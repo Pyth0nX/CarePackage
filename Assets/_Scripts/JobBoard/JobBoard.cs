@@ -12,7 +12,6 @@ namespace CarePackage.Job
             foreach (var button in jobButtons)
             {
                 button.onClick.AddListener((() => OnJobClicked(button.gameObject)));
-
             }
         }
 
