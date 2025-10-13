@@ -63,7 +63,8 @@ namespace CarePackage.Main
         {
             if (input.started)
             {
-                _interactionComponent.TryInteract(_owningPlayer);
+                if (!_interactionComponent.ValidInteraction() && !_interactionComponent.IsActive) return;
+                _interactionComponent.TryInteract();
             }
         }
 

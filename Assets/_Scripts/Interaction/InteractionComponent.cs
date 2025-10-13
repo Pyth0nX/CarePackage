@@ -8,10 +8,20 @@ namespace CarePackage.Interaction
         [SerializeField] private LayerMask interactionLayer;
         
         private IInteractable _interactable;
-        private GameObject owner;
+        private MonoBehaviour owner;
+        
+        public bool ValidInteraction() => _interactable != null;
+        public bool IsPassive => _interactable.Type == InteractionType.Passive;
+        public bool IsActive => _interactable.Type == InteractionType.Active;
 
-        private void OnTriggerEnter(Collider other)
+        public void SetInteractable(IInteractable interactable)
         {
+            _interactable = interactable;
+        }
+
+        /*
+        private void OnTriggerEnter(Collider other)
+        {/*
             if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
             {
                 Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
@@ -20,13 +30,13 @@ namespace CarePackage.Interaction
 
             if (other.gameObject.TryGetComponent<IInteractable>(out _interactable))
             {
-                if (_interactable.Type == InteractionType.Passive)
+                if (IsPassive)
                 {
-                    //_interactable.Interact(owner);
-                    _interactable = null;
+                    Debug.LogWarning($"[Interactable] Passive interaction: {gameObject.name}");
+                    TryInteract(owner as PlayerState);
                 }
             }
-        }
+        }*/
 
         private void OnTriggerExit(Collider other)
         {
@@ -35,14 +45,14 @@ namespace CarePackage.Interaction
                 Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
                 return;
             }
-            
             _interactable = null;
         }
 
-        public void TryInteract(PlayerState player)
+        public void TryInteract()
         {
             if (_interactable == null) return;
-            _interactable.Interact(player);
+            _interactable.Interact(owner as PlayerState);
+            _interactable = null;
         }
     }
 }

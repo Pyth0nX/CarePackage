@@ -1,6 +1,5 @@
 using CarePackage.Main;
 using UnityEngine;
-using System;
 
 namespace CarePackage.Interaction
 {
