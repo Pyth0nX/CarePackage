@@ -59,15 +59,6 @@ namespace CarePackage.Main
             UpdateMovementVector();
         }
 
-        public void Interact(InputAction.CallbackContext input)
-        {
-            if (input.started)
-            {
-                if (!_interactionComponent.ValidInteraction() && !_interactionComponent.IsActive) return;
-                _interactionComponent.TryInteract();
-            }
-        }
-
         public void Jump(InputAction.CallbackContext input)
         {
             if (input.started)
