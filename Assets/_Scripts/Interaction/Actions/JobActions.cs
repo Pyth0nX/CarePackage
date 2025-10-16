@@ -29,10 +29,10 @@ namespace CarePackage.Interaction
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            var JobManager = interactingPlayer.JobManager;
-            if (JobManager == null) return;
+            var jobManager = interactingPlayer.JobManager;
+            if (jobManager == null) return;
 
-            JobManager.SetCurrrentJob(job.Job);
+            jobManager.SetCurrrentJob(job.Job);
         }
         
         public void OnEnable()

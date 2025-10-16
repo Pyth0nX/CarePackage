@@ -31,14 +31,22 @@ namespace CarePackage.Job
             foreach (var button in jobButtons)
             {
                 button.onClick.RemoveAllListeners();
-                Debug.Log("You have unclicked " + button.gameObject.name);
             }
         }
 
         private void OnJobClicked(GameObject button)
         {
             Debug.Log("You have clicked " + button);
-            jobListing.SetActive(true);
+            UIManager.Instance.OpenPopupWindow(jobListing);
+        }
+
+        public void OnExitJobClicked(GameObject button)
+        {
+            foreach (var btn in jobButtons)
+            {
+                UIManager.Instance.ClosePopupWindow(btn.gameObject);
+            }
+            UIManager.Instance.ClosePopupWindow(button);
         }
 
         public void SetJobListing(IJob job)

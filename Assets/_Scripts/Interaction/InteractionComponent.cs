@@ -1,4 +1,3 @@
-using System;
 using CarePackage.Main;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,9 +7,14 @@ namespace CarePackage.Interaction
     public class InteractionComponent : MonoBehaviour
     {
         [SerializeField] private LayerMask interactionLayer;
+        [SerializeField] private bool debug;
+        [SerializeField] private bool castRay;
+        [SerializeField, Range(0.1f, 10f)] private float rayDistance = 4.5f;
         
         private IInteractable _interactable;
         private MonoBehaviour owner;
+
+        private float _elapsedTime;
         
         public bool ValidInteraction() => _interactable != null;
         public bool IsPassive => _interactable.Type == InteractionType.Passive;
@@ -21,9 +25,34 @@ namespace CarePackage.Interaction
             owner = transform.root.GetComponent<MonoBehaviour>();
         }
 
+        private void Update()
+        {
+            if (castRay) CheckForInteractions();
+        }
+
         public void SetInteractable(IInteractable interactable)
         {
             _interactable = interactable;
+        }
+
+        private void CheckForInteractions()
+        {
+            if (_elapsedTime >= .2f)
+            {
+                Ray ray = new Ray(transform.position, transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
+                {
+                    Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
+                    if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
+                    {
+                        Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
+                        SetInteractable(rayInteractable);
+                    }
+                }
+                _elapsedTime = 0;
+            }
+            _elapsedTime += Time.deltaTime;
         }
 
         /*
@@ -59,7 +88,7 @@ namespace CarePackage.Interaction
         {
             if (input.started)
             {
-                if (!ValidInteraction() && !IsActive) return;
+                if (!ValidInteraction() || !IsActive) return;
                 TryInteract();
             }
         }
@@ -70,6 +99,13 @@ namespace CarePackage.Interaction
             if (_interactable == null) return;
             _interactable.Interact(owner as PlayerState);
             _interactable = null;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!debug) return;
+            
+            Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.red);
         }
     }
 }
