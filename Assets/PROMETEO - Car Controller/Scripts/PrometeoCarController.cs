@@ -17,22 +17,25 @@ public class PrometeoCarController : MonoBehaviour
       [Space(20)]
       [Header("CAR SETUP")]
       [Space(10)]
-      [Range(20, 500)]
+      [Range(20, 100000)]
       public int maxSpeed = 90; //The maximum speed that the car can reach in km/h.
-      [Range(10, 120)]
+      [Range(10, 10000)]
       public int maxReverseSpeed = 45; //The maximum speed that the car can reach while going on reverse in km/h.
-      [Range(1, 10)]
+      [Range(1, 10000)]
       public int accelerationMultiplier = 2; // How fast the car can accelerate. 1 is a slow acceleration and 10 is the fastest.
       public float torqueMultiplier = 50f;
+      public float firstVar = 1f;
+      public float secondVar = 1f;
+      public float thirdVar = 0.025f;
       [Space(10)]
       [Range(10, 45)]
       public int maxSteeringAngle = 27; // The maximum angle that the tires can reach while rotating the steering wheel.
       [Range(0.1f, 1f)]
       public float steeringSpeed = 0.5f; // How fast the steering wheel turns.
       [Space(10)]
-      [Range(100, 600)]
+      [Range(100, 100000)]
       public int brakeForce = 350; // The strength of the wheel brakes.
-      [Range(1, 10)]
+      [Range(1, 100000)]
       public int decelerationMultiplier = 2; // How fast the car decelerates when the user is not using the throttle.
       [Range(1, 10)]
       public int handbrakeDriftMultiplier = 5; // How much grip the car loses when the user hit the handbrake.
@@ -120,7 +123,7 @@ public class PrometeoCarController : MonoBehaviour
 
     //CAR DATA
 
-      [HideInInspector]
+
       public float carSpeed; // Used to store the speed of the car.
       [HideInInspector]
       public bool isDrifting; // Used to know whether the car is drifting or not.
@@ -261,7 +264,6 @@ public class PrometeoCarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
       //CAR DATA
 
       // We determine the speed of the car.
@@ -610,7 +612,7 @@ public class PrometeoCarController : MonoBehaviour
         }
       }
       //SPEED
-      carRigidbody.linearVelocity = carRigidbody.linearVelocity * (1f / (1f + (0.025f * decelerationMultiplier)));
+      carRigidbody.linearVelocity = carRigidbody.linearVelocity * (firstVar / (secondVar + (thirdVar * decelerationMultiplier)));
       // Since we want to decelerate the car, we are going to remove the torque from the wheels of the car.
       frontLeftCollider.motorTorque = 0;
       frontRightCollider.motorTorque = 0;

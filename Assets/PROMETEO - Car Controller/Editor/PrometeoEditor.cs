@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.AnimatedValues;
+/*using UnityEditor.AnimatedValues;
 
 [CustomEditor(typeof(PrometeoCarController))]
 [System.Serializable]
@@ -250,3 +250,4 @@ public class PrometeoEditor : Editor{
   }
 
 }
+*/
