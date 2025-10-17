@@ -112,7 +112,8 @@ namespace CarePackage.Main
             _xRotation -= _verticalCameraSpeed;
             _xRotation = Mathf.Clamp(_xRotation, -45, 90);
             playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
-            transform.Rotate(Vector3.up * _yRotation);
+            // transform.Rotate(Vector3.up * _yRotation);
+            _rb.MoveRotation(_rb.rotation * Quaternion.AngleAxis(_yRotation, Vector3.up));
         }
         
         private void LockCursor(CursorLockMode lockMode)
