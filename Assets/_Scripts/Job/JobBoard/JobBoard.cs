@@ -42,10 +42,6 @@ namespace CarePackage.Job
 
         public void OnExitJobClicked(GameObject button)
         {
-            foreach (var btn in jobButtons)
-            {
-                UIManager.Instance.ClosePopupWindow(btn.gameObject);
-            }
             UIManager.Instance.ClosePopupWindow(button);
         }
 

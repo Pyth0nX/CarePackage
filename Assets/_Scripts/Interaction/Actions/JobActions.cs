@@ -8,6 +8,18 @@ using TMPro;
 namespace CarePackage.Interaction
 {
     [Serializable]
+    public class PackageAction : InteractAction
+    {
+        [SerializeField] private SO_Job job;
+        
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            interactingPlayer.JobManager.SetCurrentJob(job);
+            interactingPlayer.Pickup(interactingObject);
+        }
+    }
+    
+    [Serializable]
     public class SetJob : InteractAction
     {
         [SerializeReference, SR] private IJob job;

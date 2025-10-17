@@ -1,3 +1,4 @@
+using System;
 using CarePackage.Interaction;
 using UnityEngine.InputSystem;
 using UnityEngine;
@@ -74,9 +75,12 @@ namespace CarePackage.Main
             LockCursor(uiChange ? CursorLockMode.None : CursorLockMode.Locked);
         }
 
-        private void LockCursor(CursorLockMode lockMode)
+        private void Update()
         {
-            Cursor.lockState = lockMode;
+            if (_lockedInput) return;
+            
+            HandleLook();
+            HandleVectors();
         }
 
         private void FixedUpdate()
@@ -85,9 +89,6 @@ namespace CarePackage.Main
             if (_rb == null) return;
             
             _isGrounded = Physics.Raycast(transform.position, -transform.up, out var ground, .65f);
-            
-            HandleLook();
-            HandleVectors();
             
             _rb.linearVelocity = _velocity;
         }
@@ -111,6 +112,11 @@ namespace CarePackage.Main
             _xRotation = Mathf.Clamp(_xRotation, -45, 90);
             playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
             transform.Rotate(Vector3.up * _yRotation);
+        }
+        
+        private void LockCursor(CursorLockMode lockMode)
+        {
+            Cursor.lockState = lockMode;
         }
         
         public void Look(InputAction.CallbackContext input)
