@@ -42,6 +42,17 @@ namespace CarePackage.Interaction
             else objectToToggle.SetActive(!objectToToggle.activeInHierarchy);
         }
     }
+    
+    [Serializable]
+    public class SwitchSceneAction : InteractAction
+    {
+        [SerializeField] private string  sceneName;
+        
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            SceneController.Instance.LoadScene(sceneName);
+        }
+    }
 
     namespace UI
     {
