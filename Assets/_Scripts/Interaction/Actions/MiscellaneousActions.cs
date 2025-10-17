@@ -34,13 +34,12 @@ namespace CarePackage.Interaction
         {
             if (targetSelf)
             {
-                if (!toggleItself) objectToToggle.SetActive(enable);
-                else objectToToggle.SetActive(!objectToToggle.activeInHierarchy);
+                if (!toggleItself) interactingObject.SetActive(enable);
+                else interactingObject.SetActive(!interactingObject.activeInHierarchy);
                 return;
             }
-            
-            if (!toggleItself) interactingObject.SetActive(enable);
-            else interactingObject.SetActive(!interactingObject.activeInHierarchy);
+            if (!toggleItself) objectToToggle.SetActive(enable);
+            else objectToToggle.SetActive(!objectToToggle.activeInHierarchy);
         }
     }
 

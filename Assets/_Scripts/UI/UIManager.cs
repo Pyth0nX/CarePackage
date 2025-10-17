@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public void OpenPopupWindow(GameObject popupWindow)
     {
         popupWindow.SetActive(true);
+        if (_activePopups.Contains(popupWindow)) return;
         _activePopups.Add(popupWindow);
         OnInterfaceOpened?.Invoke();
     }
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
     public void ClosePopupWindow(GameObject popupWindow)
     {
         popupWindow.SetActive(false);
+        if (!_activePopups.Contains(popupWindow)) return;
         _activePopups.Remove(popupWindow);
         bool morePopups = _activePopups.Count > 0;
         OnInterfaceClosed?.Invoke(morePopups);

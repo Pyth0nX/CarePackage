@@ -39,8 +39,9 @@ namespace CarePackage.Interaction
         {
             if (_elapsedTime >= .2f)
             {
-                Ray ray = new Ray(transform.position, transform.forward);
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));// new Ray(transform.position, transform.forward);
                 RaycastHit hit;
+                
                 if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
                 {
                     Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
@@ -105,7 +106,8 @@ namespace CarePackage.Interaction
         {
             if (!debug) return;
             
-            Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.red);
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+            Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
         }
     }
 }
