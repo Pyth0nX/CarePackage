@@ -14,8 +14,8 @@ namespace CarePackage.Interaction
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            interactingPlayer.JobManager.SetCurrentJob(job);
             interactingPlayer.Pickup(interactingObject);
+            interactingPlayer.JobManager.SetCurrentJob(job);
         }
     }
     

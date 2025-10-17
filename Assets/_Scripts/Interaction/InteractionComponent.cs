@@ -85,7 +85,7 @@ namespace CarePackage.Interaction
             _interactable = null;
         }*/
         
-        public void Interact(InputAction.CallbackContext input)
+        public void OnInteract(InputAction.CallbackContext input)
         {
             if (input.started)
             {

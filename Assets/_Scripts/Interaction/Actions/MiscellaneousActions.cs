@@ -7,7 +7,6 @@ namespace CarePackage.Interaction
     [Serializable]
     public class PickupAction : InteractAction
     {
-        
         [SerializeField] private bool hideInstedOfDestroy;
         [SerializeField] private bool disapearAfterUse;
         
@@ -40,6 +39,17 @@ namespace CarePackage.Interaction
             }
             if (!toggleItself) objectToToggle.SetActive(enable);
             else objectToToggle.SetActive(!objectToToggle.activeInHierarchy);
+        }
+    }
+    
+    [Serializable]
+    public class SwitchSceneAction : InteractAction
+    {
+        [SerializeField] private string  sceneName;
+        
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            SceneController.Instance.LoadScene(sceneName);
         }
     }
 
