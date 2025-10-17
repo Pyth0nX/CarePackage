@@ -1,5 +1,6 @@
 using System;
 using CarePackage.Interaction;
+using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
@@ -119,25 +120,25 @@ namespace CarePackage.Main
             Cursor.lockState = lockMode;
         }
         
-        public void Look(InputAction.CallbackContext input)
+        public void OnLook(InputAction.CallbackContext input)
         {
             if (input.performed) _lookVector = input.ReadValue<Vector2>();
             else if (input.canceled) _lookVector = Vector2.zero;
         }
 
-        public void Move(InputAction.CallbackContext input)
+        public void OnMove(InputAction.CallbackContext input)
         {
             if (input.performed) _inputVector = input.ReadValue<Vector2>();
             else if (input.canceled) _inputVector = Vector2.zero;
         }
 
-        public void Run(InputAction.CallbackContext input)
+        public void OnRun(InputAction.CallbackContext input)
         {
             if (input.started) _sprintBonus = 2f;
             else if (input.canceled) _sprintBonus = 1f;
         }
 
-        public void Jump(InputAction.CallbackContext input)
+        public void OnJump(InputAction.CallbackContext input)
         {
             if (input.started)
             {
@@ -154,6 +155,22 @@ namespace CarePackage.Main
                 _isGrounded = false;
                 Debug.Log($"Player Jumped");
             }
+        }
+        
+        public void OnLeftClick(InputAction.CallbackContext input)
+        {
+            if (input.started)
+            {
+                if (!_owningPlayer.IsPickupValid) return;
+                _owningPlayer.DropPickup();
+            }
+            else if (input.canceled) Debug.Log("Let go of LeftClick");
+        }
+        
+        public void OnRightClick(InputAction.CallbackContext input)
+        {
+            if (input.started) Debug.Log("pressed RightClick");
+            else if (input.canceled) Debug.Log("Let go of RightClick");
         }
         
         private void OnDrawGizmos()

@@ -7,7 +7,6 @@ namespace CarePackage.Interaction
     [Serializable]
     public class PickupAction : InteractAction
     {
-        
         [SerializeField] private bool hideInstedOfDestroy;
         [SerializeField] private bool disapearAfterUse;
         
