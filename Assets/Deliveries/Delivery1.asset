@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2ace173dc1d794680db90f0e92d842, type: 3}
+  m_Name: Delivery1
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.SO_Job
+  jobData:
+    Title: Going skiing
+    Description: Hello, we are in dire need of your help, we want some fish cakes
+      please
+  job:
+    rid: 7586773519980036159
+  references:
+    version: 2
+    RefIds:
+    - rid: 7586773519980036159
+      type: {class: JobBob, ns: CarePackage.Job, asm: Assembly-CSharp}
+      data:
+        job: {fileID: 11400000}
+        bob: 

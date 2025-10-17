@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,16 @@ namespace CarePackage.Job
     public class JobBoard : MonoBehaviour
     {
         [SerializeField] private Button[] jobButtons;
+        [SerializeField] private GameObject jobListing;
+
+        private TextMeshProUGUI _jobTitle;
+        private TextMeshProUGUI _jobDescription;
+
+        private void Start()
+        {
+            _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+            _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+        }
 
         private void OnEnable()
         {
@@ -20,13 +31,28 @@ namespace CarePackage.Job
             foreach (var button in jobButtons)
             {
                 button.onClick.RemoveAllListeners();
-                Debug.Log("You have unclicked " + button.gameObject.name);
             }
         }
 
         private void OnJobClicked(GameObject button)
         {
             Debug.Log("You have clicked " + button);
+            UIManager.Instance.OpenPopupWindow(jobListing);
+        }
+
+        public void OnExitJobClicked(GameObject button)
+        {
+            foreach (var btn in jobButtons)
+            {
+                UIManager.Instance.ClosePopupWindow(btn.gameObject);
+            }
+            UIManager.Instance.ClosePopupWindow(button);
+        }
+
+        public void SetJobListing(IJob job)
+        {
+            _jobTitle.text = job.GetTitle();
+            _jobDescription.text = job.GetDescription();
         }
     }
 }
