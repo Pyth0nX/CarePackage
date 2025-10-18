@@ -686,6 +686,292 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230143423}
   m_CullTransparentMesh: 1
+--- !u!1 &383376894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383376902}
+  - component: {fileID: 383376901}
+  - component: {fileID: 383376900}
+  - component: {fileID: 383376899}
+  - component: {fileID: 383376898}
+  - component: {fileID: 383376897}
+  - component: {fileID: 383376896}
+  - component: {fileID: 383376895}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383376895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb864de83b0c5744b881504d4f38754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.Master
+  dialogueGraph: {fileID: 11400000, guid: ab08c146cc24830408813c7e87b61476, type: 2}
+  frames: []
+  currentFrame: {fileID: 0}
+  background: {fileID: 0}
+  dialogue: {fileID: 0}
+  eventText: {fileID: 0}
+  randomTextCache: 
+  portrait1: {fileID: 0}
+  portrait2: {fileID: 0}
+  portrait3: {fileID: 0}
+  name1: {fileID: 0}
+  name2: {fileID: 0}
+  name3: {fileID: 0}
+  nameBlock1: {fileID: 0}
+  nameBlock2: {fileID: 0}
+  nameBlock3: {fileID: 0}
+  option1: {fileID: 0}
+  option2: {fileID: 0}
+  option3: {fileID: 0}
+  option1Block: {fileID: 0}
+  option2Block: {fileID: 0}
+  option3Block: {fileID: 0}
+  eventImage: {fileID: 0}
+  conversationPanel: {fileID: 0}
+  eventPanel: {fileID: 0}
+  choiceManager: {fileID: 0}
+  endingManager: {fileID: 0}
+  backgroundSource: {fileID: 0}
+  foregroundSource: {fileID: 0}
+  inventory: {fileID: 0}
+  valueTracker: {fileID: 0}
+  loadingScreen: {fileID: 0}
+  graphsToLoad: []
+  beganLoading: 0
+  loadedIntoRam: 0
+  initialized: 0
+--- !u!114 &383376896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75408c707b3f35428bf9f2e72f2369c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.ChoiceManager
+  choices: 
+  slot: 0
+  timeSinceSave: 0
+  saveInterval: 0
+--- !u!114 &383376897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde27f71244324b4d81d0c6266f710c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.coderunner
+--- !u!114 &383376898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20616085789d9e140b9994925fe73392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.EndingManager
+  choiceManager: {fileID: 0}
+  endingText: {fileID: 0}
+  endingPanel: {fileID: 0}
+--- !u!114 &383376899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ffb26879e226a4f96d78c547df1186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.ValueTracker
+  values:
+    _serializedList: []
+--- !u!114 &383376900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6891024a9b4529043a27b9760e0370bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.Inventory
+  items:
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  - name: 
+    image: {fileID: 0}
+    id: 0
+  inventoryItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &383376901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0da79d74942e61438a2c643b528445d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDialogue.ImageEnumManager
+  images:
+    _serializedList: []
+  backgroundImages:
+    _serializedList: []
+  questionMark: {fileID: 0}
+--- !u!4 &383376902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383376894}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.12002, y: 0, z: 69.78307}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &515182856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,3 +2197,4 @@ SceneRoots:
   - {fileID: 862322149}
   - {fileID: 181233315}
   - {fileID: 1369036445}
+  - {fileID: 383376902}
