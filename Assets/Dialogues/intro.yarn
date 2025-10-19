@@ -1,9 +1,26 @@
-﻿title: intro
+﻿title: FamADay1
+position: -168,-397
 ---
-MAILMAN: Morning! Are you Lina?
-LINA: That’s me! Sofie, your package is here!
-MAILMAN: Wonderful! I just need your signature here.
-LINA: Of course. Are you new around here? I haven’t seen you before.
-MAILMAN: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
-LINA: Oh, so you are just like Sofie! She just started in a new school.
+Mailman: Morning! Are you Lina?
+Lina: That’s me! Sofie, your package is here!
+Mailman: Wonderful! I just need your signature here.
+Lina: Of course. Are you new around here? I haven’t seen you before.
+Mailman: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
+Lina: Oh, so you are just like Sofie! She just started in a new school.
+-> Mailman: Are you nervous?
+<<jump engage1>>
+-> Mailman: Oh yeah? Well, enjoy your package!
+===
+
+title: engage1
+position: -164,-118
+---
+Sofie: Yes...but mom promised to get me a new backpack!
+Mailman: Oh, so that’s what I have here for you?
+Sofie: YES! Can I have it? pleeaaase.
+-> Mailman: Here you go.
+-> Mailman: I made sure it brings good luck on your first day.
+Sofie: THANK YOU!
+Lina: Thanks again! see you around.
+Mailman: Have a great evening, both of you!
 ===
