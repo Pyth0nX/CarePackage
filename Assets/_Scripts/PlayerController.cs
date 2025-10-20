@@ -1,6 +1,3 @@
-using System;
-using CarePackage.Interaction;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
