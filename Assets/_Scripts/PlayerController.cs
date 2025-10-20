@@ -18,7 +18,6 @@ namespace CarePackage.Main
         [SerializeField] private GameObject playerCamera;
         
         // private components
-        private InteractionComponent _interactionComponent;
         private PlayerState _owningPlayer;
         private Rigidbody _rb;
         
@@ -45,9 +44,8 @@ namespace CarePackage.Main
         
         private void InitializeAllComponents()
         {
-            _rb = GetComponentInChildren<Rigidbody>();
-            _owningPlayer = GetComponentInChildren<PlayerState>();
-            _interactionComponent = GetComponentInChildren<InteractionComponent>();
+            _rb = transform.parent.GetComponent<Rigidbody>();
+            _owningPlayer = transform.parent.GetComponent<PlayerState>();
         }
 
         private void OnEnable()
