@@ -345,6 +345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4746172810602887884}
   - component: {fileID: 1837168583697562740}
+  - component: {fileID: 4896808228684473572}
   m_Layer: 0
   m_Name: Controlls
   m_TagString: Untagged
@@ -394,7 +395,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -410,7 +411,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
@@ -426,7 +427,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnLeftClick
         m_Mode: 0
@@ -458,7 +459,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
@@ -474,7 +475,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnRun
         m_Mode: 0
@@ -530,7 +531,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 571036587580134113}
+      - m_Target: {fileID: 4896808228684473572}
         m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
         m_MethodName: OnRightClick
         m_Mode: 0
@@ -549,6 +550,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: 0
   m_Camera: {fileID: 0}
+--- !u!114 &4896808228684473572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634162688162102448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b710b120981cc943ad80682656975ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  speed: 5
+  jumpForce: 5
+  sensitivity: 0.3
+  playerCamera: {fileID: 8711818139406008826}
 --- !u!1 &1649386176195587489
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +576,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1126775509190355156}
   - component: {fileID: 455486807488474456}
-  - component: {fileID: 571036587580134113}
   - component: {fileID: 3099733559931690986}
   - component: {fileID: 598207795424766240}
   - component: {fileID: 296281093717553139}
@@ -608,22 +624,6 @@ MonoBehaviour:
     car: {fileID: 0}
     carCamera: {fileID: 0}
   pickupLocation: {fileID: 0}
---- !u!114 &571036587580134113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649386176195587489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b710b120981cc943ad80682656975ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 5
-  jumpForce: 5
-  sensitivity: 0.3
-  playerCamera: {fileID: 8711818139406008826}
 --- !u!114 &3099733559931690986
 MonoBehaviour:
   m_ObjectHideFlags: 0
