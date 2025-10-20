@@ -6,6 +6,7 @@ namespace CarePackage.Main
 {
     public class PlayerState : MonoBehaviour
     {
+        [SerializeField] private PlayerModeData modeData;
         [SerializeField] private Transform pickupLocation;
         
         // private Components
@@ -22,6 +23,45 @@ namespace CarePackage.Main
         {
             _jobManager = GetComponent<JobManager>();
             _interactionComponent = GetComponent<InteractionComponent>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                SwitchMode();
+            }
+        }
+
+        public void SwitchMode()
+        {
+            var rb = GetComponent<Rigidbody>();
+            var capsule =  GetComponent<CapsuleCollider>();
+            
+            if (modeData.car.activeSelf)
+            {
+                modeData.car.SetActive(false);
+                modeData.carController.enabled = false;
+                modeData.carCamera.SetActive(false);
+                
+                rb.mass = modeData.firstPersonMass;
+
+                modeData.player.SetActive(true);
+                modeData.playerController.enabled = true;
+                
+                capsule.enabled = true;
+
+                return;
+            }
+            modeData.car.SetActive(true);
+            modeData.carController.enabled = true;
+            modeData.carCamera.SetActive(true);
+            
+            rb.mass = modeData.carMass;
+            
+            modeData.player.SetActive(false);
+            modeData.playerController.enabled = false;
+            capsule.enabled = false;
         }
 
         public void DropPickup()
@@ -48,5 +88,17 @@ namespace CarePackage.Main
         {
             _pickup = pickedupObject;
         }
+    }
+
+    [System.Serializable]
+    public struct PlayerModeData
+    { 
+        public float firstPersonMass;
+        public PlayerController playerController;
+        public GameObject player;
+        public float carMass;
+        public PrometeoCarController carController;
+        public GameObject car;
+        public GameObject carCamera;
     }
 }
