@@ -10326,9 +10326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6d3ff905719c845a4a6404bc4d4162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  carTransform: {fileID: 78472956}
-  followSpeed: 2
-  lookSpeed: 5
+  target: {fileID: 78472956}
+  offset: {x: 0, y: 2, z: -5}
+  smoothSpeed: 0.125
 --- !u!1 &787014444
 GameObject:
   m_ObjectHideFlags: 0

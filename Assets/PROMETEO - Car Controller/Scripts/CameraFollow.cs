@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+/*public class CameraFollows : MonoBehaviour {
 
 	public Transform carTransform;
 	[Range(1, 10)]
@@ -32,4 +32,24 @@ public class CameraFollow : MonoBehaviour {
 
 	}
 
+}*/
+
+public class CameraFollow : MonoBehaviour
+{
+	[SerializeField] private Transform target;
+	[SerializeField] private Vector3 offset = new Vector3(0, 2, -5);
+	[SerializeField] private float smoothSpeed = 0.125f;
+
+	private Vector3 _velocity = Vector3.zero;
+
+	void LateUpdate()
+	{
+		Vector3 desiredPosition = target.TransformPoint(offset);
+		
+		Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref _velocity, smoothSpeed);
+
+		transform.position = smoothedPosition;
+		
+		transform.LookAt(target);
+	}
 }
