@@ -41,8 +41,8 @@ namespace CarePackage.Main
         
         private void InitializeAllComponents()
         {
-            _rb = transform.parent.GetComponent<Rigidbody>();
-            _owningPlayer = transform.parent.GetComponent<PlayerState>();
+            _rb = transform.root.GetComponent<Rigidbody>();
+            _owningPlayer = transform.root.GetComponent<PlayerState>();
         }
 
         private void OnEnable()
