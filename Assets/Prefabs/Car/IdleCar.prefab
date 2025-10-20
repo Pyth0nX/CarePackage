@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7622633654942513460}
   - component: {fileID: 5004457504666268799}
   - component: {fileID: 5909932853251727219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire UR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3534561299058436248}
   - component: {fileID: 219217637648430227}
   - component: {fileID: 8617869593906174143}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 6737300094442106275}
   - component: {fileID: 7423206347700937606}
   - component: {fileID: 5289774928323179198}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarHood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7987409605001906256}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 3242688338946778363}
   - component: {fileID: 5204979038447662102}
   - component: {fileID: 1519932116503249617}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarWall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8472231146204074940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 8558207313599815026}
   - component: {fileID: 638321718321589932}
   - component: {fileID: 6380737497967138652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 3955927814125244784}
   - component: {fileID: 6845861225740706809}
   - component: {fileID: 665600881125391999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 965671564034776958}
   - component: {fileID: 5951062333823020557}
   - component: {fileID: 2372987747059070532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 8791923876088120445}
   - component: {fileID: 5502456103886713225}
   - component: {fileID: 4267495884927691283}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tire UL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 5705677286673908925}
   - component: {fileID: 259391414267643432}
   - component: {fileID: 5456981722514022736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarWall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 1146623909629273224}
   - component: {fileID: 4478269816818154931}
   - component: {fileID: 2730617631318225428}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 631406142849092384}
   - component: {fileID: 6640502614555807549}
   - component: {fileID: 9210091067888703958}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IdleCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,7 +990,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3534561299058436248}
@@ -1041,5 +1041,4 @@ MonoBehaviour:
     RefIds:
     - rid: 7586773630133207108
       type: {class: EnterCarAction, ns: , asm: Assembly-CSharp}
-      data:
-        playerActive: 1
+      data: 

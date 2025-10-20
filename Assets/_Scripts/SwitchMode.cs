@@ -8,11 +8,21 @@ public class SwitchMode : MonoBehaviour
 {
     [SerializeField] private GameObject firstPersonPlayer;
     [SerializeField] private GameObject carCamera;
+    [SerializeField] private GameObject car;
+    [SerializeField] private GameObject idleCar;
     
     public GameObject CarCamera => carCamera;
     public GameObject FirstPersonPlayer { get => firstPersonPlayer; set => firstPersonPlayer = value; }
+    public GameObject Car { get => car; set => car = value; }
+    public GameObject IdleCar { get => idleCar; set => idleCar = value; }
+    
 
+    public bool FirstPersonInitialized;
+
+    public bool IdleCarInitialized;
+        
     public static SwitchMode Instance;
+    
 
     private void Awake()
     {
@@ -22,19 +32,15 @@ public class SwitchMode : MonoBehaviour
 
 public class EnterCarAction : InteractAction
 {
-    [SerializeField] private bool playerActive;
-    
     public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
     {
-        var switchMode = interactingObject.GetComponent<SwitchMode>();
-        if (playerActive)
-        {
-            switchMode.CarCamera.SetActive(true);
-            switchMode.FirstPersonPlayer.SetActive(false);
-            return;
-        }
-        switchMode.CarCamera.SetActive(false);
-        switchMode.FirstPersonPlayer.SetActive(true);
+        var switchMode = SwitchMode.Instance;
+        switchMode.FirstPersonPlayer.SetActive(false);
+        switchMode.CarCamera.SetActive(true);
+        var carPosition = interactingObject.transform.position;
+        interactingObject.SetActive(false);
+        switchMode.Car.transform.position = carPosition;
+        switchMode.Car.SetActive(true);
     }
 }
 
@@ -44,10 +50,25 @@ public class ExitCarAction : InteractAction
     
     public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
     {
+        Debug.Log("Player has exited the car!");
         var carPosition = interactingObject.transform.position;
-        var car = GameObject.Instantiate(idleCarPrefab, carPosition, Quaternion.Euler(Vector3.zero));
+        if (!SwitchMode.Instance.IdleCarInitialized)
+        {
+            SwitchMode.Instance.IdleCar = GameObject.Instantiate(idleCarPrefab, carPosition, Quaternion.Euler(Vector3.zero));
+            SwitchMode.Instance.IdleCarInitialized = true;
+        }
+        SwitchMode.Instance.IdleCar.transform.position = carPosition;
+        SwitchMode.Instance.IdleCar.SetActive(true);
         
         var playerStartPos = carPosition + new Vector3(3f, 0, 0);
-        SwitchMode.Instance.FirstPersonPlayer = GameObject.Instantiate(SwitchMode.Instance.FirstPersonPlayer, playerStartPos, Quaternion.identity);
+        if (!SwitchMode.Instance.FirstPersonInitialized)
+        {
+            SwitchMode.Instance.FirstPersonPlayer = GameObject.Instantiate(SwitchMode.Instance.FirstPersonPlayer, playerStartPos, Quaternion.identity);
+            SwitchMode.Instance.FirstPersonInitialized = true;
+        }
+        interactingObject.transform.parent.gameObject.SetActive(false);
+        SwitchMode.Instance.CarCamera.SetActive(false);
+        SwitchMode.Instance.FirstPersonPlayer.SetActive(false);
+        SwitchMode.Instance.FirstPersonPlayer.SetActive(true);
     }
 }
