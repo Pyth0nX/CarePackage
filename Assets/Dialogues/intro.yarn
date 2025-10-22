@@ -1,6 +1,32 @@
-﻿title: FamADay1
-position: -226,-420
+﻿title: setup
+color: orange
+position: -533,-907
 ---
+<<declare $day = 1>>
+<<declare $family = 0>>
+===
+
+title: start
+color: blue
+position: -276,-803
+---
+
+Mailman: *Knock knock*
+<<if $day == 1>>
+<<jump FamADay1>>
+<<elseif $day == 2>>
+<<jump FamADay2>>
+<<endif>>
+===
+
+title: FamADay1
+position: -1426,-631
+color: purple
+group: FamA
+group: Day1
+---
+<<once>>
+<<declare $relationshipFamA = 0>>
 Mailman: Morning! Are you Lina?
 Lina: That’s me! Sofie, your package is here!
 Mailman: Wonderful! I just need your signature here.
@@ -10,17 +36,57 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Are you nervous?
 <<jump engage1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
+<<jump end1>>
+<<else>>
+...
+<<endonce>>
 ===
 
 title: engage1
-position: -227,-211
+position: -1428,-386
+color: green
+group: FamA
+group: Day1
 ---
+<<set $relationshipFamA += 1>>
 Sofie: Yes...but mom promised to get me a new backpack!
 Mailman: Oh, so that’s what I have here for you?
 Sofie: YES! Can I have it? pleeaaase.
 -> Mailman: Here you go.
+<<jump end1>>
 -> Mailman: I made sure it brings good luck on your first day.
+<<jump end2>>
+===
+
+title: end1
+color: red
+position: -1183,-530
+group: FamA
+group: Day1
+---
+Lina: Thank you, have a nice day.
+Mailman: You too.
+<<set $day += 1>>
+===
+
+title: end2
+position: -1179,-358
+color: green
+group: FamA
+group: Day1
+---
+<<set $relationshipFamA += 2>>
 Sofie: THANK YOU!
 Lina: Thanks again! see you around.
 Mailman: Have a great evening, both of you!
+<<set $day += 1>>
+===
+
+title: FamADay2
+color: purple
+group: FamA
+group: Day2
+position: -952,-620
+---
+//day2 famA dialogue
 ===
