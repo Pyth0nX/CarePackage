@@ -55,7 +55,7 @@ namespace CarePackage.Main
             Debug.Log($"[{GetType()}] Is UIManager Instance set {UIManager.Instance != null}");
             UIManager.Instance.OnInterfaceOpened += () => ListenToUIChanges(true);
             UIManager.Instance.OnInterfaceClosed += ListenToUIChanges;
-            Cursor.lockState = CursorLockMode.Locked;
+            LockCursor(CursorLockMode.Locked);
         }
 
         private void OnDisable()
