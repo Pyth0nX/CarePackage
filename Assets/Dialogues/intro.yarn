@@ -2,8 +2,8 @@
 color: orange
 position: -533,-907
 ---
-<<declare $day = 1>>
 <<declare $family = 0>>
+
 ===
 
 title: start
@@ -20,6 +20,7 @@ Mailman: *Knock knock*
 ===
 
 title: FamADay1
+when: $package == true
 position: -1426,-631
 color: purple
 group: FamA
@@ -41,7 +42,19 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 ...
 <<endonce>>
 ===
-
+title: FamADay1
+when: $package == false
+position: -1426,-631
+color: purple
+group: FamA
+group: Day1
+---
+Mailman: Morning! Are you Lina?
+Lina: That’s me! Sofie, your package is here!
+Mailman: Actualy I lost your package on my way here...
+Lina: Oh...Then come back when you have it
+<<set $relationshipFamA -= 1>>
+===
 title: engage1
 position: -1428,-386
 color: green
@@ -66,11 +79,10 @@ group: Day1
 ---
 Lina: Thank you, have a nice day.
 Mailman: You too.
-<<set $day += 1>>
 ===
 
 title: end2
-position: -1179,-358
+position: -1150,-383
 color: green
 group: FamA
 group: Day1
@@ -79,14 +91,13 @@ group: Day1
 Sofie: THANK YOU!
 Lina: Thanks again! see you around.
 Mailman: Have a great evening, both of you!
-<<set $day += 1>>
 ===
 
 title: FamADay2
 color: purple
 group: FamA
 group: Day2
-position: -952,-620
+position: -882,-615
 ---
 //day2 famA dialogue
 ===
