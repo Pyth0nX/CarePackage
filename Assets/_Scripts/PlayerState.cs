@@ -1,5 +1,5 @@
 using CarePackage.Interaction;
-using CarePackage.Job;
+using CarePackage.Delivery;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -10,19 +10,22 @@ namespace CarePackage.Main
         [SerializeField] private Transform pickupLocation;
         
         // private Components
-        private JobManager _jobManager;
+        private DeliveryManager _deliveryManager;
         private InteractionComponent _interactionComponent;
+        private Inventory _inventory;
 
         private GameObject _pickup;
         
-        public JobManager JobManager => _jobManager;
+        public DeliveryManager DeliveryManager => _deliveryManager;
         public InteractionComponent InteractionComponent => _interactionComponent;
+        public Inventory Inventory => _inventory;
         public bool IsPickupValid => _pickup != null;
 
         private void Awake()
         {
-            _jobManager = GetComponent<JobManager>();
+            _deliveryManager = GetComponent<DeliveryManager>();
             _interactionComponent = GetComponent<InteractionComponent>();
+            _inventory = GetComponent<Inventory>();
         }
 
         private void Update()

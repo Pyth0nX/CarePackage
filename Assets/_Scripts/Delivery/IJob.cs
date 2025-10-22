@@ -1,13 +1,12 @@
 
 using UnityEngine;
 
-namespace CarePackage.Job
+namespace CarePackage.Delivery
 {
     public interface IJob
     {
         public string GetTitle();
         public string GetDescription();
-        //job specific method or data that is hold and overriden for each job;
     }
 
     [System.Serializable]

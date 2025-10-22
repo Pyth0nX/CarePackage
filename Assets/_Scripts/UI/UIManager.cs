@@ -49,4 +49,20 @@ public class UIManager : MonoBehaviour
             ClosePopupWindow(popupWindow);
         }
     }
+
+    public void TogglePopupWindow(GameObject popupWindow)
+    {
+        if (_activePopups.Contains(popupWindow) && popupWindow.activeSelf)
+        {
+            ClosePopupWindow(popupWindow);
+        }
+        else if (!_activePopups.Contains(popupWindow) && !popupWindow.activeSelf)
+        {
+            OpenPopupWindow(popupWindow);
+        }
+    }
+    
+    public int GetActivePopupCount() => _activePopups.Count;
+    
+    public GameObject GetActivePopup(int index) => _activePopups[index];
 }

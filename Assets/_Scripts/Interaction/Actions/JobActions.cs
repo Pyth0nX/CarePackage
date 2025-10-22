@@ -1,8 +1,7 @@
 using System;
-using CarePackage.Job;
+using CarePackage.Delivery;
 using UnityEngine;
 using CarePackage.Main;
-using SerializeReferenceEditor;
 using TMPro;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -14,10 +13,17 @@ namespace CarePackage.Interaction.Package
     {
         [SerializeField] private SO_Job job;
 
+        public PackageAction() { job = null; }
+
+        public PackageAction(SO_Job inJob)
+        {
+            job = inJob;
+        }
+
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(interactingObject);
-            interactingPlayer.JobManager.SetCurrentJob(job);
+            interactingPlayer.DeliveryManager.SetCurrentJob(job);
         }
     }
 
@@ -25,14 +31,12 @@ namespace CarePackage.Interaction.Package
     [Serializable]
     public class SetJob : InteractAction
     {
-        [SerializeReference, SR] private IJob job;
-
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            var JobManager = interactingPlayer.JobManager;
+            var JobManager = interactingPlayer.DeliveryManager;
             if (JobManager == null) return;
 
-            JobManager.SetCurrrentJob(job);
+            //JobManager.SetCurrrentJob(job);
         }
     }
 
@@ -45,10 +49,10 @@ namespace CarePackage.Interaction.Package
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            var jobManager = interactingPlayer.JobManager;
+            var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
 
-            jobManager.SetCurrentJob(job);
+            
         }
 
         public void OnEnable()

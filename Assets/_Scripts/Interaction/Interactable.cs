@@ -15,6 +15,8 @@ namespace CarePackage.Interaction
         
         private InteractionComponent _interactionComponent;
         
+        public InteractAction InteractAction { get => interactAction; set => interactAction = value; }
+
         private void Start()
         {
             _interactionComponent = GameManager.Instance.Player.InteractionComponent;

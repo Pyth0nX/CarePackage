@@ -16,13 +16,4 @@ MonoBehaviour:
     Title: Going skiing
     Description: Hello, we are in dire need of your help, we want some fish cakes
       please
-  job:
-    rid: 7586773519980036159
-  references:
-    version: 2
-    RefIds:
-    - rid: 7586773519980036159
-      type: {class: JobBob, ns: CarePackage.Job, asm: Assembly-CSharp}
-      data:
-        job: {fileID: 11400000}
-        bob: 
+  item: {fileID: 11400000, guid: 4b1897c58a40a5e49a820736dfcb0145, type: 2}

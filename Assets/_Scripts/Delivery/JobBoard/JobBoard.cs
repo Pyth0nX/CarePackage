@@ -1,18 +1,30 @@
+using CarePackage.Interaction;
+using CarePackage.Interaction.Package;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CarePackage.Job
+namespace CarePackage.Delivery
 {
     public class JobBoard : MonoBehaviour
     {
         [SerializeField] private Button[] jobButtons;
         [SerializeField] private GameObject jobListing;
 
+        [SerializeField] private GameObject packagePrefab;
+
+        private SO_Job _displayedJob;
+        private GameObject _lastClickedButton;
+        
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
 
         private void Start()
+        {
+            FetchJobListedElements();
+        }
+
+        private void FetchJobListedElements()
         {
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
             _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
@@ -38,6 +50,7 @@ namespace CarePackage.Job
         {
             Debug.Log("You have clicked " + button);
             UIManager.Instance.OpenPopupWindow(jobListing);
+            _lastClickedButton = button;
         }
 
         public void OnExitJobClicked(GameObject button)
@@ -45,13 +58,16 @@ namespace CarePackage.Job
             UIManager.Instance.ClosePopupWindow(button);
         }
 
-        public void SetJobListing(IJob job)
+        public void OnAcceptJobClicked()
         {
-            _jobTitle.text = job.GetTitle();
-            _jobDescription.text = job.GetDescription();
+            if (_displayedJob == null) return;
+            GameObject newPackage = Instantiate(packagePrefab);
+            var package = newPackage.GetComponent<Interactable>();
+            package.InteractAction = new PackageAction(_displayedJob);
+            OnExitJobClicked(_lastClickedButton);
         }
         
-        public void SetJobListingScriptable(SO_Job job)
+        public void SetJobListing(SO_Job job)
         {
             _jobTitle.text = job.JobData.Title;
             _jobDescription.text = job.JobData.Description;
