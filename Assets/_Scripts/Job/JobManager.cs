@@ -7,13 +7,19 @@ namespace CarePackage.Job
     {
         [SerializeReference, SR] private IJob _job;
         [SerializeField] private SO_Job _jobDetails;
-        [SerializeField] private JobBoard jobBoard;
         
+        private JobBoard _jobBoard;
+
+        private void Start()
+        {
+            _jobBoard = FindFirstObjectByType<JobBoard>();
+        }
+
         public void SetCurrrentJob(IJob job)
         {
             if (job == null) return;
             _job = job;
-            jobBoard.SetJobListing(_job);
+            _jobBoard.SetJobListing(_job);
         }
 
         public void SetCurrentJob(SO_Job job)
