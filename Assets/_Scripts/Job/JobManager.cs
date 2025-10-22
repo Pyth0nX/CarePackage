@@ -17,6 +17,7 @@ namespace CarePackage.Job
 
         public void SetCurrrentJob(IJob job)
         {
+            Debug.Log($"[SetCurrrentJob] setting current job with ijob: {job}");
             if (job == null) return;
             _job = job;
             _jobBoard.SetJobListing(_job);
@@ -24,9 +25,11 @@ namespace CarePackage.Job
 
         public void SetCurrentJob(SO_Job job)
         {
+            Debug.Log($"[SetCurrrentJob] setting current job with so_job: {job}");
             if (job == null) return;
             _jobDetails = job;
-            SetCurrrentJob(_jobDetails.Job);
+            _jobBoard.SetJobListingScriptable(job);
+            //SetCurrrentJob(_jobDetails.Job);
         }
 
         public SO_Job GetCurrentJob()

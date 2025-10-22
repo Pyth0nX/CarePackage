@@ -44,10 +44,10 @@ namespace CarePackage.Interaction
                 
                 if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
                 {
-                    Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
+                    if (debug) Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
                     if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
                     {
-                        Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
+                        if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
                         SetInteractable(rayInteractable);
                     }
                 }
@@ -96,7 +96,7 @@ namespace CarePackage.Interaction
 
         public void TryInteract()
         {
-            Debug.Log("Trying to interaction with " + _interactable);
+            if (debug) Debug.Log("Trying to interaction with " + _interactable);
             if (_interactable == null) return;
             _interactable.Interact(owner as PlayerState);
             _interactable = null;

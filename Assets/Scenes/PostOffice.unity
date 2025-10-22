@@ -815,15 +815,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactAction:
-    rid: 7586773519980036096
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 7586773519980036096
-      type: {class: SetJobFromBoard, ns: CarePackage.Interaction, asm: Assembly-CSharp}
-      data:
-        job: {fileID: 11400000, guid: 5e809afbcd3023646b31c991eadcb10c, type: 2}
-        parent: {fileID: 155312279}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &172508006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,20 +1806,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactAction:
-    rid: 7586773514952900686
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 7586773514952900686
-      type: {class: SetJob, ns: CarePackage.Interaction, asm: Assembly-CSharp}
-      data:
-        job:
-          rid: 7586773514952900687
-    - rid: 7586773514952900687
-      type: {class: JobBob, ns: CarePackage.Job, asm: Assembly-CSharp}
-      data:
-        job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
-        bob: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &693107373
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,14 +2340,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactAction:
-    rid: 5509776304594485311
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 5509776304594485311
-      type: {class: SwitchSceneAction, ns: CarePackage.Interaction, asm: Assembly-CSharp}
-      data:
-        sceneName: NeighbourHood
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &782246627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4598,6 +4585,10 @@ PrefabInstance:
     - target: {fileID: 6301901883804925642, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
       propertyPath: interactAction
       value: 7586773541107531843
+      objectReference: {fileID: 0}
+    - target: {fileID: 6301901883804925642, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
+      propertyPath: 'managedReferences[-2]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6301901883804925642, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
       propertyPath: 'managedReferences[7586773541107531843]'
@@ -6957,20 +6948,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactAction:
-    rid: 7586773514952900670
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 7586773514952900670
-      type: {class: SetJob, ns: CarePackage.Interaction, asm: Assembly-CSharp}
-      data:
-        job:
-          rid: 7586773514952900671
-    - rid: 7586773514952900671
-      type: {class: JobBob, ns: CarePackage.Job, asm: Assembly-CSharp}
-      data:
-        job: {fileID: 11400000, guid: 5e809afbcd3023646b31c991eadcb10c, type: 2}
-        bob: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &2102847729
 MonoBehaviour:
   m_ObjectHideFlags: 0

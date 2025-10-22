@@ -50,5 +50,11 @@ namespace CarePackage.Job
             _jobTitle.text = job.GetTitle();
             _jobDescription.text = job.GetDescription();
         }
+        
+        public void SetJobListingScriptable(SO_Job job)
+        {
+            _jobTitle.text = job.JobData.Title;
+            _jobDescription.text = job.JobData.Description;
+        }
     }
 }
