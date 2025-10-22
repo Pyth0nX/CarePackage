@@ -39,7 +39,7 @@ namespace CarePackage.Delivery
             List<GameObject> s = GameManager.Instance.Player.Inventory.GetUnacceptedItems();
             for (int i = 0; i < s.Count; i++)
             {
-                Debug.Log(s[i]);
+                Debug.Log($"Added mail with {i}");
                 var newMail = Instantiate(mailPrefab, mailContainer.transform);
                 var mailBtn =  newMail.transform.GetChild(0).GetComponent<Button>();
                 mailBtn.onClick.AddListener(() => OnMailClicked(i));
@@ -48,7 +48,8 @@ namespace CarePackage.Delivery
 
         private void OnMailClicked(int index)
         {
-            GameManager.Instance.Player.Inventory.AcceptItem(GameManager.Instance.Player.Inventory.GetUnacceptedItems()[index]);
+            
+            GameManager.Instance.Player.Inventory.AcceptItem(GameManager.Instance.Player.Inventory.GetUnacceptedItem(index));
         }
     }
 }

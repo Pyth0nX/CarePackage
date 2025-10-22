@@ -22,6 +22,8 @@ namespace CarePackage.Main
         }
         
         public GameObject GetItem(int index) => items[index];
+        
+        public GameObject GetUnacceptedItem(int index) => unacceptedItems[index];
 
         public void AcceptItem(GameObject item)
         {
