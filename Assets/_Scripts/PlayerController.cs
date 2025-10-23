@@ -136,6 +136,8 @@ namespace CarePackage.Main
 
         public void OnJump(InputAction.CallbackContext input)
         {
+            if (_lockedInput) return;
+            
             if (input.started)
             {
                 Vector3 force;
