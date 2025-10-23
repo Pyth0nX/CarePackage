@@ -1,16 +1,15 @@
 ﻿title: setup
 color: orange
-position: -533,-907
+position: -277,-961
 ---
 <<declare $family = 0>>
-
+<<declare $relationshipFamA = 0>>
 ===
 
 title: start
 color: blue
 position: -276,-803
 ---
-
 Mailman: *Knock knock*
 <<if $day == 1>>
 <<jump FamADay1>>
@@ -20,14 +19,13 @@ Mailman: *Knock knock*
 ===
 
 title: FamADay1
-when: $package == true
+//when: $package == true
 position: -1426,-631
 color: purple
 group: FamA
 group: Day1
 ---
 <<once>>
-<<declare $relationshipFamA = 0>>
 Mailman: Morning! Are you Lina?
 Lina: That’s me! Sofie, your package is here!
 Mailman: Wonderful! I just need your signature here.
@@ -42,9 +40,9 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 ...
 <<endonce>>
 ===
-title: FamADay1
-when: $package == false
-position: -1426,-631
+//title: FamADay1
+//when: $package == false
+position: -1634,-631
 color: purple
 group: FamA
 group: Day1
@@ -72,7 +70,7 @@ Sofie: YES! Can I have it? pleeaaase.
 ===
 
 title: end1
-color: red
+color: orange
 position: -1183,-530
 group: FamA
 group: Day1
@@ -97,7 +95,38 @@ title: FamADay2
 color: purple
 group: FamA
 group: Day2
-position: -882,-615
+position: -923,-636
 ---
-//day2 famA dialogue
+Mailman: Good Morning Lina! More schools supplies I'm guessing.
+Lina: [Sign]Yes, you got me[/Sign]. I got Sofie the new uniform.
+Sofie: Hello Mr.Mailman...
+Mailman: Hello Sofie, are you excited about your new uniform?
+Sofie: No, I wanted new cool clothes, but my mom won't let me.
+Lina: You know that's not true we can barely afford the uniform, I'm not gonna waste money when you have clothes that still fit you. #emotion:tired,sad
+Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
+-> Mailman: Ouch, I don't think my uniform is stupid. #enotion:nice
+<<jump engage2>>
+-> Mailman: You should listen to your mother. #emotion:annoyed
+<<jump bad1>>
+===
+
+title: engage2
+color: green
+group: FamA
+position: -922,-426
+---
+Sofie: I didn't mean to say that, I just would like some new clothes. #emotion:sad
+Mailman: Yeah, I get it. Just don't be so hard on your mom, she's trying her best.
+Lina: I promise that we'll go shopping next month. Thank you, Mr.Mailman.
+Mailman: Have a great day.
+===
+
+title: bad1
+color: red
+group: FamA
+position: -701,-426
+---
+Sofie: You are not my father, you don't even know me. #emotion:angry
+Lina: I think you should go, she's just not in the mood to talk.
+Mailman: I'm sorry, have a good day.
 ===
