@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using TMPro;
@@ -16,6 +18,7 @@ namespace CarePackage.Delivery
 
         private SO_Package _displayedJob;
         private GameObject _lastClickedButton;
+        private List<GameObject> _spawnedPackages = new();
         
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
@@ -46,6 +49,13 @@ namespace CarePackage.Delivery
                 button.onClick.RemoveAllListeners();
             }
         }
+        
+        public void SetJobListing(SO_Package job)
+        {
+            _displayedJob = job;
+            _jobTitle.text = job.PackageData.Title;
+            _jobDescription.text = job.PackageData.Description;
+        }
 
         private void OnJobClicked(GameObject button)
         {
@@ -65,14 +75,60 @@ namespace CarePackage.Delivery
             GameObject newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
             var package = newPackage.GetComponent<Interactable>();
             package.InteractAction = new PackageAction(_displayedJob);
+            _spawnedPackages.Add(newPackage);
             OnExitJobClicked(_lastClickedButton);
+            MovePackagesAlong();
         }
         
-        public void SetJobListing(SO_Package job)
+        private Vector3 CalculateTargetPosition(int index, float spacing)
         {
-            _displayedJob = job;
-            _jobTitle.text = job.PackageData.Title;
-            _jobDescription.text = job.PackageData.Description;
+            var startPoint = packageConveyerBelt.transform.GetChild(0).position;
+            var direction = packageConveyerBelt.transform.GetChild(0).forward;
+
+            float offset = 0f;
+            for (int i = 0; i < index; i++)
+            {
+                var prevPackage = _spawnedPackages[i];
+                var collider = prevPackage.GetComponent<Collider>();
+                if (collider != null)
+                {
+                    offset += collider.bounds.size.z + spacing;
+                }
+            }
+
+            var currentPackage = _spawnedPackages[index];
+            var currentCollider = currentPackage.GetComponent<Collider>();
+            if (currentCollider != null)
+            {
+                offset += currentCollider.bounds.size.z / 2f;
+            }
+
+            return startPoint + direction * offset;
+        }
+        
+        private void MovePackagesAlong()
+        {
+            for (int i = 0; i < _spawnedPackages.Count; i++)
+            {
+                var package = _spawnedPackages[i];
+                var targetPosition = CalculateTargetPosition(i, .5f);
+
+                if (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
+                {
+                    StartCoroutine(MovePackageToPosition(package, targetPosition));
+                }
+            }
+        }
+        
+        private IEnumerator MovePackageToPosition(GameObject package, Vector3 targetPosition)
+        {
+            float speed = 2f; // Adjust as needed
+            while (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
+            {
+                package.transform.position = Vector3.MoveTowards(package.transform.position, targetPosition, speed * Time.deltaTime);
+                yield return null;
+            }
+            package.transform.position = targetPosition;
         }
     }
 }

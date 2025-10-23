@@ -654,15 +654,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60728dfea2bf9c24994fd6b005048fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JobManager
-  _job:
-    rid: -2
-  _jobDetails: {fileID: 0}
-  jobBoard: {fileID: 0}
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  currentDelivery: {fileID: 0}
+  debuggedJobData:
+    Title: 
+    Description: 
+  deliveries: []
+  mailBase: {fileID: 11400000, guid: 67484784f30ba224e87779ace375382b, type: 2}
+  mailboxes: {fileID: 0}
 --- !u!136 &296281093717553139
 CapsuleCollider:
   m_ObjectHideFlags: 0
