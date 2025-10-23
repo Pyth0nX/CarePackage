@@ -9,8 +9,8 @@ namespace CarePackage.Persistance
         public long lastUpdated;
         public SO_Item[] items;
         public SO_Item[] unacceptedItems;
-        public SO_Job[] deliveries;
-        public SO_Job currentDelivery;
+        public IDeliverable[] deliveries;
+        public IDeliverable currentDelivery;
 
         public GameData()
         {

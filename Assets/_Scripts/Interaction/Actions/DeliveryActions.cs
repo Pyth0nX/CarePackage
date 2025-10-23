@@ -9,26 +9,26 @@ namespace CarePackage.Interaction.Delivery
     [Serializable]
     public class PackageAction : InteractAction
     {
-        [SerializeField] private SO_Job job;
+        [SerializeField] private SO_Package package;
 
-        public PackageAction() { job = null; }
+        public PackageAction() { package = null; }
 
-        public PackageAction(SO_Job inJob)
+        public PackageAction(SO_Package inPackage)
         {
-            job = inJob;
+            package = inPackage;
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(interactingObject);
-            interactingPlayer.DeliveryManager.SetCurrentJob(job);
+            interactingPlayer.DeliveryManager.SetCurrentDelivery(package);
         }
     }
     
     [Serializable]
     public class SetListedJobAction : InteractAction, IActivatable
     {
-        [SerializeField] private SO_Job job;
+        [SerializeField] private SO_Package job;
         [SerializeField] private GameObject parent;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
@@ -36,13 +36,13 @@ namespace CarePackage.Interaction.Delivery
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
 
-            jobManager.SetListedJob(job);
+            jobManager.SetListedDelivery(job);
         }
 
         public void OnEnable()
         {
             var text = parent.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = job.JobData.Title;
+            text.text = job.PackageData.Title;
         }
 
         public void OnDisable()

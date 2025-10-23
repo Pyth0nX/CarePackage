@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a2ace173dc1d794680db90f0e92d842, type: 3}
-  m_Name: Mail1
-  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.SO_Job
-  jobData:
-    Title: 
-    Description: 
-  item: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c14f6b8412a5d594ba362060b592a624, type: 3}
+  m_Name: Letter
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.SO_Mail
+  id: 0

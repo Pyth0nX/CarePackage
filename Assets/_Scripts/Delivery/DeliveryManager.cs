@@ -8,9 +8,9 @@ namespace CarePackage.Delivery
 {
     public class DeliveryManager : MonoBehaviour, IDataPersistance
     {
-        [SerializeField] private SO_Job currentDelivery;
-        [SerializeField] private FJobData debuggedJobData;
-        [SerializeField] private List<SO_Job> deliveries = new();
+        [SerializeField] private IDeliverable currentDelivery;
+        [SerializeField] private FPackageData debuggedJobData;
+        [SerializeField] private List<IDeliverable>  deliveries = new();
         
         private JobBoard _jobBoard;
         
@@ -39,53 +39,55 @@ namespace CarePackage.Delivery
 
         private void GetNewJob()
         {
-            SetCurrentJob(GetRandomJob());
+            SetCurrentDelivery(GetRandomJob());
         }
 
-        public void CompleteJob(SO_Job deliveryToComplete)
+        public void DeliverPackage(IDeliverable packageToDeliver)
         {
-            if (deliveries.Contains(deliveryToComplete))
+            if (deliveries.Contains(packageToDeliver))
             {
-                deliveries.Remove(deliveryToComplete);
+                deliveries.Remove(packageToDeliver);
                 GetNewJob();
             }
         }
 
-        private SO_Job GetRandomJob()
+        private IDeliverable GetRandomJob()
         {
             if (deliveries.Count == 0) return null;
             var randomIndex = Random.Range(0, deliveries.Count);
             return deliveries[randomIndex];
         }
 
-        public void SetCurrentJob(SO_Job inJob)
+        public void SetCurrentDelivery(IDeliverable inDelivery)
         {
-            Debug.Log($"[SetCurrrentJob] setting current job with so_job: {inJob}");
-            currentDelivery = inJob;
+            Debug.Log($"[SetCurrrentJob] setting current job with so_job: {inDelivery}");
+            currentDelivery = inDelivery;
         }
         
-        public SO_Job GetCurrentJob()
+        public IDeliverable GetCurrentDelivery()
         {
             if (currentDelivery == null) return null;
             return currentDelivery;
         }
 
-        public void SetListedJob(SO_Job inJob)
+        public void SetListedDelivery(IDeliverable inJob)
         {
-            debuggedJobData = inJob.JobData;
-            _jobBoard.SetJobListing(inJob);
+            SO_Package debugJob = (SO_Package)inJob;
+            if (debugJob == null) return;
+            debuggedJobData = debugJob.PackageData;
+            _jobBoard.SetJobListing(debugJob);
         }
 
         public void LoadData(GameData loadData)
         {
             deliveries = loadData.deliveries.ToList();
-            SetCurrentJob(loadData.currentDelivery);
+            SetCurrentDelivery(loadData.currentDelivery);
         }
 
         public void SaveData(GameData saveData)
         {
             saveData.deliveries = deliveries.ToArray();
-            saveData.currentDelivery = GetCurrentJob();
+            saveData.currentDelivery = GetCurrentDelivery();
         }
     }
 }

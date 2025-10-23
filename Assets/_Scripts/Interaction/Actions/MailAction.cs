@@ -2,7 +2,6 @@ using System;
 using CarePackage.Delivery;
 using CarePackage.Main;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CarePackage.Interaction
 {
@@ -18,7 +17,7 @@ namespace CarePackage.Interaction
     [Serializable]
     public class DeliverMail : InteractAction
     {
-        [SerializeField] private SO_Job wantedLetter;
+        [SerializeField] private int wantedLetter;
         
         private DeliveryManager _deliveryManager;
 
@@ -32,8 +31,13 @@ namespace CarePackage.Interaction
 
         public bool DeliverMailToMailbox()
         {
-            if (_deliveryManager.GetCurrentJob() != wantedLetter) return false;
-            // _deliveryManager.DeliverPackage(wantedLetter);
+            var currentPackage = _deliveryManager.GetCurrentDelivery();
+            if (currentPackage == null) return false;
+
+            if (currentPackage is not SO_Mail mailPackage) return false;
+            if (mailPackage.id != wantedLetter) return false;
+            
+            _deliveryManager.DeliverPackage(mailPackage);
             return true;
         }
     }

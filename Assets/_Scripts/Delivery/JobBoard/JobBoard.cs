@@ -14,7 +14,7 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
 
-        private SO_Job _displayedJob;
+        private SO_Package _displayedJob;
         private GameObject _lastClickedButton;
         
         private TextMeshProUGUI _jobTitle;
@@ -68,11 +68,11 @@ namespace CarePackage.Delivery
             OnExitJobClicked(_lastClickedButton);
         }
         
-        public void SetJobListing(SO_Job job)
+        public void SetJobListing(SO_Package job)
         {
             _displayedJob = job;
-            _jobTitle.text = job.JobData.Title;
-            _jobDescription.text = job.JobData.Description;
+            _jobTitle.text = job.PackageData.Title;
+            _jobDescription.text = job.PackageData.Description;
         }
     }
 }
