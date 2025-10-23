@@ -14,35 +14,27 @@ namespace CarePackage.Interaction
             Debug.Log($"{interactingPlayer} interacted with {interactingObject}");
         }
     }
-    
+
     [Serializable]
     public class DeliverMail : InteractAction
     {
-        [SerializeField] private DeliveryManager deliveryManager;
+        [SerializeField] private SO_Job wantedLetter;
         
-        [SerializeField] private bool delivered;
-        private int _lettersToDeliver = Random.Range(2, 4);
+        private DeliveryManager _deliveryManager;
+
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            DeliverMoreMail(_lettersToDeliver);
+            if (interactingPlayer.DeliveryManager == null) return;
+            _deliveryManager = interactingPlayer.DeliveryManager;
+            
+            DeliverMailToMailbox();
         }
-            public void DeliverMoreMail(int lettersToDeliver)
-            {
-                if (!delivered)
-                {
-                    Debug.Log("You have delivered mail");
-                    _lettersToDeliver--;
-                    delivered = true;
-                }
-                else
-                {
-                    Debug.Log("You have already delivered mail");
-                }
 
-                if (_lettersToDeliver == 0)
-                {
-                    Debug.Log("You have delivered all mail, congrats");
-                }
-            }
+        public bool DeliverMailToMailbox()
+        {
+            if (_deliveryManager.GetCurrentJob() != wantedLetter) return false;
+            // _deliveryManager.DeliverPackage(wantedLetter);
+            return true;
+        }
     }
 }

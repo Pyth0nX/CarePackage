@@ -251,14 +251,14 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 5509776417514848325
-  debug: 1
+  debug: 0
   references:
     version: 2
     RefIds:
     - rid: 5509776417514848325
       type: {class: DeliverMail, ns: CarePackage.Interaction, asm: Assembly-CSharp}
       data:
-        delivered: 0
+        wantedLetter: {fileID: 0}
 --- !u!1 &5490596006909826266
 GameObject:
   m_ObjectHideFlags: 0
