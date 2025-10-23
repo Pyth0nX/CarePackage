@@ -17,13 +17,19 @@ namespace CarePackage.Delivery
 
         public void CheckInClicked()
         {
+            UIManager.Instance.ClosePopupWindow(checkInButton);
             UIManager.Instance.OpenPopupWindow(desktop);
 //        GameManager.StartDay();
         }
     
         public void CheckOutClicked()
         {
-            GameObject[] popups = new GameObject[2] { desktop, UIManager.Instance.GetActivePopup(1) };
+            int popupCount = UIManager.Instance.GetActivePopupCount();
+            GameObject[] popups = new GameObject[popupCount];
+            for (int i = 0; i < popupCount; i++)
+            {
+                popups[i] = UIManager.Instance.GetActivePopup(i);
+            }
             UIManager.Instance.ClosePopupWindows(popups);
             //    GameManager.SkipDay();
         }
@@ -36,20 +42,40 @@ namespace CarePackage.Delivery
 
         private void InitializeAllMails()
         {
-            List<GameObject> s = GameManager.Instance.Player.Inventory.GetUnacceptedItems();
+            foreach (Transform child in mailContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            
+            List<SO_Item> unreadMails = GameManager.Instance.Player.Inventory.GetUnacceptedItems();
+            foreach (var item in unreadMails)
+            {
+                var newMail = Instantiate(mailPrefab, mailContainer.transform);
+                Button mailBtn =  newMail.transform.GetChild(0).GetComponent<Button>();
+                Image mailImage = newMail.transform.GetChild(0).GetComponent<Image>();
+                
+                SO_Item index = item;
+                
+                mailImage.sprite = index.ItemData.icon;
+                mailBtn.onClick.AddListener(() => OnMailClicked(index, mailBtn));
+            }
+            /*
             for (int i = 0; i < s.Count; i++)
             {
                 Debug.Log($"Added mail with {i}");
                 var newMail = Instantiate(mailPrefab, mailContainer.transform);
-                var mailBtn =  newMail.transform.GetChild(0).GetComponent<Button>();
-                mailBtn.onClick.AddListener(() => OnMailClicked(i));
-            }
+                Button mailBtn =  newMail.transform.GetChild(0).GetComponent<Button>();
+                int index = i;
+                mailBtn.onClick.AddListener(() => OnMailClicked(index, mailBtn));
+            }*/
         }
 
-        private void OnMailClicked(int index)
+        private void OnMailClicked(SO_Item index, Button parent)
         {
-            
-            GameManager.Instance.Player.Inventory.AcceptItem(GameManager.Instance.Player.Inventory.GetUnacceptedItem(index));
+            if (index == null) return;
+            GameManager.Instance.Player.Inventory.AcceptItem(index);
+            parent.onClick.RemoveAllListeners();
+            Destroy(parent.transform.parent.gameObject);
         }
     }
 }

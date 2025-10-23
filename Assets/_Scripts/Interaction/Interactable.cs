@@ -19,6 +19,7 @@ namespace CarePackage.Interaction
 
         private void Start()
         {
+            if (interactionLayer == LayerMask.NameToLayer("Default")) interactionLayer = LayerMask.GetMask("Interaction");
             _interactionComponent = GameManager.Instance.Player.InteractionComponent;
         }
 

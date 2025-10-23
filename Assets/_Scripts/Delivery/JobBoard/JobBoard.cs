@@ -1,5 +1,5 @@
 using CarePackage.Interaction;
-using CarePackage.Interaction.Package;
+using CarePackage.Interaction.Delivery;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject jobListing;
 
         [SerializeField] private GameObject packagePrefab;
+        [SerializeField] private GameObject packageConveyerBelt;
 
         private SO_Job _displayedJob;
         private GameObject _lastClickedButton;
@@ -61,7 +62,7 @@ namespace CarePackage.Delivery
         public void OnAcceptJobClicked()
         {
             if (_displayedJob == null) return;
-            GameObject newPackage = Instantiate(packagePrefab);
+            GameObject newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
             var package = newPackage.GetComponent<Interactable>();
             package.InteractAction = new PackageAction(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
@@ -69,6 +70,7 @@ namespace CarePackage.Delivery
         
         public void SetJobListing(SO_Job job)
         {
+            _displayedJob = job;
             _jobTitle.text = job.JobData.Title;
             _jobDescription.text = job.JobData.Description;
         }

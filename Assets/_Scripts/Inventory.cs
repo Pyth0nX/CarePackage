@@ -1,37 +1,51 @@
 using System.Collections.Generic;
+using System.Linq;
+using CarePackage.Persistance;
 using UnityEngine;
 
 namespace CarePackage.Main
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : MonoBehaviour, IDataPersistance
     {
-        [SerializeField] private List<GameObject> items = new();
-        [SerializeField] private List<GameObject> unacceptedItems = new();
+        [SerializeField] private List<SO_Item> items = new();
+        [SerializeField] private List<SO_Item> unacceptedItems = new();
         
-        public List<GameObject> GetItems() => items;
-        public List<GameObject> GetUnacceptedItems() => unacceptedItems;
+        public List<SO_Item> GetItems() => items;
+        public List<SO_Item> GetUnacceptedItems() => unacceptedItems;
 
-        public void AddItem(GameObject item)
+        public void AddItem(SO_Item item)
         {
             items.Add(item);
         }
 
-        public void RemoveItem(GameObject item)
+        public void RemoveItem(SO_Item item)
         {
             items.Remove(item);
         }
         
-        public GameObject GetItem(int index) => items[index];
+        public SO_Item GetItem(int index) => items[index];
         
-        public GameObject GetUnacceptedItem(int index) => unacceptedItems[index];
+        public SO_Item GetUnacceptedItem(int index) => unacceptedItems[index];
 
-        public void AcceptItem(GameObject item)
+        public void AcceptItem(SO_Item item)
         {
             if (!items.Contains(item) && unacceptedItems.Contains(item))
             {
                 unacceptedItems.Remove(item);
                 AddItem(item);
             }
+        }
+
+        public void LoadData(GameData loadData)
+        {
+            items = loadData.items.ToList();
+            unacceptedItems = loadData.unacceptedItems.ToList();
+        }
+
+        public void SaveData(GameData saveData)
+        {
+            saveData.items = items.ToArray();
+            saveData.unacceptedItems = unacceptedItems.ToArray();
         }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 public class SO_Item : ScriptableObject
 {
     [SerializeField] private FItemData itemData;
+    
+    public FItemData ItemData => itemData;
 }
 
 [System.Serializable]

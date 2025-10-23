@@ -3,11 +3,9 @@ using CarePackage.Delivery;
 using UnityEngine;
 using CarePackage.Main;
 using TMPro;
-using UnityEngine.Scripting.APIUpdating;
 
-namespace CarePackage.Interaction.Package
+namespace CarePackage.Interaction.Delivery
 {
-    [MovedFrom("CarePackage.Interaction")]
     [Serializable]
     public class PackageAction : InteractAction
     {
@@ -26,23 +24,9 @@ namespace CarePackage.Interaction.Package
             interactingPlayer.DeliveryManager.SetCurrentJob(job);
         }
     }
-
-    [MovedFrom("CarePackage.Interaction")]
+    
     [Serializable]
-    public class SetJob : InteractAction
-    {
-        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {
-            var JobManager = interactingPlayer.DeliveryManager;
-            if (JobManager == null) return;
-
-            //JobManager.SetCurrrentJob(job);
-        }
-    }
-
-    [MovedFrom("CarePackage.Interaction")]
-    [Serializable]
-    public class SetJobFromBoard : InteractAction, IActivatable
+    public class SetListedJobAction : InteractAction, IActivatable
     {
         [SerializeField] private SO_Job job;
         [SerializeField] private GameObject parent;
@@ -52,7 +36,7 @@ namespace CarePackage.Interaction.Package
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
 
-            
+            jobManager.SetListedJob(job);
         }
 
         public void OnEnable()
