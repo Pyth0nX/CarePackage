@@ -1,24 +1,46 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
+namespace CarePackage.Main
 {
-    public static SceneController Instance;
-
-    private void Awake()
+    public class SceneController : MonoBehaviour
     {
-        if (Instance == null) Instance = this;
-    }
+        public static SceneController Instance;
 
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+        private void Awake()
+        {
+            if (Instance == null) Instance = this;
+        }
 
-    public void QuitGame()
-    {
-        Debug.Log("Quit Game");
-        Application.Quit();
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded_Implementation;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded_Implementation;
+        }
+
+        private void OnSceneLoaded_Implementation(Scene scene, LoadSceneMode sceneMode)
+        {
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+            {
+                Debug.Log($"Loaded Scene {scene.name}");
+                GameManager.Instance.Player.DeliveryManager.AssignMailBoxesRandom();
+                GameManager.Instance.OnDayStarted?.Invoke();
+            }
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+
+        public void QuitGame()
+        {
+            Debug.Log("Quit Game");
+            Application.Quit();
+        }
     }
 }

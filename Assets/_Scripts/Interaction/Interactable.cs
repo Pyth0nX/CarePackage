@@ -78,10 +78,7 @@ namespace CarePackage.Interaction
             if (!Clickable) return;
             if (_interactionComponent == null) return;
             _interactionComponent.SetInteractable(this);
-            _interactionComponent.TryInteract(); /*
-        Interact(GameManager.Instance.Player);
-        _interactionComponent.SetInteractable(this);
-        _interactionComponent.TryInteract();*/
+            _interactionComponent.TryInteract();
         }
 
         private void OnTriggerEnter(Collider other)

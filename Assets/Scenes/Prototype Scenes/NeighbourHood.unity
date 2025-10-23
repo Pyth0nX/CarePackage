@@ -8712,6 +8712,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c469c3f52b7ae740b158eaadf8c96c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.PlayerState
+--- !u!114 &536874760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536874750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60728dfea2bf9c24994fd6b005048fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.DeliveryManager
+  currentDelivery: {fileID: 0}
+  debuggedJobData:
+    Title: 
+    Description: 
+  deliveries: []
+  mailBase: {fileID: 11400000, guid: 67484784f30ba224e87779ace375382b, type: 2}
+  mailboxes: {fileID: 0}
 --- !u!1 &544074625
 GameObject:
   m_ObjectHideFlags: 0
@@ -39593,6 +39612,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1736489539347083668, guid: 9403fa6af55d9b54f9892f32f32e664e, type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736489539347083668, guid: 9403fa6af55d9b54f9892f32f32e664e, type: 3}
+      propertyPath: castRay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3659539483020709844, guid: 9403fa6af55d9b54f9892f32f32e664e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.17
@@ -39640,7 +39667,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6136999048260884011, guid: 9403fa6af55d9b54f9892f32f32e664e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 536874760}
   m_SourcePrefab: {fileID: 100100000, guid: 9403fa6af55d9b54f9892f32f32e664e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
