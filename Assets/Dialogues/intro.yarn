@@ -4,6 +4,7 @@ position: -277,-961
 ---
 <<declare $family = 0>>
 <<declare $relationshipFamA = 0>>
+<<declare $day = 1>>
 ===
 
 title: start
@@ -33,26 +34,14 @@ Lina: Of course. Are you new around here? I haven’t seen you before.
 Mailman: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Are you nervous?
-<<jump engage1>>
+    <<jump engage1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
-<<jump end1>>
+    <<jump end1>>
 <<else>>
 ...
 <<endonce>>
 ===
-//title: FamADay1
-//when: $package == false
-position: -1634,-631
-color: purple
-group: FamA
-group: Day1
----
-Mailman: Morning! Are you Lina?
-Lina: That’s me! Sofie, your package is here!
-Mailman: Actualy I lost your package on my way here...
-Lina: Oh...Then come back when you have it
-<<set $relationshipFamA -= 1>>
-===
+
 title: engage1
 position: -1428,-386
 color: green
@@ -64,9 +53,9 @@ Sofie: Yes...but mom promised to get me a new backpack!
 Mailman: Oh, so that’s what I have here for you?
 Sofie: YES! Can I have it? pleeaaase.
 -> Mailman: Here you go.
-<<jump end1>>
+    <<jump end1>>
 -> Mailman: I made sure it brings good luck on your first day.
-<<jump end2>>
+    <<jump end2>>
 ===
 
 title: end1
