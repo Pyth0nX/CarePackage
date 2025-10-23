@@ -20,6 +20,8 @@ namespace CarePackage.Interaction
         [SerializeField] private int wantedLetter;
         
         private DeliveryManager _deliveryManager;
+        
+        public int WantedLetter { get => wantedLetter; set => wantedLetter = value; }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
