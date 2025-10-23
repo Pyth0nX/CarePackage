@@ -81,6 +81,7 @@ Mailman: Have a great evening, both of you!
 ===
 
 title: FamADay2
+when: $clothes == true
 color: purple
 group: FamA
 group: Day2
@@ -94,9 +95,14 @@ Sofie: No, I wanted new cool clothes, but my mom won't let me.
 Lina: You know that's not true we can barely afford the uniform, I'm not gonna waste money when you have clothes that still fit you. #emotion:tired,sad
 Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 -> Mailman: Ouch, I don't think my uniform is stupid. #enotion:nice
-<<jump engage2>>
+    <<set $relationshipFamA += 1>>
+    <<jump engage2>>
 -> Mailman: You should listen to your mother. #emotion:annoyed
-<<jump bad1>>
+    <<set $relationshipFamA -= 0.5>>
+    <<jump bad1>>
+-> Mailman: I might have another package for you. <<if $clothes == true>> 
+    <<set $relationshipFamA += 3>>
+    <<jump engage3>>
 ===
 
 title: engage2
@@ -118,4 +124,22 @@ position: -701,-426
 Sofie: You are not my father, you don't even know me. #emotion:angry
 Lina: I think you should go, she's just not in the mood to talk.
 Mailman: I'm sorry, have a good day.
+===
+
+title: engage3
+color: green
+group: FamA
+position: -922,-426
+---
+Lina: I don't think I ordered anything else
+Mailman: This one is addressed to Sofie
+Sofie: To me...?
+Mailman: Yeah, it's from Vera, your Neighbour.
+Sofie: Vera? I don't think I know her.
+Mailman: She has the cutest little boy, that's probably why you haven't seen her much. That boy is a piece of work.
+Lina: Oh that's just perfect, we've been looking for something Sofie could do after school. What do you think Sofie?
+Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
+Mailman: Of course! I'm sure she we'll be excited to have an evening to relax and have a night out with her husband.
+<<declare $noteForVera = true>>
+Sofie: Here you have the note, I wrote my number in case she wants to contact with me.
 ===
