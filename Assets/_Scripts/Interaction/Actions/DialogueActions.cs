@@ -35,7 +35,7 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            playerController = interactingPlayer.GetComponentInChildren<PlayerController>();
+            playerController = interactingPlayer.GetComponent<ModeSwitcher>().FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
             Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
 

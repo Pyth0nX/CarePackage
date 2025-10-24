@@ -85,8 +85,8 @@ public class DialogueVisualsController : MonoBehaviour
         Sprite sprite = portrait.GetEmotionSprite(emotion);
         if (sprite != null)
         {
-            portrait.image.sprite = sprite;
             portrait.image.gameObject.SetActive(true);
+            portrait.image.sprite = sprite;
         }
         else
         {
