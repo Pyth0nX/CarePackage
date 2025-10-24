@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CarePackage.Persistance;
 using UnityEngine;
 
@@ -6,6 +7,10 @@ namespace CarePackage.Main
 {
     public class GameManager : MonoBehaviour, IDataPersistance
     {
+        [SerializeField] private float dayTime = 120f;
+        
+        private float _elapsedTime;
+        
         // events
         public Action OnStartGame;
         public Action OnDayStarted;
@@ -21,11 +26,6 @@ namespace CarePackage.Main
             StartGame();
         }
 
-        private void Start()
-        {
-            
-        }
-
         public void SetPlayer(PlayerState player)
         {
             Player = player;
@@ -33,12 +33,24 @@ namespace CarePackage.Main
 
         private void StartGame()
         {
+            _elapsedTime = 0f;
+            StartCoroutine(DayCoroutine());
             OnStartGame?.Invoke();
         }
 
         private void EndDay()
         {
             OnDayEnded?.Invoke();
+        }
+
+        private IEnumerator DayCoroutine()
+        {
+            while (_elapsedTime < dayTime)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                _elapsedTime++;
+            }
+            EndDay();
         }
 
         public void LoadData(GameData loadData)
