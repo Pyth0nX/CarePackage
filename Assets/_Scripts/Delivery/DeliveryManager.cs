@@ -27,6 +27,10 @@ namespace CarePackage.Delivery
         private JobBoard _jobBoard;
         private IDeliverable _mainDelivery;
 
+        private StopWatch _deliveryTimer = new();
+        private float _timeTakenToDelivery;
+        private float _directDistanceToDelivery;
+        
         private void Awake()
         {
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>(FindObjectsInactive.Include);
@@ -69,15 +73,15 @@ namespace CarePackage.Delivery
              IDeliverable delivery = GetRandomJob();
             if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
                 delivery = _mainDelivery;
-            SetCurrentDelivery(delivery);
             int wantedId = 0;
             if (delivery is SO_Mail mail)
                 wantedId = mail.AddressToDeliver;
             Debug.Log("Wanted ID: " + wantedId);
-            ToggleIndicator(wantedId);
+            ToggleIndicator(wantedId, delivery);
+            _deliveryTimer.Start();
         }
 
-        private void ToggleIndicator(int wantedId)
+        private void ToggleIndicator(int wantedId, IDeliverable delivery)
         {
             GameObject deliveryLocation = null;
             var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
@@ -98,7 +102,19 @@ namespace CarePackage.Delivery
                 Debug.Log("Delivered ID: " + id + " Found Delivery: " + deliveryLocation);
             }
             
+            delivery.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
+            SetCurrentDelivery(delivery);
+            
+            _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
             STUPIDUITEST.Instance.SetObject(deliveryLocation);
+        }
+
+        private int GetBasePayBasedOnDistance(Vector3 position, Vector3 target)
+        {
+            var distance = Vector3.Distance(position, target);
+            float normalizedDistance = Mathf.Clamp01((distance - 10f) / (1000f - 10f));
+            float baseValue = Mathf.Lerp(50f, 500f, normalizedDistance);
+            return (int)baseValue;
         }
         
         private IDeliverable GetRandomJob()
@@ -143,6 +159,8 @@ namespace CarePackage.Delivery
             {
                 deliveries.Remove(packageToDeliver);
                 _randomNumbers.Remove(packageToDeliver.Id);
+                _timeTakenToDelivery = _deliveryTimer.Stop();
+                EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
                 _deliveriesMade++;
                 GetNewJob();
             }

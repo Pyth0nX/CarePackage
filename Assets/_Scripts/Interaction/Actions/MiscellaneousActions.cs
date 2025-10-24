@@ -5,7 +5,6 @@ using UnityEngine.Scripting.APIUpdating;
 
 namespace CarePackage.Interaction.Miscellaneous
 {
-    [MovedFrom("CarePackage.Interaction")]
     [Serializable]
     public class PickupAction : InteractAction
     {
@@ -22,8 +21,7 @@ namespace CarePackage.Interaction.Miscellaneous
             else GameObject.Destroy(interactingObject);
         }
     }
-
-    [MovedFrom("CarePackage.Interaction")]
+    
     [Serializable]
     public class ToggleObjectAction : InteractAction
     {
@@ -45,8 +43,7 @@ namespace CarePackage.Interaction.Miscellaneous
             else objectToToggle.SetActive(!objectToToggle.activeInHierarchy);
         }
     }
-
-    [MovedFrom("CarePackage.Interaction")]
+    
     [Serializable]
     public class SwitchSceneAction : InteractAction
     {

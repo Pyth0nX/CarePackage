@@ -1,11 +1,9 @@
+using CarePackage.Main;
 using UnityEngine;
 using System;
-using CarePackage.Main;
-using UnityEngine.Scripting.APIUpdating;
 
 namespace CarePackage.Interaction.UI
 {
-    [MovedFrom("CarePackage.Interaction.Miscellaneous.UI")]
     [Serializable]
     public class PopPopupWindowAction : InteractAction
     {
@@ -17,7 +15,6 @@ namespace CarePackage.Interaction.UI
         }
     }
     
-    [MovedFrom("CarePackage.Interaction.Miscellaneous.UI")]
     [Serializable]
     public class PopPopupWindowsAction : InteractAction
     {

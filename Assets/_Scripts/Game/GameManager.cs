@@ -10,6 +10,7 @@ namespace CarePackage.Main
         [SerializeField] private float dayTime = 120f;
         
         private float _elapsedTime;
+        [SerializeField] private bool _survived;
         
         // events
         public Action OnStartGame;
@@ -52,6 +53,17 @@ namespace CarePackage.Main
                 _elapsedTime++;
             }
             EndDay();
+        }
+
+        public void LoseGame()
+        {
+            _survived = false;
+            SceneController.Instance.LoadScene("LoseScene");
+        }
+
+        public void WinGame()
+        {
+            
         }
 
         public void LoadData(GameData loadData)

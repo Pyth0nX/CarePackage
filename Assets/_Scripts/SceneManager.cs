@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +29,11 @@ namespace CarePackage.Main
             {
                 Debug.Log($"Loaded Scene {scene.name}");
                 Invoke("Stupid", .01f);
+            }
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6))
+            {
+                GameObject.Find("UI_Failed").GetComponentInChildren<TextMeshProUGUI>().text =
+                    "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
             }
         }
 

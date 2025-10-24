@@ -1,5 +1,4 @@
 using CarePackage.Delivery;
-using UnityEngine;
 
 namespace CarePackage.Persistance
 {
@@ -11,6 +10,9 @@ namespace CarePackage.Persistance
         public SO_Item[] unacceptedItems;
         public IDeliverable[] deliveries;
         public IDeliverable currentDelivery;
+        public float requiredMoney;
+        public int money;
+        public bool lost;
 
         public GameData()
         {

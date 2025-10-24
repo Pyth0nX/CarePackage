@@ -11663,6 +11663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1019885402}
     m_Modifications:
+    - target: {fileID: 2525503219296498052, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
+      propertyPath: moneyText
+      value: 
+      objectReference: {fileID: 274970412}
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: Player
       value: 
@@ -11858,10 +11862,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3912448818094539170, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1525840637}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
 --- !u!1 &620673263
 GameObject:
@@ -30914,26 +30915,6 @@ Transform:
   - {fileID: 942095991}
   m_Father: {fileID: 657327320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1525840636 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3912448818094539170, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
-  m_PrefabInstance: {fileID: 614598666}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1525840637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525840636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f82897ca66484824c8fab10c4a8770eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
-  money: 100
-  requiredMoney: 1000
-  Instance: {fileID: 0}
 --- !u!1 &1527914536
 GameObject:
   m_ObjectHideFlags: 0

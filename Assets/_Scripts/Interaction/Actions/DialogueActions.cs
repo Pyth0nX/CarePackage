@@ -1,12 +1,10 @@
 ﻿using CarePackage.Main;
-using System;
-using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 using Yarn.Unity;
+using UnityEngine;
+using System;
 
 namespace CarePackage.Interaction.Dialogue
 {
-    [MovedFrom("CarePackage.Interaction")]
     [Serializable]
     public class DialogueAction : InteractAction, IActivatable
     {
@@ -35,7 +33,7 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            playerController = interactingPlayer.GetComponent<ModeSwitcher>().FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+            playerController = interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
             Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
 
