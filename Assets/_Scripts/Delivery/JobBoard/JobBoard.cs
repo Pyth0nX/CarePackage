@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,7 @@ namespace CarePackage.Delivery
 {
     public class JobBoard : MonoBehaviour
     {
+        [SerializeField] private Renderer material;
         [SerializeField] private Button[] jobButtons;
         [SerializeField] private GameObject jobListing;
 
@@ -25,6 +28,7 @@ namespace CarePackage.Delivery
 
         private void Start()
         {
+            material.material.SetFloat(Shader.PropertyToID("T_Speed"), 0f); 
             FetchJobListedElements();
         }
 
@@ -32,6 +36,7 @@ namespace CarePackage.Delivery
         {
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
             _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+            
         }
 
         private void OnEnable()
@@ -122,6 +127,7 @@ namespace CarePackage.Delivery
         
         private IEnumerator MovePackageToPosition(GameObject package, Vector3 targetPosition)
         {
+            
             float speed = 2f; // Adjust as needed
             while (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
             {

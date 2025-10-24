@@ -4,7 +4,10 @@ using System.Linq;
 using CarePackage.Interaction;
 using CarePackage.Main;
 using CarePackage.Persistance;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 namespace CarePackage.Delivery
@@ -17,6 +20,7 @@ namespace CarePackage.Delivery
         
         [SerializeField] private SO_Mail mailBase;
         [SerializeField] private GameObject mailboxes;
+        [SerializeField] private TextMeshProUGUI mailLocationText;
         
         private List<int> _randomNumbers = new();
         private JobBoard _jobBoard;
@@ -52,12 +56,22 @@ namespace CarePackage.Delivery
 
         private void OnDayStarted()
         {
-            AssignMail(_randomNumbers);
+            AssignMail(new int[Random.Range(8, 16)].ToList());
         }
 
         private void GetNewJob()
         {
-            SetCurrentDelivery(GetRandomJob());
+            var delivery = GetRandomJob();
+            SetCurrentDelivery(delivery);
+
+            var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+            foreach (var postBox in postBoxes)
+            {
+                if (postBox.InteractAction is DeliverMail mailAction)
+                {
+                    if (mailAction.WantedLetter != 1) continue;
+                }
+            }
         }
         
         private IDeliverable GetRandomJob()
@@ -110,11 +124,12 @@ namespace CarePackage.Delivery
                 newMail.id = randomNumbers[i];
                 AddDelivery(newMail);
             }
+            GetNewJob();
         }
 
         public void AssignMailBoxesRandom()
         {
-            var mailboxesCount = mailboxes.transform.childCount;
+            var mailboxesCount = mailboxes.transform.childCount; 
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
             
             List<Interactable> interactables = new List<Interactable>();
