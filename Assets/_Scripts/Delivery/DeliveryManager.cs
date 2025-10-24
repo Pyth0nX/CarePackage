@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CarePackage.Interaction;
+using CarePackage.Interaction.Dialogue;
 using CarePackage.Main;
 using CarePackage.Persistance;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using Object = System.Object;
-using Random = UnityEngine.Random;
+using TMPro;
 
 namespace CarePackage.Delivery
 {
@@ -64,14 +61,44 @@ namespace CarePackage.Delivery
             var delivery = GetRandomJob();
             SetCurrentDelivery(delivery);
 
+            int wantedId = Random.Range(0, 30);
+            Debug.Log("Wanted ID: " + wantedId);
+            GameObject deliveryLocation = null;
+
             var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
             foreach (var postBox in postBoxes)
             {
-                if (postBox.InteractAction is DeliverMail mailAction)
+                var action = postBox.InteractAction;
+                int id = -1;
+                if (action is DeliverMail mailAction)
                 {
-                    if (mailAction.WantedLetter != 1) continue;
+                    id =  mailAction.id;
                 }
+                else if (action is DialogueAction dialogueAction)
+                {
+                    id =  dialogueAction.id;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (id != wantedId || id == -1)
+                {
+                    Debug.Log("ID: " + id + " is not the wanted ID: " + wantedId);
+                    continue;
+                }
+                deliveryLocation = postBox.gameObject;
+                Debug.Log("Set DeliveryLocation to: " + deliveryLocation);
             }
+            
+            if (deliveryLocation == null) return;
+            {
+                Debug.Log("Delivery Location is null: " + deliveryLocation);
+            }
+            var indicator = STUPIDUITEST.Instance;
+            Debug.Log("Indicator = " + indicator);
+            indicator.SetObject(deliveryLocation);
         }
         
         private IDeliverable GetRandomJob()
@@ -118,10 +145,10 @@ namespace CarePackage.Delivery
         private void AssignMail(List<int> randomNumbers)
         {
             HelperMethods.ShuffleList(randomNumbers);
-            for (int i = 0; i < mailboxes.transform.childCount; i++)
+            for (int i = 0; i < randomNumbers.Count; i++)
             {
                 var newMail = Instantiate(mailBase);
-                newMail.id = randomNumbers[i];
+                newMail.AddressToDeliver = randomNumbers[i];
                 AddDelivery(newMail);
             }
             GetNewJob();
@@ -149,6 +176,7 @@ namespace CarePackage.Delivery
                 if (action is DeliverMail mailAction)
                 {
                     mailAction.WantedLetter = assignedNumber;
+                    mailAction.id = assignedNumber;
                 }
             }
         }

@@ -18,6 +18,8 @@ namespace CarePackage.Interaction
     public class DeliverMail : InteractAction
     {
         [SerializeField] private int wantedLetter;
+
+        public int id;
         
         private DeliveryManager _deliveryManager;
         
@@ -37,7 +39,7 @@ namespace CarePackage.Interaction
             if (currentPackage == null) return false;
 
             if (currentPackage is not SO_Mail mailPackage) return false;
-            if (mailPackage.id != wantedLetter) return false;
+            if (mailPackage.AddressToDeliver != wantedLetter) return false;
             
             _deliveryManager.DeliverPackage(mailPackage);
             return true;

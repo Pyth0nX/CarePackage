@@ -12,6 +12,8 @@ namespace CarePackage.Interaction.Dialogue
     {
         [SerializeField] private string nodeName;
         [SerializeField] private DialogueRunner dialogueRunner;
+        
+        public int id;
 
         private PlayerController playerController;
 

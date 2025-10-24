@@ -21,7 +21,7 @@ namespace CarePackage.Interaction.Delivery
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(interactingObject);
-            interactingPlayer.DeliveryManager.SetCurrentDelivery(package);
+            interactingPlayer.DeliveryManager.AddDelivery(package);
         }
     }
     
