@@ -12,12 +12,12 @@ namespace CarePackage.Delivery
 {
     public class JobBoard : MonoBehaviour
     {
-        [SerializeField] private Renderer material;
         [SerializeField] private Button[] jobButtons;
         [SerializeField] private GameObject jobListing;
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
+        [SerializeField] private ConveyorBeltController conveyorBeltController;
 
         private SO_Package _displayedJob;
         private GameObject _lastClickedButton;
@@ -28,7 +28,7 @@ namespace CarePackage.Delivery
 
         private void Start()
         {
-            material.material.SetFloat(Shader.PropertyToID("T_Speed"), 0f); 
+            conveyorBeltController.SetSpeed(0f);
             FetchJobListedElements();
         }
 
