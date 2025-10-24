@@ -1,6 +1,6 @@
 ﻿title: setup
 color: orange
-position: -277,-961
+position: -285,-1018
 ---
 <<declare $family = 0>>
 <<declare $relationshipFamA = 0>>
@@ -26,13 +26,20 @@ color: purple
 group: FamA
 group: Day1
 ---
+<<setBackground "BGFamA">>
 <<once>>
 Mailman: Morning! Are you Lina?
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: That’s me! Sofie, your package is here!
+<<hideCharacter "Lina">>
 Mailman: Wonderful! I just need your signature here.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Of course. Are you new around here? I haven’t seen you before.
+<<hideCharacter "Lina">>
 Mailman: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
+<<hideCharacter "Lina">>
 -> Mailman: Are you nervous?
     <<jump engage1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
@@ -66,6 +73,7 @@ group: Day1
 ---
 Lina: Thank you, have a nice day.
 Mailman: You too.
+<<hideBackground>>
 ===
 
 title: end2
@@ -78,6 +86,7 @@ group: Day1
 Sofie: THANK YOU!
 Lina: Thanks again! see you around.
 Mailman: Have a great evening, both of you!
+<<hideBackground>>
 ===
 
 title: FamADay2
