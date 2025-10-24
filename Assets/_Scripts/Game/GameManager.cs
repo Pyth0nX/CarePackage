@@ -23,6 +23,7 @@ namespace CarePackage.Main
         private void Awake()
         {
             if (Instance == null) Instance = this;
+            if (Player == null) Player = FindFirstObjectByType<PlayerState>(FindObjectsInactive.Include);
             StartGame();
         }
 

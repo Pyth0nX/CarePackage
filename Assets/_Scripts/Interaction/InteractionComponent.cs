@@ -10,6 +10,7 @@ namespace CarePackage.Interaction
         [SerializeField] private bool debug;
         [SerializeField] private bool castRay;
         [SerializeField, Range(0.1f, 10f)] private float rayDistance = 4.5f;
+        [SerializeField] private bool isPlayer = true;
         
         private IInteractable _interactable;
         private MonoBehaviour owner;
@@ -22,7 +23,8 @@ namespace CarePackage.Interaction
 
         private void Start()
         {
-            owner = transform.root.GetComponent<MonoBehaviour>();
+            if (isPlayer) owner = GameManager.Instance.Player;
+            else owner = transform.root.GetComponent<MonoBehaviour>();
         }
 
         private void Update()

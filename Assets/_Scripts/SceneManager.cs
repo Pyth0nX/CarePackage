@@ -27,9 +27,14 @@ namespace CarePackage.Main
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
             {
                 Debug.Log($"Loaded Scene {scene.name}");
-                GameManager.Instance.Player.DeliveryManager.AssignMailBoxesRandom();
-                GameManager.Instance.OnDayStarted?.Invoke();
+                Invoke("Stupid", .01f);
             }
+        }
+
+        private void Stupid()
+        {
+            GameManager.Instance.OnDayStarted?.Invoke();
+            GameManager.Instance.Player.DeliveryManager.AssignMailBoxesRandom();
         }
 
         public void LoadScene(string sceneName)

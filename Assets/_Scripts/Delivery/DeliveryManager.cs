@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Dialogue;
-using CarePackage.Main;
 using CarePackage.Persistance;
+using CarePackage.Main;
+using System.Linq;
 using UnityEngine;
-using TMPro;
 
 namespace CarePackage.Delivery
 {
@@ -17,20 +16,21 @@ namespace CarePackage.Delivery
         
         [SerializeField] private SO_Mail mailBase;
         [SerializeField] private GameObject mailboxes;
-        [SerializeField] private TextMeshProUGUI mailLocationText;
+        
+        [SerializeField] private bool overrideRandomDelivery = false;
+        [SerializeField] private int mainPackageNumber = 3;
+
+        [SerializeField] private int deliveriesToMake;
         
         private List<int> _randomNumbers = new();
+        private int _deliveriesMade;
         private JobBoard _jobBoard;
+        private IDeliverable _mainDelivery;
 
         private void Awake()
         {
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>(FindObjectsInactive.Include);
             if (mailboxes == null) mailboxes = GameObject.Find("Mailboxes");
-        }
-
-        private void Start()
-        {
-            
         }
 
         private void Update()
@@ -43,62 +43,62 @@ namespace CarePackage.Delivery
 
         private void OnEnable()
         {
-            GameManager.Instance.OnDayStarted += OnDayStarted;
+            Invoke("Enable", .001f);
+        }
+
+        private void Enable()
+        {
+            Debug.Log("GameManager: " + GameManager.Instance);
+            GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.OnDayStarted -= OnDayStarted;
+            GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
         }
 
-        private void OnDayStarted()
+        private void OnDayStarted_Implementation()
         {
-            AssignMail(new int[Random.Range(8, 16)].ToList());
+            _deliveriesMade = 0;
+            MakeRandomNumbers(Random.Range(5, mailboxes != null ? mailboxes.transform.childCount : 30));
+            Invoke("AssignMail", .1f);
         }
 
         private void GetNewJob()
         {
-            var delivery = GetRandomJob();
+             IDeliverable delivery = GetRandomJob();
+            if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
+                delivery = _mainDelivery;
             SetCurrentDelivery(delivery);
-
-            int wantedId = Random.Range(0, 30);
+            int wantedId = 0;
+            if (delivery is SO_Mail mail)
+                wantedId = mail.AddressToDeliver;
             Debug.Log("Wanted ID: " + wantedId);
-            GameObject deliveryLocation = null;
+            ToggleIndicator(wantedId);
+        }
 
+        private void ToggleIndicator(int wantedId)
+        {
+            GameObject deliveryLocation = null;
             var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+            
             foreach (var postBox in postBoxes)
             {
                 var action = postBox.InteractAction;
                 int id = -1;
+                
                 if (action is DeliverMail mailAction)
-                {
                     id =  mailAction.id;
-                }
                 else if (action is DialogueAction dialogueAction)
-                {
                     id =  dialogueAction.id;
-                }
-                else
-                {
-                    continue;
-                }
+                else continue;
 
-                if (id != wantedId || id == -1)
-                {
-                    Debug.Log("ID: " + id + " is not the wanted ID: " + wantedId);
-                    continue;
-                }
+                if (id != wantedId || id == -1) continue;
                 deliveryLocation = postBox.gameObject;
-                Debug.Log("Set DeliveryLocation to: " + deliveryLocation);
+                Debug.Log("Delivered ID: " + id + " Found Delivery: " + deliveryLocation);
             }
             
-            if (deliveryLocation == null) return;
-            {
-                Debug.Log("Delivery Location is null: " + deliveryLocation);
-            }
-            var indicator = STUPIDUITEST.Instance;
-            Debug.Log("Indicator = " + indicator);
-            indicator.SetObject(deliveryLocation);
+            STUPIDUITEST.Instance.SetObject(deliveryLocation);
         }
         
         private IDeliverable GetRandomJob()
@@ -111,6 +111,10 @@ namespace CarePackage.Delivery
         public void AddDelivery(IDeliverable newDelivery)
         {
             deliveries.Add(newDelivery);
+            if (newDelivery is SO_Package newPackage)
+            {
+                _mainDelivery =  newPackage;
+            }
         }
 
         public void SetCurrentDelivery(IDeliverable inDelivery)
@@ -138,17 +142,19 @@ namespace CarePackage.Delivery
             if (deliveries.Contains(packageToDeliver))
             {
                 deliveries.Remove(packageToDeliver);
+                _randomNumbers.Remove(packageToDeliver.Id);
+                _deliveriesMade++;
                 GetNewJob();
             }
         }
 
-        private void AssignMail(List<int> randomNumbers)
+        private void AssignMail()
         {
-            HelperMethods.ShuffleList(randomNumbers);
-            for (int i = 0; i < randomNumbers.Count; i++)
+            HelperMethods.ShuffleList(_randomNumbers);
+            for (int i = 0; i < _randomNumbers.Count; i++)
             {
                 var newMail = Instantiate(mailBase);
-                newMail.AddressToDeliver = randomNumbers[i];
+                newMail.AddressToDeliver = _randomNumbers[i];
                 AddDelivery(newMail);
             }
             GetNewJob();
@@ -156,16 +162,16 @@ namespace CarePackage.Delivery
 
         public void AssignMailBoxesRandom()
         {
-            var mailboxesCount = mailboxes.transform.childCount; 
+            var mailboxesCount = _randomNumbers.Count; 
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
             
-            List<Interactable> interactables = new List<Interactable>();
-            for (int i = 0; i < mailboxesCount; i++)
+            List<Interactable> interactables = new();
+            for (int i = 0; i < mailboxes.transform.childCount; i++)
             {
                 var mailbox = mailboxes.transform.GetChild(i).GetComponent<Interactable>();
                 interactables.Add(mailbox);
             }
-            MakeRandomNumbersWithShuffle(mailboxesCount);
+            HelperMethods.ShuffleList(_randomNumbers);
             
             for (int i = 0; i < mailboxesCount; i++)
             {
@@ -188,12 +194,7 @@ namespace CarePackage.Delivery
             {
                 _randomNumbers.Add(i);
             }
-        }
-        
-        public void MakeRandomNumbersWithShuffle(int number)
-        { 
-            MakeRandomNumbers(number);
-            HelperMethods.ShuffleList(_randomNumbers);
+            deliveriesToMake = number;
         }
 
         public void LoadData(GameData loadData)

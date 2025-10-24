@@ -42,7 +42,7 @@ namespace CarePackage.Main
         private void InitializeAllComponents()
         {
             _rb = transform.root.GetComponent<Rigidbody>();
-            _owningPlayer = transform.root.GetComponent<PlayerState>();
+            _owningPlayer = GameManager.Instance.Player;
         }
 
         private void OnEnable()
@@ -136,23 +136,23 @@ namespace CarePackage.Main
 
         public void OnJump(InputAction.CallbackContext input)
         {
-            if (_lockedInput) return;
-            
             if (input.started)
             {
-                Vector3 force;
-                if (_movementVector.magnitude > 0.1f)
-                {
-                    force = Vector3.up + Vector3.forward * .5f;
-                }
-                else
-                {
-                    force = Vector3.up;
-                }
-                _rb.AddForce(force.normalized * jumpForce, ForceMode.VelocityChange);
-                _isGrounded = false;
-                Debug.Log($"Player Jumped");
+                Jump();
             }
+        }
+
+        private void Jump()
+        {
+            if (_lockedInput) return;
+            if (!IsGrounded) return;
+            
+            Vector3 force;
+            if (_movementVector.magnitude > 0.1f) force = Vector3.up + Vector3.forward * .5f;
+            else force = Vector3.up;
+            
+            _rb.AddForce(force.normalized * jumpForce, ForceMode.VelocityChange);
+            _isGrounded = false;
         }
         
         public void OnLeftClick(InputAction.CallbackContext input)

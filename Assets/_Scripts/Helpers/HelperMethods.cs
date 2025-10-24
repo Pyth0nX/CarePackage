@@ -13,4 +13,9 @@ public class HelperMethods : MonoBehaviour
             list[j] = temp;
         }
     }
+
+    public static int GetRandomFromList(List<int> list)
+    {
+        return list[Random.Range(0, list.Count)];
+    }
 }

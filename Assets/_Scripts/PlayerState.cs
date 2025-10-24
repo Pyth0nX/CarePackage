@@ -13,12 +13,14 @@ namespace CarePackage.Main
         private DeliveryManager _deliveryManager;
         private InteractionComponent _interactionComponent;
         private Inventory _inventory;
-
+        private ModeSwitcher _switchMode;
+        
         private GameObject _pickup;
         
         public DeliveryManager DeliveryManager => _deliveryManager;
         public InteractionComponent InteractionComponent => _interactionComponent;
         public Inventory Inventory => _inventory;
+        public ModeSwitcher SwitchMode => _switchMode;
         public bool IsPickupValid => _pickup != null;
 
         private void Awake()
@@ -26,17 +28,18 @@ namespace CarePackage.Main
             _deliveryManager = GetComponent<DeliveryManager>();
             _interactionComponent = GetComponent<InteractionComponent>();
             _inventory = GetComponent<Inventory>();
+            _switchMode = GetComponent<ModeSwitcher>();
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                SwitchMode();
+                SwitchPlayerMode();
             }
         }
 
-        public void SwitchMode()
+        public void SwitchPlayerMode()
         {
             var rb = GetComponent<Rigidbody>();
             var capsule =  GetComponent<CapsuleCollider>();
