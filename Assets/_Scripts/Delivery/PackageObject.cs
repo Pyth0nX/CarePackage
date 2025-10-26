@@ -4,7 +4,7 @@ namespace CarePackage.Delivery
 {
     public enum EPackageState { Pristine = 0, SlightlyDamaged = 1, Damaged = 2, Flattened = 3, Broken = 4 }
     
-    public class Package : MonoBehaviour
+    public class PackageObject : MonoBehaviour
     {
         [SerializeField] private Mesh[] meshes;
         [SerializeField] private GameObject[] meshesObj;

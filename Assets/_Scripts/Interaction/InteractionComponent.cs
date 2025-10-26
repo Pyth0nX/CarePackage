@@ -9,7 +9,7 @@ namespace CarePackage.Interaction
         [SerializeField] private LayerMask interactionLayer;
         [SerializeField] private bool debug;
         [SerializeField] private bool castRay;
-        [SerializeField, Range(0.1f, 10f)] private float rayDistance = 4.5f;
+        [SerializeField, Range(0.1f, 50f)] private float rayDistance = 4.5f;
         [SerializeField] private bool isPlayer = true;
         
         private IInteractable _interactable;

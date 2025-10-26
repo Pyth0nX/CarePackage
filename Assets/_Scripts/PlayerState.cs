@@ -10,22 +10,25 @@ namespace CarePackage.Main
         
         // private Components
         private DeliveryManager _deliveryManager;
-        private InteractionComponent _interactionComponent;
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
         
         private GameObject _pickup;
         
         public DeliveryManager DeliveryManager => _deliveryManager;
-        public InteractionComponent InteractionComponent => _interactionComponent;
+        public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
         public bool IsPickupValid => _pickup != null;
 
         private void Awake()
         {
+            InitializeComponents();
+        }
+
+        private void InitializeComponents()
+        {
             _deliveryManager = GetComponent<DeliveryManager>();
-            _interactionComponent = GetComponent<InteractionComponent>();
             _inventory = GetComponent<Inventory>();
             _switchMode = GetComponent<ModeSwitcher>();
         }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CarePackage.Persistance;
 using System.Linq;
+using CarePackage.Delivery;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -38,14 +39,14 @@ namespace CarePackage.Main
 
         public void LoadData(GameData loadData)
         {
-            items = loadData.items.ToList();
-            unacceptedItems = loadData.unacceptedItems.ToList();
+            if (loadData.items != null) items = InventoryUtilities.LoadItems(loadData.items.ToList());
+            if (loadData.unacceptedItems != null) unacceptedItems = InventoryUtilities.LoadItems(loadData.unacceptedItems.ToList());
         }
 
         public void SaveData(GameData saveData)
         {
-            saveData.items = items.ToArray();
-            saveData.unacceptedItems = unacceptedItems.ToArray();
+            if (items != null) saveData.items = InventoryUtilities.GetItemGUIDs(items).ToArray();
+            if (unacceptedItems != null) saveData.unacceptedItems = InventoryUtilities.GetItemGUIDs(unacceptedItems).ToArray();
         }
     }
 }

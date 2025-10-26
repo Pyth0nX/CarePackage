@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CarePackage.Delivery;
 
 namespace CarePackage.Persistance
@@ -6,13 +7,14 @@ namespace CarePackage.Persistance
     public class GameData
     {
         public long lastUpdated;
-        public SO_Item[] items;
-        public SO_Item[] unacceptedItems;
-        public IDeliverable[] deliveries;
-        public IDeliverable currentDelivery;
+        public string[] items;
+        public string[] unacceptedItems;
+        public Package[] deliveries;
+        public Package currentDelivery;
+        public List<int> randomNumbers;
         public float requiredMoney;
         public int money;
-        public bool lost;
+        public bool survived;
 
         public GameData()
         {

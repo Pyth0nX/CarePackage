@@ -3,12 +3,12 @@ using UnityEngine;
 namespace CarePackage.Delivery
 {
     [CreateAssetMenu(fileName = "Package", menuName = "CarePackage/Deliverable/Package")]
-    public class SO_Package : IDeliverable
+    public class SO_Package : ScriptableObject
     {
-        [SerializeField] private FPackageData deliveryData;
-        [SerializeField] private SO_Item item;
-
-        public FPackageData PackageData => deliveryData;
+        public int Id;
+        public int Pay;
+        public FPackageData PackageData;
+        public SO_Item Item;
     }
     
     [System.Serializable]
@@ -16,5 +16,14 @@ namespace CarePackage.Delivery
     {
         public string Title;
         public string Description;
+    }
+    
+    [System.Serializable]
+    public class Package
+    {
+        public int Id;
+        public int Pay;
+        public FPackageData PackageData;
+        public string ItemGUID;
     }
 }

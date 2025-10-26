@@ -32,6 +32,11 @@ public class UIManager : MonoBehaviour
             OpenPopupWindow(popupWindow);
         }
     }
+    
+    public void OpenPopupWindows(List<GameObject> popupWindows)
+    {
+        OpenPopupWindows(popupWindows.ToArray());
+    }
 
     public void ClosePopupWindow(GameObject popupWindow)
     {
@@ -47,6 +52,20 @@ public class UIManager : MonoBehaviour
         foreach (GameObject popupWindow in popupWindows)
         {
             ClosePopupWindow(popupWindow);
+        }
+    }
+
+    public void ClosePopupWindows(List<GameObject> popupWindows)
+    {
+        ClosePopupWindows(popupWindows.ToArray());
+    }
+
+    public void CloseAllPopupWindows()
+    {
+        if (_activePopups.Count == 0) return;
+        for (int i = _activePopups.Count - 1; i >= 0; i--)
+        {
+            ClosePopupWindow(_activePopups[i]);
         }
     }
 

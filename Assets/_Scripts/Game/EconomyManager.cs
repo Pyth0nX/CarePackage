@@ -5,18 +5,22 @@ using TMPro;
 
 public class EconomyManager : MonoBehaviour, IDataPersistance
 {
-    [SerializeField] private int money;
     [SerializeField] private float requiredMoney;
-    [SerializeField] private TMP_Text moneyText;
+    [SerializeField] private TMP_Text requiredMoneyText;
+    [SerializeField] private TMP_Text currentMoneyText;
     
-    public int Bank => money;
-    public float GetRequiredMoney => requiredMoney;
+    public int Bank => _money;
+    public float GetRequiredMoney => _requiredMoney;
+    
+    private float _requiredMoney;
+    private int _money;
     
     public static EconomyManager Instance;
     
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        requiredMoneyText.text = "Required Money: " + requiredMoney + "$";
     }
 
     private void OnEnable()
@@ -26,6 +30,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     private void Enable()
     {
+        GameManager.Instance.OnStartGame += OnGameStarted_Implementation;
         GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded += OnDayEnded_Implementation;
         UpdateMoneyText();
@@ -33,25 +38,36 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     private void OnDisable()
     {
+        GameManager.Instance.OnStartGame -= OnGameStarted_Implementation;
         GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded -= OnDayEnded_Implementation;
     }
-    
-    public void OnDayStarted_Implementation()
+
+    private void OnGameStarted_Implementation()
     {
-        requiredMoney *= 1.2f;
+        _requiredMoney = requiredMoney;
+    }
+    
+    private void OnDayStarted_Implementation()
+    {
+        _requiredMoney *= 1.2f;
+        requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
         UpdateMoneyText();
     }
 
-    public void OnDayEnded_Implementation()
+    private void OnDayEnded_Implementation()
     {
-        if (money >= requiredMoney) return;
+        if (_money >= GetRequiredMoney)
+        {
+            GameManager.Instance.Survive();
+            return;
+        }
         GameManager.Instance.LoseGame();
     }
     
     public void AddMoney(int amount)
     {
-        money += amount;
+        _money += amount;
         UpdateMoneyText();
     }
 
@@ -74,14 +90,15 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     }
 
     private void UpdateMoneyText()
-    {
-        moneyText.text = "Money: " + Bank + "$";
+    { 
+        if (currentMoneyText == null) return;
+        currentMoneyText.text = "Money: " + Bank + "$";
     }
 
     public void LoadData(GameData loadData)
     {
-        money = loadData.money;
-        requiredMoney = loadData.requiredMoney;
+        _money = loadData.money;
+        if (loadData.requiredMoney > _requiredMoney) _requiredMoney = loadData.requiredMoney;
     }
 
     public void SaveData(GameData saveData)

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,26 +15,25 @@ namespace CarePackage.Delivery
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
-        [SerializeField] private ConveyorBeltController conveyorBeltController;
 
-        private SO_Package _displayedJob;
+        private Package _displayedJob;
         private GameObject _lastClickedButton;
         private List<GameObject> _spawnedPackages = new();
-        
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
+        private ConveyorBeltController _conveyorController;
 
         private void Start()
         {
-            conveyorBeltController.SetSpeed(0f);
             FetchJobListedElements();
+            if (_conveyorController != null) _conveyorController.SetSpeed(0f);
         }
 
         private void FetchJobListedElements()
         {
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
             _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
-            
+            _conveyorController = packageConveyerBelt.GetComponentInChildren<ConveyorBeltController>();
         }
 
         private void OnEnable()
@@ -55,7 +52,7 @@ namespace CarePackage.Delivery
             }
         }
         
-        public void SetJobListing(SO_Package job)
+        public void SetJobListing(Package job)
         {
             _displayedJob = job;
             _jobTitle.text = job.PackageData.Title;
@@ -72,6 +69,12 @@ namespace CarePackage.Delivery
         public void OnExitJobClicked(GameObject button)
         {
             UIManager.Instance.ClosePopupWindow(button);
+        }
+
+        public void OnExitBoardClicked()
+        {
+            //var popupsToClose = new List<GameObject> {gameObject, button};
+            UIManager.Instance.CloseAllPopupWindows();
         }
 
         public void OnAcceptJobClicked()

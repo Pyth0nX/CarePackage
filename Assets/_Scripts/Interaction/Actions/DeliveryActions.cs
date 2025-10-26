@@ -13,15 +13,15 @@ namespace CarePackage.Interaction.Delivery
 
         public PackageAction() { package = null; }
 
-        public PackageAction(SO_Package inPackage)
+        public PackageAction(Package inPackage)
         {
-            package = inPackage;
+            package = DeliveryUitilities.ToScriptableObject(inPackage);
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(interactingObject);
-            interactingPlayer.DeliveryManager.AddDelivery(package);
+            interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
         }
     }
     
@@ -36,7 +36,7 @@ namespace CarePackage.Interaction.Delivery
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
 
-            jobManager.SetListedDelivery(job);
+            jobManager.SetListedDelivery(DeliveryUitilities.ToPackage(job));
         }
 
         public void OnEnable()
