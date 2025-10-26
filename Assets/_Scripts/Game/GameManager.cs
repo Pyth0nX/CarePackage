@@ -19,6 +19,7 @@ namespace CarePackage.Main
         
         // events
         public Action OnStartGame;
+        public Action OnGameRestart;
         public Action OnDayStarted;
         public Action OnDayEnded;
         
@@ -56,6 +57,12 @@ namespace CarePackage.Main
             OnDayEnded?.Invoke();
         }
 
+        public void EndDayEarly()
+        {
+            StopAllCoroutines();
+            EndDay();
+        }
+
         private IEnumerator DayCoroutine()
         {
             while (_elapsedTime < dayTime)
@@ -86,6 +93,7 @@ namespace CarePackage.Main
         public void RestartGame()
         {
             _survived = false;
+            OnGameRestart?.Invoke();
             StartGame();
             SceneController.Instance.LoadScene("PostOffice");
         }

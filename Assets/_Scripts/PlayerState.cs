@@ -7,16 +7,19 @@ namespace CarePackage.Main
     public class PlayerState : MonoBehaviour
     {
         [SerializeField] private Transform pickupLocation;
-        
+
         // private Components
         private DeliveryManager _deliveryManager;
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
-        
+
         private GameObject _pickup;
-        
+
         public DeliveryManager DeliveryManager => _deliveryManager;
-        public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
+
+        public InteractionComponent InteractionComponent =>
+            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
+
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
         public bool IsPickupValid => _pickup != null;
@@ -37,20 +40,11 @@ namespace CarePackage.Main
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                
+
             }
         }
 
-        public void DropPickup()
-        {
-            if (!IsPickupValid) return;
-            Drop(_pickup);
-        }
-
-        public void Drop(GameObject objectToDrop)
-        {
-            objectToDrop.transform.SetParent(null);
-        }
+        public GameObject ActivePlayer => _switchMode.ActivePlayer;
 
         public void Pickup(GameObject objectToPickup)
         {
@@ -64,6 +58,17 @@ namespace CarePackage.Main
         public void SetPickup(GameObject pickedupObject)
         {
             _pickup = pickedupObject;
+        }
+
+        public void DropPickup()
+        {
+            if (!IsPickupValid) return;
+            Drop(_pickup);
+        }
+
+        public void Drop(GameObject objectToDrop)
+        {
+            objectToDrop.transform.SetParent(null);
         }
     }
 }

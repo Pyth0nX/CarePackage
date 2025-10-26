@@ -22,6 +22,7 @@ namespace CarePackage.Delivery
             _meshFilter = GetComponentInChildren<MeshFilter>();
             _rigidbody = GetComponent<Rigidbody>();
             UpdateState();
+            SetDamageEnabled(canBeDamaged);
         }
         
         public void SetDamageEnabled(bool damageEnabled)

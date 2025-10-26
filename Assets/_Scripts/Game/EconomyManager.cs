@@ -31,6 +31,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void Enable()
     {
         GameManager.Instance.OnStartGame += OnGameStarted_Implementation;
+        GameManager.Instance.OnGameRestart += OnGameRestart_Implementation;
         GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded += OnDayEnded_Implementation;
         UpdateMoneyText();
@@ -39,6 +40,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void OnDisable()
     {
         GameManager.Instance.OnStartGame -= OnGameStarted_Implementation;
+        GameManager.Instance.OnGameRestart -= OnGameRestart_Implementation;
         GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded -= OnDayEnded_Implementation;
     }
@@ -46,6 +48,13 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void OnGameStarted_Implementation()
     {
         _requiredMoney = requiredMoney;
+    }
+
+    private void OnGameRestart_Implementation()
+    {
+        _money = 0;
+        _requiredMoney = requiredMoney;
+        UpdateMoneyText();
     }
     
     private void OnDayStarted_Implementation()

@@ -61,7 +61,8 @@ namespace CarePackage.Delivery
         private void OnDayStarted_Implementation()
         {
             _deliveriesMade = 0;
-            MakeRandomNumbers(Random.Range(5, mailboxes != null ? mailboxes.transform.childCount : 30));
+            deliveries.Clear();
+            MakeRandomNumbers(Random.Range(3, 15));
             Invoke("AssignRandomPackages", .1f);
         }
 
@@ -70,10 +71,21 @@ namespace CarePackage.Delivery
             var delivery = GetRandomJob();
             if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
                 delivery = _mainDelivery;
+            if (delivery == null)
+            {
+                STUPIDUITEST.Instance.SetObject(null);
+                Invoke("EndDayEarly", 2f);
+                return;
+            }
             int wantedId = delivery.Id;
             Debug.Log("Wanted ID: " + wantedId);
             ToggleIndicator(wantedId, delivery);
             _deliveryTimer.Start();
+        }
+
+        private void EndDayEarly()
+        {
+            GameManager.Instance.EndDayEarly();
         }
 
         private void ToggleIndicator(int wantedId, Package delivery)
@@ -107,8 +119,8 @@ namespace CarePackage.Delivery
         private int GetBasePayBasedOnDistance(Vector3 position, Vector3 target)
         {
             var distance = Vector3.Distance(position, target);
-            float normalizedDistance = Mathf.Clamp01((distance - 10f) / (1000f - 10f));
-            float baseValue = Mathf.Lerp(50f, 500f, normalizedDistance);
+            float normalizedDistance = Mathf.Clamp01((distance - 10f) / (400f - 10f));
+            float baseValue = Mathf.Lerp(10f, 150f, normalizedDistance);
             return (int)baseValue;
         }
         
@@ -171,7 +183,8 @@ namespace CarePackage.Delivery
             {
                 var newMail = new Package()
                 {
-                    Id = _randomNumbers[i]
+                    Id = _randomNumbers[i],
+                    Pay = Random.Range(10, 150)
                 };
                 AddDelivery(newMail);
             }

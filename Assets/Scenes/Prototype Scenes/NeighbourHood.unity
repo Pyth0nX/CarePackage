@@ -11684,7 +11684,7 @@ PrefabInstance:
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1869203963}
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: dayTime
       value: 900
@@ -37980,6 +37980,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
+--- !u!114 &1869203963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5718209564711959202, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
+  m_PrefabInstance: {fileID: 1869203962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c469c3f52b7ae740b158eaadf8c96c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.PlayerState
 --- !u!1 &1873376658
 GameObject:
   m_ObjectHideFlags: 0

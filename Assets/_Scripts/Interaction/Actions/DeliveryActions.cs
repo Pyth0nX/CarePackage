@@ -10,6 +10,7 @@ namespace CarePackage.Interaction.Delivery
     public class PackageAction : InteractAction
     {
         [SerializeField] private SO_Package package;
+        [SerializeField] private bool addedDelivery;
 
         public PackageAction() { package = null; }
 
@@ -21,7 +22,9 @@ namespace CarePackage.Interaction.Delivery
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(interactingObject);
+            if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
+            addedDelivery = true;
         }
     }
     

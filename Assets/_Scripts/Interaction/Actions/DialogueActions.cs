@@ -14,9 +14,12 @@ namespace CarePackage.Interaction.Dialogue
         public int id;
 
         private PlayerController playerController;
+        private PlayerState _interactingPlayer;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
+            if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
+            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().Id != id) return;
             if (dialogueRunner == null)
             {
                 dialogueRunner = UnityEngine.Object.FindFirstObjectByType<DialogueRunner>();
@@ -33,7 +36,7 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            playerController = interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+            playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
             Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
 
@@ -77,6 +80,9 @@ namespace CarePackage.Interaction.Dialogue
             if (playerController == null)
                 return;
             playerController.LockInput(false); 
+            
+            var packageToDeliver = _interactingPlayer.DeliveryManager.GetCurrentDelivery();
+            _interactingPlayer.DeliveryManager.DeliverPackage(packageToDeliver);
         }
     }
 }
