@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a2ace173dc1d794680db90f0e92d842, type: 3}
-  m_Name: Delivery1
+  m_Name: Backpack
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.SO_Job
-  Id: 0
+  Id: 33
   Pay: 100
   PackageData:
-    Title: Get LOST BOy
-    Description: do you dare go on this journey
-  Item: {fileID: 11400000, guid: dfc95b7490df459489f444f0787297ae, type: 2}
+    Title: Backpack
+    Description: "Backpack needed for a child. \n\nAddress: Homington 32."
+  Item: {fileID: 11400000, guid: cbfa4aca271fba6428d0cf58f7e00795, type: 2}

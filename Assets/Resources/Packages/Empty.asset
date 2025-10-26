@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a2ace173dc1d794680db90f0e92d842, type: 3}
-  m_Name: Delivery2
-  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.SO_Job
-  Id: 1
-  Pay: 125
+  m_Name: Empty
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.SO_Package
+  Id: 0
+  Pay: 0
   PackageData:
-    Title: Hello there!
-    Description: are you ready to prove your mettle, by meeting your old friend and
-      battling it out like true jedi scum?
-  Item: {fileID: 11400000, guid: 4b1897c58a40a5e49a820736dfcb0145, type: 2}
+    Title: Job
+    Description: 
+  Item: {fileID: 0}

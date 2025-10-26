@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 namespace CarePackage.Delivery
 {
@@ -15,6 +16,7 @@ namespace CarePackage.Delivery
     public struct FPackageData
     {
         public string Title;
+        [TextArea]
         public string Description;
     }
     
