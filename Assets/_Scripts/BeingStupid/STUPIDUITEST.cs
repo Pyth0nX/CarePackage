@@ -7,9 +7,7 @@ public class STUPIDUITEST : MonoBehaviour
     
     public void SetObject(GameObject obj)
     {
-        Debug.Log("Setting StupidUI object to " + obj.name);
-        this.obj = obj;
-    }
+        this.obj = obj == null ? null : obj;    }
 
     private TextMeshProUGUI indicatorText;
     private bool IndicatorSet => indicatorText.text == "!";

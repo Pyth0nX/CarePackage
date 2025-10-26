@@ -30,7 +30,7 @@ namespace CarePackage.Main
             // PostOffice
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
             {
-                Invoke("StartTheDay", .01f);
+                Invoke("StartTheDay", .05f);
             }
             // Neighbourhood
             else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))

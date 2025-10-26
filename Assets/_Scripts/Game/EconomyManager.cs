@@ -19,13 +19,13 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        requiredMoneyText.text = "Required Money: " + requiredMoney + "$";
+        if (Instance == null) Instance = this; 
+        if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + requiredMoney + "$";
     }
 
     private void OnEnable()
     {
-        Invoke("Enable", .1f);
+        Invoke("Enable", .01f);
     }
 
     private void Enable()
@@ -48,7 +48,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void OnGameStarted_Implementation()
     {
         _requiredMoney = requiredMoney;
-    }
+        UpdateMoneyText();    }
 
     private void OnGameRestart_Implementation()
     {
@@ -60,8 +60,9 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void OnDayStarted_Implementation()
     {
         _requiredMoney *= 1.2f;
-        requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
+        if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
         UpdateMoneyText();
+
     }
 
     private void OnDayEnded_Implementation()
@@ -82,15 +83,16 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     public void CalculateMoneyEarned(int originalPay, float timeTaken, float directDistance)
     {
-        float normalizedTime = Mathf.Clamp01((360f - timeTaken) / 350f);
-        float normalizedDistance = Mathf.Clamp01((directDistance - 10f) / 990f);
+        float normalizedTime = Mathf.Clamp01((120f - timeTaken) / 350f);
+        float normalizedDistance = Mathf.Clamp01((directDistance - 10f) / 590f);
         
         float timeWeight = 0.7f;
         float distanceWeight = 0.3f;
         
         float performanceScore = (normalizedTime * timeWeight) + (normalizedDistance * distanceWeight);
+        performanceScore = Mathf.Clamp01(performanceScore);
         
-        float scaledBase = Mathf.Lerp(180f, 360f, originalPay / 500f);
+        float scaledBase = Mathf.Lerp(20f, 150f, performanceScore);
         float payout = scaledBase * performanceScore;
         
         float calculatedPay = Mathf.Round(payout);
@@ -107,7 +109,8 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData loadData)
     {
         _money = loadData.money;
-        if (loadData.requiredMoney > _requiredMoney) _requiredMoney = loadData.requiredMoney;
+        if (loadData.requiredMoney >= requiredMoney) _requiredMoney = loadData.requiredMoney;
+        else _requiredMoney = requiredMoney;
     }
 
     public void SaveData(GameData saveData)
