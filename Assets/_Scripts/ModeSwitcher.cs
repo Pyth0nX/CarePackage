@@ -11,15 +11,22 @@ public class ModeSwitcher : MonoBehaviour
     public GameObject FirstPersonPlayer { get => _firstPersonPlayer; set => _firstPersonPlayer = value; }
     public GameObject Car { get => _car; set => _car = value; }
     public GameObject IdleCar { get => idleCar; set => idleCar = value; }
+
+    public GameObject ActivePlayer => _currentPlayer;
     
     private GameObject _firstPersonPlayer;
     private GameObject _car;
+    private GameObject _currentPlayer;
     private bool _idleCarInitialized;
 
     private void Awake()
     {
-        FirstPersonPlayer = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include).gameObject;
-        Car = FindFirstObjectByType<PrometeoCarController>(FindObjectsInactive.Include).gameObject;
+        var playerController = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+        var carController = FindFirstObjectByType<PrometeoCarController>(FindObjectsInactive.Include);
+
+        FirstPersonPlayer = playerController != null ? playerController.gameObject : null;
+        Car = carController != null ? carController.gameObject : null;
+        _currentPlayer = FirstPersonPlayer != null && FirstPersonPlayer.activeInHierarchy ? FirstPersonPlayer : Car;
     }
 
     public void EnterCarMode(Transform originalTransform)
@@ -34,6 +41,7 @@ public class ModeSwitcher : MonoBehaviour
         Car.transform.position = carPosition;
         Car.transform.rotation = carRotation;
         Car.SetActive(true);
+        _currentPlayer = Car;
     }
     
     public void EnterFirstPersonMode(Transform originalTransform)
@@ -55,6 +63,7 @@ public class ModeSwitcher : MonoBehaviour
         FirstPersonPlayer.transform.position = playerStartPos;
         FirstPersonPlayer.transform.rotation = Quaternion.Euler(playerRotation);
         FirstPersonPlayer.SetActive(true);
+        _currentPlayer = FirstPersonPlayer;
     }
 }
 

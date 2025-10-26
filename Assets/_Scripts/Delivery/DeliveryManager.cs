@@ -1,20 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Dialogue;
 using CarePackage.Persistance;
 using CarePackage.Main;
-using System.Linq;
 using UnityEngine;
 
 namespace CarePackage.Delivery
 {
     public class DeliveryManager : MonoBehaviour, IDataPersistance
     {
-        [SerializeField] private IDeliverable currentDelivery;
-        [SerializeField] private FPackageData debuggedJobData;
-        [SerializeField] private List<IDeliverable>  deliveries = new();
-        
-        [SerializeField] private SO_Mail mailBase;
+        [SerializeField] private Package currentDelivery;
+        [SerializeField] private List<SO_Package>  deliveries = new();
         [SerializeField] private GameObject mailboxes;
         
         [SerializeField] private bool overrideRandomDelivery = false;
@@ -25,7 +22,7 @@ namespace CarePackage.Delivery
         private List<int> _randomNumbers = new();
         private int _deliveriesMade;
         private JobBoard _jobBoard;
-        private IDeliverable _mainDelivery;
+        private Package _mainDelivery;
 
         private StopWatch _deliveryTimer = new();
         private float _timeTakenToDelivery;
@@ -53,35 +50,33 @@ namespace CarePackage.Delivery
         private void Enable()
         {
             Debug.Log("GameManager: " + GameManager.Instance);
-            GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
+            GameManager.Instance.OnStartGame += OnDayStarted_Implementation;
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
+            GameManager.Instance.OnStartGame -= OnDayStarted_Implementation;
         }
 
         private void OnDayStarted_Implementation()
         {
             _deliveriesMade = 0;
             MakeRandomNumbers(Random.Range(5, mailboxes != null ? mailboxes.transform.childCount : 30));
-            Invoke("AssignMail", .1f);
+            Invoke("AssignRandomPackages", .1f);
         }
 
-        private void GetNewJob()
+        public void GetNewJob()
         {
-             IDeliverable delivery = GetRandomJob();
+            var delivery = GetRandomJob();
             if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
                 delivery = _mainDelivery;
-            int wantedId = 0;
-            if (delivery is SO_Mail mail)
-                wantedId = mail.AddressToDeliver;
+            int wantedId = delivery.Id;
             Debug.Log("Wanted ID: " + wantedId);
             ToggleIndicator(wantedId, delivery);
             _deliveryTimer.Start();
         }
 
-        private void ToggleIndicator(int wantedId, IDeliverable delivery)
+        private void ToggleIndicator(int wantedId, Package delivery)
         {
             GameObject deliveryLocation = null;
             var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
@@ -117,47 +112,43 @@ namespace CarePackage.Delivery
             return (int)baseValue;
         }
         
-        private IDeliverable GetRandomJob()
+        private Package GetRandomJob()
         {
             if (deliveries.Count == 0) return null;
             var randomIndex = Random.Range(0, deliveries.Count);
-            return deliveries[randomIndex];
+            return DeliveryUitilities.ToPackage(deliveries[randomIndex]);
         }
 
-        public void AddDelivery(IDeliverable newDelivery)
+        public void AddDelivery(Package newDelivery, bool special = false)
         {
-            deliveries.Add(newDelivery);
-            if (newDelivery is SO_Package newPackage)
-            {
-                _mainDelivery =  newPackage;
-            }
+            deliveries.Add(DeliveryUitilities.ToScriptableObject(newDelivery));
+            if (special) _mainDelivery =  newDelivery;
         }
 
-        public void SetCurrentDelivery(IDeliverable inDelivery)
+        public void SetCurrentDelivery(Package inDelivery)
         {
             Debug.Log($"[SetCurrrentJob] setting current job with so_job: {inDelivery}");
             currentDelivery = inDelivery;
         }
         
-        public IDeliverable GetCurrentDelivery()
+        public Package GetCurrentDelivery()
         {
             if (currentDelivery == null) return null;
             return currentDelivery;
         }
         
-        public void SetListedDelivery(IDeliverable inJob)
+        public void SetListedDelivery(Package inJob)
         {
-            SO_Package debugJob = (SO_Package)inJob;
-            if (debugJob == null) return;
-            debuggedJobData = debugJob.PackageData;
-            _jobBoard.SetJobListing(debugJob);
+            if (inJob == null) return;
+            _jobBoard.SetJobListing(inJob);
         }
         
-        public void DeliverPackage(IDeliverable packageToDeliver)
+        public void DeliverPackage(Package packageToDeliver)
         {
-            if (deliveries.Contains(packageToDeliver))
+            var packageToDeliverSO = DeliveryUitilities.FindById(deliveries, packageToDeliver.Id);
+            if (packageToDeliverSO != null)
             {
-                deliveries.Remove(packageToDeliver);
+                deliveries.Remove(packageToDeliverSO);
                 _randomNumbers.Remove(packageToDeliver.Id);
                 _timeTakenToDelivery = _deliveryTimer.Stop();
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
@@ -165,20 +156,28 @@ namespace CarePackage.Delivery
                 GetNewJob();
             }
         }
+        
+        private SO_Package GetDeliveryById(int id, SO_Package packageToDeliver)
+        {
+            var match = deliveries.FirstOrDefault(d => d.Id == packageToDeliver.Id);
+            if (match != null) return match;
+            return null;
+        }
 
-        private void AssignMail()
+        private void AssignRandomPackages()
         {
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
             {
-                var newMail = Instantiate(mailBase);
-                newMail.AddressToDeliver = _randomNumbers[i];
+                var newMail = new Package()
+                {
+                    Id = _randomNumbers[i]
+                };
                 AddDelivery(newMail);
             }
-            GetNewJob();
         }
 
-        public void AssignMailBoxesRandom()
+        public void AssignRandomAddressesForDelivery()
         {
             var mailboxesCount = _randomNumbers.Count; 
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
@@ -203,6 +202,7 @@ namespace CarePackage.Delivery
                     mailAction.id = assignedNumber;
                 }
             }
+            GetNewJob();
         }
 
         public void MakeRandomNumbers(int number)
@@ -217,14 +217,16 @@ namespace CarePackage.Delivery
 
         public void LoadData(GameData loadData)
         {
-            deliveries = loadData.deliveries.ToList();
+            if (loadData.deliveries != null) deliveries = DeliveryUitilities.ToScriptableObjectList(loadData.deliveries);
             SetCurrentDelivery(loadData.currentDelivery);
+            _randomNumbers = loadData.randomNumbers;
         }
 
         public void SaveData(GameData saveData)
         {
-            saveData.deliveries = deliveries.ToArray();
+            if (deliveries != null) saveData.deliveries = DeliveryUitilities.ToPackageList(deliveries).ToArray();
             saveData.currentDelivery = GetCurrentDelivery();
+            if (_randomNumbers.Count > 0) saveData.randomNumbers = _randomNumbers;
         }
     }
 }

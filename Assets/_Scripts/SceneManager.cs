@@ -1,3 +1,4 @@
+using CarePackage.Persistance;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,26 +26,46 @@ namespace CarePackage.Main
 
         private void OnSceneLoaded_Implementation(Scene scene, LoadSceneMode sceneMode)
         {
-            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+            Debug.Log($"Loaded Scene {scene.name}");
+            // PostOffice
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
             {
-                Debug.Log($"Loaded Scene {scene.name}");
-                Invoke("Stupid", .01f);
+                Invoke("StartTheDay", .01f);
             }
+            // Neighbourhood
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+            {
+                Invoke("SetMailBoxes", .01f);
+            }
+            // Ending
             else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6))
             {
-                GameObject.Find("UI_Failed").GetComponentInChildren<TextMeshProUGUI>().text =
+                if (!GameManager.Instance.Survived)
+                {
+                    GameObject.Find("UI_Failed").GetComponentInChildren<TextMeshProUGUI>().text =
                     "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
+                }
+                else
+                {
+                    GameObject.Find("UI_Failed").SetActive(false);
+                }
             }
         }
 
-        private void Stupid()
+        private void SetMailBoxes()
         {
-            GameManager.Instance.OnDayStarted?.Invoke();
-            GameManager.Instance.Player.DeliveryManager.AssignMailBoxesRandom();
+            GameManager.Instance.StartDay();
+            GameManager.Instance.Player.DeliveryManager.AssignRandomAddressesForDelivery();
+        }
+
+        private void StartTheDay()
+        {
+            GameManager.Instance.StartGame();
         }
 
         public void LoadScene(string sceneName)
         {
+            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
             SceneManager.LoadScene(sceneName);
         }
 

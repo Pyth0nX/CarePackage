@@ -17,13 +17,13 @@ namespace CarePackage.Interaction
     [Serializable]
     public class DeliverMail : InteractAction
     {
-        [SerializeField] private int wantedLetter;
+        [SerializeField] private int wantedPackage;
 
         public int id;
         
         private DeliveryManager _deliveryManager;
         
-        public int WantedLetter { get => wantedLetter; set => wantedLetter = value; }
+        public int WantedLetter { get => wantedPackage; set => wantedPackage = value; }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
@@ -35,13 +35,12 @@ namespace CarePackage.Interaction
 
         public bool DeliverMailToMailbox()
         {
-            var currentPackage = _deliveryManager.GetCurrentDelivery();
-            if (currentPackage == null) return false;
-
-            if (currentPackage is not SO_Mail mailPackage) return false;
-            if (mailPackage.AddressToDeliver != wantedLetter) return false;
+            var packageToDeliver = _deliveryManager.GetCurrentDelivery();
+            if (packageToDeliver == null) return false;
             
-            _deliveryManager.DeliverPackage(mailPackage);
+            if (packageToDeliver.Id != wantedPackage) return false;
+            
+            _deliveryManager.DeliverPackage(packageToDeliver);
             return true;
         }
     }
