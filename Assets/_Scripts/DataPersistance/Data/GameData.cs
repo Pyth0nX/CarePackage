@@ -12,9 +12,11 @@ namespace CarePackage.Persistance
         public Package[] deliveries;
         public Package currentDelivery;
         public List<int> randomNumbers;
-        public float requiredMoney;
         public int money;
+        public int day;
         public bool survived;
+        
+        public float famARelationship;
 
         public GameData()
         {

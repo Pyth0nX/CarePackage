@@ -86,10 +86,12 @@ namespace CarePackage.Main
             //RestorePackageTransforms();
             SetPackagesRigid(true);
 
-            var playerStartPos = carPosition + new Vector3(3f, 0, 0);
-            var playerRotation = originalTransform.root.right;
+            var playerStartPos = carPosition + -IdleCar.transform.right * 3f;
             FirstPersonPlayer.transform.position = playerStartPos;
-            FirstPersonPlayer.transform.rotation = Quaternion.Euler(playerRotation);
+            Vector3 lookDirection = IdleCar.transform.forward;
+            lookDirection.y = 0f;
+            lookDirection.Normalize();
+            FirstPersonPlayer.transform.rotation = Quaternion.LookRotation(lookDirection);
             
             CarCamera.SetActive(false);
             FirstPersonPlayer.SetActive(true);

@@ -1,7 +1,10 @@
+using System;
+using CarePackage.Main;
+using CarePackage.Persistance;
 using UnityEngine;
 using Yarn.Unity;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IDataPersistance
 {
     public static DialogueManager Instance { get; private set; }
 
@@ -19,13 +22,38 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         if (dialogueRunner == null)
             dialogueRunner = GetComponentInChildren<DialogueRunner>();
 
         if (variableStorage == null && dialogueRunner != null)
             variableStorage = dialogueRunner.VariableStorage as InMemoryVariableStorage;
+    }
+
+    private void Update()
+    {
+        Debug.Log("Day: " + GetYarnFloat("$day"));
+    }
+
+    private void OnEnable()
+    {
+        Invoke("Enable", .01f);
+    }
+
+    private void Enable()
+    {
+        GameManager.Instance.OnGameRestart += OnGameRestart_Implementation;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameRestart -= OnGameRestart_Implementation;
+    }
+    
+    private void OnGameRestart_Implementation()
+    {
+        SetYarnFloat("$relationshipFamA", 0f);
     }
 
     public float GetYarnFloat(string varName)
@@ -82,5 +110,17 @@ public class DialogueManager : MonoBehaviour
     {
         if (variableStorage == null) return;
         variableStorage.SetValue(varName, value);
+    }
+
+    public void LoadData(GameData loadData)
+    {
+        if (variableStorage == null) return;
+        SetYarnFloat("$relationshipFamA", loadData.famARelationship);
+    }
+
+    public void SaveData(GameData saveData)
+    {
+        if (variableStorage == null) return;
+        saveData.famARelationship = GetYarnFloat("$relationshipFamA");
     }
 }

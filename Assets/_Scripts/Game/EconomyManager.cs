@@ -20,7 +20,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     private void Awake()
     {
         if (Instance == null) Instance = this; 
-        if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + requiredMoney + "$";
+        if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
     }
 
     private void OnEnable()
@@ -30,7 +30,6 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     private void Enable()
     {
-        GameManager.Instance.OnStartGame += OnGameStarted_Implementation;
         GameManager.Instance.OnGameRestart += OnGameRestart_Implementation;
         GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded += OnDayEnded_Implementation;
@@ -39,30 +38,22 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     private void OnDisable()
     {
-        GameManager.Instance.OnStartGame -= OnGameStarted_Implementation;
         GameManager.Instance.OnGameRestart -= OnGameRestart_Implementation;
         GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
         GameManager.Instance.OnDayEnded -= OnDayEnded_Implementation;
     }
 
-    private void OnGameStarted_Implementation()
-    {
-        _requiredMoney = requiredMoney;
-        UpdateMoneyText();    }
-
     private void OnGameRestart_Implementation()
     {
         _money = 0;
-        _requiredMoney = requiredMoney;
         UpdateMoneyText();
     }
     
     private void OnDayStarted_Implementation()
     {
-        _requiredMoney *= 1.2f;
+        _requiredMoney = requiredMoney * (GameManager.Instance.CurrentDay > 1 ? GameManager.Instance.CurrentDay * 1.2f : 1);
         if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
         UpdateMoneyText();
-
     }
 
     private void OnDayEnded_Implementation()
@@ -83,7 +74,7 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     public void CalculateMoneyEarned(int originalPay, float timeTaken, float directDistance)
     {
-        float normalizedTime = Mathf.Clamp01((120f - timeTaken) / 350f);
+        float normalizedTime = Mathf.Clamp01((120f - timeTaken) / 110f);
         float normalizedDistance = Mathf.Clamp01((directDistance - 10f) / 590f);
         
         float timeWeight = 0.7f;
@@ -92,8 +83,9 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
         float performanceScore = (normalizedTime * timeWeight) + (normalizedDistance * distanceWeight);
         performanceScore = Mathf.Clamp01(performanceScore);
         
-        float scaledBase = Mathf.Lerp(20f, 150f, performanceScore);
-        float payout = scaledBase * performanceScore;
+        float scaledBase = Mathf.Lerp(40f, 100f, performanceScore);
+        var RandomFactor = Random.Range(0.9f, 1.1f);
+        float payout = scaledBase * performanceScore * RandomFactor;
         
         float calculatedPay = Mathf.Round(payout);
         int finalPay = (int)calculatedPay;
@@ -109,13 +101,10 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData loadData)
     {
         _money = loadData.money;
-        if (loadData.requiredMoney >= requiredMoney) _requiredMoney = loadData.requiredMoney;
-        else _requiredMoney = requiredMoney;
     }
 
     public void SaveData(GameData saveData)
     {
         saveData.money = Bank;
-        saveData.requiredMoney = GetRequiredMoney;
     }
 }

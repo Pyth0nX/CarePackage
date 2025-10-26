@@ -39,23 +39,25 @@ namespace CarePackage.Interaction
 
         private void CheckForInteractions()
         {
-            if (_elapsedTime >= .2f)
-            {
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));// new Ray(transform.position, transform.forward);
-                RaycastHit hit;
-                
-                if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
-                {
-                    if (debug) Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
-                    if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
-                    {
-                        if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
-                        SetInteractable(rayInteractable);
-                    }
-                }
-                _elapsedTime = 0;
-            }
             _elapsedTime += Time.deltaTime;
+            if (_elapsedTime < 0.2f) return;
+
+            _elapsedTime = 0;
+
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f)); // new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
+            {
+                if (debug) Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
+                if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
+                {
+                    if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
+                    SetInteractable(rayInteractable);
+                    return;
+                }
+            }
+            SetInteractable(null);
         }
 
         /*

@@ -1,5 +1,4 @@
 ﻿using CarePackage.Main;
-using Yarn.Unity;
 using UnityEngine;
 using System;
 
@@ -9,7 +8,6 @@ namespace CarePackage.Interaction.Dialogue
     public class DialogueAction : InteractAction, IActivatable
     {
         [SerializeField] private string nodeName;
-        [SerializeField] private DialogueRunner dialogueRunner;
         
         public int id;
 
@@ -20,17 +18,21 @@ namespace CarePackage.Interaction.Dialogue
         {
             if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
             if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().Id != id) return;
-            if (dialogueRunner == null)
+            if (DialogueManager.Instance == null)
             {
-                dialogueRunner = UnityEngine.Object.FindFirstObjectByType<DialogueRunner>();
-                if (dialogueRunner == null)
-                {
-                    Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
-                    return;
-                }
+                Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
+                return;
+            }
+            
+            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+
+            if (_dialogueRunner == null)
+            {
+                Debug.LogError("[DialogueAction] DialogueRunner not in the instance of GameManager");
+                return;
             }
 
-            if (dialogueRunner.IsDialogueRunning)
+            if (_dialogueRunner.IsDialogueRunning)
             {
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but one is already running!");
                 return;
@@ -46,30 +48,30 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
             playerController.LockInput(true);
+            
+            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform") DialogueManager.Instance.SetYarnBool("$clothes", true);
 
-            dialogueRunner.StartDialogue(nodeName);
+            _dialogueRunner.StartDialogue(nodeName);
         }
 
         public void OnEnable()
         {
-            if (dialogueRunner == null)
+            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+            if (_dialogueRunner == null)
             {
-                dialogueRunner = UnityEngine.Object.FindFirstObjectByType<DialogueRunner>();
-                if (dialogueRunner == null)
-                {
                     Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
                     return;
-                }
             }
 
-            dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+            _dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
         }
 
         public void OnDisable()
         {
-            if (dialogueRunner != null)
+            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+            if (_dialogueRunner != null)
             {
-                dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
+                _dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
             }
         }
 

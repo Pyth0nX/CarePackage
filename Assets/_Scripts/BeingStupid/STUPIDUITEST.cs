@@ -7,7 +7,8 @@ public class STUPIDUITEST : MonoBehaviour
     
     public void SetObject(GameObject obj)
     {
-        this.obj = obj == null ? null : obj;    }
+        this.obj = obj == null ? null : obj;
+    }
 
     private TextMeshProUGUI indicatorText;
     private bool IndicatorSet => indicatorText.text == "!";

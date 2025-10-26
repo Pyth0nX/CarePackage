@@ -14,8 +14,10 @@ namespace CarePackage.Main
         
         private float _elapsedTime;
         [SerializeField] private bool _survived = true;
+        private int _day;
         
         public bool Survived => _survived;
+        public int CurrentDay => _day;
         
         // events
         public Action OnStartGame;
@@ -47,6 +49,7 @@ namespace CarePackage.Main
         {
             _survived = false;
             _elapsedTime = 0f;
+            _day = 1;
             StartCoroutine(DayCoroutine());
             OnDayStarted?.Invoke();
         }
@@ -54,6 +57,8 @@ namespace CarePackage.Main
         private void EndDay()
         {
             Debug.Log("Day ended");
+            _day++;
+            DialogueManager.Instance.SetYarnFloat("$day", _day);
             OnDayEnded?.Invoke();
         }
 
@@ -94,6 +99,7 @@ namespace CarePackage.Main
         {
             _survived = false;
             OnGameRestart?.Invoke();
+            _day = 1;
             StartGame();
             SceneController.Instance.LoadScene("PostOffice");
         }
@@ -113,13 +119,17 @@ namespace CarePackage.Main
         public void LoadData(GameData loadData)
         {
             _survived = loadData.survived;
-            // load persistance data
+            if (loadData.day > 0)
+            {
+                _day = loadData.day;
+                if (DialogueManager.Instance != null) DialogueManager.Instance.SetYarnFloat("$day", _day);
+            }
         }
 
         public void SaveData(GameData saveData)
         {
             saveData.survived = _survived;
-            // save persistance data
+            saveData.day = _day;
         }
     }
 }
