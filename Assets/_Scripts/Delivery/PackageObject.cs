@@ -16,7 +16,6 @@ namespace CarePackage.Delivery
         private Rigidbody _rigidbody;
         
         private int _currentMeshIndex;
-        private bool _isRigid => _rigidbody.useGravity && !_rigidbody.isKinematic;
 
         private void Start()
         {
@@ -24,19 +23,13 @@ namespace CarePackage.Delivery
             _rigidbody = GetComponent<Rigidbody>();
             UpdateState();
         }
-
-        private void Update()
+        
+        public void SetDamageEnabled(bool damageEnabled)
         {
-            if (!canBeDamaged && _isRigid)
-            {
-                _rigidbody.isKinematic = true;
-                _rigidbody.useGravity = false;
-            }
-            else if (canBeDamaged && !_isRigid)
-            {
-                _rigidbody.isKinematic = false;
-                _rigidbody.useGravity = true;
-            }
+            canBeDamaged = damageEnabled;
+            if (_rigidbody == null) return;
+            _rigidbody.isKinematic = !canBeDamaged;
+            _rigidbody.useGravity = canBeDamaged;
         }
 
         private void OnCollisionEnter(Collision other)
@@ -69,11 +62,11 @@ namespace CarePackage.Delivery
             if (packageState == EPackageState.Broken) return;
 
             packageState++;
-            UpdateState();
+            //UpdateState();
             
             Debug.Log($"Package damaged updated mesh to {packageState}");
         }
-
+        
         public void UpdateState()
         {
             int index = (int)packageState;

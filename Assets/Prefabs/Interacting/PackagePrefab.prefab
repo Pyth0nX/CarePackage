@@ -231,15 +231,17 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   interactAction:
-    rid: -2
+    rid: 1741967866699972677
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 1741967866699972677
+      type: {class: PackageAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
+      data:
+        package: {fileID: 0}
 --- !u!114 &8151896957031775992
 MonoBehaviour:
   m_ObjectHideFlags: 0

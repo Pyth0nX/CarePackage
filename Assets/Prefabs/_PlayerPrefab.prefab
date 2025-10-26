@@ -47,14 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c469c3f52b7ae740b158eaadf8c96c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.PlayerState
-  modeData:
-    firstPersonMass: 0
-    playerController: {fileID: 0}
-    player: {fileID: 0}
-    carMass: 0
-    carController: {fileID: 0}
-    car: {fileID: 0}
-    carCamera: {fileID: 0}
   pickupLocation: {fileID: 0}
 --- !u!114 &4214719672869644458
 MonoBehaviour:
@@ -68,14 +60,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60728dfea2bf9c24994fd6b005048fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.DeliveryManager
-  currentDelivery: {fileID: 0}
-  debuggedJobData:
-    Title: 
-    Description: 
+  currentDelivery:
+    Id: 0
+    Pay: 0
+    PackageData:
+      Title: 
+      Description: 
+    ItemGUID: 
   deliveries: []
-  mailBase: {fileID: 11400000, guid: 67484784f30ba224e87779ace375382b, type: 2}
   mailboxes: {fileID: 0}
-  mailLocationText: {fileID: 0}
+  overrideRandomDelivery: 1
+  mainPackageNumber: 3
+  deliveriesToMake: 0
 --- !u!114 &8894910802748203241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,4 +99,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchMode
   carCamera: {fileID: 0}
-  idleCar: {fileID: 8903697174729374434, guid: 24ac5f71debd05e458515b8d277edf4f, type: 3}
+  idleCarPrefab: {fileID: 4266863884866237995, guid: 24ac5f71debd05e458515b8d277edf4f, type: 3}
+  transitPackages: {fileID: 0}

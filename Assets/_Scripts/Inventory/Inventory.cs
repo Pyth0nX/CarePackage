@@ -24,9 +24,13 @@ namespace CarePackage.Main
             items.Remove(item);
         }
         
-        public SO_Item GetItem(int index) => items[index];
+        public SO_Item GetItemAtIndex(int index) => items[index];
+        public SO_Item GetItemByGUID(string guid) => items.Find(i => i.GUID == guid);
+        public SO_Item GetItem(SO_Item item) => items.Find(i => i == item);
         
-        public SO_Item GetUnacceptedItem(int index) => unacceptedItems[index];
+        public SO_Item GetUnacceptedItemAtIndex(int index) => unacceptedItems[index];
+        public SO_Item GetUnacceptedItemByGUID(string guid) => unacceptedItems.Find(i => i.GUID == guid);
+        public SO_Item GetUnacceptedItem(SO_Item item) => unacceptedItems.Find(i => i == item);
 
         public void AcceptItem(SO_Item item)
         {

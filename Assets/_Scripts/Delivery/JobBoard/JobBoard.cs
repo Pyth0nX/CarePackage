@@ -85,7 +85,7 @@ namespace CarePackage.Delivery
             package.InteractAction = new PackageAction(_displayedJob);
             _spawnedPackages.Add(newPackage);
             OnExitJobClicked(_lastClickedButton);
-            OnExitJobClicked(jobListing);
+            UIManager.Instance.ClosePopupWindow(jobListing);
             MovePackagesAlong();
         }
         
