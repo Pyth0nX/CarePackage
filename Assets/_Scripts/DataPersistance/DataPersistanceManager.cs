@@ -1,3 +1,4 @@
+using CarePackage.Main;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,6 +145,7 @@ namespace CarePackage.Persistance
 
         private void OnApplicationQuit()
         {
+            GameManager.Instance.RestartGame();
             SaveGame();
         }
         

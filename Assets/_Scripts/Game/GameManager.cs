@@ -58,6 +58,7 @@ namespace CarePackage.Main
         {
             Debug.Log("Day ended");
             _day++;
+            if (_day >= 3) LoseGame();
             DialogueManager.Instance.SetYarnFloat("$day", _day);
             OnDayEnded?.Invoke();
         }

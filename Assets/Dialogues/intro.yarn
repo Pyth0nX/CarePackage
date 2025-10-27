@@ -31,15 +31,15 @@ group: Day1
 Mailman: Morning! Are you Lina?
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: That’s me! Sofie, your package is here!
-<<hideCharacter "Lina">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Wonderful! I just need your signature here.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Of course. Are you new around here? I haven’t seen you before.
-<<hideCharacter "Lina">>
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
-<<showCharacter "Lina" "SpeakingTired">>
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
-<<hideCharacter "Lina">>
+<<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Are you nervous?
     <<jump engage1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
@@ -56,9 +56,13 @@ group: FamA
 group: Day1
 ---
 <<set $relationshipFamA += 1>>
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yes...but mom promised to get me a new backpack!
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Oh, so that’s what I have here for you?
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: YES! Can I have it? pleeaaase.
+<<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Here you go.
     <<jump end1>>
 -> Mailman: I made sure it brings good luck on your first day.
@@ -71,8 +75,11 @@ position: -1184,-526
 group: FamA
 group: Day1
 ---
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thank you, have a nice day.
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: You too.
+<<hideCharacter "Lina">>
 <<hideBackground>>
 ===
 
@@ -83,9 +90,13 @@ group: FamA
 group: Day1
 ---
 <<set $relationshipFamA += 2>>
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: THANK YOU!
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thanks again! see you around.
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Have a great evening, both of you!
+<<hideCharacter "Lina">>
 <<hideBackground>>
 ===
 
@@ -94,15 +105,24 @@ when: $clothes == true
 color: purple
 group: FamA
 group: Day2
-position: -923,-636
+position: -921,-631
 ---
-Mailman: Good Morning Lina! More schools supplies I'm guessing.
+<<once>>
+<<setBackground "BGFamA">>
+Mailman: Good Morning Lina! More school supplies I'm guessing.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: [Sign]Yes, you got me[/Sign]. I got Sofie the new uniform.
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Hello Mr.Mailman...
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Hello Sofie, are you excited about your new uniform?
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: No, I wanted new cool clothes, but my mom won't let me.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: You know that's not true we can barely afford the uniform, I'm not gonna waste money when you have clothes that still fit you. #emotion:tired,sad
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
+<<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Ouch, I don't think my uniform is stupid. #enotion:nice
     <<set $relationshipFamA += 1>>
     <<jump engage2>>
@@ -112,6 +132,9 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 -> Mailman: I might have another package for you. <<if $clothes == true>> 
     <<set $relationshipFamA += 3>>
     <<jump engage3>>
+<<else>>
+...
+<<endonce>>
 ===
 
 title: engage2
@@ -119,10 +142,16 @@ color: green
 group: FamA
 position: -922,-426
 ---
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: I didn't mean to say that, I just would like some new clothes. #emotion:sad
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Yeah, I get it. Just don't be so hard on your mom, she's trying her best.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: I promise that we'll go shopping next month. Thank you, Mr.Mailman.
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Have a great day.
+<<hideCharacter "Lina">>
+<<hideBackground>>
 ===
 
 title: bad1
@@ -130,9 +159,14 @@ color: red
 group: FamA
 position: -701,-426
 ---
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: You are not my father, you don't even know me. #emotion:angry
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: I think you should go, she's just not in the mood to talk.
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: I'm sorry, have a good day.
+<<hideCharacter "Lina">>
+<<hideBackground>>
 ===
 
 title: engage3
@@ -140,15 +174,27 @@ color: green
 group: FamA
 position: -922,-426
 ---
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: I don't think I ordered anything else
-Mailman: This one is addressed to Sofie
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: This one is addressed to Sofie.
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: To me...?
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Yeah, it's from Vera, your Neighbour.
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Vera? I don't think I know her.
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: She has the cutest little boy, that's probably why you haven't seen her much. That boy is a piece of work.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Oh that's just perfect, we've been looking for something Sofie could do after school. What do you think Sofie?
+<<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax and have a night out with her husband.
+<<showCharacter "Lina" "SofieSpeakingTired">>
 <<declare $noteForVera = true>>
 Sofie: Here you have the note, I wrote my number in case she wants to contact with me.
+<<hideCharacter "Lina">>
+<<hideBackground>>
 ===
