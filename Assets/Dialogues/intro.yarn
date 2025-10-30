@@ -12,15 +12,19 @@ color: blue
 position: -276,-803
 ---
 Mailman: *Knock knock*
-<<if $day == 1>>
-<<jump FamADay1>>
-<<elseif $day == 2>>
-<<jump FamADay2>>
+<<if $family == 1>>
+<<jump FamA>>
 <<endif>>
+//<<if $day == 1>>
+//<<jump FamADay1>>
+//<<elseif $day == 2>>
+//<<jump FamADay2>>
+//<<endif>>
 ===
 
-title: FamADay1
+title: FamA
 //when: $package == true
+when: $day == 1
 position: -1426,-631
 color: purple
 group: FamA
@@ -100,8 +104,9 @@ Mailman: Have a great evening, both of you!
 <<hideBackground>>
 ===
 
-title: FamADay2
-when: $clothes == true
+title: FamA
+//when: $clothes == true
+when: $day == 2
 color: purple
 group: FamA
 group: Day2
