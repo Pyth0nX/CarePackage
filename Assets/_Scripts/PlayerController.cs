@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
@@ -33,6 +34,8 @@ namespace CarePackage.Main
         
         public bool IsGrounded => _isGrounded;
         public void LockInput(bool lockMode) => _lockedInput = lockMode;
+
+        public static event Action OnPlayerMoved = delegate { };
         
         private void Start()
         {
@@ -120,6 +123,7 @@ namespace CarePackage.Main
         {
             if (input.performed) _lookVector = input.ReadValue<Vector2>();
             else if (input.canceled) _lookVector = Vector2.zero;
+            OnPlayerMoved?.Invoke();
         }
 
         public void OnMove(InputAction.CallbackContext input)

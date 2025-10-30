@@ -65,6 +65,11 @@ namespace CarePackage.Delivery
             MakeRandomNumbers(Random.Range(3, 15));
             Invoke("AssignRandomPackages", .1f);
         }
+        
+        private void EndDayEarly()
+        {
+            GameManager.Instance.EndDayEarly();
+        }
 
         public void GetNewJob()
         {
@@ -81,47 +86,6 @@ namespace CarePackage.Delivery
             Debug.Log("Wanted ID: " + wantedId);
             ToggleIndicator(wantedId, delivery);
             _deliveryTimer.Start();
-        }
-
-        private void EndDayEarly()
-        {
-            GameManager.Instance.EndDayEarly();
-        }
-
-        private void ToggleIndicator(int wantedId, Package delivery)
-        {
-            GameObject deliveryLocation = null;
-            var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
-            
-            foreach (var postBox in postBoxes)
-            {
-                var action = postBox.InteractAction;
-                int id = -1;
-                
-                if (action is DeliverMail mailAction)
-                    id =  mailAction.id;
-                else if (action is DialogueAction dialogueAction)
-                    id =  dialogueAction.id;
-                else continue;
-
-                if (id != wantedId || id == -1) continue;
-                deliveryLocation = postBox.gameObject;
-                Debug.Log("Delivered ID: " + id + " Found Delivery: " + deliveryLocation);
-            }
-            
-            delivery.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
-            SetCurrentDelivery(delivery);
-            
-            _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
-            STUPIDUITEST.Instance.SetObject(deliveryLocation);
-        }
-
-        private int GetBasePayBasedOnDistance(Vector3 position, Vector3 target)
-        {
-            var distance = Vector3.Distance(position, target);
-            float normalizedDistance = Mathf.Clamp01((distance - 10f) / (400f - 10f));
-            float baseValue = Mathf.Lerp(10f, 150f, normalizedDistance);
-            return (int)baseValue;
         }
         
         private Package GetRandomJob()
@@ -226,6 +190,42 @@ namespace CarePackage.Delivery
                 _randomNumbers.Add(i);
             }
             deliveriesToMake = number;
+        }
+        
+        private void ToggleIndicator(int wantedId, Package delivery)
+        {
+            GameObject deliveryLocation = null;
+            var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+            
+            foreach (var postBox in postBoxes)
+            {
+                var action = postBox.InteractAction;
+                int id = -1;
+                
+                if (action is DeliverMail mailAction)
+                    id =  mailAction.id;
+                else if (action is DialogueAction dialogueAction)
+                    id =  dialogueAction.id;
+                else continue;
+
+                if (id != wantedId || id == -1) continue;
+                deliveryLocation = postBox.gameObject;
+                Debug.Log("Delivered ID: " + id + " Found Delivery: " + deliveryLocation);
+            }
+            
+            delivery.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
+            SetCurrentDelivery(delivery);
+            
+            _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
+            STUPIDUITEST.Instance.SetObject(deliveryLocation);
+        }
+
+        private int GetBasePayBasedOnDistance(Vector3 position, Vector3 target)
+        {
+            var distance = Vector3.Distance(position, target);
+            float normalizedDistance = Mathf.Clamp01((distance - 10f) / (400f - 10f));
+            float baseValue = Mathf.Lerp(10f, 150f, normalizedDistance);
+            return (int)baseValue;
         }
 
         public void LoadData(GameData loadData)
