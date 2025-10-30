@@ -111,13 +111,105 @@ group: FamA
 group: Day1
 ---
 <<once>>
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Morning! I have a package for you.
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: I don’t think this is my package. Can you come back when you have mine?
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Oh I’m sorry about that, I’ll be back with your package.
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Okay, thank you. Have a good day!
+<<hideCharacter "Lina">>
+<<hideBackground>>
 <<else>>
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Remember to come back with the right package, please.
+<<hideCharacter "Lina">>
+<<hideBackground>>
 <<endonce>>
+===
+
+title: FamA
+when: $day == 1 && $package == "backpack" && $packageState == "damaged"
+position: -1426,-631
+color: purple
+group: FamA
+group: Day1
+---
+Mailman: Morning! Are you Lina?
+
+Lina: That’s me! Sofie, your package is here!
+
+Mailman: Wonderful! I just need your signature here.
+
+Lina: Of course. Are you new around here? I haven’t seen you before.
+
+Mailman: Yeah, just started, actually. Still getting the hang of it, you’ll have to be patient with this old man, hahaha.
+
+Lina: Oh, so you are just like Sofie! She just started in a new school.
+
+-> Mailman: Are you nervous?
+<<jump engage4>>
+-> Mailman: Oh yeah? Well, enjoy your package!
+<<jump end3>> 
+===
+
+title: engage4
+color: green
+group: FamA && Day1
+---
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: Yes…But mom promised to get me a new backpack!
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: Oh, so that’s what I have here for you? 
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: YES! Can I have it, please?
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+-> Mailman: Here you go.
+    <<showCharacter "Lina" "SofieSpeakingTired">>
+    Sofie: Oh, it’s a bit squished.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: You’re right Sofie, what happened to the package?
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mailman: I’m sorry, it must have received some damage on the drive here.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: You should be more careful, you’re lucky this is not fragile.
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mail man: You are completely right, I’m so sorry. I’ll drive with more care from now on.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: Okay then, have a good day.
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mailman: You too.
+-> Mailman: I made sure it brings good luck on your first day.
+    <<showCharacter "Lina" "SofieSpeakingTired">>
+    Sofie: Oh thank you, it’s a bit squished.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: You’re right Sofie, what happened to the package?
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mailman: I’m sorry, it must have received some damage on the drive here.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: You should be more careful, you’re lucky this is not fragile.
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mail man: You are completely right, I’m so sorry. I’ll drive with more care from now on.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    Lina: Okay then, have a good day.
+    <<showCharacter "Lina" "SofieListeningTired">>
+    Mailman: You too.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+title: end3
+color: green
+group: FamA && Day1
+---
+
+Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
+Mailman: I hit some rough bumps on the way here, it must have collided with some of the other packages.
+Lina: I know you said you were new, but this can’t happen again. 
+Mailman: I’m sorry, it won’t happen again.
 ===
 
 title: FamA
@@ -154,7 +246,9 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
     <<set $relationshipFamA += 3>>
     <<jump engage3>>
 <<else>>
+<<setBackground "BGFamA">>
 ...
+<<hideBackground>>
 <<endonce>>
 ===
 
