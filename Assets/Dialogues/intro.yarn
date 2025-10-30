@@ -23,8 +23,7 @@ Mailman: *Knock knock*
 ===
 
 title: FamA
-//when: $package == true
-when: $day == 1 && $package == "backpack"
+when: $day == 1 && $package == "backpack" && $packageState == "undamaged"
 position: -1426,-631
 color: purple
 group: FamA
@@ -102,6 +101,23 @@ Lina: Thanks again! see you around.
 Mailman: Have a great evening, both of you!
 <<hideCharacter "Lina">>
 <<hideBackground>>
+===
+
+title: FamA
+when: $day == 1 && $package != "backpack"
+position: -1426,-631
+color: purple
+group: FamA
+group: Day1
+---
+<<once>>
+Mailman: Morning! I have a package for you.
+Lina: I don’t think this is my package. Can you come back when you have mine?
+Mailman: Oh I’m sorry about that, I’ll be back with your package.
+Lina: Okay, thank you. Have a good day!
+<<else>>
+Lina: Remember to come back with the right package, please.
+<<endonce>>
 ===
 
 title: FamA
