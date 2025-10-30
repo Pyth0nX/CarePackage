@@ -24,7 +24,7 @@ Mailman: *Knock knock*
 
 title: FamA
 //when: $package == true
-when: $day == 1
+when: $day == 1 && $package == "backpack"
 position: -1426,-631
 color: purple
 group: FamA
@@ -106,7 +106,7 @@ Mailman: Have a great evening, both of you!
 
 title: FamA
 //when: $clothes == true
-when: $day == 2
+when: $day == 2 && $package == "uniform"
 color: purple
 group: FamA
 group: Day2
