@@ -15,15 +15,10 @@ Mailman: *Knock knock*
 <<if $family == 1>>
 <<jump FamA>>
 <<endif>>
-//<<if $day == 1>>
-//<<jump FamADay1>>
-//<<elseif $day == 2>>
-//<<jump FamADay2>>
-//<<endif>>
 ===
 
 title: FamA
-when: $day == 1 && $package == "backpack" && $packageState == "undamaged"
+when: $day == 1 && $package == "backpack" && $damage == 0
 position: -1426,-631
 color: purple
 group: FamA
@@ -132,28 +127,36 @@ Lina: Remember to come back with the right package, please.
 ===
 
 title: FamA
-when: $day == 1 && $package == "backpack" && $packageState == "damaged"
+when: $day == 1 && $package == "backpack" && $damage == 1
 position: -1426,-631
 color: purple
 group: FamA
 group: Day1
 ---
+<<once>>
+<<setBackgroung "BGFamA">>
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Morning! Are you Lina?
-
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: That’s me! Sofie, your package is here!
-
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Wonderful! I just need your signature here.
-
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Of course. Are you new around here? I haven’t seen you before.
-
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Yeah, just started, actually. Still getting the hang of it, you’ll have to be patient with this old man, hahaha.
-
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
-
+<<showCharacter "Lina" "LinaListeningTired">>
 -> Mailman: Are you nervous?
 <<jump engage4>>
 -> Mailman: Oh yeah? Well, enjoy your package!
 <<jump end3>> 
+<<else>>
+<<setBackgroung "BGFamA">>
+...
+<<hideBackground>>
+<<endonce>>
 ===
 
 title: engage4
@@ -205,16 +208,21 @@ title: end3
 color: green
 group: FamA && Day1
 ---
-
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: I hit some rough bumps on the way here, it must have collided with some of the other packages.
-Lina: I know you said you were new, but this can’t happen again. 
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: I know you said you were new, but this can’t happen again.
+<<showCharacter "Lina" "LinaListeningTired">>
 Mailman: I’m sorry, it won’t happen again.
+<<hideBackground>>
+<<hideCharacter "Lina">>
 ===
 
 title: FamA
-//when: $clothes == true
-when: $day == 2 && $package == "uniform"
+when: $day == 2 && $package == "uniform" && $damage == 0
+//undamaged package
 color: purple
 group: FamA
 group: Day2
@@ -313,3 +321,71 @@ Sofie: Here you have the note, I wrote my number in case she wants to contact wi
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
+
+title: FamA
+when: $day == 2 && $package == "uniform" && $damage == 1 && $packageState == "damaged"
+//1st time damaged
+color: purple
+group: FamA
+group: Day2
+position: -921,-631
+---
+<<setBackgroung "BGFamA">>
+<<showCharacter "Lina" "LinaListeningTired">>
+Mail man: Morning Lina!
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Sofie, come here!
+<<showCharacter "Lina" "LinaListeningTired">>
+Mail man: Wonderful! I just need your signature here.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Oh but this package is damaged, what happened to it?
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: I’m so sorry, it was a bumpy ride.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Anyways, I’m glad it at least arrived.
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: It’s that my new uniform? 
+<<showCharacter "Lina" "SofieListeningTired">>
+-> Mailman: That’s right, how was your first day?
+<<jump engage5>>
+-> Mailman: Yes, I hope you enjoy it.
+	Sofie: Thank you Mr.Mailman.
+	Lina: Bye Mr.Mailman.
+	Mailman: Have a nice day.
+===
+title: FamA
+when: $day == 2 && $package == "uniform" && $damage == 2 && $packageState == "damaged"
+//damaged AGAIN 
+color: purple
+group: FamA
+group: Day2
+position: -921,-631
+---
+Mail man: Morning Lina!
+Lina: Sofie, come here!
+Mail man: Wonderful! I just need your signature here.
+Lina: Oh but this package is damaged again, I thought you said it wasn’t going to happen again.
+Mailman: I’m so sorry, it was a bumpy ride.
+Lina: Anyways, I’m glad it at least arrived.
+Sofie: It’s that my new uniform? 
+-> Mailman: That’s right, how was your first day?
+<<jump engage5>>
+-> Mailman: Yes, I hope you enjoy it.
+	Sofie: Thank you Mr.Mailman.
+	Lina: Bye Mr.Mailman.
+	Mailman: Have a nice day.
+===
+
+title: engage5
+---
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: Some kids already called me weird yesterday because I didn’t have my uniform and my clothes were old.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: We are working on it, I promised her we will go shopping next month. 
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: Yeah, but until then I will avoid any chances of meeting my classmates out of school.
+<<showCharacter "Lina" "SofieListeningTired">>
+-> Mailman: I might have something to fix that, just wait here while I look in my truck.
+-> Mailman: Wow, that’s a lot of free time
+===
+
