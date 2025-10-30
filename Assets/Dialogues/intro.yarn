@@ -27,13 +27,13 @@ group: FamA && Day1
 <<once>>
 Mailman: Morning! Are you Lina?
 <<showCharacter "Lina" "SpeakingTired">>
-Lina: That’s me! Sofie, your package is here!
+Lina: That's me! Sofie, your package is here!
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Wonderful! I just need your signature here.
 <<showCharacter "Lina" "SpeakingTired">>
-Lina: Of course. Are you new around here? I haven’t seen you before.
+Lina: Of course. Are you new around here? I haven't seen you before.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Yeah, just started, actually. Still getting the hang of it. You’ll have to be patient with this old man, hahaha.
+Mailman: Yeah, just started, actually. Still getting the hang of it. You'll have to be patient with this old man, hahaha.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -55,7 +55,7 @@ group: FamA && Day1
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yes...but mom promised to get me a new backpack!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, so that’s what I have here for you?
+Mailman: Oh, so that's what I have here for you?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: YES! Can I have it? pleeaaase.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -105,9 +105,9 @@ position: -1430,-895
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Morning! I have a package for you.
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: I don’t think this is my package. Can you come back when you have mine?
+Lina: I don't think this is my package. Can you come back when you have mine?
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Oh I’m sorry about that, I’ll be back with your package.
+Mailman: Oh I'm sorry about that, I'll be back with your package.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Okay, thank you. Have a good day!
 <<hideCharacter "Lina">>
@@ -132,13 +132,13 @@ group: FamA && Day1
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Morning! Are you Lina?
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: That’s me! Sofie, your package is here!
+Lina: That's me! Sofie, your package is here!
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Wonderful! I just need your signature here.
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Of course. Are you new around here? I haven’t seen you before.
+Lina: Of course. Are you new around here? I haven't seen you before.
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Yeah, just started, actually. Still getting the hang of it, you’ll have to be patient with this old man, hahaha.
+Mailman: Yeah, just started, actually. Still getting the hang of it, you'll have to be patient with this old man, hahaha.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<showCharacter "Lina" "LinaListeningTired">>
@@ -161,7 +161,7 @@ position: -1164,-659
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yes…But mom promised to get me a new backpack!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, so that’s what I have here for you? 
+Mailman: Oh, so that's what I have here for you? 
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: YES! Can I have it, please?
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -209,9 +209,9 @@ Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: I hit some rough bumps on the way here, it must have collided with some of the other packages.
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: I know you said you were new, but this can’t happen again.
+Lina: I know you said you were new, but this can't happen again.
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I’m sorry, it won’t happen again.
+Mailman: I'm sorry, it won't happen again.
 <<hideBackground>>
 <<hideCharacter "Lina">>
 ===
@@ -334,19 +334,20 @@ Mail man: Wonderful! I just need your signature here.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Oh but this package is damaged, what happened to it?
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I’m so sorry, it was a bumpy ride.
+Mailman: I'm so sorry, it was a bumpy ride.
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Anyways, I’m glad it at least arrived.
+Lina: Anyways, I'm glad it at least arrived.
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: It’s that my new uniform? 
+Sofie: It's that my new uniform? 
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: That’s right, how was your first day?
+-> Mailman: That's right, how was your first day?
 <<jump engage5>>
 -> Mailman: Yes, I hope you enjoy it.
 	Sofie: Thank you Mr.Mailman.
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
 ===
+
 title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 2 && $packageState == "damaged"
 //damaged AGAIN 
@@ -354,14 +355,22 @@ color: purple
 group: FamA && Day2
 position: -647,-882
 ---
+<<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Morning Lina!
+<<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Sofie, come here!
+<<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Wonderful! I just need your signature here.
-Lina: Oh but this package is damaged again, I thought you said it wasn’t going to happen again.
-Mailman: I’m so sorry, it was a bumpy ride.
-Lina: Anyways, I’m glad it at least arrived.
-Sofie: It’s that my new uniform? 
--> Mailman: That’s right, how was your first day?
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Oh but this package is damaged again, I thought you said it wasn't going to happen again.
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: I'm so sorry, it was a bumpy ride.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Anyways, I'm glad it at least arrived.
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: It's that my new uniform? 
+<<showCharacter "Lina" "SofieListeningTired">>
+-> Mailman: That's right, how was your first day?
 <<jump engage5>>
 -> Mailman: Yes, I hope you enjoy it.
 	Sofie: Thank you Mr.Mailman.
@@ -374,13 +383,106 @@ group: FamA && Day2
 position: -536,-670
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: Some kids already called me weird yesterday because I didn’t have my uniform and my clothes were old.
+Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: We are working on it, I promised her we will go shopping next month. 
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yeah, but until then I will avoid any chances of meeting my classmates out of school.
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: I might have something to fix that, just wait here while I look in my truck.
--> Mailman: Wow, that’s a lot of free time
+-> Mailman: Wow, that's a lot of free time
 ===
 
+title: FamA
+when: $relationshipFamA <= 3
+color: purple
+group: FamA && Day2
+---
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Good Morning Lina! More school supplies I'm guessing.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
+<<showCharacter "Lina" "SofieListeningTired">>
+Sofie:...
+-> Mailman: I might have something for you, let me check.
+<<jump inventory>>
+-> Mailman: I'm glad she has it now, tomorrow will be a better day.
+	Lina: Yeah, let's hope you're right. Have a nice day.
+	Sofie: …
+	Mailman: You too.
+===
+
+title: inventory
+color: orange
+---
+-> lollipop
+-> Vera's clothes <<if $VerasClothes == true>>
+-> Note for Vera <<if $noteForVera == true>>
+-> Toys for kids <<if $toysForKids == true>>
+-> Cookies <<if $cookies == true>>
+===
+
+title: FamB
+color: purple 
+group: FamB && Day1
+---
+Day 1:
+Mail man: Good afternoon, is this the house of Mr.Andersen?
+Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
+CHOICE
+
+-> Mailman: No thank you, I'll just wait out here.
+    Mikkel: Alright, he'll be right out.
+    *Mrs.Andersen leaves and Mr.Andersen comes*
+
+    Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
+
+    Mikkel, as he signs: Sure thing.
+
+    Mail man: Thank you, have a lovely evening.
+
+    Mikkel: You too.
+-> Mailman: Oh, thank you! It's pretty warm out here.
+<<jump >>
+Option 1:
+
+
+Option 2:
+
+Gertrude: Dangerous heat for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
+
+Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all day.
+*You walk into the living room where Mr.Andersen is at*
+Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends have passed away, and the rest can't make it up the stairs anymore.
+
+-> Mailman: 1-Haha, I know the feeling. That's why I became a mailman! But I'm always up for a bit of fishing if you ever feel like it.
+-> Mailman: Yeah, I know… that's why I needed something to keep busy.
+
+Option 1:
+
+Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
+
+Mail man: Oh right, sorry! I just need you to sign right here.
+
+Mikkel: Thanks! Our kids ordered them online, I wasn't sure they'd even arrive.
+
+Gertrude: You thought they were scammers!!
+
+Mail man: Well, can't be too careful! Thank you for letting me in. See you another time.
+
+Mikkel: Thank you for not robbing us!
+
+Gertrude: Come back anytime for some tea!
+
+Option 2:
+
+Mikkel: Oh so you got my package! Where do I sign?
+
+Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
+
+Mikkel: Done. Thank you!
+
+Mail man: Thank you! Have a nice afternoon.
+===
+
+title: 
