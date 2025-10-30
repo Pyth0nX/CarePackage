@@ -1,6 +1,6 @@
 ﻿title: setup
 color: orange
-position: -285,-1018
+position: -965,-1121
 ---
 <<declare $family = 0>>
 <<declare $relationshipFamA = 0>>
@@ -9,7 +9,7 @@ position: -285,-1018
 
 title: start
 color: blue
-position: -276,-803
+position: -1177,-1121
 ---
 Mailman: *Knock knock*
 <<if $family == 1>>
@@ -19,10 +19,9 @@ Mailman: *Knock knock*
 
 title: FamA
 when: $day == 1 && $package == "backpack" && $damage == 0
-position: -1426,-631
+position: -1430,-609
 color: purple
-group: FamA
-group: Day1
+group: FamA && Day1
 ---
 <<setBackground "BGFamA">>
 <<once>>
@@ -50,8 +49,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 title: engage1
 position: -1428,-386
 color: green
-group: FamA
-group: Day1
+group: FamA && Day1
 ---
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -69,9 +67,8 @@ Sofie: YES! Can I have it? pleeaaase.
 
 title: end1
 color: orange
-position: -1184,-526
-group: FamA
-group: Day1
+position: -1157,-520
+group: FamA && Day1
 ---
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thank you, have a nice day.
@@ -82,10 +79,9 @@ Mailman: You too.
 ===
 
 title: end2
-position: -1150,-383
+position: -1156,-388
 color: green
-group: FamA
-group: Day1
+group: FamA && Day1
 ---
 <<set $relationshipFamA += 2>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -100,10 +96,9 @@ Mailman: Have a great evening, both of you!
 
 title: FamA
 when: $day == 1 && $package != "backpack"
-position: -1426,-631
 color: purple
-group: FamA
-group: Day1
+group: FamA && Day1
+position: -1430,-895
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -128,10 +123,9 @@ Lina: Remember to come back with the right package, please.
 
 title: FamA
 when: $day == 1 && $package == "backpack" && $damage == 1
-position: -1426,-631
+position: -1426,-756
 color: purple
-group: FamA
-group: Day1
+group: FamA && Day1
 ---
 <<once>>
 <<setBackgroung "BGFamA">>
@@ -162,6 +156,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 title: engage4
 color: green
 group: FamA && Day1
+position: -1164,-659
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yes…But mom promised to get me a new backpack!
@@ -207,6 +202,7 @@ Sofie: YES! Can I have it, please?
 title: end3
 color: green
 group: FamA && Day1
+position: -1162,-799
 ---
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
@@ -224,9 +220,8 @@ title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 0
 //undamaged package
 color: purple
-group: FamA
-group: Day2
-position: -921,-631
+group: FamA && Day2
+position: -805,-644
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -262,7 +257,7 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 
 title: engage2
 color: green
-group: FamA
+group: FamA && Day2
 position: -922,-426
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -279,8 +274,8 @@ Mailman: Have a great day.
 
 title: bad1
 color: red
-group: FamA
-position: -701,-426
+group: FamA && Day2
+position: -699,-426
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: You are not my father, you don't even know me. #emotion:angry
@@ -294,7 +289,7 @@ Mailman: I'm sorry, have a good day.
 
 title: engage3
 color: green
-group: FamA
+group: FamA && Day2
 position: -922,-426
 ---
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -326,9 +321,8 @@ title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 1 && $packageState == "damaged"
 //1st time damaged
 color: purple
-group: FamA
-group: Day2
-position: -921,-631
+group: FamA && Day2
+position: -416,-880
 ---
 <<setBackgroung "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
@@ -357,9 +351,8 @@ title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 2 && $packageState == "damaged"
 //damaged AGAIN 
 color: purple
-group: FamA
-group: Day2
-position: -921,-631
+group: FamA && Day2
+position: -647,-882
 ---
 Mail man: Morning Lina!
 Lina: Sofie, come here!
@@ -377,6 +370,8 @@ Sofie: It’s that my new uniform?
 ===
 
 title: engage5
+group: FamA && Day2
+position: -536,-670
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Some kids already called me weird yesterday because I didn’t have my uniform and my clothes were old.
