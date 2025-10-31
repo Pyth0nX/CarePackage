@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CarePackage.Interaction;
+using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction.Dialogue;
 using CarePackage.Persistance;
 using CarePackage.Main;
@@ -78,7 +79,7 @@ namespace CarePackage.Delivery
                 delivery = _mainDelivery;
             if (delivery == null)
             {
-                STUPIDUITEST.Instance.SetObject(null);
+                GoalIndicator.Instance.SetGoalObject(null);
                 Invoke("EndDayEarly", 2f);
                 return;
             }
@@ -127,7 +128,7 @@ namespace CarePackage.Delivery
                 deliveries.Remove(packageToDeliverSO);
                 _randomNumbers.Remove(packageToDeliver.Id);
                 _timeTakenToDelivery = _deliveryTimer.Stop();
-                EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
+                EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
                 _deliveriesMade++;
                 GetNewJob();
             }
@@ -148,7 +149,7 @@ namespace CarePackage.Delivery
                 var newMail = new Package()
                 {
                     Id = _randomNumbers[i],
-                    Pay = Random.Range(10, 150)
+                    PackageData = new FPackageData(Random.Range(10, 150))
                 };
                 AddDelivery(newMail);
             }
@@ -173,10 +174,9 @@ namespace CarePackage.Delivery
                 Debug.Log($"Child {interactables[i].name} assigned number: {assignedNumber}");
                 
                 var action = interactables[i].InteractAction;
-                if (action is DeliverMail mailAction)
+                if (action is ReceiveDeliveryAction deliveryAction)
                 {
-                    mailAction.WantedLetter = assignedNumber;
-                    mailAction.id = assignedNumber;
+                    deliveryAction.WantedLetter = assignedNumber;
                 }
             }
             GetNewJob();
@@ -202,8 +202,8 @@ namespace CarePackage.Delivery
                 var action = postBox.InteractAction;
                 int id = -1;
                 
-                if (action is DeliverMail mailAction)
-                    id =  mailAction.id;
+                if (action is ReceiveDeliveryAction mailAction)
+                    id =  mailAction.WantedLetter;
                 else if (action is DialogueAction dialogueAction)
                     id =  dialogueAction.id;
                 else continue;
@@ -213,11 +213,11 @@ namespace CarePackage.Delivery
                 Debug.Log("Delivered ID: " + id + " Found Delivery: " + deliveryLocation);
             }
             
-            delivery.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
+            delivery.PackageData.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
             SetCurrentDelivery(delivery);
             
             _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
-            STUPIDUITEST.Instance.SetObject(deliveryLocation);
+            GoalIndicator.Instance.SetGoalObject(deliveryLocation);
         }
 
         private int GetBasePayBasedOnDistance(Vector3 position, Vector3 target)

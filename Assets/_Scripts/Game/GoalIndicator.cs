@@ -3,38 +3,17 @@ using CarePackage.Main;
 using UnityEngine;
 using TMPro;
 
-public class STUPIDUITEST : MonoBehaviour
+public class GoalIndicator : MonoBehaviour
 {
     [SerializeField] private GameObject obj;
     [SerializeField] private Camera cam;
-    [SerializeField] private bool isVisible;
     
     private List<Renderer> _objectRenderers = new();
     private TextMeshProUGUI _indicatorText;
     private float _elapsedTime;
+    private bool _isVisible;
     
-    public void SetObject(GameObject obj)
-    {
-        if (this.obj != null) this.obj.transform.GetChild(this.obj.transform.childCount -1).gameObject.SetActive(false);
-        if (obj == null)
-        {
-            this.obj = null;
-            _indicatorText.text = "";
-            return;
-        }
-        
-        this.obj = obj;
-        _indicatorText.text = "!";
-        this.obj.transform.GetChild(this.obj.transform.childCount - 1).gameObject.SetActive(true);
-        var objRenderer = this.obj.transform.GetChild(0);
-        _objectRenderers.Clear();
-        for (int i = 0; i < objRenderer.childCount; i++)
-        {
-            _objectRenderers.Add(objRenderer.transform.GetChild(i).GetComponent<Renderer>());
-        }
-    }
-    
-    public static STUPIDUITEST Instance;
+    public static GoalIndicator Instance;
 
     private void Awake()
     {
@@ -49,12 +28,12 @@ public class STUPIDUITEST : MonoBehaviour
     
     private void Enable()
     {
-        PlayerController.OnPlayerMoved += CheckObjectInView;
+        PlayerController.OnPlayerMoved += CheckGoalObjectInView;
     }
 
     private void OnDisable()
     {
-        PlayerController.OnPlayerMoved -= CheckObjectInView;
+        PlayerController.OnPlayerMoved -= CheckGoalObjectInView;
     }
 
     private void LateUpdate()
@@ -62,25 +41,46 @@ public class STUPIDUITEST : MonoBehaviour
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime < 0.01f) return;
 
-        CheckObjectInView();
+        CheckGoalObjectInView();
         _elapsedTime = 0;
     }
+    
+    public void SetGoalObject(GameObject goalObj)
+    {
+        if (obj != null) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
+        if (obj == null)
+        {
+            obj = null;
+            _indicatorText.text = "";
+            return;
+        }
+        
+        obj = goalObj;
+        _indicatorText.text = "!";
+        obj.transform.GetChild(obj.transform.childCount - 1).gameObject.SetActive(true);
+        var objRenderer = obj.transform.GetChild(0);
+        _objectRenderers.Clear();
+        for (int i = 0; i < objRenderer.childCount; i++)
+        {
+            _objectRenderers.Add(objRenderer.transform.GetChild(i).GetComponent<Renderer>());
+        }
+    }
 
-    private void CheckObjectInView()
+    private void CheckGoalObjectInView()
     {
         if (obj == null || _indicatorText == null) return;
         if (_objectRenderers == null) return;
         
-        isVisible = false;
+        _isVisible = false;
         foreach (var render in _objectRenderers)
         {
             if (render.isVisible)
             {
-                isVisible = true;
+                _isVisible = true;
                 break;
             }
         }
-        _indicatorText.enabled = isVisible;
+        _indicatorText.enabled = _isVisible;
         if (!_indicatorText.enabled) return;
         
         Vector3 screenPos = cam.WorldToScreenPoint(obj.transform.position + obj.transform.up * 1.33f);

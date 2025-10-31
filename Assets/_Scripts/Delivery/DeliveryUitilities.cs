@@ -10,7 +10,6 @@ namespace CarePackage.Delivery
             return new Package
             {
                 Id = soPackage.Id,
-                Pay = soPackage.Pay,
                 PackageData = soPackage.PackageData,
                 ItemGUID = soPackage.Item != null ? soPackage.Item.GUID : string.Empty
             };
@@ -26,7 +25,6 @@ namespace CarePackage.Delivery
             
             var so = ScriptableObject.CreateInstance<SO_Package>();
             so.Id = package.Id;
-            so.Pay = package.Pay;
             so.PackageData = package.PackageData;
             so.Item = item;
             return so;

@@ -251,16 +251,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactAction:
-    rid: 5509776417514848325
+    rid: 7586773879207755845
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 5509776417514848325
-      type: {class: DeliverMail, ns: CarePackage.Interaction, asm: Assembly-CSharp}
+    - rid: 7586773879207755845
+      type: {class: ReceiveDeliveryAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
       data:
         wantedPackage: -1
-        id: -1
 --- !u!1 &5490596006909826266
 GameObject:
   m_ObjectHideFlags: 0

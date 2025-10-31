@@ -3212,7 +3212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &173167391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11403,6 +11403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::STUPIDUITEST
   obj: {fileID: 0}
   cam: {fileID: 1952587034}
+  isVisible: 0
 --- !u!1 &552589999
 GameObject:
   m_ObjectHideFlags: 0
@@ -18658,7 +18659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &889432716
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18823,7 +18824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c308d548e925363438eb6b28466c92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapEnabled: 1
+  mapEnabled: 0
   enablingShortcut: 109
   disablingShortcut: 109
   mapShape: {fileID: 21300000, guid: 6e9f250a811c3d44badd4a6675084748, type: 3}
@@ -24803,7 +24804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1154154131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26695,7 +26696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1215390374
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29690,7 +29691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1356404881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31920,7 +31921,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1479031351
 RectTransform:
   m_ObjectHideFlags: 0

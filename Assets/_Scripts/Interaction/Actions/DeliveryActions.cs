@@ -29,6 +29,35 @@ namespace CarePackage.Interaction.Delivery
     }
     
     [Serializable]
+    public class ReceiveDeliveryAction : InteractAction
+    {
+        [SerializeField] private int wantedPackage;
+        
+        private DeliveryManager _deliveryManager;
+        
+        public int WantedLetter { get => wantedPackage; set => wantedPackage = value; }
+
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            if (interactingPlayer.DeliveryManager == null) return;
+            _deliveryManager = interactingPlayer.DeliveryManager;
+            
+            ReceivePackage();
+        }
+
+        public bool ReceivePackage()
+        {
+            var packageToDeliver = _deliveryManager.GetCurrentDelivery();
+            if (packageToDeliver == null) return false;
+            
+            if (packageToDeliver.Id != wantedPackage) return false;
+            
+            _deliveryManager.DeliverPackage(packageToDeliver);
+            return true;
+        }
+    }
+    
+    [Serializable]
     public class SetListedJobAction : InteractAction, IActivatable
     {
         [SerializeField] private SO_Package job;
