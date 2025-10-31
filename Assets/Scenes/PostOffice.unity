@@ -7850,6 +7850,26 @@ MonoBehaviour:
       sprite: {fileID: -1374852334, guid: b41b7b6694401ca43adcb0a607bb9ea0, type: 3}
     - emotionName: LinaSSpeakingTired
       sprite: {fileID: 368689239, guid: b41b7b6694401ca43adcb0a607bb9ea0, type: 3}
+  - characterName: Mikkel
+    image: {fileID: 1271637802}
+    emotions:
+    - emotionName: Worried
+      sprite: {fileID: 1319880285, guid: 178e4ff2a357b144081f90c74d05ac73, type: 3}
+    - emotionName: TalkingTired
+      sprite: {fileID: -1113577886, guid: 4eed7c22dc903ee4e8b8a5875aed4870, type: 3}
+    - emotionName: TalkingHappy
+      sprite: {fileID: 1551219508, guid: 85cc8971e07d635449a3f60502f805e0, type: 3}
+  - characterName: Gertrude
+    image: {fileID: 1271637802}
+    emotions:
+    - emotionName: Worried
+      sprite: {fileID: 1162464435, guid: 8b6d457876faef345abb8eb55a12d6f4, type: 3}
+    - emotionName: Happy
+      sprite: {fileID: -1104278394, guid: fe71a338909accd46af43b66974eea30, type: 3}
+    - emotionName: TalkingWorried
+      sprite: {fileID: 528205276, guid: 09f6b2e8bddccc14b83fbe4192746659, type: 3}
+    - emotionName: TalkingHappy
+      sprite: {fileID: -228063516, guid: 471eff38cf577604497b9228593d85fc, type: 3}
 --- !u!1 &693107373
 GameObject:
   m_ObjectHideFlags: 0
