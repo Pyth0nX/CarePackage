@@ -1,6 +1,6 @@
 ﻿title: setup
 color: orange
-position: -965,-1121
+position: -1043,-1125
 ---
 <<declare $family = 0>>
 <<declare $relationshipFamA = 0>>
@@ -9,7 +9,7 @@ position: -965,-1121
 
 title: start
 color: blue
-position: -1177,-1121
+position: -1249,-1125
 ---
 Mailman: *Knock knock*
 <<if $family == 1>>
@@ -19,7 +19,7 @@ Mailman: *Knock knock*
 
 title: FamA
 when: $day == 1 && $package == "backpack" && $damage == 0
-position: -1430,-609
+position: -1092,-969
 color: purple
 group: FamA && Day1
 ---
@@ -47,7 +47,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 ===
 
 title: AEn1Day1
-position: -1428,-386
+position: -1514,-662
 color: green
 group: FamA && Day1
 ---
@@ -66,8 +66,8 @@ Sofie: YES! Can I have it? pleeaaase.
 ===
 
 title: AEnd1Day1
-color: orange
-position: -1157,-520
+color: green
+position: -1517,-254
 group: FamA && Day1
 ---
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -79,7 +79,7 @@ Mailman: You too.
 ===
 
 title: AEnd2Day1
-position: -1156,-388
+position: -1299,-797
 color: green
 group: FamA && Day1
 ---
@@ -98,7 +98,7 @@ title: FamA
 when: $day == 1 && $package != "backpack"
 color: purple
 group: FamA && Day1
-position: -1426,-906
+position: -1508,-967
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -123,7 +123,7 @@ Lina: Remember to come back with the right package, please.
 
 title: FamA
 when: $day == 1 && $package == "backpack" && $damage == 1
-position: -1426,-756
+position: -1298,-968
 color: purple
 group: FamA && Day1
 ---
@@ -156,7 +156,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 title: AEn2Day1
 color: green
 group: FamA && Day1
-position: -1164,-659
+position: -1514,-388
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yes…But mom promised to get me a new backpack!
@@ -200,9 +200,9 @@ Sofie: YES! Can I have it, please?
 ===
 
 title: AEnd3Day1
-color: purple
+color: green
 group: FamA && Day1
-position: -1162,-799
+position: -1515,-521
 ---
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
@@ -219,8 +219,9 @@ Mailman: I'm sorry, it won't happen again.
 title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 0
 //undamaged package
+color: purple
 group: FamA && Day2
-position: -872,-647
+position: -272,-971
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -257,7 +258,7 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 title: AEn1Day2
 color: green
 group: FamA && Day2
-position: -922,-426
+position: -1301,-526
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: I didn't mean to say that, I just would like some new clothes. #emotion:sad
@@ -274,7 +275,7 @@ Mailman: Have a great day.
 title: AEnd1Day2
 color: red
 group: FamA && Day2
-position: -699,-426
+position: -1304,-384
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: You are not my father, you don't even know me. #emotion:angry
@@ -289,7 +290,7 @@ Mailman: I'm sorry, have a good day.
 title: AEn2Day2
 color: green
 group: FamA && Day2
-position: -922,-426
+position: -1511,-800
 ---
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: I don't think I ordered anything else
@@ -321,7 +322,7 @@ when: $day == 2 && $package == "uniform" && $damage == 1 && $packageState == "da
 //1st time damaged
 color: purple
 group: FamA && Day2
-position: -416,-880
+position: -684,-975
 ---
 <<setBackgroung "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
@@ -340,10 +341,13 @@ Lina: Anyways, I'm glad it at least arrived.
 Sofie: It's that my new uniform? 
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: That's right, how was your first day?
-<<jump engage5>>
+    <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
+    <<showCharacter "Lina" "SofieSpeakingTired">>
 	Sofie: Thank you Mr.Mailman.
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
 	Lina: Bye Mr.Mailman.
+    <<showCharacter "Lina" "SofieListeningTired">>
 	Mailman: Have a nice day.
 ===
 
@@ -352,7 +356,7 @@ when: $day == 2 && $package == "uniform" && $damage == 2 && $packageState == "da
 //damaged AGAIN 
 color: purple
 group: FamA && Day2
-position: -647,-882
+position: -888,-973
 ---
 <<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Morning Lina!
@@ -370,7 +374,7 @@ Lina: Anyways, I'm glad it at least arrived.
 Sofie: It's that my new uniform? 
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: That's right, how was your first day?
-<<jump engage5>>
+    <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
 	Sofie: Thank you Mr.Mailman.
 	Lina: Bye Mr.Mailman.
@@ -378,8 +382,9 @@ Sofie: It's that my new uniform?
 ===
 
 title: AEn3Day2
+color:green
 group: FamA && Day2
-position: -536,-670
+position: -1302,-662
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
@@ -396,7 +401,7 @@ title: FamA
 when: $relationshipFamA <= 3
 color: purple
 group: FamA && Day2
-position: -164,-453
+position: -479,-971
 ---
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Good Morning Lina! More school supplies I'm guessing.
@@ -405,7 +410,7 @@ Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt lik
 <<showCharacter "Lina" "SofieListeningTired">>
 Sofie:...
 -> Mailman: I might have something for you, let me check.
-<<jump inventory>>
+    <<jump inventory>>
 -> Mailman: I'm glad she has it now, tomorrow will be a better day.
 	Lina: Yeah, let's hope you're right. Have a nice day.
 	Sofie: …
@@ -414,7 +419,7 @@ Sofie:...
 
 title: inventory
 color: orange
-position: -382,-435
+position: -837,-1122
 ---
 -> lollipop
 -> Vera's clothes <<if $VerasClothes == true>>
@@ -428,29 +433,30 @@ color: purple
 group: FamB && Day1
 ---
 Mail man: Good afternoon, is this the house of Mr.Andersen?
-
+<<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
-
+<<showCharacter "Gertrude" "Worried">>
 -> Mailman: No thank you, I'll just wait out here.
-    Mikkel: Alright, he'll be right out.
+    <<showCharacter "Gertrude" "TalkingWorried">>
+    Gertrude: Alright, he'll be right out.
+    <<hideCharacter "Gertrude">>
     *Mrs.Andersen leaves and Mr.Andersen comes*
-
+    <<showCharacter "Mikkel" "Worried">>
     Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
-
-    Mikkel, as he signs: Sure thing.
-
+    <<showCharacter "Mikkel" "TalkingTired">>
+    Mikkel: Sure thing.
+    <<showCharacter "Mikkel" "Worried">>
     Mail man: Thank you, have a lovely evening.
-
+    <<showCharacter "Mikkel" "TalkingTired">>
     Mikkel: You too.
+    <<showCharacter "Mikkel" "Worried">>
 -> Mailman: Oh, thank you! It's pretty warm out here.
-<<jump BEn1Day1>>
-Option 2:
-
-
+    <<jump BEn1Day1>>
 ===
 
 title: BEn1Day1
 ---
+
 Gertrude: Dangerous heat for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 
 Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all day.
