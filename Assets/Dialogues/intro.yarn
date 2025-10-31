@@ -38,15 +38,15 @@ Mailman: Yeah, just started, actually. Still getting the hang of it. You'll have
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Are you nervous?
-    <<jump engage1>>
+    <<jump AEn1Day1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
-    <<jump end1>>
+    <<jump AEnd1Day1>>
 <<else>>
 ...
 <<endonce>>
 ===
 
-title: engage1
+title: AEn1Day1
 position: -1428,-386
 color: green
 group: FamA && Day1
@@ -60,12 +60,12 @@ Mailman: Oh, so that's what I have here for you?
 Sofie: YES! Can I have it? pleeaaase.
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Here you go.
-    <<jump end1>>
+    <<jump AEnd1Day1>>
 -> Mailman: I made sure it brings good luck on your first day.
-    <<jump end2>>
+    <<jump AEnd2Day1>>
 ===
 
-title: end1
+title: AEnd1Day1
 color: orange
 position: -1157,-520
 group: FamA && Day1
@@ -78,7 +78,7 @@ Mailman: You too.
 <<hideBackground>>
 ===
 
-title: end2
+title: AEnd2Day1
 position: -1156,-388
 color: green
 group: FamA && Day1
@@ -98,7 +98,7 @@ title: FamA
 when: $day == 1 && $package != "backpack"
 color: purple
 group: FamA && Day1
-position: -1430,-895
+position: -1426,-906
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -143,9 +143,9 @@ Mailman: Yeah, just started, actually. Still getting the hang of it, you'll have
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<showCharacter "Lina" "LinaListeningTired">>
 -> Mailman: Are you nervous?
-<<jump engage4>>
+<<jump AEn2Day1>>
 -> Mailman: Oh yeah? Well, enjoy your package!
-<<jump end3>> 
+<<jump AEnd3Day1>> 
 <<else>>
 <<setBackgroung "BGFamA">>
 ...
@@ -153,7 +153,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<endonce>>
 ===
 
-title: engage4
+title: AEn2Day1
 color: green
 group: FamA && Day1
 position: -1164,-659
@@ -167,30 +167,30 @@ Sofie: YES! Can I have it, please?
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 -> Mailman: Here you go.
     <<showCharacter "Lina" "SofieSpeakingTired">>
-    Sofie: Oh, it’s a bit squished.
+    Sofie: Oh, it's a bit squished.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You’re right Sofie, what happened to the package?
+    Lina: You're right Sofie, what happened to the package?
     <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: I’m sorry, it must have received some damage on the drive here.
+    Mailman: I'm sorry, it must have received some damage on the drive here.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You should be more careful, you’re lucky this is not fragile.
+    Lina: You should be more careful, you're lucky this is not fragile.
     <<showCharacter "Lina" "SofieListeningTired">>
-    Mail man: You are completely right, I’m so sorry. I’ll drive with more care from now on.
+    Mail man: You are completely right, I'm so sorry. I'll drive with more care from now on.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
     Lina: Okay then, have a good day.
     <<showCharacter "Lina" "SofieListeningTired">>
     Mailman: You too.
 -> Mailman: I made sure it brings good luck on your first day.
     <<showCharacter "Lina" "SofieSpeakingTired">>
-    Sofie: Oh thank you, it’s a bit squished.
+    Sofie: Oh thank you, it's a bit squished.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You’re right Sofie, what happened to the package?
+    Lina: You're right Sofie, what happened to the package?
     <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: I’m sorry, it must have received some damage on the drive here.
+    Mailman: I'm sorry, it must have received some damage on the drive here.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You should be more careful, you’re lucky this is not fragile.
+    Lina: You should be more careful, you're lucky this is not fragile.
     <<showCharacter "Lina" "SofieListeningTired">>
-    Mail man: You are completely right, I’m so sorry. I’ll drive with more care from now on.
+    Mail man: You are completely right, I'm so sorry. I'll drive with more care from now on.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
     Lina: Okay then, have a good day.
     <<showCharacter "Lina" "SofieListeningTired">>
@@ -199,8 +199,8 @@ Sofie: YES! Can I have it, please?
 <<hideBackground>>
 ===
 
-title: end3
-color: green
+title: AEnd3Day1
+color: purple
 group: FamA && Day1
 position: -1162,-799
 ---
@@ -219,9 +219,8 @@ Mailman: I'm sorry, it won't happen again.
 title: FamA
 when: $day == 2 && $package == "uniform" && $damage == 0
 //undamaged package
-color: purple
 group: FamA && Day2
-position: -805,-644
+position: -872,-647
 ---
 <<once>>
 <<setBackground "BGFamA">>
@@ -241,13 +240,13 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: Ouch, I don't think my uniform is stupid. #enotion:nice
     <<set $relationshipFamA += 1>>
-    <<jump engage2>>
+    <<jump AEn1Day2>>
 -> Mailman: You should listen to your mother. #emotion:annoyed
     <<set $relationshipFamA -= 0.5>>
-    <<jump bad1>>
+    <<jump AEnd1Day2>>
 -> Mailman: I might have another package for you. <<if $clothes == true>> 
     <<set $relationshipFamA += 3>>
-    <<jump engage3>>
+    <<jump AEn2Day2>>
 <<else>>
 <<setBackground "BGFamA">>
 ...
@@ -255,7 +254,7 @@ Sofie: Well that is unfair, uniforms are stupid. #emotion:annoyed
 <<endonce>>
 ===
 
-title: engage2
+title: AEn1Day2
 color: green
 group: FamA && Day2
 position: -922,-426
@@ -272,7 +271,7 @@ Mailman: Have a great day.
 <<hideBackground>>
 ===
 
-title: bad1
+title: AEnd1Day2
 color: red
 group: FamA && Day2
 position: -699,-426
@@ -287,7 +286,7 @@ Mailman: I'm sorry, have a good day.
 <<hideBackground>>
 ===
 
-title: engage3
+title: AEn2Day2
 color: green
 group: FamA && Day2
 position: -922,-426
@@ -378,7 +377,7 @@ Sofie: It's that my new uniform?
 	Mailman: Have a nice day.
 ===
 
-title: engage5
+title: AEn3Day2
 group: FamA && Day2
 position: -536,-670
 ---
@@ -397,6 +396,7 @@ title: FamA
 when: $relationshipFamA <= 3
 color: purple
 group: FamA && Day2
+position: -164,-453
 ---
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Good Morning Lina! More school supplies I'm guessing.
@@ -414,6 +414,7 @@ Sofie:...
 
 title: inventory
 color: orange
+position: -382,-435
 ---
 -> lollipop
 -> Vera's clothes <<if $VerasClothes == true>>
@@ -426,10 +427,9 @@ title: FamB
 color: purple 
 group: FamB && Day1
 ---
-Day 1:
 Mail man: Good afternoon, is this the house of Mr.Andersen?
+
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
-CHOICE
 
 -> Mailman: No thank you, I'll just wait out here.
     Mikkel: Alright, he'll be right out.
@@ -443,13 +443,13 @@ CHOICE
 
     Mikkel: You too.
 -> Mailman: Oh, thank you! It's pretty warm out here.
-<<jump engage6>>
+<<jump BEn1Day1>>
 Option 2:
 
 
 ===
 
-title: engage6
+title: BEn1Day1
 ---
 Gertrude: Dangerous heat for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 
@@ -457,10 +457,15 @@ Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all
 *You walk into the living room where Mr.Andersen is at*
 Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends have passed away, and the rest can't make it up the stairs anymore.
 
--> Mailman: 1-Haha, I know the feeling. That's why I became a mailman! But I'm always up for a bit of fishing if you ever feel like it.
+-> Mailman: Haha, I know the feeling. That's why I became a mailman! But I'm always up for a bit of fishing if you ever feel like it.
+<<jump BEn1Day1>>
 -> Mailman: Yeah, I know… that's why I needed something to keep busy.
+<<jump BEnd2Day1>>
+===
 
-Option 1:
+title: BEnd1Day1
+color: green
+---
 
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
 
@@ -476,8 +481,11 @@ Mikkel: Thank you for not robbing us!
 
 Gertrude: Come back anytime for some tea!
 
-Option 2:
+===
 
+title: BEnd2Day1
+color: green
+---
 Mikkel: Oh so you got my package! Where do I sign?
 
 Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
