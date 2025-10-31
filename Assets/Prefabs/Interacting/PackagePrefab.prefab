@@ -234,6 +234,7 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967866699972677
+  interactText: Press E
   debug: 0
   references:
     version: 2
@@ -242,6 +243,7 @@ MonoBehaviour:
       type: {class: PackageAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
       data:
         package: {fileID: 0}
+        addedDelivery: 0
 --- !u!114 &8151896957031775992
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ namespace CarePackage.Delivery
     {
         public static Package ToPackage(SO_Package soPackage)
         {
-            return new Package
+            return new Package()
             {
                 Id = soPackage.Id,
                 PackageData = soPackage.PackageData,

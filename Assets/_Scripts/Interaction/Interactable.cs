@@ -10,7 +10,8 @@ namespace CarePackage.Interaction
         [SerializeField] private InteractionType interactionType;
         [SerializeField] private LayerMask interactionLayer;
         [SerializeReference, SR] private InteractAction interactAction;
-
+        [SerializeField] private string interactText;
+        
         [SerializeField] private bool debug;
         
         private InteractionComponent _interactionComponent;
@@ -47,7 +48,8 @@ namespace CarePackage.Interaction
         }
         
         public InteractionType Type {  get => interactionType; }
-        
+        public string InteractText => interactText;
+
         public bool Clickable => interactionType == InteractionType.Clicked;
         public bool Passive => interactionType == InteractionType.Passive;
 

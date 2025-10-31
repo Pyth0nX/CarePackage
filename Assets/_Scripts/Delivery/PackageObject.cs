@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CarePackage.Delivery
@@ -9,12 +10,17 @@ namespace CarePackage.Delivery
         [SerializeField] private Mesh[] meshes;
         [SerializeField] private GameObject[] meshesObj;
         [SerializeField] private EPackageState packageState;
-        [SerializeField] private int velocityThreshold = 5;
+        [SerializeField] private float defaultVelocityThreshold = 12;
+        [SerializeField] private float heldVelocityThreshold = 5;
         [SerializeField] private bool canBeDamaged = false;
+        
+        public float VelocityThreshold { get => _velocityThreshold; set => _velocityThreshold = value; }
+        public float DefaultVelocityThreshold { get => defaultVelocityThreshold; set => defaultVelocityThreshold = value; }
+        public float HeldVelocityThreshold { get => heldVelocityThreshold; set => heldVelocityThreshold = value; }
         
         private MeshFilter _meshFilter;
         private Rigidbody _rigidbody;
-        
+        private float _velocityThreshold;
         private int _currentMeshIndex;
 
         private void Start()
@@ -28,9 +34,13 @@ namespace CarePackage.Delivery
         public void SetDamageEnabled(bool damageEnabled)
         {
             canBeDamaged = damageEnabled;
+        }
+
+        public void TogglePhysics(bool toggle)
+        {
             if (_rigidbody == null) return;
-            _rigidbody.isKinematic = !canBeDamaged;
-            _rigidbody.useGravity = canBeDamaged;
+            _rigidbody.isKinematic = !toggle;
+            _rigidbody.useGravity = toggle;
         }
 
         private void OnCollisionEnter(Collision other)
@@ -54,7 +64,7 @@ namespace CarePackage.Delivery
                 else Debug.Log("side of package hit");
                 
 
-                if (impact >= velocityThreshold) Damage();
+                if (impact >= _velocityThreshold) Damage();
             }
         }
 

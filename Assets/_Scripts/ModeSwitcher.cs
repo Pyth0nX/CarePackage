@@ -126,29 +126,8 @@ namespace CarePackage.Main
             {
                 var package = packageTransform.GetComponent<PackageObject>();
                 if (package == null) continue;
-                package.SetDamageEnabled(rigidBodyEnabled);
+                package.TogglePhysics(rigidBodyEnabled);
             }
-        }
-    }
-}
-
-namespace CarePackage.Interaction.Car
-{
-    public class EnterCarAction : InteractAction
-    {
-        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {
-            var switchMode = interactingPlayer.SwitchMode;
-            switchMode.EnterCarMode(interactingObject.transform);
-        }
-    }
-
-    public class ExitCarAction : InteractAction
-    {
-        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {
-            var switchMode = interactingPlayer.SwitchMode;
-            switchMode.EnterFirstPersonMode(interactingObject.transform.root);
         }
     }
 }

@@ -1,6 +1,7 @@
 using CarePackage.Main;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
+using TMPro;
 
 namespace CarePackage.Interaction
 {
@@ -11,10 +12,12 @@ namespace CarePackage.Interaction
         [SerializeField] private bool castRay;
         [SerializeField, Range(0.1f, 50f)] private float rayDistance = 4.5f;
         [SerializeField] private bool isPlayer = true;
+        [SerializeField] private GameObject interactionUI;
         
         private IInteractable _interactable;
         private MonoBehaviour owner;
-
+        
+        private TextMeshProUGUI _interactionText;
         private float _elapsedTime;
         
         public bool ValidInteraction() => _interactable != null;
@@ -25,6 +28,7 @@ namespace CarePackage.Interaction
         {
             if (isPlayer) owner = GameManager.Instance.Player;
             else owner = transform.root.GetComponent<MonoBehaviour>();
+            _interactionText =  interactionUI.GetComponentInChildren<TextMeshProUGUI>();
         }
 
         private void Update()
@@ -35,6 +39,13 @@ namespace CarePackage.Interaction
         public void SetInteractable(IInteractable interactable)
         {
             _interactable = interactable;
+            
+            if (_interactable == null) interactionUI.SetActive(false);
+            else
+            {
+                _interactionText.text = _interactable.InteractText;
+                interactionUI.SetActive(true);
+            }
         }
 
         private void CheckForInteractions()
@@ -53,6 +64,8 @@ namespace CarePackage.Interaction
                 if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
                 {
                     if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
+
+                    if (_interactable == rayInteractable) return;
                     SetInteractable(rayInteractable);
                     return;
                 }
@@ -95,6 +108,7 @@ namespace CarePackage.Interaction
             {
                 if (!ValidInteraction() || !IsActive) return;
                 TryInteract();
+                interactionUI.SetActive(false);
             }
         }
 

@@ -6,19 +6,29 @@ using UnityEngine.Scripting.APIUpdating;
 namespace CarePackage.Interaction.Miscellaneous
 {
     [Serializable]
-    public class PickupAction : InteractAction
+    public class PickupAction : InteractAction, IPickup
     {
         [SerializeField] private bool hideInstedOfDestroy;
         [SerializeField] private bool disapearAfterUse;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            // Pickup logic
-            interactingPlayer.Pickup(interactingObject);
+            interactingPlayer.Pickup(this, interactingObject);
+        }
 
+        public Vector3 Offset { get; }
+        public GameObject OwningObject { get; set; }
+        
+        public void OnPickedUp(PlayerState interactingPlayer)
+        {
             if (!disapearAfterUse) return;
-            if (hideInstedOfDestroy) interactingObject.SetActive(false);
-            else GameObject.Destroy(interactingObject);
+            if (hideInstedOfDestroy) OwningObject.SetActive(false);
+            else GameObject.Destroy(OwningObject);
+        }
+
+        public void OnDropped(PlayerState interactingPlayer)
+        {
+            
         }
     }
     

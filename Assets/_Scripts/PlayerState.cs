@@ -1,5 +1,6 @@
 using CarePackage.Interaction;
 using CarePackage.Delivery;
+using CarePackage.Interaction.Delivery;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -13,15 +14,14 @@ namespace CarePackage.Main
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
 
-        private GameObject _pickup;
-
         public DeliveryManager DeliveryManager => _deliveryManager;
-
-        public InteractionComponent InteractionComponent =>
-            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
-
+        public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
+        public GameObject PickupObject => _pickup.OwningObject;
+        
+        private IPickup _pickup;
+        
         public bool IsPickupValid => _pickup != null;
 
         private void Awake()
@@ -45,18 +45,31 @@ namespace CarePackage.Main
         }
 
         public GameObject ActivePlayer => _switchMode.ActivePlayer;
-
-        public void Pickup(GameObject objectToPickup)
+        
+        public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
         {
-            objectToPickup.transform.SetParent(pickupLocation);
-            SetPickup(objectToPickup);
-            objectToPickup.transform.localPosition = Vector3.zero;
-            objectToPickup.transform.localPosition += new Vector3(0, -.65f, 0);
-            objectToPickup.transform.localRotation = Quaternion.identity;
+            SetPickup(objectToPickup, objectOfPickup);
+            
+            _pickup.OwningObject.transform.SetParent(pickupLocation);
+            _pickup.OwningObject.transform.localPosition = Vector3.zero;
+            _pickup.OwningObject.transform.localPosition += _pickup.Offset;
+            _pickup.OwningObject.transform.localRotation = Quaternion.identity;
+            
+            FixedJoint joint = pickupLocation.gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = ActivePlayer.GetComponent<Rigidbody>();
+            
+            if (_pickup.OwningObject.TryGetComponent<Interactable>(out var interactable) 
+                && interactable.InteractAction is PackageAction packageAction)
+            {
+                DeliveryManager.SetCurrentHeldDelivery(packageAction.Package);
+            }
+            
+            _pickup.OnPickedUp(this);
         }
 
-        public void SetPickup(GameObject pickedupObject)
+        public void SetPickup(IPickup pickedupObject, GameObject pickupObject)
         {
+            pickedupObject.OwningObject = pickupObject;
             _pickup = pickedupObject;
         }
 
@@ -66,9 +79,11 @@ namespace CarePackage.Main
             Drop(_pickup);
         }
 
-        public void Drop(GameObject objectToDrop)
+        public void Drop(IPickup objectToDrop)
         {
-            objectToDrop.transform.SetParent(null);
+            objectToDrop.OwningObject.transform.SetParent(null);
+            DeliveryManager.SetCurrentHeldDelivery(null);
+            objectToDrop.OnDropped(this);
         }
     }
 }

@@ -20,10 +20,13 @@ namespace CarePackage.Delivery
 
         [SerializeField] private int deliveriesToMake;
         
+        public Package CurrentDelivery => _heldDelivery;
+        
         private List<int> _randomNumbers = new();
         private int _deliveriesMade;
         private JobBoard _jobBoard;
         private Package _mainDelivery;
+        private Package _heldDelivery;
 
         private StopWatch _deliveryTimer = new();
         private float _timeTakenToDelivery;
@@ -72,12 +75,18 @@ namespace CarePackage.Delivery
             GameManager.Instance.EndDayEarly();
         }
 
+        public void SetCurrentHeldDelivery(Package package)
+        {
+            if (package == null) return;
+            _heldDelivery = package;
+        }
+
         public void GetNewJob()
         {
             var delivery = GetRandomJob();
             if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
                 delivery = _mainDelivery;
-            if (delivery == null)
+            if (delivery == null && GameManager.Instance.ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft)
             {
                 GoalIndicator.Instance.SetGoalObject(null);
                 Invoke("EndDayEarly", 2f);
@@ -176,7 +185,7 @@ namespace CarePackage.Delivery
                 var action = interactables[i].InteractAction;
                 if (action is ReceiveDeliveryAction deliveryAction)
                 {
-                    deliveryAction.WantedLetter = assignedNumber;
+                    deliveryAction.WantedPackage = assignedNumber;
                 }
             }
             GetNewJob();
@@ -203,7 +212,7 @@ namespace CarePackage.Delivery
                 int id = -1;
                 
                 if (action is ReceiveDeliveryAction mailAction)
-                    id =  mailAction.WantedLetter;
+                    id =  mailAction.WantedPackage;
                 else if (action is DialogueAction dialogueAction)
                     id =  dialogueAction.id;
                 else continue;

@@ -12,6 +12,12 @@ namespace CarePackage.Main
         [SerializeField] private TMP_Text timeLeftText;
         [SerializeField] private GameObject survivedPanel;
         
+        [SerializeField] private bool automaticallyEndDayWhenNoPackagesLeft = true;
+        [SerializeField] private bool automaticallyLoseAtSpecificDay = true;
+        [SerializeField] private int dayToLose = 3;
+        
+        public bool ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft => automaticallyEndDayWhenNoPackagesLeft;
+        
         private float _elapsedTime;
         [SerializeField] private bool _survived = true;
         private int _day;
@@ -58,7 +64,10 @@ namespace CarePackage.Main
         {
             Debug.Log("Day ended");
             _day++;
-            if (_day >= 3) LoseGame();
+            
+            if (automaticallyLoseAtSpecificDay) 
+                if (_day >= dayToLose) LoseGame();
+            
             DialogueManager.Instance.SetYarnFloat("$day", _day);
             OnDayEnded?.Invoke();
         }
