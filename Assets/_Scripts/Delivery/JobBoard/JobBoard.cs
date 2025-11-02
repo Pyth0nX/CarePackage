@@ -10,12 +10,16 @@ namespace CarePackage.Delivery
 {
     public class JobBoard : MonoBehaviour
     {
-        [SerializeField] private Button[] jobButtons;
+        [SerializeField] private List<Button> jobButtons = new();
         [SerializeField] private GameObject jobListing;
+        [SerializeField] private GameObject jobPrefab;
+        [SerializeField] private Transform jobsContainer;
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
-
+        
+        //private int _movingPackages;
+        private HashSet<GameObject> _movingPackages = new();
         private Package _displayedJob;
         private GameObject _lastClickedButton;
         private List<GameObject> _spawnedPackages = new();
@@ -23,7 +27,7 @@ namespace CarePackage.Delivery
         private TextMeshProUGUI _jobDescription;
         private ConveyorBeltController _conveyorController;
 
-        private void Start()
+        private void Awake()
         {
             FetchJobListedElements();
             if (_conveyorController != null) _conveyorController.SetSpeed(0f);
@@ -34,6 +38,17 @@ namespace CarePackage.Delivery
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
             _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
             _conveyorController = packageConveyerBelt.GetComponentInChildren<ConveyorBeltController>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                var randomIndex = Random.Range(0, _spawnedPackages.Count);
+                GameObject package = _spawnedPackages[randomIndex];
+                _spawnedPackages.Remove(package);
+                Destroy(package);
+            }
         }
 
         private void OnEnable()
@@ -88,57 +103,76 @@ namespace CarePackage.Delivery
             UIManager.Instance.ClosePopupWindow(jobListing);
             MovePackagesAlong();
         }
+
+        public void CreateJob(Package job)
+        {
+            var newJob = Instantiate(jobPrefab, jobsContainer);
+            var rect = newJob.GetComponent<RectTransform>();
+            var screenHeight = 380;
+            var screenWidth = 780;
+            rect.anchoredPosition = new Vector2(Random.Range(-screenWidth, screenWidth), Random.Range(-screenHeight, screenHeight));
+            
+            var interactable = newJob.GetComponent<Interactable>();
+            interactable.InteractAction = new SetListedJobAction();
+            var interactAction = interactable.InteractAction;
+            if (interactAction is SetListedJobAction jobListingAction)
+            {
+                jobListingAction.SetParent(newJob);
+                jobListingAction.SetJob(job);
+            }
+            jobButtons.Add(newJob.GetComponent<Button>());
+        }
         
-        private Vector3 CalculateTargetPosition(int index, float spacing)
+        private Vector3 CalculateTargetPositionFromEnd(int index, float spacing)
         {
             var startPoint = packageConveyerBelt.transform.GetChild(0).position;
             var direction = packageConveyerBelt.transform.GetChild(0).forward;
+            
+            var nextPackage = _spawnedPackages[index];
+            var collider = nextPackage.GetComponent<Collider>();
+            if (collider == null) return startPoint;
+            
+            float offset = index * (GetPackageDepth(collider) + spacing);
+            return startPoint + direction * (5 - offset);
+        }
 
-            float offset = 0f;
-            for (int i = 0; i < index; i++)
-            {
-                var prevPackage = _spawnedPackages[i];
-                var collider = prevPackage.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    offset += collider.bounds.size.z + spacing;
-                }
-            }
-
-            var currentPackage = _spawnedPackages[index];
-            var currentCollider = currentPackage.GetComponent<Collider>();
-            if (currentCollider != null)
-            {
-                offset += currentCollider.bounds.size.z / 2f;
-            }
-
-            return startPoint + direction * offset;
+        private float GetPackageDepth(Collider package)
+        {
+            var bounds = package.bounds;
+            return bounds.size.z;
         }
         
         private void MovePackagesAlong()
         {
+            if (_movingPackages.Count == 0 && _conveyorController != null) 
+                _conveyorController.SetSpeed(1f);
+            
             for (int i = 0; i < _spawnedPackages.Count; i++)
             {
                 var package = _spawnedPackages[i];
-                var targetPosition = CalculateTargetPosition(i, .5f);
+                var targetPosition = CalculateTargetPositionFromEnd(i, 0.5f);
 
-                if (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
-                {
+                if (Vector3.Distance(package.transform.position, targetPosition) > 0.01f) 
                     StartCoroutine(MovePackageToPosition(package, targetPosition));
-                }
             }
         }
         
         private IEnumerator MovePackageToPosition(GameObject package, Vector3 targetPosition)
         {
+            if (_movingPackages.Contains(package)) yield break;
             
-            float speed = 2f; // Adjust as needed
+            _movingPackages.Add(package);
+            var speed = 1f; // Adjust as needed
             while (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
             {
                 package.transform.position = Vector3.MoveTowards(package.transform.position, targetPosition, speed * Time.deltaTime);
                 yield return null;
             }
             package.transform.position = targetPosition;
+            _movingPackages.Remove(package);
+            
+            if (_movingPackages.Count == 0 && _conveyorController != null) 
+                _conveyorController.SetSpeed(0f);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace CarePackage.Delivery
         {
             _deliveriesMade = 0;
             deliveries.Clear();
-            MakeRandomNumbers(Random.Range(3, 15));
+            MakeRandomNumbers(Random.Range(5, 12));
             Invoke("AssignRandomPackages", .1f);
         }
         
@@ -155,12 +155,19 @@ namespace CarePackage.Delivery
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
             {
-                var newMail = new Package()
+                string Title = "Delivery" + _randomNumbers[i];
+                string Description = "Go to Address: " + _randomNumbers[i];
+                var newDelivery = new Package()
                 {
                     Id = _randomNumbers[i],
-                    PackageData = new FPackageData(Random.Range(10, 150))
+                    PackageData = new FPackageData(
+                        Title, 
+                        Description, 
+                        Random.Range(10, 150)
+                        )
                 };
-                AddDelivery(newMail);
+                //AddDelivery(newMail);
+                _jobBoard.CreateJob(newDelivery);
             }
         }
 

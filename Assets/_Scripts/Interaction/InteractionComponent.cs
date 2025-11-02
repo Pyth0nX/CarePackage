@@ -19,6 +19,7 @@ namespace CarePackage.Interaction
         
         private TextMeshProUGUI _interactionText;
         private float _elapsedTime;
+        private bool _inInteraction;
         
         public bool ValidInteraction() => _interactable != null;
         public bool IsPassive => _interactable.Type == InteractionType.Passive;
@@ -33,7 +34,7 @@ namespace CarePackage.Interaction
 
         private void Update()
         {
-            if (castRay) CheckForInteractions();
+            if (castRay && !_inInteraction) CheckForInteractions();
         }
 
         public void SetInteractable(IInteractable interactable)
@@ -41,9 +42,9 @@ namespace CarePackage.Interaction
             _interactable = interactable;
             
             if (_interactable == null) interactionUI.SetActive(false);
-            else
+            else if (_interactable.ShowMessage)
             {
-                _interactionText.text = _interactable.InteractText;
+                _interactionText.text = _interactable.InteractMessage;
                 interactionUI.SetActive(true);
             }
         }
@@ -108,7 +109,6 @@ namespace CarePackage.Interaction
             {
                 if (!ValidInteraction() || !IsActive) return;
                 TryInteract();
-                interactionUI.SetActive(false);
             }
         }
 
@@ -118,6 +118,12 @@ namespace CarePackage.Interaction
             if (_interactable == null) return;
             _interactable.Interact(owner as PlayerState);
             _interactable = null;
+            interactionUI.SetActive(false);
+        }
+
+        public void SetCurrentlyInInteraction(bool inInteraction)
+        {
+            _inInteraction = inInteraction;
         }
 
         private void OnDrawGizmos()

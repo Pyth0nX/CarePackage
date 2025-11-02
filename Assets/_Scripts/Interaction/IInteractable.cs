@@ -6,6 +6,7 @@ namespace CarePackage.Interaction
     {
         void Interact(PlayerState interactingPlayer);
         InteractionType Type { get; }
-        string InteractText { get; }
+        string InteractMessage { get; }
+        bool ShowMessage { get; }
     }
 }

@@ -13,20 +13,24 @@ namespace CarePackage.Interaction.Delivery
         [SerializeField] private bool addedDelivery;
         [SerializeField] private Vector3 offset;
 
-        public Package Package => DeliveryUitilities.ToPackage(package);
+        public Package Package => _internalPackage;
         
         private PackageObject _packageObj;
         private GameObject _owningObject;
+        private Package _internalPackage;
 
         public PackageAction() { package = null; }
 
         public PackageAction(Package inPackage)
         {
+            _internalPackage = inPackage;
             package = DeliveryUitilities.ToScriptableObject(inPackage);
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
+            if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(package);
+            if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             interactingPlayer.Pickup(this, interactingObject);
             if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
@@ -90,24 +94,35 @@ namespace CarePackage.Interaction.Delivery
     {
         [SerializeField] private SO_Package job;
         [SerializeField] private GameObject parent;
+        private Package _internalPackage;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
+            if (job == null) return;
+            if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(job);
 
-            jobManager.SetListedDelivery(DeliveryUitilities.ToPackage(job));
+            jobManager.SetListedDelivery(_internalPackage);
         }
 
         public void OnEnable()
         {
             var text = parent.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = job.PackageData.Title;
+            text.text = _internalPackage.PackageData.Title;
         }
 
         public void OnDisable()
         {
             Debug.Log($"[IActivatable:{this.GetType()}] OnDisable");
+        }
+        
+        public void SetParent(GameObject inParent) => parent = inParent;
+
+        public void SetJob(Package inJob)
+        {
+            job = DeliveryUitilities.ToScriptableObject(inJob);
+            _internalPackage = inJob;
         }
     }
 }

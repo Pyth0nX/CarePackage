@@ -9,7 +9,7 @@ namespace CarePackage.Interaction.Dialogue
     {
         [SerializeField] private string nodeName;
         [SerializeField] private int familyID;
-
+        
         public int id;
 
         private PlayerController playerController;
@@ -18,20 +18,14 @@ namespace CarePackage.Interaction.Dialogue
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
-            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().Id != id) return;
-            if (DialogueManager.Instance == null)
-            {
-                Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
-                return;
-            }
+            var package = _interactingPlayer.DeliveryManager.CurrentDelivery;
+            if (package == null) return; 
+            
+            if (package.Id != id) return;
+            if (DialogueManager.Instance == null) return;
             
             var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
-
-            if (_dialogueRunner == null)
-            {
-                Debug.LogError("[DialogueAction] DialogueRunner not in the instance of GameManager");
-                return;
-            }
+            if (_dialogueRunner == null) return;
 
             if (_dialogueRunner.IsDialogueRunning)
             {
@@ -41,21 +35,18 @@ namespace CarePackage.Interaction.Dialogue
 
             playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
-            Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
-
-            if (playerController == null)
-            {
-                Debug.Log("Player Controller not found");
-                return;
-            }
+            if (playerController == null) return;
             playerController.LockInput(true);
-
-            var delivery = _interactingPlayer.DeliveryManager.GetCurrentDelivery();
+            
+            DialogueManager.Instance.SetYarnFloat("$family", familyID);
 
             if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform") DialogueManager.Instance.SetYarnBool("$clothes", true);
-
-            DialogueManager.Instance.dialogueRunner.VariableStorage.SetValue("$family", familyID);
-
+            DialogueManager.Instance.SetYarnFloat("$Damage", (int)package.PackageData.State);
+            
+            var stateName = package.PackageData.State.ToString();
+            DialogueManager.Instance.SetYarnString("$packageState", stateName);
+            
+            Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
             _dialogueRunner.StartDialogue(nodeName);
         }
 

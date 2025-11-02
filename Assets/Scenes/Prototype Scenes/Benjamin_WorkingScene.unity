@@ -2608,6 +2608,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475459
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -2745,6 +2747,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -5199,6 +5203,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -7346,6 +7352,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -8829,6 +8837,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -9110,6 +9120,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: -2
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -9666,6 +9678,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -10115,6 +10129,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -11122,7 +11138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5978763744521821375, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9084469636125557372, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11627,6 +11643,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475459
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -11798,6 +11816,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -13663,6 +13683,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -16200,6 +16222,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -16337,6 +16361,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -19012,7 +19038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1288789017
 AudioListener:
   m_ObjectHideFlags: 0
@@ -23829,6 +23855,8 @@ MonoBehaviour:
   - {fileID: 760683887}
   - {fileID: 1724619545}
   jobListing: {fileID: 2087993820}
+  jobPrefab: {fileID: 0}
+  jobsContainer: {fileID: 0}
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 787709674}
 --- !u!1 &1623060246
@@ -24315,6 +24343,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 7586773697546682433
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -25262,6 +25292,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -26961,6 +26993,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -28038,6 +28072,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -29179,6 +29215,8 @@ MonoBehaviour:
     m_Bits: 64
   interactAction:
     rid: 1741967783452475460
+  interactText: 
+  showMessage: 0
   debug: 1
   references:
     version: 2
@@ -29788,6 +29826,8 @@ MonoBehaviour:
   - {fileID: 166222791}
   - {fileID: 939090931}
   jobListing: {fileID: 1439505259}
+  jobPrefab: {fileID: 0}
+  jobsContainer: {fileID: 0}
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 1357124567}
 --- !u!224 &2057262305
@@ -30964,7 +31004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7328367307721634624, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8885936716914577251, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_ProvidesContacts

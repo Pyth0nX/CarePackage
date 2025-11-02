@@ -48,7 +48,7 @@ public class GoalIndicator : MonoBehaviour
     public void SetGoalObject(GameObject goalObj)
     {
         if (obj != null) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
-        if (obj == null)
+        if (goalObj == null)
         {
             obj = null;
             _indicatorText.text = "";
