@@ -76,6 +76,12 @@ namespace CarePackage.Delivery
             //UpdateState();
             
             Debug.Log($"Package damaged updated mesh to {packageState}");
+
+            var bridge = UnityEngine.Object.FindFirstObjectByType<YarnPackageBridge>();
+            if (bridge != null)
+            {
+                bridge.UpdateYarnPackageState();
+            }
         }
         
         public void UpdateState()
@@ -91,6 +97,16 @@ namespace CarePackage.Delivery
             {
                 _meshFilter.mesh = meshes[index];
             }
+        }
+
+        public EPackageState GetPackageState()
+        {
+            return packageState;
+        }
+
+        public string GetPackageStateName()
+        {
+            return packageState.ToString();
         }
     }
 }

@@ -18,28 +18,29 @@ Mailman: *Knock knock*
 ===
 
 title: FamA
-when: $day == 1 && $package == "backpack" && $damage == 0
+when: $day == 1 && $package == "backpack" && $packageState == "Pristine" || $packageState == "SlightlyDamaged"
 position: -1637,-804
 color: purple
 group: FamA && Day1
 ---
 <<setBackground "BGFamA">>
 <<once>>
-Mailman: Morning! Are you Lina?
+Mailman: Good afternoon! Are you Lina?
 <<showCharacter "Lina" "SpeakingTired">>
-Lina: That's me! Sofie, your package is here!
+Lina: That's me. Sofie, your package is here!
 <<showCharacter "Lina" "ListeningTired">>
-Mailman: Wonderful! I just need your signature here.
+Mailman: Wonderful! I just need your signature right here.
 <<showCharacter "Lina" "SpeakingTired">>
-Lina: Of course. Are you new around here? I haven't seen you before.
+Lina: Of course. I don't think I've seen you around before, are you new?
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Yeah, just started, actually. Still getting the hang of it. You'll have to be patient with this old man, hahaha.
+Mailman: Yeah, just started actually. Still getting the hang of it. You'll have to be patient with this old man, hahaha.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Oh, so you are just like Sofie! She just started in a new school.
+Lina: Oh, so you are just like Sofie! She's starting at a new school tomorrow.
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: Are you nervous?
+Mailman: Tomorrow? That's exciting! Big day for her then.
+-> Mailman: Feeling nervous about it?
 <<jump AEn1Day1>>
--> Mailman: Oh yeah? Well, enjoy your package!
+-> Mailman: Well, I hope this brightens her evening.
 <<jump AEnd1Day1>>
 <<else>>
 ...
@@ -53,15 +54,15 @@ group: FamA && Day1
 ---
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: Yes...but mom promised to get me a new backpack!
+Sofie: A little... but Mom promised me a brand-new backpack!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, so that's what I have here for you?
+Mailman: Oh, then this must be it!
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: YES! Can I have it? pleeaaase.
+Sofie: Really? Yay! Can I open it now, please?
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: Here you go.
+-> Mailman: Go ahead, it's all yours.
     <<jump AEnd1Day1>>
--> Mailman: I made sure it brings good luck on your first day.
+-> Mailman: I made sure it brings you good luck on your first day.
     <<jump AEnd2Day1>>
 ===
 
@@ -71,9 +72,9 @@ group: FamA && Day1
 color: green
 ---
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Thank you, have a nice day.
+Lina: Thank you so much. Have a nice day.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: You too.
+Mailman: You too. Take care!
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
@@ -85,13 +86,44 @@ group: FamA && Day1
 ---
 <<set $relationshipFamA += 2>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: THANK YOU!
+Sofie: THANK YOU! It's perfect!
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Thanks again! see you around.
+Lina: Thanks again! We'll see you around.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Have a great evening, both of you!
+Mailman: Have a wonderful evening, both of you. And good luck tomorrow!
 <<hideCharacter "Lina">>
 <<hideBackground>>
+===
+
+title: FamA
+when: $day == 1 && $package == "backpack" && $packageState == "Broken" || $packageState == "Flattened"
+position: -1637,-804
+color: purple
+group: FamA && Day1
+---
+<<setBackground "BGFamA">>
+<<once>>
+Mailman: Good afternoon! Are you Lina?
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: That's me. Sofie, your package is here!
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Perfect! I just need your signature right here.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Of course. Are you new around here? I haven't seen you before.
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: Yeah, just started, actually. Still getting the hang of it. You'll have to be patient with this old man, hahaha.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Oh, so you are just like Sofie! She just started in a new school.
+<<showCharacter "Lina" "SofieListeningTired">>
+-> Mailman: Are you nervous?
+-> Mailman: Oh yeah? Well, enjoy your package!
+Lina: Wait! The package is completely ruined! What happened to it?!
+Mailman: I'm sorry, it must have recieved some damage on the way here.
+Lina: This is trashed, you can't let this happen. I'm gonna have to write a complain.
+Mailman: I'm so sorry, I swear this won't happen again.
+<<else>>
+...
+<<endonce>>
 ===
 
 title: FamA
@@ -122,7 +154,7 @@ Lina: Remember to come back with the right package, please.
 ===
 
 title: FamA
-when: $day == 1 && $package == "backpack" && $damage == 1
+when: $day == 1 && $package == "backpack" && $packageState == "Damaged"
 position: -1640,-490
 color: purple
 group: FamA && Day1
@@ -142,10 +174,11 @@ Mailman: Yeah, just started, actually. Still getting the hang of it, you'll have
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 <<showCharacter "Lina" "LinaListeningTired">>
--> Mailman: Are you nervous?
-<<jump AEn2Day1>>
--> Mailman: Oh yeah? Well, enjoy your package!
-<<jump AEnd3Day1>> 
+Mailman: Tomorrow? Big day, huh?
+-> Mailman: Feeling nervous about it?
+    <<jump AEn2Day1>>
+-> Mailman: Well, I hope this brightens her evening.
+    <<jump AEnd3Day1>>
 <<else>>
 <<setBackgroung "BGFamA">>
 ...
@@ -159,42 +192,23 @@ group: FamA && Day1
 position: -1386,-408
 ---
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: Yes…But mom promised to get me a new backpack!
+Sofie: A little... but Mom promised me a new backpack for tomorrow!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, so that's what I have here for you? 
+Mailman: Then this must be it! 
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: YES! Can I have it, please?
+Sofie: Oh... it's kind of squished.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
--> Mailman: Here you go.
-    <<showCharacter "Lina" "SofieSpeakingTired">>
-    Sofie: Oh, it's a bit squished.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You're right Sofie, what happened to the package?
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: I'm sorry, it must have received some damage on the drive here.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You should be more careful, you're lucky this is not fragile.
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mail man: You are completely right, I'm so sorry. I'll drive with more care from now on.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: Okay then, have a good day.
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: You too.
--> Mailman: I made sure it brings good luck on your first day.
-    <<showCharacter "Lina" "SofieSpeakingTired">>
-    Sofie: Oh thank you, it's a bit squished.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You're right Sofie, what happened to the package?
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: I'm sorry, it must have received some damage on the drive here.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: You should be more careful, you're lucky this is not fragile.
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mail man: You are completely right, I'm so sorry. I'll drive with more care from now on.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
-    Lina: Okay then, have a good day.
-    <<showCharacter "Lina" "SofieListeningTired">>
-    Mailman: You too.
+Lina: You're right, Sofie. What happened to the package?
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: I'm really sorry. The road was rough — it must've taken a few bumps on the way here.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: You should be more careful next time. You're lucky this wasn't fragile.
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: You're absolutely right. I'll make sure it doesn't happen again.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Alright. Have a good evening.
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: You too. And good luck tomorrow, Sofie.
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
@@ -205,15 +219,50 @@ group: FamA && Day1
 position: -1394,-576
 ---
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Excuse me, this package is a bit damaged. What the hell happened to it?
+Lina: Excuse me, this package looks damaged. What happened to it?
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I hit some rough bumps on the way here, it must have collided with some of the other packages.
+Mailman: I hit a few rough patches on the road, it probably got knocked around.
 <<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: I know you said you were new, but this can't happen again.
+Lina: I know you said you're new, but this can't happen again.
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I'm sorry, it won't happen again.
-<<hideBackground>>
+Mailman: You're right. It won't. I'm sorry, truly.
 <<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+title: FamA
+when: $day == 1 && $package == "backpack" && $packageState == "Broken" || $packageState == "Flattened"
+color: purple
+group: FamA && Day1
+position: -1643,-650
+---
+<<setBackground "BGFamA">>
+<<once>>
+Mailman: Good afternoon! Are you Lina?
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: That's me. Sofie, your package is here!
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Perfect! Just need your signature right here.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Of course. I haven't seen you before, are you new?
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Yeah, just started this week. Still figuring out the routes. You'll have to be patient with the new guy, haha.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Well... I hope delivering ruined packages doesn't become a habit.
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: Oh no... is it that bad?
+Lina: It's completely crushed! What happened?
+Mailman: I'm really sorry, it must've been damaged on the way here. I take full responsibility.
+Lina: This is unacceptable. I'll have to report it.
+Mailman: I understand. Please, let me make it right next time. I promise I'll be more careful.
+Lina: Let's hope so. Good evening.
+Mailman: You too, ma'am.
+<<hideCharacter "Lina">>
+<<else>>
+...
+<<endonce>>
+<<hideBackground>>
+
 ===
 
 title: FamA

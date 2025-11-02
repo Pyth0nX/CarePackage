@@ -8,7 +8,8 @@ namespace CarePackage.Interaction.Dialogue
     public class DialogueAction : InteractAction, IActivatable
     {
         [SerializeField] private string nodeName;
-        
+        [SerializeField] private int familyID;
+
         public int id;
 
         private PlayerController playerController;
@@ -48,8 +49,12 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
             playerController.LockInput(true);
-            
+
+            var delivery = _interactingPlayer.DeliveryManager.GetCurrentDelivery();
+
             if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform") DialogueManager.Instance.SetYarnBool("$clothes", true);
+
+            DialogueManager.Instance.dialogueRunner.VariableStorage.SetValue("$family", familyID);
 
             _dialogueRunner.StartDialogue(nodeName);
         }
