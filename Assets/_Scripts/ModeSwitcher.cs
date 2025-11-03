@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using CarePackage.Delivery;
-using CarePackage.Main;
+using CarePackage.Interaction;
+using CarePackage.Interaction.Delivery;
+using CarePackage.Utilities;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -11,6 +14,7 @@ namespace CarePackage.Main
         [SerializeField] private GameObject carCamera;
         [SerializeField] private GameObject idleCarPrefab;
         [SerializeField] private Transform transitPackages;
+        [SerializeField] private GameObject packagePrefab;
 
         public GameObject CarCamera => carCamera;
         public GameObject Car { get => _car; set => _car = value; }
@@ -37,6 +41,47 @@ namespace CarePackage.Main
             _currentPlayer = FirstPersonPlayer != null && FirstPersonPlayer.activeInHierarchy ? FirstPersonPlayer : Car;
         }
 
+        private void Start()
+        {
+            GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.onDayStarted -= OnDayStarted_Implementation;
+        }
+
+        private void OnDayStarted_Implementation(int day)
+        {
+            var offset = .8f;
+            var count = GameManager.Instance.Player.DeliveryManager.DeliveriesToMake;
+            SpawnInitalPackages(count, offset);
+        }
+
+        private void SpawnInitalPackages(int count, float offset)
+        {
+            var center = TransitPackages.position;
+            var positions = PositionUtilities.GenerateStrict2x3Grid(center, count, offset);
+            var packages = GameManager.Instance.Player.DeliveryManager.Deliveries;
+            List<PackageObject> packageObjects = new();
+            
+            for (int i = 0; i < count; i++)
+            {
+                var newPackage = Instantiate(packagePrefab, positions[i], Quaternion.identity);
+                //newPackage.transform.SetParent(transitPackages.transform, true);
+                var interactable = newPackage.GetComponent<Interactable>();
+                interactable.InteractAction = new PackageInSceneAction(packages[i], true, new Vector3(0, -0.1f, 0));
+                var package = newPackage.GetComponent<PackageObject>();
+                packageObjects.Add(package);
+            }
+            
+            foreach (var package in packageObjects)
+            {
+                package.TogglePhysics(true);
+                package.SetDamageEnabled(true);
+            }
+        }
+
         public void EnterCarMode(Transform originalTransform)
         {
             SavePackageTransforms();
@@ -59,6 +104,9 @@ namespace CarePackage.Main
             SetPackagesRigid(true);
             
             _currentPlayer = Car;
+            var deliveryManager = GameManager.Instance.Player.DeliveryManager;
+            var postBox = deliveryManager.FindPostBoxWithId(deliveryManager.CurrentDeliveryId);
+            deliveryManager.ToggleIndicator(postBox);
         }
 
         public void EnterFirstPersonMode(Transform originalTransform)
@@ -96,6 +144,10 @@ namespace CarePackage.Main
             CarCamera.SetActive(false);
             FirstPersonPlayer.SetActive(true);
             _currentPlayer = FirstPersonPlayer;
+
+            var deliveryManager = GameManager.Instance.Player.DeliveryManager;
+            var wantedPackage = deliveryManager.FindDeliveryPackageWithId(deliveryManager.CurrentDeliveryId);
+            deliveryManager.ToggleIndicator(wantedPackage);
         }
         
         private void SavePackageTransforms()

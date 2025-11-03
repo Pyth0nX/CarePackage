@@ -2,18 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
-using TMPro;
+using CarePackage.Main;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace CarePackage.Delivery
 {
+    [System.Serializable]
+    public class ScriptedJob
+    {
+        [SerializeField] private int dayToAppear;
+        [SerializeField] private SO_Package deliveryToAppear;
+            
+        public int TargetDay => dayToAppear;
+        public Package TargetPackage => DeliveryUitilities.ToPackage(deliveryToAppear);
+    }
+    
     public class JobBoard : MonoBehaviour
     {
         [SerializeField] private List<Button> jobButtons = new();
         [SerializeField] private GameObject jobListing;
         [SerializeField] private GameObject jobPrefab;
         [SerializeField] private Transform jobsContainer;
+        [SerializeField] private float maxOffset = 5f;
+        
+        [SerializeField] private List<ScriptedJob> scriptedJobs = new();
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
@@ -45,10 +59,27 @@ namespace CarePackage.Delivery
             if (Input.GetKeyDown(KeyCode.J))
             {
                 var randomIndex = Random.Range(0, _spawnedPackages.Count);
-                GameObject package = _spawnedPackages[randomIndex];
-                _spawnedPackages.Remove(package);
-                Destroy(package);
+                RemovePackageFromConveyerBelt(randomIndex);
             }
+            
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Debug.Log("There are " + GetScriptedJobsByDay(GameManager.Instance.CurrentDay) + " scripted deliveries for the current day: " + GameManager.Instance.CurrentDay);
+            }
+        }
+
+        private void RemovePackageFromConveyerBelt(int index)
+        {
+            GameObject package = _spawnedPackages[index];
+            _spawnedPackages.Remove(package);
+            Destroy(package);
+        }
+        
+        public void RemovePackageFromConveyerBelt(GameObject objToFind)
+        {
+            GameObject package = _spawnedPackages.Find(obj => obj == objToFind);
+            _spawnedPackages.Remove(package);
+            Destroy(package);
         }
 
         private void OnEnable()
@@ -95,13 +126,16 @@ namespace CarePackage.Delivery
         public void OnAcceptJobClicked()
         {
             if (_displayedJob == null) return;
-            GameObject newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
-            var package = newPackage.GetComponent<Interactable>();
-            package.InteractAction = new PackageAction(_displayedJob);
+            var newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
+            var package = newPackage.GetComponent<PackageObject>();
+            var packageInteractable = newPackage.GetComponent<Interactable>();
+            packageInteractable.InteractAction = new PackageAction(_displayedJob);
+            
             _spawnedPackages.Add(newPackage);
             OnExitJobClicked(_lastClickedButton);
-            UIManager.Instance.ClosePopupWindow(jobListing);
             MovePackagesAlong();
+            UIManager.Instance.ClosePopupWindow(jobListing);
+            package.TogglePhysics(false);
         }
 
         public void CreateJob(Package job)
@@ -123,6 +157,25 @@ namespace CarePackage.Delivery
             jobButtons.Add(newJob.GetComponent<Button>());
         }
         
+        public void CheckScriptedJobs()
+        {
+            var day = GameManager.Instance.CurrentDay;
+            foreach (var scriptedJob in scriptedJobs)
+            {
+                if (scriptedJob.TargetDay != day)
+                {
+                    Debug.Log($"Skipping job {scriptedJob.TargetDay} as it is not the current day: {day}");
+                    continue;
+                }
+                CreateJob(scriptedJob.TargetPackage);
+            }
+        }
+
+        public int GetScriptedJobsByDay(int day)
+        {
+            return scriptedJobs.FindAll(j => j.TargetDay == day).Count;
+        }
+        
         private Vector3 CalculateTargetPositionFromEnd(int index, float spacing)
         {
             var startPoint = packageConveyerBelt.transform.GetChild(0).position;
@@ -133,7 +186,7 @@ namespace CarePackage.Delivery
             if (collider == null) return startPoint;
             
             float offset = index * (GetPackageDepth(collider) + spacing);
-            return startPoint + direction * (5 - offset);
+            return startPoint + direction * (maxOffset - offset);
         }
 
         private float GetPackageDepth(Collider package)

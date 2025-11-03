@@ -7,7 +7,7 @@ using TMPro;
 namespace CarePackage.Interaction.Delivery
 {
     [Serializable]
-    public class PackageAction : InteractAction, IPickup
+    public class PackageAction : IInteractAction, IPickup
     {
         [SerializeField] private SO_Package package;
         [SerializeField] private bool addedDelivery;
@@ -25,6 +25,16 @@ namespace CarePackage.Interaction.Delivery
         {
             _internalPackage = inPackage;
             package = DeliveryUitilities.ToScriptableObject(inPackage);
+        }
+        
+        public PackageAction(Package inPackage, bool alreadyAdded) : this(inPackage)
+        {
+            addedDelivery = alreadyAdded;
+        }
+        
+        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset) : this(inPackage, alreadyAdded)
+        {
+            offset = inOffset;
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
@@ -45,6 +55,12 @@ namespace CarePackage.Interaction.Delivery
             _packageObj = OwningObject.GetComponent<PackageObject>();
             _packageObj.TogglePhysics(false);
             _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
+            ExtendedOnPickedUp(interactingPlayer);
+        }
+
+        protected virtual void ExtendedOnPickedUp(PlayerState interactingPlayer)
+        {
+            interactingPlayer.DeliveryManager.RemovePackageFromConveyerBelt(_packageObj.gameObject);
         }
 
         public void OnDropped(PlayerState interactingPlayer)
@@ -53,9 +69,24 @@ namespace CarePackage.Interaction.Delivery
             _packageObj.VelocityThreshold = _packageObj.DefaultVelocityThreshold;
         }
     }
-    
+
     [Serializable]
-    public class ReceiveDeliveryAction : InteractAction
+    public class PackageInSceneAction : PackageAction
+    {
+        public PackageInSceneAction(Package inPackage) : base(inPackage) { }
+        public PackageInSceneAction(Package inPackage, bool alreadyAdded) : base(inPackage, alreadyAdded) { }
+        public PackageInSceneAction(Package inPackage, bool alreadyAdded, Vector3 inOffset) : base(inPackage, alreadyAdded, inOffset) { }
+        protected override void ExtendedOnPickedUp(PlayerState interactingPlayer)
+        {
+            base.ExtendedOnPickedUp(interactingPlayer);
+            var wantedId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
+            var postBox = interactingPlayer.DeliveryManager.FindPostBoxWithId(wantedId);
+            interactingPlayer.DeliveryManager.ToggleIndicator(postBox);
+        }
+    }
+
+    [Serializable]
+    public class ReceiveDeliveryAction : IInteractAction
     {
         [SerializeField] private int wantedPackage;
         
@@ -82,15 +113,16 @@ namespace CarePackage.Interaction.Delivery
         {
             var packageToDeliver = _deliveryManager.GetCurrentDelivery();
             if (packageToDeliver == null) return;
-            
+            var f = _deliveryManager.FindDeliveryPackageWithId(packageToDeliver.Id);
             if (packageToDeliver.Id != wantedPackage) return;
             
             _deliveryManager.DeliverPackage(packageToDeliver);
+            GameObject.Destroy(f);
         }
     }
     
     [Serializable]
-    public class SetListedJobAction : InteractAction, IActivatable
+    public class SetListedJobAction : IInteractAction, IActivatable
     {
         [SerializeField] private SO_Package job;
         [SerializeField] private GameObject parent;

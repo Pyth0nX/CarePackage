@@ -43,12 +43,12 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
 
     private void Enable()
     {
-        GameManager.Instance.OnGameRestart += OnGameRestart_Implementation;
+        GameManager.Instance.onGameRestart += OnGameRestart_Implementation;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnGameRestart -= OnGameRestart_Implementation;
+        GameManager.Instance.onGameRestart -= OnGameRestart_Implementation;
     }
     
     private void OnGameRestart_Implementation()

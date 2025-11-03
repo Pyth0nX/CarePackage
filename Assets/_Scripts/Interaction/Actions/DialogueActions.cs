@@ -5,7 +5,7 @@ using System;
 namespace CarePackage.Interaction.Dialogue
 {
     [Serializable]
-    public class DialogueAction : InteractAction, IActivatable
+    public class DialogueAction : IInteractAction, IActivatable
     {
         [SerializeField] private string nodeName;
         [SerializeField] private int familyID;

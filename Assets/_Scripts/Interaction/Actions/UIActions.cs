@@ -5,7 +5,7 @@ using System;
 namespace CarePackage.Interaction.UI
 {
     [Serializable]
-    public class PopPopupWindowAction : InteractAction
+    public class PopPopupWindowAction : IInteractAction
     {
         [SerializeField] private GameObject popupWindow;
 
@@ -16,7 +16,7 @@ namespace CarePackage.Interaction.UI
     }
     
     [Serializable]
-    public class PopPopupWindowsAction : InteractAction
+    public class PopPopupWindowsAction : IInteractAction
     {
         [SerializeField] private GameObject[] popupWindows;
 

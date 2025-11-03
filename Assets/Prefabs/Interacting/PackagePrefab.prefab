@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 41940760829610834}
   - component: {fileID: 1255261761870180772}
   - component: {fileID: 5826967967171365996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 7562792553590417820}
   - component: {fileID: 7883843985238924401}
   - component: {fileID: 5117769591676541985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.27841, y: 0.43, z: -13.28396}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3300002, y: 1.2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2354134860661492467}
@@ -232,18 +232,20 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  interactAction:
-    rid: 1741967866699972677
+  iInteractAction:
+    rid: 7735813133548388455
   interactText: Press E
+  showMessage: 1
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 1741967866699972677
+    - rid: 7735813133548388455
       type: {class: PackageAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
       data:
         package: {fileID: 0}
         addedDelivery: 0
+        offset: {x: 0, y: -0.1, z: 0}
 --- !u!114 &8151896957031775992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +265,8 @@ MonoBehaviour:
   - {fileID: 768334057057307425}
   - {fileID: 1539472756699477838}
   packageState: 0
-  velocityThreshold: 5
+  defaultVelocityThreshold: 12
+  heldVelocityThreshold: 5
   canBeDamaged: 0
 --- !u!54 &2833091412667130690
 Rigidbody:
@@ -273,7 +276,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758858581119899920}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -311,8 +314,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.475, y: 0.5, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0.145}
 --- !u!1 &5454415090124796519
 GameObject:
   m_ObjectHideFlags: 0

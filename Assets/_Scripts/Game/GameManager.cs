@@ -26,10 +26,10 @@ namespace CarePackage.Main
         public int CurrentDay => _day;
         
         // events
-        public Action OnStartGame;
-        public Action OnGameRestart;
-        public Action OnDayStarted;
-        public Action OnDayEnded;
+        public event Action onStartGame;
+        public event Action onGameRestart;
+        public event Action<int> onDayStarted;
+        public event Action<int> onDayEnded;
         
         public PlayerState Player;
 
@@ -48,16 +48,16 @@ namespace CarePackage.Main
 
         public void StartGame()
         {
-            OnStartGame?.Invoke();
+            _day = 1;
+            onStartGame?.Invoke();
         }
         
         public void StartDay()
         {
             _survived = false;
             _elapsedTime = 0f;
-            _day = 1;
             StartCoroutine(DayCoroutine());
-            OnDayStarted?.Invoke();
+            onDayStarted?.Invoke(_day);
         }
 
         private void EndDay()
@@ -69,7 +69,7 @@ namespace CarePackage.Main
                 if (_day >= dayToLose) LoseGame();
             
             DialogueManager.Instance.SetYarnFloat("$day", _day);
-            OnDayEnded?.Invoke();
+            onDayEnded?.Invoke(_day);
         }
 
         public void EndDayEarly()
@@ -108,8 +108,8 @@ namespace CarePackage.Main
         public void RestartGame()
         {
             _survived = false;
-            OnGameRestart?.Invoke();
             _day = 1;
+            onGameRestart?.Invoke();
             StartGame();
             SceneController.Instance.LoadScene("PostOffice");
         }

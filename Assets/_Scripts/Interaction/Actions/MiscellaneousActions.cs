@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 using CarePackage.Main;
+using SerializeReferenceEditor;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace CarePackage.Interaction.Miscellaneous
 {
     [Serializable]
-    public class PickupAction : InteractAction, IPickup
+    public class PickupAction : IInteractAction, IPickup
     {
         [SerializeField] private bool hideInstedOfDestroy;
         [SerializeField] private bool disapearAfterUse;
@@ -33,7 +34,7 @@ namespace CarePackage.Interaction.Miscellaneous
     }
     
     [Serializable]
-    public class ToggleObjectAction : InteractAction
+    public class ToggleObjectAction : IInteractAction
     {
         [SerializeField] private bool enable = true;
         [SerializeField] private bool toggleItself;
@@ -55,9 +56,14 @@ namespace CarePackage.Interaction.Miscellaneous
     }
     
     [Serializable]
-    public class SwitchSceneAction : InteractAction
+    public class SwitchSceneAction : IInteractAction
     {
         [SerializeField] private string sceneName;
+
+        public SwitchSceneAction(string inSceneName)
+        {
+            sceneName = inSceneName;
+        }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {

@@ -2,6 +2,7 @@ using CarePackage.Main;
 using SerializeReferenceEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace CarePackage.Interaction
 {
@@ -9,7 +10,7 @@ namespace CarePackage.Interaction
     {
         [SerializeField] private InteractionType interactionType;
         [SerializeField] private LayerMask interactionLayer;
-        [SerializeReference, SR] private InteractAction interactAction;
+        [FormerlySerializedAs("interactAction")] [SerializeReference, SR] private IInteractAction iInteractAction;
         [SerializeField] private string interactText;
         [SerializeField] private bool showMessage;
         
@@ -17,7 +18,7 @@ namespace CarePackage.Interaction
         
         private InteractionComponent _interactionComponent;
         
-        public InteractAction InteractAction { get => interactAction; set => interactAction = value; }
+        public IInteractAction InteractAction { get => iInteractAction; set => iInteractAction = value; }
 
         private void Start()
         {
@@ -27,7 +28,7 @@ namespace CarePackage.Interaction
 
         private void OnEnable()
         {
-            if (interactAction is IActivatable activatable)
+            if (iInteractAction is IActivatable activatable)
             {
                 activatable.OnEnable();
             }
@@ -35,7 +36,7 @@ namespace CarePackage.Interaction
 
         private void OnDisable()
         {
-            if (interactAction is IActivatable activatable)
+            if (iInteractAction is IActivatable activatable)
             {
                 activatable.OnDisable();
             }
@@ -43,9 +44,9 @@ namespace CarePackage.Interaction
 
         public void Interact(PlayerState interactingPlayer)
         {
-            if (interactAction == null) return;
+            if (iInteractAction == null) return;
             if (debug) Debug.Log($"[Interactable] Interacted {this.name} {Type}");
-            interactAction.PerformAction(interactingPlayer, gameObject);
+            iInteractAction.PerformAction(interactingPlayer, gameObject);
         }
         
         public InteractionType Type => interactionType;

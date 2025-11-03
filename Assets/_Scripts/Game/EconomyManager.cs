@@ -30,17 +30,17 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
 
     private void Enable()
     {
-        GameManager.Instance.OnGameRestart += OnGameRestart_Implementation;
-        GameManager.Instance.OnDayStarted += OnDayStarted_Implementation;
-        GameManager.Instance.OnDayEnded += OnDayEnded_Implementation;
+        GameManager.Instance.onGameRestart += OnGameRestart_Implementation;
+        GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
+        GameManager.Instance.onDayEnded += OnDayEnded_Implementation;
         UpdateMoneyText();
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnGameRestart -= OnGameRestart_Implementation;
-        GameManager.Instance.OnDayStarted -= OnDayStarted_Implementation;
-        GameManager.Instance.OnDayEnded -= OnDayEnded_Implementation;
+        GameManager.Instance.onGameRestart -= OnGameRestart_Implementation;
+        GameManager.Instance.onDayStarted -= OnDayStarted_Implementation;
+        GameManager.Instance.onDayEnded -= OnDayEnded_Implementation;
     }
 
     private void OnGameRestart_Implementation()
@@ -49,14 +49,14 @@ public class EconomyManager : MonoBehaviour, IDataPersistance
         UpdateMoneyText();
     }
     
-    private void OnDayStarted_Implementation()
+    private void OnDayStarted_Implementation(int day)
     {
-        _requiredMoney = requiredMoney * (GameManager.Instance.CurrentDay > 1 ? GameManager.Instance.CurrentDay * 1.2f : 1);
+        _requiredMoney = requiredMoney * (day > 1 ? day * 1.2f : 1);
         if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
         UpdateMoneyText();
     }
 
-    private void OnDayEnded_Implementation()
+    private void OnDayEnded_Implementation(int day)
     {
         if (_money >= GetRequiredMoney)
         {
