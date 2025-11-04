@@ -21,10 +21,10 @@ namespace CarePackage.Delivery
     
     public class JobBoard : MonoBehaviour
     {
-        [SerializeField] private List<Button> jobButtons = new();
         [SerializeField] private GameObject jobListing;
         [SerializeField] private GameObject jobPrefab;
         [SerializeField] private Transform jobsContainer;
+        [SerializeField] private List<Button> jobNotes;
         [SerializeField] private float maxOffset = 5f;
         
         [SerializeField] private List<ScriptedJob> scriptedJobs = new();
@@ -32,7 +32,7 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
         
-        //private int _movingPackages;
+        private List<Button> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
         private Package _displayedJob;
         private GameObject _lastClickedButton;
@@ -79,12 +79,12 @@ namespace CarePackage.Delivery
         {
             GameObject package = _spawnedPackages.Find(obj => obj == objToFind);
             _spawnedPackages.Remove(package);
-            Destroy(package);
+            //Destroy(package);
         }
 
         private void OnEnable()
         {
-            foreach (var button in jobButtons)
+            foreach (var button in _jobButtons)
             {
                 button.onClick.AddListener((() => OnJobClicked(button.gameObject)));
             }
@@ -92,7 +92,7 @@ namespace CarePackage.Delivery
 
         private void OnDisable()
         {
-            foreach (var button in jobButtons)
+            foreach (var button in _jobButtons)
             {
                 button.onClick.RemoveAllListeners();
             }
@@ -154,7 +154,42 @@ namespace CarePackage.Delivery
                 jobListingAction.SetParent(newJob);
                 jobListingAction.SetJob(job);
             }
-            jobButtons.Add(newJob.GetComponent<Button>());
+            _jobButtons.Add(newJob.GetComponent<Button>());
+        }
+
+        public void InitRandomJobsForPackages(List<Package> packages)
+        {
+            for (int i = 0; i < jobNotes.Count - GetScriptedJobsByDay(GameManager.Instance.CurrentDay); i++)
+            {
+                InitJob(packages[i]);
+            }
+        }
+
+        public void InitJob(Package job)
+        {
+            var jobNote = GetAvailableJobNote();
+            if (jobNote == null) return;
+            
+            var interactable = jobNote.GetComponent<Interactable>();
+            interactable.InteractAction = new SetListedJobAction();
+            var interactAction = interactable.InteractAction;
+            if (interactAction is SetListedJobAction jobListingAction)
+            {
+                jobListingAction.SetParent(jobNote.gameObject);
+                jobListingAction.SetJob(job);
+            }
+            _jobButtons.Add(jobNote);
+            jobNote.gameObject.SetActive(true);
+        }
+
+        private Button GetAvailableJobNote()
+        {
+            foreach (var jobNote in jobNotes)
+            {
+                var avaiable = !jobNote.gameObject.activeSelf;
+                if (avaiable) return jobNote;
+            }
+            return null;
         }
         
         public void CheckScriptedJobs()
@@ -167,7 +202,7 @@ namespace CarePackage.Delivery
                     Debug.Log($"Skipping job {scriptedJob.TargetDay} as it is not the current day: {day}");
                     continue;
                 }
-                CreateJob(scriptedJob.TargetPackage);
+                InitJob(scriptedJob.TargetPackage);
             }
         }
 

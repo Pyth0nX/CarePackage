@@ -157,6 +157,7 @@ namespace CarePackage.Delivery
 
         private void AssignRandomPackages()
         {
+            var packages = new List<Package>();
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
             {
@@ -172,8 +173,10 @@ namespace CarePackage.Delivery
                         )
                 };
                 //AddDelivery(newMail);
-                _jobBoard.CreateJob(newDelivery);
+                //_jobBoard.CreateJob(newDelivery);
+                packages.Add(newDelivery);
             }
+            _jobBoard.InitRandomJobsForPackages(packages);
             _jobBoard.CheckScriptedJobs();
         }
 
