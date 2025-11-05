@@ -1,4 +1,3 @@
-using System;
 using CarePackage.Main;
 using CarePackage.Persistance;
 using UnityEngine;
@@ -11,6 +10,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     [Header("Yarn References")]
     public DialogueRunner dialogueRunner;
     public InMemoryVariableStorage variableStorage;
+
+    public bool shouldDebugDialogueNode = false;
 
     void Awake()
     {
@@ -34,6 +35,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     private void Update()
     {
         Debug.Log("Day: " + GetYarnFloat("$day"));
+        if (!shouldDebugDialogueNode) return;
+        Debug.Log(dialogueRunner.Dialogue.CurrentNode);
     }
 
     private void OnEnable()

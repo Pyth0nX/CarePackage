@@ -18,7 +18,7 @@ Mailman: *Knock knock*
 ===
 
 title: FamA1
-//when: $day == 1 && $package == "backpack" && $damage == 0
+//when: $day == 1 && $package == "backpack" && $damage <= 2
 position: -1092,-969
 color: purple
 group: FamA && Day1
@@ -122,13 +122,13 @@ Lina: Remember to come back with the right package, please.
 ===
 
 title: FamA3
-//when: $day == 1 && $package == "backpack" && $damage == 1
+//when: $day == 1 && $package == "backpack" && $damage >= 3
 position: -1298,-968
 color: purple
 group: FamA && Day1
 ---
 <<once>>
-<<setBackgroung "BGFamA">>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Morning! Are you Lina?
 <<showCharacter "Lina" "LinaSpeakingTired">>
@@ -147,7 +147,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Oh yeah? Well, enjoy your package!
 <<jump AEnd3Day1>> 
 <<else>>
-<<setBackgroung "BGFamA">>
+<<setBackground "BGFamA">>
 ...
 <<hideBackground>>
 <<endonce>>
@@ -324,7 +324,7 @@ color: purple
 group: FamA && Day2
 position: -684,-975
 ---
-<<setBackgroung "BGFamA">>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Morning Lina!
 <<showCharacter "Lina" "LinaSpeakingTired">>

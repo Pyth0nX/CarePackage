@@ -12,7 +12,7 @@ namespace CarePackage.Interaction.Dialogue
         
         public int id;
 
-        private PlayerController playerController;
+        private PlayerController _playerController;
         private PlayerState _interactingPlayer;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
@@ -33,10 +33,10 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+            _playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
-            if (playerController == null) return;
-            playerController.LockInput(true);
+            if (_playerController == null) return;
+            _playerController.LockInput(true);
             
             DialogueManager.Instance.SetYarnFloat("$family", familyID);
 
@@ -48,6 +48,8 @@ namespace CarePackage.Interaction.Dialogue
             
             Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
             _dialogueRunner.StartDialogue(nodeName);
+            
+            DialogueManager.Instance.shouldDebugDialogueNode = true;
         }
 
         public void OnEnable()
@@ -74,10 +76,12 @@ namespace CarePackage.Interaction.Dialogue
         private void OnDialogueComplete()
         {
             Debug.Log("[DialogueAction] Dialogue finished — input");
+            
+            DialogueManager.Instance.shouldDebugDialogueNode = false;
 
-            if (playerController == null)
+            if (_playerController == null)
                 return;
-            playerController.LockInput(false); 
+            _playerController.LockInput(false); 
             
             var packageToDeliver = _interactingPlayer.DeliveryManager.GetCurrentDelivery();
             _interactingPlayer.DeliveryManager.DeliverPackage(packageToDeliver);
