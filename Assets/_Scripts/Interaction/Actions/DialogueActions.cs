@@ -1,4 +1,6 @@
-﻿using CarePackage.Main;
+﻿using CarePackage.Interaction.Delivery;
+using CarePackage.Main;
+using Yarn.Unity;
 using UnityEngine;
 using System;
 
@@ -14,17 +16,20 @@ namespace CarePackage.Interaction.Dialogue
 
         private PlayerController _playerController;
         private PlayerState _interactingPlayer;
+        private GameObject _interactingObject;
+        private DialogueRunner _dialogueRunner;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
             var package = _interactingPlayer.DeliveryManager.CurrentDelivery;
-            if (package == null) return; 
-            
+            _interactingObject = interactingObject;
+            if (package == null) return;
+
             if (package.Id != id) return;
             if (DialogueManager.Instance == null) return;
-            
-            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+
+            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
             if (_dialogueRunner == null) return;
 
             if (_dialogueRunner.IsDialogueRunning)
@@ -33,58 +38,61 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            _playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+            _playerController =
+                _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
 
             if (_playerController == null) return;
             _playerController.LockInput(true);
-            
+
             DialogueManager.Instance.SetYarnFloat("$family", familyID);
 
-            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform") DialogueManager.Instance.SetYarnBool("$clothes", true);
+            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform")
+                DialogueManager.Instance.SetYarnBool("$clothes", true);
             DialogueManager.Instance.SetYarnFloat("$Damage", (int)package.PackageData.State);
-            
+
             var stateName = package.PackageData.State.ToString();
             DialogueManager.Instance.SetYarnString("$packageState", stateName);
-            
-            Debug.Log($"[DialogueAction] {interactingPlayer.name} initiates dialogue '{nodeName}' with {interactingObject.name}");
+
             _dialogueRunner.StartDialogue(nodeName);
-            
+#if UNITY_EDITOR
             DialogueManager.Instance.shouldDebugDialogueNode = true;
+#endif
         }
 
         public void OnEnable()
         {
-            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
             if (_dialogueRunner == null)
             {
                     Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
                     return;
             }
-
+            if (_dialogueRunner.onDialogueComplete == null) return;
             _dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
         }
 
         public void OnDisable()
         {
-            var _dialogueRunner = DialogueManager.Instance.dialogueRunner;
-            if (_dialogueRunner != null)
+            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+            if (_dialogueRunner == null)
             {
-                _dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
+                Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
+                return;
             }
+            if (_dialogueRunner.onDialogueComplete == null) return;
+            _dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
         }
 
         private void OnDialogueComplete()
         {
             Debug.Log("[DialogueAction] Dialogue finished — input");
-            
             DialogueManager.Instance.shouldDebugDialogueNode = false;
 
-            if (_playerController == null)
-                return;
-            _playerController.LockInput(false); 
-            
-            var packageToDeliver = _interactingPlayer.DeliveryManager.GetCurrentDelivery();
-            _interactingPlayer.DeliveryManager.DeliverPackage(packageToDeliver);
+            if (_playerController == null) return;
+            _playerController.LockInput(false);
+
+            var receivePackageAction = new ReceiveDeliveryAction(id);
+            receivePackageAction.PerformAction(_interactingPlayer, _interactingObject);
         }
     }
 }

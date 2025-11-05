@@ -17,6 +17,7 @@ namespace CarePackage.Delivery
         
         [SerializeField] private bool overrideRandomDelivery = false;
         [SerializeField] private int mainPackageNumber = 3;
+        [SerializeField] private float newDeliveryDistanceThreshold;
 
         [SerializeField] private int deliveriesToMake;
         
@@ -27,19 +28,18 @@ namespace CarePackage.Delivery
         public int CurrentDeliveryId => _currentDeliveryId;
         
         private List<int> _randomNumbers = new();
-        private int _deliveriesMade;
-        private JobBoard _jobBoard;
+        private StopWatch _deliveryTimer = new();
         private Package _mainDelivery;
         private Package _heldDelivery;
+        private JobBoard _jobBoard;
+        private int _deliveriesMade;
         private int _currentDeliveryId;
-
-        private StopWatch _deliveryTimer = new();
         private float _timeTakenToDelivery;
         private float _directDistanceToDelivery;
         
         private void Awake()
         {
-            if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>(FindObjectsInactive.Include);
+            if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>();
             if (mailboxes == null) mailboxes = GameObject.Find("Mailboxes");
         }
 
@@ -71,7 +71,7 @@ namespace CarePackage.Delivery
         {
             _deliveriesMade = 0;
             deliveries.Clear();
-            MakeRandomNumbers(Random.Range(5, 12));
+            MakeRandomNumbers(Random.Range(4, 12));
             Invoke("AssignRandomPackages", .1f);
         }
         
@@ -136,15 +136,31 @@ namespace CarePackage.Delivery
         
         public void DeliverPackage(Package packageToDeliver)
         {
-            var packageToDeliverSO = DeliveryUitilities.FindById(deliveries, packageToDeliver.Id);
+            var deliveringId = packageToDeliver.Id;
+            var packageToDeliverSO = DeliveryUitilities.FindById(deliveries, deliveringId);
             if (packageToDeliverSO != null)
             {
+                var packageObj = FindDeliveryPackageWithId(deliveringId);
+                
                 deliveries.Remove(packageToDeliverSO);
-                _randomNumbers.Remove(packageToDeliver.Id);
+                _randomNumbers.Remove(deliveringId);
+                
                 _timeTakenToDelivery = _deliveryTimer.Stop();
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
+                
+                if (packageObj != null) Destroy(packageObj);
                 _deliveriesMade++;
                 GetNewJob();
+                
+                var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position, 
+                    GameManager.Instance.Player.ActivePlayer.transform.position);
+                Debug.Log("Goal Distance: " + distanceGoalToPlayer);
+                if (distanceGoalToPlayer > newDeliveryDistanceThreshold) return;
+                
+                var goalPackage = FindDeliveryPackageWithId(_currentDeliveryId);
+                if (goalPackage == null) return;
+                
+                ToggleIndicator(goalPackage);
             }
         }
         
@@ -176,8 +192,8 @@ namespace CarePackage.Delivery
                 //_jobBoard.CreateJob(newDelivery);
                 packages.Add(newDelivery);
             }
-            _jobBoard.InitRandomJobsForPackages(packages);
             _jobBoard.CheckScriptedJobs();
+            _jobBoard.InitRandomJobsForPackages(packages);
         }
 
         public void AssignRandomAddressesForDelivery()
@@ -228,9 +244,9 @@ namespace CarePackage.Delivery
             ToggleIndicator(deliveryLocation);
         }
 
-        public void ToggleIndicator(GameObject wantedGameObject)
+        public void ToggleIndicator(GameObject wantedGameObject, bool hasMapIndicator = true, bool hidePreviousMarker = true)
         {
-            GoalIndicator.Instance.SetGoalObject(wantedGameObject);
+            GoalIndicator.Instance.SetGoalObject(wantedGameObject, hasMapIndicator, hidePreviousMarker);
         }
 
         public GameObject FindPostBoxWithId(int targetId)

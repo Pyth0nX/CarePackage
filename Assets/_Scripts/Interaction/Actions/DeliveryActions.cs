@@ -1,23 +1,24 @@
-using System;
+using CarePackage.Main;
 using CarePackage.Delivery;
 using UnityEngine;
-using CarePackage.Main;
+using System;
 using TMPro;
 
 namespace CarePackage.Interaction.Delivery
 {
     [Serializable]
-    public class PackageAction : IInteractAction, IPickup
+    public class PackageAction : IInteractAction, IPickupExtension
     {
         [SerializeField] private SO_Package package;
         [SerializeField] private bool addedDelivery;
         [SerializeField] private Vector3 offset;
 
         public Package Package => _internalPackage;
+        public Vector3 Offset => offset;
         
         private PackageObject _packageObj;
-        private GameObject _owningObject;
         private Package _internalPackage;
+        private Miscellaneous.PickupAction _pickupAction;
 
         public PackageAction() { package = null; }
 
@@ -31,39 +32,39 @@ namespace CarePackage.Interaction.Delivery
         {
             addedDelivery = alreadyAdded;
         }
-        
+
         public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset) : this(inPackage, alreadyAdded)
         {
             offset = inOffset;
+        }
+
+        public void PickupAction(Miscellaneous.PickupAction pickupAction = null)
+        {
+            if (pickupAction == null) _pickupAction = new Miscellaneous.PickupAction();
+            _pickupAction = pickupAction;
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(package);
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
-            interactingPlayer.Pickup(this, interactingObject);
+            
+            if (_pickupAction != null)
+                _pickupAction.PerformAction(interactingPlayer, interactingObject);
+            
             if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
             addedDelivery = true;
         }
 
-        public Vector3 Offset => offset;
-        public GameObject OwningObject { get => _owningObject; set => _owningObject = value; }
-        
-        public void OnPickedUp(PlayerState interactingPlayer)
-        { 
-            _packageObj = OwningObject.GetComponent<PackageObject>();
-            _packageObj.TogglePhysics(false);
-            _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
-            ExtendedOnPickedUp(interactingPlayer);
-        }
-
-        protected virtual void ExtendedOnPickedUp(PlayerState interactingPlayer)
+        public void ExtendedPickUp(PlayerState interactingPlayer)
         {
-            interactingPlayer.DeliveryManager.RemovePackageFromConveyerBelt(_packageObj.gameObject);
+            _packageObj = _pickupAction.OwningObject.GetComponent<PackageObject>();
+            _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
+            _packageObj.TogglePhysics(false);
         }
 
-        public void OnDropped(PlayerState interactingPlayer)
+        public void ExtendedDropped(PlayerState interactingPlayer)
         {
             _packageObj.TogglePhysics(true);
             _packageObj.VelocityThreshold = _packageObj.DefaultVelocityThreshold;
@@ -71,17 +72,45 @@ namespace CarePackage.Interaction.Delivery
     }
 
     [Serializable]
-    public class PackageInSceneAction : PackageAction
+    public class ConveyerBeltPackagePickup : IPickupExtension
     {
-        public PackageInSceneAction(Package inPackage) : base(inPackage) { }
-        public PackageInSceneAction(Package inPackage, bool alreadyAdded) : base(inPackage, alreadyAdded) { }
-        public PackageInSceneAction(Package inPackage, bool alreadyAdded, Vector3 inOffset) : base(inPackage, alreadyAdded, inOffset) { }
-        protected override void ExtendedOnPickedUp(PlayerState interactingPlayer)
+        [SerializeField] private GameObject packageObject;
+        
+        public ConveyerBeltPackagePickup(GameObject inPackageObject)
         {
-            base.ExtendedOnPickedUp(interactingPlayer);
-            var wantedId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
-            var postBox = interactingPlayer.DeliveryManager.FindPostBoxWithId(wantedId);
-            interactingPlayer.DeliveryManager.ToggleIndicator(postBox);
+            packageObject = inPackageObject;
+        }
+        
+        public void ExtendedPickUp(PlayerState interactingPlayer)
+        {
+            interactingPlayer.DeliveryManager.RemovePackageFromConveyerBelt(packageObject);
+        }
+
+        public void ExtendedDropped(PlayerState interactingPlayer) {}
+    }
+    
+    [Serializable]
+    public class NeigbourHoodPackagePickup : IPickupExtension
+    {
+        private GameObject _goalObject;
+        private int _packageId;
+
+        public NeigbourHoodPackagePickup(int inPackageId, GameObject inGoalObject)
+        {
+            _packageId = inPackageId;
+            _goalObject = inGoalObject;
+        }
+        
+        public void ExtendedPickUp(PlayerState interactingPlayer)
+        {
+            _goalObject = interactingPlayer.DeliveryManager.FindPostBoxWithId(_packageId);
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, true, false);
+        }
+
+        public void ExtendedDropped(PlayerState interactingPlayer)
+        {
+            _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false);
         }
     }
 
@@ -94,30 +123,25 @@ namespace CarePackage.Interaction.Delivery
         
         public int WantedPackage { get => wantedPackage; set => wantedPackage = value; }
 
+        public ReceiveDeliveryAction(int inWantedPackage)
+        {
+            wantedPackage = inWantedPackage;
+        }
+
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             if (interactingPlayer.DeliveryManager == null) return;
             _deliveryManager = interactingPlayer.DeliveryManager;
             
             if (!CanReceivePackage()) return;
-            ReceivePackage();
+            var delivery = _deliveryManager.CurrentDelivery;
+            _deliveryManager.DeliverPackage(delivery);
         }
 
         private bool CanReceivePackage()
         {
             if (_deliveryManager.CurrentDelivery.Id == wantedPackage) return true;
             return false;
-        }
-
-        public void ReceivePackage()
-        {
-            var packageToDeliver = _deliveryManager.GetCurrentDelivery();
-            if (packageToDeliver == null) return;
-            var f = _deliveryManager.FindDeliveryPackageWithId(packageToDeliver.Id);
-            if (packageToDeliver.Id != wantedPackage) return;
-            
-            _deliveryManager.DeliverPackage(packageToDeliver);
-            GameObject.Destroy(f);
         }
     }
     

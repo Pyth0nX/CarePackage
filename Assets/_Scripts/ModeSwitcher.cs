@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using CarePackage.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
+using CarePackage.Interaction.Miscellaneous;
 using CarePackage.Utilities;
+using PrimeTween;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -30,6 +32,7 @@ namespace CarePackage.Main
         private GameObject _idleCarInstance;
         private GameObject _currentPlayer;
         private bool _idleCarInitialized;
+        private List<PackageObject> packageObjects = new();
 
         private void Awake()
         {
@@ -63,23 +66,27 @@ namespace CarePackage.Main
             var center = TransitPackages.position;
             var positions = PositionUtilities.GenerateStrict2x3Grid(center, count, offset);
             var packages = GameManager.Instance.Player.DeliveryManager.Deliveries;
-            List<PackageObject> packageObjects = new();
             
             for (int i = 0; i < count; i++)
             {
                 var newPackage = Instantiate(packagePrefab, positions[i], Quaternion.identity);
                 //newPackage.transform.SetParent(transitPackages.transform, true);
                 var interactable = newPackage.GetComponent<Interactable>();
-                interactable.InteractAction = new PackageInSceneAction(packages[i], true, new Vector3(0, -0.1f, 0));
+                
+                var packageAction = new PackageAction(packages[i], true, new Vector3(0, -0.1f, 0));
+                var extendedPickups = new IPickupExtension[]
+                {
+                    new NeigbourHoodPackagePickup(packages[i].Id, newPackage),
+                    packageAction
+                };
+                var pickupAction = new PickupAction(false, false, packageAction.Offset, extendedPickups);
+                
+                packageAction.PickupAction(pickupAction);
+                interactable.InteractAction = packageAction;
                 var package = newPackage.GetComponent<PackageObject>();
                 packageObjects.Add(package);
             }
-            
-            foreach (var package in packageObjects)
-            {
-                package.TogglePhysics(true);
-                package.SetDamageEnabled(true);
-            }
+            TogglePackagesDamagable(true);
         }
 
         public void EnterCarMode(Transform originalTransform)
@@ -89,7 +96,7 @@ namespace CarePackage.Main
             FirstPersonPlayer.SetActive(false);
             CarCamera.SetActive(true);
             
-            SetPackagesRigid(false);
+            TogglePackagesDamagable(false, 0.1f);
             TransitPackages.SetParent(null, true);
             if (IdleCar != null) IdleCar.SetActive(false);
 
@@ -101,7 +108,7 @@ namespace CarePackage.Main
             
             TransitPackages.SetParent(Car.transform.GetChild(3), true);
             RestorePackageTransforms();
-            SetPackagesRigid(true);
+            TogglePackagesDamagable(true);
             
             _currentPlayer = Car;
             var deliveryManager = GameManager.Instance.Player.DeliveryManager;
@@ -111,7 +118,7 @@ namespace CarePackage.Main
 
         public void EnterFirstPersonMode(Transform originalTransform)
         {
-            SetPackagesRigid(false);
+            TogglePackagesDamagable(false, 0.1f);
             SavePackageTransforms();
             TransitPackages.SetParent(null, true);
 
@@ -131,8 +138,7 @@ namespace CarePackage.Main
             
             var packageLocation = IdleCar.transform.GetChild(3);
             TransitPackages.SetParent(packageLocation, true);
-            //RestorePackageTransforms();
-            SetPackagesRigid(true);
+            TogglePackagesDamagable(true);
 
             var playerStartPos = carPosition + -IdleCar.transform.right * 3f;
             FirstPersonPlayer.transform.position = playerStartPos;
@@ -172,13 +178,12 @@ namespace CarePackage.Main
             }
         }
 
-        private void SetPackagesRigid(bool rigidBodyEnabled)
+        private void TogglePackagesDamagable(bool toggle, float delay = 1f)
         {
-            foreach (Transform packageTransform in TransitPackages)
-            {
-                var package = packageTransform.GetComponent<PackageObject>();
-                if (package == null) continue;
-                package.TogglePhysics(rigidBodyEnabled);
+            foreach (var package in packageObjects)
+            { 
+                Tween.Delay(delay).OnComplete(() => package.TogglePhysics(toggle));
+                Tween.Delay(delay).OnComplete(() => package.SetDamageEnabled(toggle));
             }
         }
     }

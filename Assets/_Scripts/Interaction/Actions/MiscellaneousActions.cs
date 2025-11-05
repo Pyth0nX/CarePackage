@@ -1,28 +1,44 @@
-using System;
-using UnityEngine;
 using CarePackage.Main;
-using SerializeReferenceEditor;
-using UnityEngine.Scripting.APIUpdating;
+using UnityEngine;
+using System;
 
 namespace CarePackage.Interaction.Miscellaneous
 {
     [Serializable]
-    public class PickupAction : IInteractAction, IPickup
+    public class PickupAction : Pickup, IInteractAction
     {
         [SerializeField] private bool hideInstedOfDestroy;
-        [SerializeField] private bool disapearAfterUse;
+        [SerializeField] private bool removeAfterUse;
 
+        public PickupAction(bool inHideInstedOfDestroy = false, bool inDisapearAfterUse = false) : base()
+        {
+            hideInstedOfDestroy = inHideInstedOfDestroy;
+            removeAfterUse = inDisapearAfterUse;
+        }
+        
+        public PickupAction(bool inHideInstedOfDestroy, bool inDisapearAfterUse, Vector3 inOffset) : this(inHideInstedOfDestroy, inDisapearAfterUse)
+        {
+            Offset = inOffset;
+        }
+
+        public PickupAction(bool inHideInstedOfDestroy, bool inDisapearAfterUse, Vector3 inOffset, IPickupExtension inPickupExtension) : this(inHideInstedOfDestroy, inDisapearAfterUse, inOffset)
+        {
+            ExtendedLogic = new[]{ inPickupExtension };
+        }
+        
+        public PickupAction(bool inHideInstedOfDestroy, bool inDisapearAfterUse, Vector3 inOffset, IPickupExtension[] inPickupExtensions) : this(inHideInstedOfDestroy, inDisapearAfterUse, inOffset)
+        {
+            ExtendedLogic = inPickupExtensions;
+        }
+        
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(this, interactingObject);
         }
 
-        public Vector3 Offset { get; }
-        public GameObject OwningObject { get; set; }
-        
         public void OnPickedUp(PlayerState interactingPlayer)
         {
-            if (!disapearAfterUse) return;
+            if (!removeAfterUse) return;
             if (hideInstedOfDestroy) OwningObject.SetActive(false);
             else GameObject.Destroy(OwningObject);
         }

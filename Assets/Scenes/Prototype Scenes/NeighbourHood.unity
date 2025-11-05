@@ -40685,6 +40685,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4214719672869644458, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
+      propertyPath: newDeliveryDistanceThreshold
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4684704552412156944, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab

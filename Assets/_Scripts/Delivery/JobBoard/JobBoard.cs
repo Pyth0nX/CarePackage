@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CarePackage.Interaction;
@@ -6,6 +7,7 @@ using CarePackage.Main;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 namespace CarePackage.Delivery
 {
@@ -79,15 +81,21 @@ namespace CarePackage.Delivery
         {
             GameObject package = _spawnedPackages.Find(obj => obj == objToFind);
             _spawnedPackages.Remove(package);
+            MovePackagesAlong();
             //Destroy(package);
         }
 
-        private void OnEnable()
+        private void Enable()
         {
             foreach (var button in _jobButtons)
             {
                 button.onClick.AddListener((() => OnJobClicked(button.gameObject)));
             }
+        }
+
+        private void OnEnable()
+        {
+            Enable();
         }
 
         private void OnDisable()
@@ -126,16 +134,33 @@ namespace CarePackage.Delivery
         public void OnAcceptJobClicked()
         {
             if (_displayedJob == null) return;
-            var newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
-            var package = newPackage.GetComponent<PackageObject>();
-            var packageInteractable = newPackage.GetComponent<Interactable>();
-            packageInteractable.InteractAction = new PackageAction(_displayedJob);
-            
-            _spawnedPackages.Add(newPackage);
+            CreatePackageForConveyerBelt(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
-            MovePackagesAlong();
             UIManager.Instance.ClosePopupWindow(jobListing);
-            package.TogglePhysics(false);
+        }
+
+        private void CreatePackageForConveyerBelt(Package packageData)
+        {
+            if (packageData == null) return;
+            var package = packageData;
+            
+            var newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
+            var packageInteractable = newPackage.GetComponent<Interactable>();
+            var packageObj = newPackage.GetComponent<PackageObject>();
+            
+            var packageAction = new PackageAction(package, false, new Vector3(0, -0.1f, 0));
+            var extendedPickups = new IPickupExtension[]
+            {
+                new ConveyerBeltPackagePickup(newPackage),
+                packageAction
+            };
+            var pickupAction = new Interaction.Miscellaneous.PickupAction(false, false, packageAction.Offset, extendedPickups);
+            packageAction.PickupAction(pickupAction);
+
+            packageInteractable.InteractAction = packageAction;
+            _spawnedPackages.Add(newPackage);
+            PrimeTween.Tween.Delay(1f).OnComplete(() => packageObj.TogglePhysics(false));
+            MovePackagesAlong();
         }
 
         public void CreateJob(Package job)
@@ -159,7 +184,7 @@ namespace CarePackage.Delivery
 
         public void InitRandomJobsForPackages(List<Package> packages)
         {
-            for (int i = 0; i < jobNotes.Count - GetScriptedJobsByDay(GameManager.Instance.CurrentDay); i++)
+            for (int i = 0; i < packages.Count; i++)
             {
                 InitJob(packages[i]);
             }
@@ -168,7 +193,11 @@ namespace CarePackage.Delivery
         public void InitJob(Package job)
         {
             var jobNote = GetAvailableJobNote();
-            if (jobNote == null) return;
+            if (jobNote == null)
+            {
+                CreatePackageForConveyerBelt(job);
+                return;
+            }
             
             var interactable = jobNote.GetComponent<Interactable>();
             interactable.InteractAction = new SetListedJobAction();
@@ -180,6 +209,7 @@ namespace CarePackage.Delivery
             }
             _jobButtons.Add(jobNote);
             jobNote.gameObject.SetActive(true);
+            Enable();
         }
 
         private Button GetAvailableJobNote()

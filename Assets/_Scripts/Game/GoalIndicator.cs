@@ -12,6 +12,9 @@ public class GoalIndicator : MonoBehaviour
     private TextMeshProUGUI _indicatorText;
     private float _elapsedTime;
     private bool _isVisible;
+
+    public GameObject GoalObject => obj;
+    public Transform GoalTransform => obj.transform;
     
     public static GoalIndicator Instance;
 
@@ -45,9 +48,9 @@ public class GoalIndicator : MonoBehaviour
         _elapsedTime = 0;
     }
     
-    public void SetGoalObject(GameObject goalObj)
+    public void SetGoalObject(GameObject goalObj, bool mapIndicator = true, bool hidePreviousMarker = true)
     {
-        if (obj != null) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
+        if (obj != null && mapIndicator && hidePreviousMarker) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
         if (goalObj == null)
         {
             obj = null;
@@ -57,7 +60,7 @@ public class GoalIndicator : MonoBehaviour
         
         obj = goalObj;
         _indicatorText.text = "!";
-        obj.transform.GetChild(obj.transform.childCount - 1).gameObject.SetActive(true);
+        if (mapIndicator) obj.transform.GetChild(obj.transform.childCount - 1).gameObject.SetActive(true);
         var objRenderer = obj.transform.GetChild(0);
         _objectRenderers.Clear();
         for (int i = 0; i < objRenderer.childCount; i++)
