@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using CarePackage.Main;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Random = UnityEngine.Random;
 
 namespace CarePackage.Delivery
 {
@@ -20,7 +18,7 @@ namespace CarePackage.Delivery
         public int TargetDay => dayToAppear;
         public Package TargetPackage => DeliveryUitilities.ToPackage(deliveryToAppear);
     }
-    
+
     public class JobBoard : MonoBehaviour
     {
         [SerializeField] private GameObject jobListing;
@@ -28,12 +26,12 @@ namespace CarePackage.Delivery
         [SerializeField] private Transform jobsContainer;
         [SerializeField] private List<Button> jobNotes;
         [SerializeField] private float maxOffset = 5f;
-        
+
         [SerializeField] private List<ScriptedJob> scriptedJobs = new();
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
-        
+
         private List<Button> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
         private Package _displayedJob;
@@ -63,10 +61,11 @@ namespace CarePackage.Delivery
                 var randomIndex = Random.Range(0, _spawnedPackages.Count);
                 RemovePackageFromConveyerBelt(randomIndex);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.U))
             {
-                Debug.Log("There are " + GetScriptedJobsByDay(GameManager.Instance.CurrentDay) + " scripted deliveries for the current day: " + GameManager.Instance.CurrentDay);
+                Debug.Log("There are " + GetScriptedJobsByDay(GameManager.Instance.CurrentDay) +
+                          " scripted deliveries for the current day: " + GameManager.Instance.CurrentDay);
             }
         }
 
@@ -76,13 +75,15 @@ namespace CarePackage.Delivery
             _spawnedPackages.Remove(package);
             Destroy(package);
         }
-        
+
         public void RemovePackageFromConveyerBelt(GameObject objToFind)
         {
             GameObject package = _spawnedPackages.Find(obj => obj == objToFind);
+            if (package == null) return;
+
+            Tween.StopAll(package.transform);
             _spawnedPackages.Remove(package);
             MovePackagesAlong();
-            //Destroy(package);
         }
 
         private void Enable()
@@ -105,7 +106,7 @@ namespace CarePackage.Delivery
                 button.onClick.RemoveAllListeners();
             }
         }
-        
+
         public void SetJobListing(Package job)
         {
             _displayedJob = job;
@@ -143,23 +144,21 @@ namespace CarePackage.Delivery
         {
             if (packageData == null) return;
             var package = packageData;
-            
+
             var newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
             var packageInteractable = newPackage.GetComponent<Interactable>();
             var packageObj = newPackage.GetComponent<PackageObject>();
-            
-            var packageAction = new PackageAction(package, false, new Vector3(0, -0.1f, 0));
+
             var extendedPickups = new IPickupExtension[]
             {
-                new ConveyerBeltPackagePickup(newPackage),
-                packageAction
+                new ConveyerBeltPackageExtension(newPackage)
             };
-            var pickupAction = new Interaction.Miscellaneous.PickupAction(false, false, packageAction.Offset, extendedPickups);
-            packageAction.PickupAction(pickupAction);
-
+            var packageAction =
+                new PackageAction(package, false, new Vector3(0, -0.1f, 0), newPackage, extendedPickups);
             packageInteractable.InteractAction = packageAction;
+
             _spawnedPackages.Add(newPackage);
-            PrimeTween.Tween.Delay(1f).OnComplete(() => packageObj.TogglePhysics(false));
+            Tween.Delay(.33f).OnComplete(() => packageObj.TogglePhysics(false));
             MovePackagesAlong();
         }
 
@@ -169,8 +168,9 @@ namespace CarePackage.Delivery
             var rect = newJob.GetComponent<RectTransform>();
             var screenHeight = 380;
             var screenWidth = 780;
-            rect.anchoredPosition = new Vector2(Random.Range(-screenWidth, screenWidth), Random.Range(-screenHeight, screenHeight));
-            
+            rect.anchoredPosition = new Vector2(Random.Range(-screenWidth, screenWidth),
+                Random.Range(-screenHeight, screenHeight));
+
             var interactable = newJob.GetComponent<Interactable>();
             interactable.InteractAction = new SetListedJobAction();
             var interactAction = interactable.InteractAction;
@@ -183,10 +183,37 @@ namespace CarePackage.Delivery
         }
 
         public void InitRandomJobsForPackages(List<Package> packages)
-        {
+        {/*
             for (int i = 0; i < packages.Count; i++)
             {
                 InitJob(packages[i]);
+            }*/
+            
+            if (packages == null || packages.Count == 0)
+                return;
+
+            var scriptedPackages = GetScriptedJobsByDay(GameManager.Instance.CurrentDay);
+            int totalPackages = packages.Count - scriptedPackages;
+            int availableJobNotes = jobNotes.Count - scriptedPackages;
+            int maxAssignable = Mathf.Min(availableJobNotes, totalPackages);
+
+// Scale factor: higher package count → more jobs
+            float biasFactor = Mathf.Clamp01((float)totalPackages / 15f); // assuming 15 is the upper bound
+            int scaledJobs = Mathf.RoundToInt(Mathf.Lerp(3, maxAssignable, biasFactor)); // bias toward higher count
+
+            int jobsToAssign = Mathf.Clamp(scaledJobs, 2, Mathf.Min(10, maxAssignable));
+            
+            List<Package> shuffledPackages = new List<Package>(packages);
+            for (int i = 0; i < shuffledPackages.Count; i++)
+            {
+                int swapIndex = Random.Range(i, shuffledPackages.Count);
+                (shuffledPackages[i], shuffledPackages[swapIndex]) = (shuffledPackages[swapIndex], shuffledPackages[i]);
+            }
+            
+            for (int i = 0; i < shuffledPackages.Count; i++)
+            {
+                if (i < jobsToAssign) InitJob(shuffledPackages[i]);
+                else CreatePackageForConveyerBelt(shuffledPackages[i]);
             }
         }
 
@@ -198,7 +225,7 @@ namespace CarePackage.Delivery
                 CreatePackageForConveyerBelt(job);
                 return;
             }
-            
+
             var interactable = jobNote.GetComponent<Interactable>();
             interactable.InteractAction = new SetListedJobAction();
             var interactAction = interactable.InteractAction;
@@ -207,21 +234,37 @@ namespace CarePackage.Delivery
                 jobListingAction.SetParent(jobNote.gameObject);
                 jobListingAction.SetJob(job);
             }
+
             _jobButtons.Add(jobNote);
             jobNote.gameObject.SetActive(true);
             Enable();
         }
 
         private Button GetAvailableJobNote()
-        {
+        {/*
             foreach (var jobNote in jobNotes)
             {
                 var avaiable = !jobNote.gameObject.activeSelf;
                 if (avaiable) return jobNote;
             }
+            return null;*/
+            
+            int attempts = 0;
+            int maxAttempts = jobNotes.Count;
+
+            while (attempts < maxAttempts)
+            {
+                int randomIndex = Random.Range(0, maxAttempts);
+                var jobNote = jobNotes[randomIndex];
+
+                if (!jobNote.gameObject.activeSelf)
+                    return jobNote;
+
+                attempts++;
+            }
             return null;
         }
-        
+
         public void CheckScriptedJobs()
         {
             var day = GameManager.Instance.CurrentDay;
@@ -240,16 +283,16 @@ namespace CarePackage.Delivery
         {
             return scriptedJobs.FindAll(j => j.TargetDay == day).Count;
         }
-        
+
         private Vector3 CalculateTargetPositionFromEnd(int index, float spacing)
         {
             var startPoint = packageConveyerBelt.transform.GetChild(0).position;
             var direction = packageConveyerBelt.transform.GetChild(0).forward;
-            
+
             var nextPackage = _spawnedPackages[index];
             var collider = nextPackage.GetComponent<Collider>();
             if (collider == null) return startPoint;
-            
+
             float offset = index * (GetPackageDepth(collider) + spacing);
             return startPoint + direction * (maxOffset - offset);
         }
@@ -259,36 +302,29 @@ namespace CarePackage.Delivery
             var bounds = package.bounds;
             return bounds.size.z;
         }
-        
+
         private void MovePackagesAlong()
         {
-            if (_movingPackages.Count == 0 && _conveyorController != null) 
+            if (_movingPackages.Count == 0 && _conveyorController != null)
                 _conveyorController.SetSpeed(1f);
-            
+
             for (int i = 0; i < _spawnedPackages.Count; i++)
             {
                 var package = _spawnedPackages[i];
                 var targetPosition = CalculateTargetPositionFromEnd(i, 0.5f);
 
-                if (Vector3.Distance(package.transform.position, targetPosition) > 0.01f) 
-                    StartCoroutine(MovePackageToPosition(package, targetPosition));
+                if (Vector3.Distance(package.transform.position, targetPosition) < 0.01f && !_movingPackages.Contains(package)) 
+                    continue;
+                _movingPackages.Add(package);
+                package.transform.rotation = Quaternion.identity;
+                Tween.PositionAtSpeed(package.transform, targetPosition, 1.2f, Ease.Linear)
+                    .OnComplete(() => FinishMovingPackage(package));
             }
         }
-        
-        private IEnumerator MovePackageToPosition(GameObject package, Vector3 targetPosition)
+
+        private void FinishMovingPackage(GameObject package)
         {
-            if (_movingPackages.Contains(package)) yield break;
-            
-            _movingPackages.Add(package);
-            var speed = 1f; // Adjust as needed
-            while (Vector3.Distance(package.transform.position, targetPosition) > 0.01f)
-            {
-                package.transform.position = Vector3.MoveTowards(package.transform.position, targetPosition, speed * Time.deltaTime);
-                yield return null;
-            }
-            package.transform.position = targetPosition;
             _movingPackages.Remove(package);
-            
             if (_movingPackages.Count == 0 && _conveyorController != null) 
                 _conveyorController.SetSpeed(0f);
         }

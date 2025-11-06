@@ -21187,6 +21187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   dialogueRunner: {fileID: 947239819}
   variableStorage: {fileID: 947239817}
+  shouldDebugDialogueNode: 0
 --- !u!114 &947239821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40736,7 +40737,7 @@ PrefabInstance:
     - target: {fileID: 5544470459316166213, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: carCamera
       value: 
-      objectReference: {fileID: 775279682}
+      objectReference: {fileID: 775279684}
     - target: {fileID: 5544470459316166213, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: packagePrefab
       value: 

@@ -13,15 +13,13 @@ namespace CarePackage.Main
         private DeliveryManager _deliveryManager;
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
+        private IPickup _pickup;
 
         public DeliveryManager DeliveryManager => _deliveryManager;
         public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
         public GameObject PickupObject => _pickup.OwningObject;
-        
-        private IPickup _pickup;
-        
         public bool IsPickupValid => _pickup != null;
 
         private void Awake()
@@ -54,9 +52,9 @@ namespace CarePackage.Main
             _pickup.OwningObject.transform.localPosition = Vector3.zero;
             _pickup.OwningObject.transform.localPosition += _pickup.Offset;
             _pickup.OwningObject.transform.localRotation = Quaternion.identity;
-            
+            /*
             FixedJoint joint = pickupLocation.gameObject.AddComponent<FixedJoint>();
-            joint.connectedBody = ActivePlayer.GetComponent<Rigidbody>();
+            joint.connectedBody = ActivePlayer.GetComponent<Rigidbody>();*/
             
             if (_pickup.OwningObject.TryGetComponent<Interactable>(out var interactable) 
                 && interactable.InteractAction is PackageAction packageAction)

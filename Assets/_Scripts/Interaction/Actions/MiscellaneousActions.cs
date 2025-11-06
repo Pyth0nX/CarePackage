@@ -45,7 +45,7 @@ namespace CarePackage.Interaction.Miscellaneous
 
         public void OnDropped(PlayerState interactingPlayer)
         {
-            
+            interactingPlayer.SetPickup(null, null);
         }
     }
     

@@ -71,7 +71,7 @@ namespace CarePackage.Delivery
         {
             _deliveriesMade = 0;
             deliveries.Clear();
-            MakeRandomNumbers(Random.Range(4, 12));
+            MakeRandomNumbers(Random.Range(3, 15));
             Invoke("AssignRandomPackages", .1f);
         }
         
@@ -244,9 +244,9 @@ namespace CarePackage.Delivery
             ToggleIndicator(deliveryLocation);
         }
 
-        public void ToggleIndicator(GameObject wantedGameObject, bool hasMapIndicator = true, bool hidePreviousMarker = true)
+        public void ToggleIndicator(GameObject wantedGameObject, bool hasMapIndicator = true, bool hidePreviousMarker = true, float upOffset = 1.33f)
         {
-            GoalIndicator.Instance.SetGoalObject(wantedGameObject, hasMapIndicator, hidePreviousMarker);
+            GoalIndicator.Instance.SetGoalObject(wantedGameObject, hasMapIndicator, hidePreviousMarker, upOffset);
         }
 
         public GameObject FindPostBoxWithId(int targetId)

@@ -56,6 +56,7 @@ namespace CarePackage.Main
         {
             GameManager.Instance.StartDay();
             GameManager.Instance.Player.DeliveryManager.AssignRandomAddressesForDelivery();
+            GoalIndicator.Instance.Camera = GameManager.Instance.Player.SwitchMode.CarCamera;
         }
 
         private void StartTheDay()

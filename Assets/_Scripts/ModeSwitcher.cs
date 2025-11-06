@@ -13,12 +13,12 @@ namespace CarePackage.Main
     public class ModeSwitcher : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private GameObject carCamera;
+        [SerializeField] private Camera carCamera;
         [SerializeField] private GameObject idleCarPrefab;
         [SerializeField] private Transform transitPackages;
         [SerializeField] private GameObject packagePrefab;
 
-        public GameObject CarCamera => carCamera;
+        public Camera CarCamera => carCamera;
         public GameObject Car { get => _car; set => _car = value; }
         public GameObject IdleCar { get => _idleCarInstance; set => _idleCarInstance = value; }
         public GameObject FirstPersonPlayer { get => _firstPersonPlayer; set => _firstPersonPlayer = value; }
@@ -72,18 +72,13 @@ namespace CarePackage.Main
                 var newPackage = Instantiate(packagePrefab, positions[i], Quaternion.identity);
                 //newPackage.transform.SetParent(transitPackages.transform, true);
                 var interactable = newPackage.GetComponent<Interactable>();
-                
-                var packageAction = new PackageAction(packages[i], true, new Vector3(0, -0.1f, 0));
+                var package = newPackage.GetComponent<PackageObject>();
                 var extendedPickups = new IPickupExtension[]
                 {
-                    new NeigbourHoodPackagePickup(packages[i].Id, newPackage),
-                    packageAction
+                    new IndicatorPickupDroppableExtension(packages[i].Id, newPackage)
                 };
-                var pickupAction = new PickupAction(false, false, packageAction.Offset, extendedPickups);
-                
-                packageAction.PickupAction(pickupAction);
+                var packageAction = new PackageAction(packages[i], true, new Vector3(0, -0.1f, 0), newPackage, extendedPickups);
                 interactable.InteractAction = packageAction;
-                var package = newPackage.GetComponent<PackageObject>();
                 packageObjects.Add(package);
             }
             TogglePackagesDamagable(true);
@@ -94,7 +89,7 @@ namespace CarePackage.Main
             SavePackageTransforms();
             
             FirstPersonPlayer.SetActive(false);
-            CarCamera.SetActive(true);
+            CarCamera.gameObject.SetActive(true);
             
             TogglePackagesDamagable(false, 0.1f);
             TransitPackages.SetParent(null, true);
@@ -113,7 +108,8 @@ namespace CarePackage.Main
             _currentPlayer = Car;
             var deliveryManager = GameManager.Instance.Player.DeliveryManager;
             var postBox = deliveryManager.FindPostBoxWithId(deliveryManager.CurrentDeliveryId);
-            deliveryManager.ToggleIndicator(postBox);
+            GoalIndicator.Instance.Camera = carCamera;
+            deliveryManager.ToggleIndicator(postBox, true, false);
         }
 
         public void EnterFirstPersonMode(Transform originalTransform)
@@ -147,13 +143,14 @@ namespace CarePackage.Main
             lookDirection.Normalize();
             FirstPersonPlayer.transform.rotation = Quaternion.LookRotation(lookDirection);
             
-            CarCamera.SetActive(false);
+            CarCamera.gameObject.SetActive(false);
             FirstPersonPlayer.SetActive(true);
             _currentPlayer = FirstPersonPlayer;
 
             var deliveryManager = GameManager.Instance.Player.DeliveryManager;
             var wantedPackage = deliveryManager.FindDeliveryPackageWithId(deliveryManager.CurrentDeliveryId);
-            deliveryManager.ToggleIndicator(wantedPackage);
+            GoalIndicator.Instance.Camera = FirstPersonPlayer.GetComponentInChildren<Camera>();
+            deliveryManager.ToggleIndicator(wantedPackage, false, true, 0f);
         }
         
         private void SavePackageTransforms()

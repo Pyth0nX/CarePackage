@@ -94,13 +94,8 @@ namespace CarePackage.Delivery
         
         public void UpdateState()
         {
-            int index = ((int)packageState + 1) % meshes.Length - 1;
+            int index = (int)packageState;
             _meshFilter.mesh = meshes[index];
-        }
-
-        private void OnDestroy()
-        {
-            GameManager.Instance.Player.SetPickup(null, null);
         }
     }
 }

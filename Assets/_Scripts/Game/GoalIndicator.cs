@@ -11,10 +11,13 @@ public class GoalIndicator : MonoBehaviour
     private List<Renderer> _objectRenderers = new();
     private TextMeshProUGUI _indicatorText;
     private float _elapsedTime;
+    private float _upOffset;
     private bool _isVisible;
+    private bool _canBeVisible = true;
 
     public GameObject GoalObject => obj;
     public Transform GoalTransform => obj.transform;
+    public Camera Camera { get => cam; set => cam = value; }
     
     public static GoalIndicator Instance;
 
@@ -32,11 +35,13 @@ public class GoalIndicator : MonoBehaviour
     private void Enable()
     {
         PlayerController.OnPlayerMoved += CheckGoalObjectInView;
+        AAMAP.MapManager.OnMapEnabled += ToggleRendererCanBeVisible;
     }
 
     private void OnDisable()
     {
         PlayerController.OnPlayerMoved -= CheckGoalObjectInView;
+        AAMAP.MapManager.OnMapEnabled -= ToggleRendererCanBeVisible;
     }
 
     private void LateUpdate()
@@ -48,7 +53,7 @@ public class GoalIndicator : MonoBehaviour
         _elapsedTime = 0;
     }
     
-    public void SetGoalObject(GameObject goalObj, bool mapIndicator = true, bool hidePreviousMarker = true)
+    public void SetGoalObject(GameObject goalObj, bool mapIndicator = true, bool hidePreviousMarker = true, float upOffset = 1.33f)
     {
         if (obj != null && mapIndicator && hidePreviousMarker) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
         if (goalObj == null)
@@ -58,15 +63,18 @@ public class GoalIndicator : MonoBehaviour
             return;
         }
         
+        _upOffset = upOffset;
         obj = goalObj;
         _indicatorText.text = "!";
         if (mapIndicator) obj.transform.GetChild(obj.transform.childCount - 1).gameObject.SetActive(true);
-        var objRenderer = obj.transform.GetChild(0);
+        
         _objectRenderers.Clear();
-        for (int i = 0; i < objRenderer.childCount; i++)
-        {
-            _objectRenderers.Add(objRenderer.transform.GetChild(i).GetComponent<Renderer>());
-        }
+        _objectRenderers.AddRange(obj.GetComponentsInChildren<Renderer>(true));
+    }
+
+    private void ToggleRendererCanBeVisible(bool toggle)
+    {
+        _canBeVisible = !toggle;
     }
 
     private void CheckGoalObjectInView()
@@ -75,6 +83,7 @@ public class GoalIndicator : MonoBehaviour
         if (_objectRenderers == null) return;
         
         _isVisible = false;
+        if (!_canBeVisible) return;
         foreach (var render in _objectRenderers)
         {
             if (render.isVisible)
@@ -85,8 +94,9 @@ public class GoalIndicator : MonoBehaviour
         }
         _indicatorText.enabled = _isVisible;
         if (!_indicatorText.enabled) return;
-        
-        Vector3 screenPos = cam.WorldToScreenPoint(obj.transform.position + obj.transform.up * 1.33f);
+
+        var worldPoint = obj.transform.position + obj.transform.up * _upOffset;
+        Vector3 screenPos = cam.WorldToScreenPoint(worldPoint);
         screenPos.x = Mathf.Clamp(screenPos.x, 0, Screen.width);
         screenPos.y = Mathf.Clamp(screenPos.y, 0, Screen.height);
         transform.position = screenPos;

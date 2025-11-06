@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
 using CarePackage.Persistance;
-using TMPro;
+using PrimeTween;
 using UnityEngine;
+using System;
+using TMPro;
 
 namespace CarePackage.Main
 {
@@ -17,13 +17,14 @@ namespace CarePackage.Main
         [SerializeField] private int dayToLose = 3;
         
         public bool ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft => automaticallyEndDayWhenNoPackagesLeft;
-        
-        private float _elapsedTime;
-        [SerializeField] private bool _survived = true;
-        private int _day;
-        
         public bool Survived => _survived;
         public int CurrentDay => _day;
+
+        private int _elapsedTime;
+        private int _currentSecond;
+        private int _lastUpdateSecond;
+        private bool _survived;
+        private int _day;
         
         // events
         public event Action onStartGame;
@@ -55,16 +56,27 @@ namespace CarePackage.Main
         public void StartDay()
         {
             _survived = false;
-            _elapsedTime = 0f;
-            StartCoroutine(DayCoroutine());
+            _lastUpdateSecond = -1;
+            Tween.Custom(0f, dayTime, dayTime, UpdateTimer, Ease.Linear).OnComplete(EndDay);
             onDayStarted?.Invoke(_day);
+        }
+
+        void UpdateTimer(float elapsed)
+        {
+            _currentSecond = Mathf.FloorToInt(elapsed);
+            if (_currentSecond != _lastUpdateSecond)
+            {
+                _lastUpdateSecond = _currentSecond;
+                _elapsedTime = Mathf.CeilToInt(dayTime - elapsed);
+                var displayTime = TimeSpan.FromSeconds(_elapsedTime);
+                string formattedTime = string.Format("{0:D2}:{1:D2}", displayTime.Minutes, displayTime.Seconds);
+                timeLeftText.text = "Time left: " + formattedTime;
+            }
         }
 
         private void EndDay()
         {
-            Debug.Log("Day ended");
             _day++;
-            
             if (automaticallyLoseAtSpecificDay) 
                 if (_day >= dayToLose) LoseGame();
             
@@ -74,21 +86,7 @@ namespace CarePackage.Main
 
         public void EndDayEarly()
         {
-            StopAllCoroutines();
-            EndDay();
-        }
-
-        private IEnumerator DayCoroutine()
-        {
-            while (_elapsedTime < dayTime)
-            {
-                yield return new WaitForSecondsRealtime(1);
-                _elapsedTime++;
-                var displayedTime = dayTime - _elapsedTime;
-                var displayTime = TimeSpan.FromSeconds(displayedTime);
-                string displayedTimeString = string.Format("{0:D2}:{1:D2}", displayTime.Minutes, displayTime.Seconds);;
-                timeLeftText.text = "Time left: " + displayedTimeString;
-            }
+            Tween.StopAll();
             EndDay();
         }
 

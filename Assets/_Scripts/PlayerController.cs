@@ -8,11 +8,10 @@ namespace CarePackage.Main
     {
         // Editor variables
         [SerializeField] private float speed = 5f;
-        
         [SerializeField] private float jumpForce = 5f;
-        
         [SerializeField, Range(0.01f, 4f)] private float sensitivity = 1f;
-        
+        [SerializeField] private float groundCheckSize;
+        [SerializeField] private Vector3 groundCheckOffset;
         [SerializeField] private GameObject playerCamera;
         
         // private components
@@ -87,7 +86,11 @@ namespace CarePackage.Main
             if (_lockedInput) return;
             if (_rb == null) return;
             
-            _isGrounded = Physics.Raycast(transform.position, -transform.up, out var ground, .65f);
+            //_isGrounded = Physics.Raycast(transform.position, -transform.up, out var ground, groundCheckSize);
+            /*Vector3 origin = transform.position + Vector3.up * 0.1f; // Slight offset to avoid self-collision
+            _isGrounded = Physics.SphereCast(origin, groundCheckSize, Vector3.down, out var groundHit, 2);*/
+            Vector3 checkPosition = transform.position + groundCheckOffset;
+            _isGrounded = Physics.CheckSphere(checkPosition, groundCheckSize);
             
             _rb.linearVelocity = _velocity;
         }
@@ -156,7 +159,7 @@ namespace CarePackage.Main
             else force = Vector3.up;
             
             _rb.AddForce(force.normalized * jumpForce, ForceMode.VelocityChange);
-            _isGrounded = false;
+            //_isGrounded = false;
         }
         
         public void OnLeftClick(InputAction.CallbackContext input)
@@ -177,7 +180,10 @@ namespace CarePackage.Main
         
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(transform.position, -Vector3.up * .65f, Color.yellow);
+            //Debug.DrawRay(transform.position, -Vector3.up * groundCheckSize, Color.yellow);
+            Gizmos.color = _isGrounded ? Color.green : Color.red;
+            Vector3 checkPosition = transform.position + groundCheckOffset;
+            Gizmos.DrawWireSphere(checkPosition, groundCheckSize);
         }
     }
 }

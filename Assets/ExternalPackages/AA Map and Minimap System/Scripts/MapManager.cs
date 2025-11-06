@@ -128,6 +128,8 @@ namespace AAMAP
 
         private readonly string errorMessagePrefix = "<color=orange>AA Map and Minimap System : </color>";
         private readonly string errorMessageSuffix = "Please delete and re-create the map.\n";
+        
+        public static event System.Action<bool> OnMapEnabled;
 
         private void Start()
         {
@@ -235,6 +237,7 @@ namespace AAMAP
                     minimapManager.DisableMinimapForMapEnabling();
                 }
             }
+            OnMapEnabled?.Invoke(true);
         }
 
         /// <summary>
@@ -263,6 +266,7 @@ namespace AAMAP
             mapZoomButtonsObject.SetActive(false);
             exitButtonObject.SetActive(false);
             mapCamera.SetActive(false);
+            OnMapEnabled?.Invoke(false);
         }
 
         /// <summary>

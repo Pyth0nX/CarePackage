@@ -7,59 +7,67 @@ using TMPro;
 namespace CarePackage.Interaction.Delivery
 {
     [Serializable]
-    public class PackageAction : IInteractAction, IPickupExtension
+    public class PackageAction : Pickup, IInteractAction
     {
         [SerializeField] private SO_Package package;
         [SerializeField] private bool addedDelivery;
-        [SerializeField] private Vector3 offset;
 
         public Package Package => _internalPackage;
-        public Vector3 Offset => offset;
         
-        private PackageObject _packageObj;
         private Package _internalPackage;
-        private Miscellaneous.PickupAction _pickupAction;
-
-        public PackageAction() { package = null; }
-
-        public PackageAction(Package inPackage)
+        
+        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension[] inAddtioanlPickupExtensions = null) : base(inOffset, inPickupOwningObject)
         {
             _internalPackage = inPackage;
             package = DeliveryUitilities.ToScriptableObject(inPackage);
+            addedDelivery = alreadyAdded;
+
+            var packageObj = inPickupOwningObject.GetComponent<PackageObject>();
+            var packagePickupExtension = new PackagePickupExtension(packageObj);
+            
+            if (inAddtioanlPickupExtensions == null || inAddtioanlPickupExtensions.Length == 0) ExtendedLogic = new IPickupExtension[] { packagePickupExtension };
+            else
+            {
+                ExtendedLogic = new IPickupExtension[inAddtioanlPickupExtensions.Length + 1];
+                ExtendedLogic[0] = packagePickupExtension;
+                Array.Copy(inAddtioanlPickupExtensions, 0, ExtendedLogic, 1, inAddtioanlPickupExtensions.Length);
+            }
         }
         
-        public PackageAction(Package inPackage, bool alreadyAdded) : this(inPackage)
-        {
-            addedDelivery = alreadyAdded;
-        }
-
-        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset) : this(inPackage, alreadyAdded)
-        {
-            offset = inOffset;
-        }
-
-        public void PickupAction(Miscellaneous.PickupAction pickupAction = null)
-        {
-            if (pickupAction == null) _pickupAction = new Miscellaneous.PickupAction();
-            _pickupAction = pickupAction;
-        }
+        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension inAdditionalPickupExtension) 
+            : this(inPackage, alreadyAdded, inOffset, inPickupOwningObject, new[] {inAdditionalPickupExtension}) {}
+        
+        public PackageAction(Package inPackage, bool alreadyAdded) 
+            : this(inPackage, alreadyAdded, new Vector3(0, -0.1f, 0), null) {}
+        
+        public PackageAction(Package inPackage) 
+            : this(inPackage, false, new Vector3(0, -0.1f, 0), null) {}
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(package);
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
-            if (_pickupAction != null)
-                _pickupAction.PerformAction(interactingPlayer, interactingObject);
+            interactingPlayer.Pickup(this, interactingObject);
             
             if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
             addedDelivery = true;
         }
+    }
 
+    [SerializeField]
+    public class PackagePickupExtension : IPickupExtension
+    {
+        private readonly PackageObject _packageObj;
+
+        public PackagePickupExtension(PackageObject inPackageObj)
+        {
+            _packageObj = inPackageObj;
+        }
+        
         public void ExtendedPickUp(PlayerState interactingPlayer)
         {
-            _packageObj = _pickupAction.OwningObject.GetComponent<PackageObject>();
             _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
             _packageObj.TogglePhysics(false);
         }
@@ -72,30 +80,30 @@ namespace CarePackage.Interaction.Delivery
     }
 
     [Serializable]
-    public class ConveyerBeltPackagePickup : IPickupExtension
+    public class ConveyerBeltPackageExtension : IPickupExtension
     {
-        [SerializeField] private GameObject packageObject;
+        private readonly GameObject _packageObject;
         
-        public ConveyerBeltPackagePickup(GameObject inPackageObject)
+        public ConveyerBeltPackageExtension(GameObject inPackageObject)
         {
-            packageObject = inPackageObject;
+            _packageObject = inPackageObject;
         }
         
         public void ExtendedPickUp(PlayerState interactingPlayer)
         {
-            interactingPlayer.DeliveryManager.RemovePackageFromConveyerBelt(packageObject);
+            interactingPlayer.DeliveryManager.RemovePackageFromConveyerBelt(_packageObject);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer) {}
     }
     
     [Serializable]
-    public class NeigbourHoodPackagePickup : IPickupExtension
+    public class IndicatorPickupDroppableExtension : IPickupExtension
     {
         private GameObject _goalObject;
         private int _packageId;
 
-        public NeigbourHoodPackagePickup(int inPackageId, GameObject inGoalObject)
+        public IndicatorPickupDroppableExtension(int inPackageId, GameObject inGoalObject)
         {
             _packageId = inPackageId;
             _goalObject = inGoalObject;
@@ -110,7 +118,7 @@ namespace CarePackage.Interaction.Delivery
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
             _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
-            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false);
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0);
         }
     }
 

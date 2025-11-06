@@ -17,6 +17,7 @@ namespace CarePackage.Delivery
         
         public static SO_Package ToScriptableObject(Package package)
         {
+            if (package == null) return null;
             SO_Item item = InventoryUtilities.LoadItem(package.ItemGUID);
             if (item == null)
             {
