@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1576409302150616186}
   - component: {fileID: 7370189176313513353}
   - component: {fileID: 6113219870906230577}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 5691203296252020238}
   - component: {fileID: 6348757438964592449}
   - component: {fileID: 9065737164933713002}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 5754348055488991862}
   - component: {fileID: 5221075880245153563}
   - component: {fileID: 7230939636702454143}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MailBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,9 +250,10 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  interactAction:
+  iInteractAction:
     rid: 7586773879207755845
   interactText: Press E
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -270,7 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5091715683356946670}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +307,7 @@ GameObject:
   - component: {fileID: 7716822356579986194}
   - component: {fileID: 9186937625519555033}
   - component: {fileID: 6361904865037471844}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PostInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 773170455439634355, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
       propertyPath: iconOffset.y
-      value: 195
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 773170455439634355, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
       propertyPath: iconRotation
@@ -461,8 +462,16 @@ PrefabInstance:
       value: Map Icon
       objectReference: {fileID: 0}
     - target: {fileID: 6817750119362447771, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817750119362447771, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628506132177668308, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

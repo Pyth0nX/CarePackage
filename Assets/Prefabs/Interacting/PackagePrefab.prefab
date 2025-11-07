@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8151896957031775992}
   - component: {fileID: 2833091412667130690}
   - component: {fileID: 6861793898021509264}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PackagePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   iInteractAction:
     rid: 7735813133548388455
   interactText: Press E
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 2354134860661492467}
   - component: {fileID: 2247037592446891328}
   - component: {fileID: 783670697573968869}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PackageMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3606516190907040015}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using CarePackage.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
-using CarePackage.Interaction.Miscellaneous;
 using CarePackage.Utilities;
 using PrimeTween;
 using UnityEngine;
@@ -32,7 +30,7 @@ namespace CarePackage.Main
         private GameObject _idleCarInstance;
         private GameObject _currentPlayer;
         private bool _idleCarInitialized;
-        private List<PackageObject> packageObjects = new();
+        private readonly List<PackageObject> _packageObjects = new();
 
         private void Awake()
         {
@@ -79,7 +77,7 @@ namespace CarePackage.Main
                 };
                 var packageAction = new PackageAction(packages[i], true, new Vector3(0, -0.1f, 0), newPackage, extendedPickups);
                 interactable.InteractAction = packageAction;
-                packageObjects.Add(package);
+                _packageObjects.Add(package);
             }
             TogglePackagesDamagable(true);
         }
@@ -177,7 +175,7 @@ namespace CarePackage.Main
 
         private void TogglePackagesDamagable(bool toggle, float delay = 1f)
         {
-            foreach (var package in packageObjects)
+            foreach (var package in _packageObjects)
             { 
                 Tween.Delay(delay).OnComplete(() => package.TogglePhysics(toggle));
                 Tween.Delay(delay).OnComplete(() => package.SetDamageEnabled(toggle));

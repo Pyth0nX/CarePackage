@@ -19,7 +19,7 @@ namespace CarePackage.Main
         public bool ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft => automaticallyEndDayWhenNoPackagesLeft;
         public bool Survived => _survived;
         public int CurrentDay => _day;
-
+        
         private int _elapsedTime;
         private int _currentSecond;
         private int _lastUpdateSecond;

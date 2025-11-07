@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4214719672869644458}
   - component: {fileID: 8894910802748203241}
   - component: {fileID: 5544470459316166213}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: _PlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,15 +62,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.DeliveryManager
   currentDelivery:
     Id: 0
-    Pay: 0
     PackageData:
       Title: 
       Description: 
+      Pay: 0
+      State: 0
     ItemGUID: 
   deliveries: []
   mailboxes: {fileID: 0}
   overrideRandomDelivery: 1
   mainPackageNumber: 3
+  newDeliveryDistanceThreshold: 0
   deliveriesToMake: 0
 --- !u!114 &8894910802748203241
 MonoBehaviour:
@@ -101,3 +103,4 @@ MonoBehaviour:
   carCamera: {fileID: 0}
   idleCarPrefab: {fileID: 4266863884866237995, guid: 24ac5f71debd05e458515b8d277edf4f, type: 3}
   transitPackages: {fileID: 0}
+  packagePrefab: {fileID: 0}

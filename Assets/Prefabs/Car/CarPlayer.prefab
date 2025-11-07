@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 5597561399573724088}
   - component: {fileID: 3257700206549437286}
   - component: {fileID: 6182469746297221120}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: ExitCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   iInteractAction:
     rid: 1741967866699972676
   interactText: Press E
@@ -1432,7 +1432,7 @@ GameObject:
   - component: {fileID: 7964839397443059014}
   - component: {fileID: 6847707198639654534}
   - component: {fileID: 3761797852263073786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1524,7 +1524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.InteractionComponent
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   debug: 0
   castRay: 1
   rayDistance: 12.5

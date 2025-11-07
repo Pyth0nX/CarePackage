@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 41940760829610834}
   - component: {fileID: 1255261761870180772}
   - component: {fileID: 5826967967171365996}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 7562792553590417820}
   - component: {fileID: 7883843985238924401}
   - component: {fileID: 5117769591676541985}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 8151896957031775992}
   - component: {fileID: 2833091412667130690}
   - component: {fileID: 6861793898021509264}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PackagePrefabOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,8 +231,8 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
-  interactAction:
+    m_Bits: 256
+  iInteractAction:
     rid: 1741967866699972677
   interactText: Press E
   showMessage: 0
@@ -243,9 +243,11 @@ MonoBehaviour:
     - rid: 1741967866699972677
       type: {class: PackageAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
       data:
+        offset: {x: 0, y: 0, z: 0}
+        owningObject: {fileID: 0}
+        extendedLogic: []
         package: {fileID: 0}
         addedDelivery: 0
-        offset: {x: 0, y: 0, z: 0}
 --- !u!114 &8151896957031775992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,13 +263,9 @@ MonoBehaviour:
   meshes:
   - {fileID: 5060444177187149915, guid: 2ed0cb24939d0bc4cba77432ab850d5b, type: 3}
   - {fileID: 5060444177187149915, guid: aa7867f860846054caf3bf829cc20a54, type: 3}
-  meshesObj:
-  - {fileID: 768334057057307425}
-  - {fileID: 1539472756699477838}
   packageState: 0
   defaultVelocityThreshold: 12
   heldVelocityThreshold: 5
-  canBeDamaged: 0
 --- !u!54 &2833091412667130690
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -327,7 +325,7 @@ GameObject:
   - component: {fileID: 2354134860661492467}
   - component: {fileID: 2247037592446891328}
   - component: {fileID: 783670697573968869}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

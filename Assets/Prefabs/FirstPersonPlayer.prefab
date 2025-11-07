@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5841550476871089910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1014255330470970388}
   - component: {fileID: 4060431457003038306}
   - component: {fileID: 3541426379881687763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2395866738297668125}
   - component: {fileID: 3196773734996463542}
   - component: {fileID: 757693322687045047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main CameraCine
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 2142213611671831051}
   - component: {fileID: 3190916870430315041}
   - component: {fileID: 99630241129946000}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 8059252898339753231}
   - component: {fileID: 2254108587052965598}
   - component: {fileID: 2214417863837985789}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 4576828789916394951}
   - component: {fileID: 2518706479563336972}
   - component: {fileID: 5840708155115867044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 2045160749519290927}
   - component: {fileID: 8311637994205179681}
   - component: {fileID: 1168911209990675615}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirstPersonPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,10 +580,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.InteractionComponent
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   debug: 0
   castRay: 1
-  rayDistance: 4.5
+  rayDistance: 5
   isPlayer: 1
   interactionUI: {fileID: 0}
 --- !u!114 &1160106555430822745
@@ -600,8 +600,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 3.5
   jumpForce: 5
+  jumpForwardBias: 0
+  gravity: 30
   sensitivity: 0.3
+  groundCheckSize: 0.375
+  groundCheckOffset: {x: 0, y: 0.8, z: 0}
+  useExtendedGroundRay: 0
   playerCamera: {fileID: 8201663292159797253}
+  debug: 1
+  airControlRate: 2
 --- !u!114 &2045160749519290927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,7 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 259125009054931929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,6 +957,14 @@ PrefabInstance:
     - target: {fileID: 6817750119362447771, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
       propertyPath: m_Name
       value: Map Icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817750119362447771, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628506132177668308, guid: ff496b830cbb2f344be687e4a3dda0fc, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

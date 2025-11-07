@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 8094847401049338897}
   - component: {fileID: 8017764250877147643}
   - component: {fileID: 9035147032048324947}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: OpenCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,10 +290,11 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
-  interactAction:
+    m_Bits: 256
+  iInteractAction:
     rid: 7586773879207755856
   interactText: Press E
+  showMessage: 0
   debug: 0
   references:
     version: 2
@@ -502,7 +503,7 @@ GameObject:
   - component: {fileID: 2376107366974889276}
   - component: {fileID: 1343624682992447437}
   - component: {fileID: 2930189407867479145}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: EnterCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,10 +561,11 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
-  interactAction:
+    m_Bits: 256
+  iInteractAction:
     rid: 1741967866699972678
   interactText: Press E
+  showMessage: 0
   debug: 0
   references:
     version: 2
