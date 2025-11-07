@@ -18940,6 +18940,10 @@ PrefabInstance:
       propertyPath: interactionUI
       value: 
       objectReference: {fileID: 681223578}
+    - target: {fileID: 6978206059300345315, guid: de0aac9467f02024497902742c7ab152, type: 3}
+      propertyPath: interactionLayer.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7140999855376833834, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_Size.x
       value: 0.48
@@ -36090,7 +36094,7 @@ PrefabInstance:
       objectReference: {fileID: 681223578}
     - target: {fileID: 3951069236596127240, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: interactionLayer.m_Bits
-      value: 256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5978763744521821375, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_Name
@@ -36102,15 +36106,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9084469636125557372, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 196.16
       objectReference: {fileID: 0}
     - target: {fileID: 9084469636125557372, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 17.13
       objectReference: {fileID: 0}
     - target: {fileID: 9084469636125557372, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -153.8
       objectReference: {fileID: 0}
     - target: {fileID: 9084469636125557372, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: m_LocalRotation.w
