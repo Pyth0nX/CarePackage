@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
 using CarePackage.Interaction.Miscellaneous;
 using CarePackage.Delivery;
 using CarePackage.Main;
 using CarePackage.Utilities;
+using UnityEngine.Animations;
 using UnityEngine;
+using System;
 
 namespace CarePackage.Interaction.Car
 {
@@ -31,16 +32,18 @@ namespace CarePackage.Interaction.Car
     [Serializable]
     public class OpenCarAction : IInteractAction
     {
-        [SerializeField] private GameObject carHoodClosed;
-        [SerializeField] private GameObject carHoodOpen;
-
+        private static readonly int carHoodClosed = Animator.StringToHash("Close");
+        private static readonly int carHoodOpen = Animator.StringToHash("Open");
+        
+        [SerializeField] private Animator animator;
+        
         private bool _opened;
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             _opened = !_opened;
-            carHoodClosed.SetActive(!_opened);
-            carHoodOpen.SetActive(_opened);
+            var triggerHash = _opened? carHoodOpen : carHoodClosed;
+            animator.SetTrigger(triggerHash);
         }
     }
     

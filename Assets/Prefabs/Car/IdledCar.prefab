@@ -97,7 +97,7 @@ MonoBehaviour:
     - rid: 7586773879207755856
       type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
       data:
-        animator: {fileID: 4023200904136066167}
+        animator: {fileID: 0}
 --- !u!65 &1814231356359604142
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -134,7 +134,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -281,11 +281,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8696091383577159939}
-  - {fileID: 4653606308280826228}
-  - {fileID: 5425041626982508868}
-  - {fileID: 4072387950272696436}
+  m_Children: []
   m_Father: {fileID: 5583901858602488741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2215941877666606190
@@ -391,12 +387,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4213116972366142899}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.53, y: -0.8534, z: 0.94700146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8696091383577159939}
+  m_Father: {fileID: 6870121018175697532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9138492880508786871
 MeshFilter:
@@ -604,7 +600,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 621771102211107570}
+  m_Father: {fileID: 5583901858602488741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5795481093746867210
 GameObject:
@@ -726,7 +722,7 @@ Transform:
   m_Children:
   - {fileID: 3425912017101926824}
   - {fileID: 2945440646338302260}
-  m_Father: {fileID: 621771102211107570}
+  m_Father: {fileID: 5583901858602488741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6471593398751348378
 GameObject:
@@ -847,6 +843,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 621771102211107570}
+  - {fileID: 8696091383577159939}
+  - {fileID: 4653606308280826228}
+  - {fileID: 5425041626982508868}
+  - {fileID: 4072387950272696436}
   m_Father: {fileID: 4352481917167987574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6719538912072912438
@@ -858,6 +858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6870121018175697532}
+  - component: {fileID: 5988128476108558238}
   m_Layer: 0
   m_Name: TrunkPlacement
   m_TagString: Untagged
@@ -873,13 +874,36 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6719538912072912438}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.53, y: 0.8534, z: -0.94700146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8819768471012022607}
   m_Father: {fileID: 8696091383577159939}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5988128476108558238
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719538912072912438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ee0220e6d80966c4aa5a911a880b677e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8005473150867778111
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +913,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8696091383577159939}
-  - component: {fileID: 4023200904136066167}
   m_Layer: 0
   m_Name: TruckBackdoor
   m_TagString: Untagged
@@ -910,32 +933,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8819768471012022607}
   - {fileID: 6870121018175697532}
-  m_Father: {fileID: 621771102211107570}
+  m_Father: {fileID: 5583901858602488741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &4023200904136066167
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8005473150867778111}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ee0220e6d80966c4aa5a911a880b677e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8955690103476422201
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,8 +984,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 1
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.35, y: 1.1, z: 1}
@@ -1047,5 +1047,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8689253520992893877}
-  m_Father: {fileID: 621771102211107570}
+  m_Father: {fileID: 5583901858602488741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
