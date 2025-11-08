@@ -102,21 +102,27 @@ namespace CarePackage.Interaction.Delivery
     {
         private GameObject _goalObject;
         private int _packageId;
+        private bool _overridePackageId;
 
-        public IndicatorPickupDroppableExtension(int inPackageId, GameObject inGoalObject)
+        public IndicatorPickupDroppableExtension(int inPackageId = -1)
         {
+            _goalObject = null;
+            _overridePackageId = false;
+            if (inPackageId == -1) return;
             _packageId = inPackageId;
-            _goalObject = inGoalObject;
+            _overridePackageId = true;
         }
         
         public void ExtendedPickUp(PlayerState interactingPlayer)
         {
+            if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindPostBoxWithId(_packageId);
             interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, true, false);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
+            if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
             interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0);
         }

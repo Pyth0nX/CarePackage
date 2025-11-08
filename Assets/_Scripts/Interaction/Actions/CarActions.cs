@@ -3,7 +3,6 @@ using CarePackage.Interaction.Miscellaneous;
 using CarePackage.Delivery;
 using CarePackage.Main;
 using CarePackage.Utilities;
-using UnityEngine.Animations;
 using UnityEngine;
 using System;
 
@@ -42,7 +41,8 @@ namespace CarePackage.Interaction.Car
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             _opened = !_opened;
-            var triggerHash = _opened? carHoodOpen : carHoodClosed;
+            var triggerHash = _opened ? carHoodOpen : carHoodClosed;
+            Debug.Log($"[CarAction] Triggering {triggerHash}");
             animator.SetTrigger(triggerHash);
         }
     }

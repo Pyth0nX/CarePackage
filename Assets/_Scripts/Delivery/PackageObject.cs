@@ -1,5 +1,3 @@
-using System;
-using CarePackage.Main;
 using UnityEngine;
 
 namespace CarePackage.Delivery
@@ -52,7 +50,7 @@ namespace CarePackage.Delivery
         public void TogglePhysics(bool toggle)
         {
             if (_rigidbody == null) return;
-            Debug.Log("[Trying to toggle Physics of PackageObject" + this.gameObject.name + "] with toggle " + toggle);
+            
             _usingGravity = toggle;
             _rigidbody.isKinematic = !_usingGravity;
             _rigidbody.useGravity = _usingGravity;

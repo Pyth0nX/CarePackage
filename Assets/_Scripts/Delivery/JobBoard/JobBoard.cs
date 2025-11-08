@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
+using CarePackage.Interaction;
 using CarePackage.Main;
-using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
+using PrimeTween;
 using TMPro;
 
 namespace CarePackage.Delivery
@@ -213,7 +213,12 @@ namespace CarePackage.Delivery
             for (int i = 0; i < shuffledPackages.Count; i++)
             {
                 if (i < jobsToAssign) InitJob(shuffledPackages[i]);
-                else CreatePackageForConveyerBelt(shuffledPackages[i]);
+                else
+                {
+                    var p = shuffledPackages[i];
+                    //Tween.Delay(1f).OnComplete(() => CreatePackageForConveyerBelt(p));
+                    CreatePackageForConveyerBelt(p);
+                }
             }
         }
 

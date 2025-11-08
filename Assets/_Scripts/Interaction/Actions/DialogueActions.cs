@@ -1,7 +1,8 @@
 ﻿using CarePackage.Interaction.Delivery;
 using CarePackage.Main;
-using Yarn.Unity;
 using UnityEngine;
+using System.Linq;
+using Yarn.Unity;
 using System;
 
 namespace CarePackage.Interaction.Dialogue
@@ -43,11 +44,15 @@ namespace CarePackage.Interaction.Dialogue
 
             if (_playerController == null) return;
             _playerController.LockInput(true);
-
+            
             DialogueManager.Instance.SetYarnFloat("$family", familyID);
+            Debug.Log("[DialogueAction] FamilyID: " + familyID + " yarnFamId: " + DialogueManager.Instance.GetYarnFloat("$family"));
 
-            if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform")
+            //if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform")
                 DialogueManager.Instance.SetYarnBool("$clothes", true);
+                DialogueManager.Instance.SetYarnString("$package", _interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID.Split('/').Last());
+                Debug.Log("[DialogueAction] ItemGUID: " + _interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID.Split('/').Last());
+                Debug.Log("[DialogueAction] Clothes: " + DialogueManager.Instance.GetYarnBool("$clothes"));
             DialogueManager.Instance.SetYarnFloat("$Damage", (int)package.PackageData.State);
 
             var stateName = package.PackageData.State.ToString();

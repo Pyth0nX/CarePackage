@@ -1,4 +1,5 @@
 using CarePackage.Persistance;
+using PrimeTweenDemo;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +24,17 @@ namespace CarePackage.Main
         {
             SceneManager.sceneLoaded -= OnSceneLoaded_Implementation;
         }
-
+        
+        /**
+         * Scene indexes
+         * 
+         * 0 = mainmenu,
+         * 1 = SwipeTutorial,
+         * 2 = postoffice,
+         * 3 = neigbourhood,
+         * 4 = houses,
+         * 5 = ending
+         */
         private void OnSceneLoaded_Implementation(Scene scene, LoadSceneMode sceneMode)
         {
             Debug.Log($"Loaded Scene {scene.name}");
@@ -38,7 +49,7 @@ namespace CarePackage.Main
                 Invoke("SetMailBoxes", .01f);
             }
             // Ending
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(6))
+            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(5))
             {
                 if (!GameManager.Instance.Survived)
                 {

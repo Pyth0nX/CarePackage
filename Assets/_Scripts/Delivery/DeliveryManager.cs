@@ -71,7 +71,7 @@ namespace CarePackage.Delivery
         {
             _deliveriesMade = 0;
             deliveries.Clear();
-            MakeRandomNumbers(Random.Range(3, 15));
+            MakeRandomNumbers(Random.Range(3, 4));
             Invoke("AssignRandomPackages", .1f);
         }
         

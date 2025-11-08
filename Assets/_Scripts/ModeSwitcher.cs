@@ -73,7 +73,7 @@ namespace CarePackage.Main
                 var package = newPackage.GetComponent<PackageObject>();
                 var extendedPickups = new IPickupExtension[]
                 {
-                    new IndicatorPickupDroppableExtension(packages[i].Id, newPackage)
+                    new IndicatorPickupDroppableExtension()//packages[i].Id, newPackage
                 };
                 var packageAction = new PackageAction(packages[i], true, new Vector3(0, -0.1f, 0), newPackage, extendedPickups);
                 interactable.InteractAction = packageAction;
