@@ -14,6 +14,10 @@ public class DialogueVisualsController : MonoBehaviour
     [Header("Characters")]
     [SerializeField] private List<CharacterPortrait> characters = new List<CharacterPortrait>();
 
+    [Header("Dialogue Canvas Control")]
+    [SerializeField] private Canvas dialogueCanvas;
+    [SerializeField] private DialogueRunner dialogueRunner;
+
     private static Dictionary<string, Sprite> backgroundLookup = new Dictionary<string, Sprite>();
     private static Dictionary<string, CharacterPortrait> characterLookup = new Dictionary<string, CharacterPortrait>();
 
@@ -36,6 +40,34 @@ public class DialogueVisualsController : MonoBehaviour
         foreach (var c in characters)
             if (c.image != null)
                 c.image.gameObject.SetActive(false);
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.enabled = false;
+    }
+
+    void Start()
+    {
+        if (dialogueRunner != null)
+        {
+            dialogueRunner.onDialogueStart.AddListener(OnDialogueStart);
+            dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+        }
+        else
+        {
+            Debug.LogWarning("DialogueRunner not assigned in DialogueVisualsController.");
+        }
+    }
+
+    private void OnDialogueStart()
+    {
+        if (dialogueCanvas != null)
+            dialogueCanvas.enabled = true;
+    }
+
+    private void OnDialogueComplete()
+    {
+        if (dialogueCanvas != null)
+            dialogueCanvas.enabled = false;
     }
 
     // --- Background ---
