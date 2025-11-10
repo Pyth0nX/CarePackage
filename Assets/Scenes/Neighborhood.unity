@@ -23491,6 +23491,8 @@ MonoBehaviour:
       sprite: {fileID: -2134281307, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
     - emotionName: SpeakingTired
       sprite: {fileID: 1576043024, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
+  dialogueCanvas: {fileID: 0}
+  dialogueRunner: {fileID: 0}
 --- !u!1 &1254997130
 GameObject:
   m_ObjectHideFlags: 0
@@ -40986,7 +40988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!33 &920014138980376603
 MeshFilter:
   m_ObjectHideFlags: 0
