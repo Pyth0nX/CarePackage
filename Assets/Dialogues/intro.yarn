@@ -5,7 +5,7 @@ position: -792,-1309
 <<declare $family = 0>>
 <<declare $relationshipFamA = 0>>
 <<declare $day = 1>>
-<<declare $famA_D2_damageCount = 0>>
+<<declare $famA_damageCount = 0>>
 ===
 
 title: start
@@ -301,7 +301,7 @@ Lina: I'm sorry, Sofie. The uniform was already too expensive.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: I know… it just feels like everyone else has cooler stuff.
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: Don’t be too hard on yourself. You’ll find your people. 
+-> Mailman: Don't be too hard on yourself. You'll find your people. 
     <<jump FamA_D2_En_Undamaged_Kind>>
 -> Mailman: You should listen to your mother.
     <<jump FamA_D2_End_Undamaged_Cold>>
@@ -382,7 +382,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 2 — UNIFORM (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($packageState == "Damaged") && ($famA_D2_damageCount == 0)
+when: ($day == 2) && ($package == "uniform") && ($packageState == "Damaged") && ($famA_damageCount == 0)
 //1st time damaged
 color: purple
 group: FamA && Day2
@@ -390,7 +390,7 @@ position: -1637,-51
 ---
 <<setBackgroung "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
-Mail man: Morning Lina!
+Mail man: Good afternoon, Lina.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Sofie, come here!
 <<showCharacter "Lina" "LinaListeningTired">>
