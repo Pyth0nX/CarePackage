@@ -2,6 +2,7 @@ using CarePackage.Main;
 using CarePackage.Persistance;
 using UnityEngine;
 using Yarn.Unity;
+using Yarn.Unity.ActionAnalyser;
 
 public class DialogueManager : MonoBehaviour, IDataPersistance
 {
@@ -10,6 +11,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     [Header("Yarn References")]
     public DialogueRunner dialogueRunner;
     public InMemoryVariableStorage variableStorage;
+
+    public static event System.Action<bool> OnPackageRecieved;
 
     public bool shouldDebugDialogueNode = false;
 
@@ -113,6 +116,12 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     {
         if (variableStorage == null) return;
         variableStorage.SetValue(varName, value);
+    }
+
+    [YarnCommand("recievePackage")]
+    public static void RecievePackage(bool recievePackage)
+    {
+        OnPackageRecieved?.Invoke(recievePackage);
     }
 
     public void LoadData(GameData loadData)

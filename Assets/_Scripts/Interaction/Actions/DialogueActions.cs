@@ -66,29 +66,15 @@ namespace CarePackage.Interaction.Dialogue
 
         public void OnEnable()
         {
-            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
-            if (_dialogueRunner == null)
-            {
-                    Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
-                    return;
-            }
-            if (_dialogueRunner.onDialogueComplete == null) return;
-            _dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+            DialogueManager.OnPackageRecieved += OnDialogueComplete;
         }
 
         public void OnDisable()
         {
-            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
-            if (_dialogueRunner == null)
-            {
-                Debug.LogError("[DialogueAction] DialogueRunner not in the scene");
-                return;
-            }
-            if (_dialogueRunner.onDialogueComplete == null) return;
-            _dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
+            DialogueManager.OnPackageRecieved -= OnDialogueComplete;
         }
 
-        private void OnDialogueComplete()
+        private void OnDialogueComplete(bool packageRecieved)
         {
             Debug.Log("[DialogueAction] Dialogue finished — input");
             DialogueManager.Instance.shouldDebugDialogueNode = false;
@@ -96,8 +82,11 @@ namespace CarePackage.Interaction.Dialogue
             if (_playerController == null) return;
             _playerController.LockInput(false);
 
-            var receivePackageAction = new ReceiveDeliveryAction(id);
-            receivePackageAction.PerformAction(_interactingPlayer, _interactingObject);
+            if (packageRecieved)
+            {
+                var receivePackageAction = new ReceiveDeliveryAction(id);
+                receivePackageAction.PerformAction(_interactingPlayer, _interactingObject);
+            }
         }
     }
 }

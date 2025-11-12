@@ -55,6 +55,7 @@ position: -1382,-1034
 color: green
 group: FamA && Day1
 ---
+<<recievePackage true>>
 <<set $relationshipFamA += 2>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: A little... but Mom promised me a brand-new backpack!
@@ -75,6 +76,7 @@ position: -1381,-872
 group: FamA && Day1
 color: green
 ---
+<<recievePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thank you so much. Have a nice day.
@@ -178,6 +180,7 @@ group: FamA && Day1
 position: -1633,-977
 ---
 <<once>>
+<<recievePackage false>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Good afternoon! I have a package for you.
