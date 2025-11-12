@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelperMethods : MonoBehaviour
+public static class HelperMethods
 {
     public static void ShuffleList(List<int> list)
     {

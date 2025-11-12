@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CarePackage.Delivery
@@ -10,7 +11,7 @@ namespace CarePackage.Delivery
         public SO_Item Item;
     }
     
-    [System.Serializable]
+    [Serializable]
     public struct FPackageData
     {
         public FPackageData(string inTitle = "", string inDescription = "", int inPay = 0, EPackageState inState = EPackageState.Pristine)
@@ -36,11 +37,45 @@ namespace CarePackage.Delivery
         public EPackageState State;
     }
     
-    [System.Serializable]
-    public class Package
+    [Serializable]
+    public class Package : IEquatable<Package>
     {
         public int Id;
         public FPackageData PackageData;
         public string ItemGUID;
+        
+        public bool Equals(Package other)
+        {
+            if (other == null) return false;
+            return Id == other.Id && ItemGUID == other.ItemGUID;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Package);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + Id.GetHashCode();
+                hash = hash * 23 + (ItemGUID != null ? ItemGUID.GetHashCode() : 0);
+                return hash;
+            }
+        }
+        
+        public static bool operator ==(Package a, Package b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (a is null || b is null) return false;
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Package a, Package b)
+        {
+            return !(a == b);
+        }
     }
 }

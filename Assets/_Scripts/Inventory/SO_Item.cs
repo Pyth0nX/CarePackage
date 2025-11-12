@@ -28,8 +28,39 @@ public class SO_Item : ScriptableObject
 }
 
 [System.Serializable]
-public struct FItemData
+public struct FItemData : System.IEquatable<FItemData>
 {
     public string name;
     public Sprite icon;
+
+    public bool Equals(FItemData other)
+    {
+        return name == other.name && icon == other.icon;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is FItemData other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + (name != null ? name.GetHashCode() : 0);
+            hash = hash * 23 + (icon != null ? icon.GetHashCode() : 0);
+            return hash;
+        }
+    }
+
+    public static bool operator ==(FItemData a, FItemData b)
+    {
+        return a.Equals(b);
+    }
+
+    public static bool operator !=(FItemData a, FItemData b)
+    {
+        return !a.Equals(b);
+    }
 }

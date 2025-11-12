@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Main;
@@ -31,6 +32,9 @@ namespace CarePackage.Delivery
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
+
+        public Package[] scriptedPackagesArray;
+        public List<Package> scriptedPackagesList;
 
         private List<Button> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
@@ -192,14 +196,13 @@ namespace CarePackage.Delivery
             if (packages == null || packages.Count == 0)
                 return;
 
-            var scriptedPackages = GetScriptedJobsByDay(GameManager.Instance.CurrentDay);
+            var scriptedPackages = GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
             int totalPackages = packages.Count - scriptedPackages;
             int availableJobNotes = jobNotes.Count - scriptedPackages;
             int maxAssignable = Mathf.Min(availableJobNotes, totalPackages);
-
-// Scale factor: higher package count → more jobs
-            float biasFactor = Mathf.Clamp01((float)totalPackages / 15f); // assuming 15 is the upper bound
-            int scaledJobs = Mathf.RoundToInt(Mathf.Lerp(3, maxAssignable, biasFactor)); // bias toward higher count
+            
+            float biasFactor = Mathf.Clamp01((float)totalPackages / 15f);
+            int scaledJobs = Mathf.RoundToInt(Mathf.Lerp(3, maxAssignable, biasFactor));
 
             int jobsToAssign = Mathf.Clamp(scaledJobs, 2, Mathf.Min(10, maxAssignable));
             
@@ -282,11 +285,32 @@ namespace CarePackage.Delivery
                 }
                 InitJob(scriptedJob.TargetPackage);
             }
+
+            scriptedPackagesArray = GetScriptedJobsDeliveriesByDay(day);
+            scriptedPackagesList = GetScriptedJobsDeliveriesByDay(day).ToList();
         }
 
-        public int GetScriptedJobsByDay(int day)
+        public int GetScriptedJobsByDayCount(int day)
         {
-            return scriptedJobs.FindAll(j => j.TargetDay == day).Count;
+            var scriptedJobsForDay = GetScriptedJobsByDay(day);
+            return scriptedJobsForDay.Count;
+        }
+
+        public Package[] GetScriptedJobsDeliveriesByDay(int day)
+        {
+            var packagesForDay = GetScriptedJobsByDay(day).Select(delivery => delivery.TargetPackage).ToArray();
+            /*var scriptedJobsForDay = GetScriptedJobsByDay(day);
+            /*var packagesForDay = new Package[scriptedJobsForDay.Count];
+            for (int i = 0; i < packagesForDay.Length - 1; i++)
+            {
+                packagesForDay[i] = scriptedJobsForDay[i].TargetPackage;
+            }*/
+            return packagesForDay;
+        }
+
+        public List<ScriptedJob> GetScriptedJobsByDay(int day)
+        {
+            return scriptedJobs.FindAll(p => p.TargetDay == day);
         }
 
         private Vector3 CalculateTargetPositionFromEnd(int index, float spacing)

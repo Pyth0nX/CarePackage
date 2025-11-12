@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CarePackage.Delivery
 {
-    public class InventoryUtilities : MonoBehaviour
+    public static class InventoryUtilities
     {
         public static SO_Item LoadItem(string GUIDPath)
         {

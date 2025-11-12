@@ -21,11 +21,12 @@ namespace CarePackage.Delivery
 
         [SerializeField] private int deliveriesToMake;
         
-        public Package CurrentDelivery => _heldDelivery;
-        public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDay(GameManager.Instance.CurrentDay);
-        public int DeliveriesToMake => deliveries.Count;
+        public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
         public List<Package> Deliveries => DeliveryUitilities.ToPackageList(deliveries);
+        public Package[] RequiredDeliveries => _jobBoard.GetScriptedJobsDeliveriesByDay(GameManager.Instance.CurrentDay);
+        public Package CurrentDelivery => _heldDelivery;
         public int CurrentDeliveryId => _currentDeliveryId;
+        public int DeliveriesToMake => deliveries.Count;
         
         private List<int> _randomNumbers = new();
         private StopWatch _deliveryTimer = new();

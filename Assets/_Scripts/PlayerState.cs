@@ -82,6 +82,8 @@ namespace CarePackage.Main
             objectToDrop.OwningObject.transform.SetParent(null);
             DeliveryManager.SetCurrentHeldDelivery(null);
             objectToDrop.OnDropped(this);
+            SetPickup(objectToDrop, null);
+            _pickup = null;
         }
     }
 }

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CarePackage.Delivery
 {
-    public class DeliveryUitilities : MonoBehaviour
+    public static class DeliveryUitilities
     {
         public static Package ToPackage(SO_Package soPackage)
         {
@@ -54,6 +55,19 @@ namespace CarePackage.Delivery
         public static SO_Package FindById(List<SO_Package> list, int id)
         {
             return list.Find(p => p.Id == id);
+        }
+
+        public static bool DoesListContainPackage(List<Package> list, Package package)
+        {
+            return DoesListContainPackages(list, new[]{package});
+        }
+
+        public static bool DoesListContainPackages(List<Package> list, IEnumerable<Package> packages)
+        {
+            if (list == null || packages == null)
+                return false;
+            
+            return packages.All(package => list.Contains(package));
         }
     }
 }
