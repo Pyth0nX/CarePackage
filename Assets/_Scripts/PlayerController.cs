@@ -76,15 +76,15 @@ namespace CarePackage.Main
         private void Enable()
         {
             Debug.Log($"[{GetType()}] Is UIManager Instance set {UIManager.Instance != null}");
-            UIManager.Instance.OnInterfaceOpened += () => ListenToUIChanges(true);
-            UIManager.Instance.OnInterfaceClosed += ListenToUIChanges;
+            UIManager.OnInterfaceOpened += () => ListenToUIChanges(true);
+            UIManager.OnInterfaceClosed += ListenToUIChanges;
             LockCursor(CursorLockMode.Locked);
         }
 
         private void OnDisable()
         {
-            UIManager.Instance.OnInterfaceOpened -= () => ListenToUIChanges(true);
-            UIManager.Instance.OnInterfaceClosed -= ListenToUIChanges;
+            UIManager.OnInterfaceOpened -= () => ListenToUIChanges(true);
+            UIManager.OnInterfaceClosed -= ListenToUIChanges;
             LockCursor(CursorLockMode.None);
         }
 

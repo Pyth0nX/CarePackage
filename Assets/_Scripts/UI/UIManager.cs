@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
-    public Action OnInterfaceOpened;
-    public Action<bool> OnInterfaceClosed;
     private bool _popupsOpen = false;
+    
+    public int GetActivePopupCount() => _activePopups.Count;
+    
+    public GameObject GetActivePopup(int index) => _activePopups[index];
 
     private List<GameObject> _activePopups = new();
+    
+    public static event Action OnInterfaceOpened;
+    public static event Action<bool> OnInterfaceClosed;
 
     public static UIManager Instance;
 
@@ -80,8 +85,4 @@ public class UIManager : MonoBehaviour
             OpenPopupWindow(popupWindow);
         }
     }
-    
-    public int GetActivePopupCount() => _activePopups.Count;
-    
-    public GameObject GetActivePopup(int index) => _activePopups[index];
 }

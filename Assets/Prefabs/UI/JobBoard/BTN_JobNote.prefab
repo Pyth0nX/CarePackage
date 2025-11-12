@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1854992295153671471}
   - component: {fileID: 1655397803924747081}
   - component: {fileID: 6610677245556389971}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,8 @@ GameObject:
   - component: {fileID: 8670479747380593011}
   - component: {fileID: 7428087936247246359}
   - component: {fileID: 3858661174350001535}
-  m_Layer: 5
+  - component: {fileID: 8573070170997200210}
+  m_Layer: 8
   m_Name: BTN_JobNote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,8 +214,8 @@ MonoBehaviour:
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
-  interactAction:
+    m_Bits: 256
+  iInteractAction:
     rid: -2
   interactText: 
   showMessage: 0
@@ -224,6 +225,23 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &8573070170997200210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2179041019779196152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785eaadb1ebabe8448cd3efc3c65d7f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Task.TaskBehavior
+  task: {fileID: 11400000, guid: d8fffbc083606954384e3467982ef717, type: 2}
+  popOnAwake: 0
+  popOnInteracted: 1
+  popOnCompleted: 0
+  interactable: {fileID: 3858661174350001535}
 --- !u!1 &5602435022592906557
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +253,7 @@ GameObject:
   - component: {fileID: 7200194429065507169}
   - component: {fileID: 7636234455589406904}
   - component: {fileID: 7005981670050935626}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TXT_Job
   m_TagString: Untagged
   m_Icon: {fileID: 0}

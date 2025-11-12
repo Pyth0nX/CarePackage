@@ -19,6 +19,9 @@ namespace CarePackage.Interaction
         private InteractionComponent _interactionComponent;
         
         public IInteractAction InteractAction { get => iInteractAction; set => iInteractAction = value; }
+        
+        public event System.Action OnInteracted;
+        public event System.Action OnInteractionFinished;
 
         private void Start()
         {
@@ -46,7 +49,9 @@ namespace CarePackage.Interaction
         {
             if (iInteractAction == null) return;
             if (debug) Debug.Log($"[Interactable] Interacted {this.name} {Type}");
+            OnInteracted?.Invoke();
             iInteractAction.PerformAction(interactingPlayer, gameObject);
+            OnInteractionFinished?.Invoke();
         }
         
         public InteractionType Type => interactionType;

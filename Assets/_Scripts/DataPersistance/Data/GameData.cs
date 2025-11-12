@@ -15,6 +15,7 @@ namespace CarePackage.Persistance
         public int money;
         public int day;
         public bool survived;
+        public bool doneTutorial;
         
         public float famARelationship;
 

@@ -19,6 +19,8 @@ namespace CarePackage.Delivery
         {
             UIManager.Instance.ClosePopupWindow(checkInButton);
             UIManager.Instance.OpenPopupWindow(desktop);
+            if (!GameManager.Instance.tutorialDone)
+                Task.TaskManager.PopTaskUpdate(new Task.Task("Select Jobs to deliver"));
 //        GameManager.StartDay();
         }
     

@@ -20,6 +20,8 @@ namespace CarePackage.Main
         public bool Survived => _survived;
         public int CurrentDay => _day;
         
+        public bool tutorialDone = false;
+        
         private int _elapsedTime;
         private int _currentSecond;
         private int _lastUpdateSecond;
@@ -132,12 +134,15 @@ namespace CarePackage.Main
                 _day = loadData.day;
                 if (DialogueManager.Instance != null) DialogueManager.Instance.SetYarnFloat("$day", _day);
             }
+
+            tutorialDone = loadData.doneTutorial;
         }
 
         public void SaveData(GameData saveData)
         {
             saveData.survived = _survived;
             saveData.day = _day;
+            saveData.doneTutorial = tutorialDone;
         }
     }
 }

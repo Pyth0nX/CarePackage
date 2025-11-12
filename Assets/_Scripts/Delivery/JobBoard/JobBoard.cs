@@ -23,6 +23,7 @@ namespace CarePackage.Delivery
     public class JobBoard : MonoBehaviour
     {
         [SerializeField] private GameObject jobListing;
+        [SerializeField] private GameObject jobListingElemets;
         [SerializeField] private GameObject jobPrefab;
         [SerializeField] private Transform jobsContainer;
         [SerializeField] private List<Button> jobNotes;
@@ -43,6 +44,7 @@ namespace CarePackage.Delivery
         private List<GameObject> _spawnedPackages = new();
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
+        private Image _jobImage;
         private ConveyorBeltController _conveyorController;
 
         private void Awake()
@@ -54,7 +56,8 @@ namespace CarePackage.Delivery
         private void FetchJobListedElements()
         {
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
-            _jobDescription = jobListing.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+            _jobDescription = jobListingElemets.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+            _jobImage = jobListingElemets.transform.GetChild(0).GetComponentInChildren<Image>();
             _conveyorController = packageConveyerBelt.GetComponentInChildren<ConveyorBeltController>();
         }
 
@@ -116,6 +119,12 @@ namespace CarePackage.Delivery
             _displayedJob = job;
             _jobTitle.text = job.PackageData.Title;
             _jobDescription.text = job.PackageData.Description;
+            _jobImage.gameObject.SetActive(false);
+            var dispJobSrciptable = DeliveryUitilities.ToScriptableObject(job);
+            if (dispJobSrciptable == null) return;
+            if (dispJobSrciptable.Item == null) return;
+            _jobImage.gameObject.SetActive(true);
+            _jobImage.sprite = dispJobSrciptable.Item.ItemData.icon;
         }
 
         private void OnJobClicked(GameObject button)
