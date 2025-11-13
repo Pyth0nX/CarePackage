@@ -118,10 +118,9 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
         variableStorage.SetValue(varName, value);
     }
 
-    [YarnCommand("recievePackage")]
-    public static void RecievePackage(bool recievePackage)
+   public static void RecievedPackage (bool recievedCorrectPackage)
     {
-        OnPackageRecieved?.Invoke(recievePackage);
+        OnPackageRecieved?.Invoke(recievedCorrectPackage);
     }
 
     public void LoadData(GameData loadData)

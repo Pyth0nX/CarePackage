@@ -840,7 +840,7 @@ position: -847,2221
 
 //FAM B — DAY 4 — SEEDS (4TH TIME DAMAGED)
 title: FamB
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 3)
+when: ($day == 4) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 3)
 color: blue
 group: FamB && Day4
 position: -848,2359
@@ -873,7 +873,7 @@ position: -847,2624
 
 //FAM B — DAY 4 — SEEDS (3RD TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
+when: ($day == 4) && ($package == "seeds") && ($damage > 1) && ($famB_damageCount == 2)
 color: blue
 group: FamB && Day4
 position: -846,2757
@@ -910,7 +910,7 @@ position: -74,-1157
 
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
-when: ($day == 1) && ($package == "diapers") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 1) && ($package == "diapers") && ($damage <= 1)
 group: FamC && Day1
 position: -74,-1019
 color: orange
@@ -1140,101 +1140,35 @@ position: -74,1035
 .
 ===
 
-//FAM C — DAY 4 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
+//FAM C — DAY 4 — SEEDS (WARM)
 title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
 color: orange
 group: FamC && Day4
 position: -74,1168
 ---
-//FAM C — DAY 4 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
+//FAM C — DAY 4 — SEEDS (WARM)
 .
 ===
 
-//FAM C — DAY 4 — SEEDS (1ST TIME DAMAGED)
+//FAM C — DAY 4 — COOKIES (NEUTRAL)
 title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
 color: orange
 group: FamC && Day4
 position: -78,1313
 ---
-//FAM C — DAY 4 — SEEDS (1ST TIME DAMAGED)
+//FAM C — DAY 4 — SEEDS (NEUTRAL)
 .
 ===
 
-//FAM C — DAY 4 — SEEDS (2ND TIME DAMAGED)
+//FAM C — DAY 4 — COOKIES (COLD)
 title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
 color: orange
 group: FamC && Day4
 position: -78,1451
 ---
-//FAM C — DAY 4 — SEEDS (2ND TIME DAMAGED)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (3RD TIME DAMAGED)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
-color: orange
-group: FamC && Day4
-position: -78,1583
----
-//FAM C — DAY 4 — SEEDS (3RD TIME DAMAGED)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (4TH TIME DAMAGED)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 3)
-color: orange
-group: FamC && Day4
-position: -78,1721
----
-//FAM C — DAY 4 — SEEDS (4TH TIME DAMAGED)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (1ST TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
-color: orange
-group: FamC && Day4
-position: -78,1865
----
-//FAM C — DAY 4 — SEEDS (1ST TIME FLATTENED / BROKEN)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (2ND TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
-color: orange
-group: FamC && Day4
-position: -74,2008
----
-//FAM C — DAY 4 — SEEDS (2ND TIME FLATTENED / BROKEN)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (3RD TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
-color: orange
-group: FamC && Day4
-position: -70,2154
----
-//FAM C — DAY 4 — SEEDS (3RD TIME FLATTENED / BROKEN)
-.
-===
-
-//FAM C — DAY 4 — SEEDS (4TH TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 3)
-color: orange
-group: FamC && Day4
-position: -74,2299
----
-//FAM C — DAY 4 — SEEDS (4TH TIME FLATTENED / BROKEN)
+//FAM C — DAY 4 — COOKIES (COLD)
 .
 ===
