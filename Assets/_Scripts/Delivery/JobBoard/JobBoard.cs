@@ -46,6 +46,7 @@ namespace CarePackage.Delivery
         private TextMeshProUGUI _jobDescription;
         private Image _jobImage;
         private ConveyorBeltController _conveyorController;
+        private float _joblistingX = 550f;
 
         private void Awake()
         {
@@ -114,7 +115,7 @@ namespace CarePackage.Delivery
             }
         }
 
-        public void SetJobListing(Package job)
+        public void SetJobListing(Package job, bool isLeft = false)
         {
             _displayedJob = job;
             _jobTitle.text = job.PackageData.Title;
@@ -125,6 +126,8 @@ namespace CarePackage.Delivery
             if (dispJobSrciptable.Item == null) return;
             _jobImage.gameObject.SetActive(true);
             _jobImage.sprite = dispJobSrciptable.Item.ItemData.icon;
+            
+            _joblistingX = isLeft ? -550f : 550f;
         }
 
         private void OnJobClicked(GameObject button)
@@ -132,6 +135,7 @@ namespace CarePackage.Delivery
             Debug.Log("You have clicked " + button);
             UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
+            Tween.Delay(1f).OnComplete(() => { jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0); });
         }
 
         public void OnExitJobClicked(GameObject button)
@@ -185,13 +189,7 @@ namespace CarePackage.Delivery
                 Random.Range(-screenHeight, screenHeight));
 
             var interactable = newJob.GetComponent<Interactable>();
-            interactable.InteractAction = new SetListedJobAction();
-            var interactAction = interactable.InteractAction;
-            if (interactAction is SetListedJobAction jobListingAction)
-            {
-                jobListingAction.SetParent(newJob);
-                jobListingAction.SetJob(job);
-            }
+            interactable.InteractAction = new SetListedJobAction(newJob, job);
             _jobButtons.Add(newJob.GetComponent<Button>());
         }
 
@@ -236,21 +234,23 @@ namespace CarePackage.Delivery
 
         public void InitJob(Package job)
         {
-            var jobNote = GetAvailableJobNote();
+            var jobNote = GetAvailableJobNote();/*
             if (jobNote == null)
             {
                 CreatePackageForConveyerBelt(job);
                 return;
-            }
-
-            var interactable = jobNote.GetComponent<Interactable>();
-            interactable.InteractAction = new SetListedJobAction();
-            var interactAction = interactable.InteractAction;
-            if (interactAction is SetListedJobAction jobListingAction)
+            }*/
+            
+            if (jobNote == null)
             {
-                jobListingAction.SetParent(jobNote.gameObject);
-                jobListingAction.SetJob(job);
+                Debug.LogError("No available job note found. All notes may be active.");
+                return;
             }
+            
+            var interactable = jobNote.GetComponent<Interactable>();
+            var positionX = jobNote.GetComponent<RectTransform>().anchoredPosition.x;
+            var setJobListingAction = new SetListedJobAction(jobNote.gameObject, job, positionX > 0);
+            interactable.InteractAction = setJobListingAction;
 
             _jobButtons.Add(jobNote);
             jobNote.gameObject.SetActive(true);
@@ -268,14 +268,15 @@ namespace CarePackage.Delivery
             
             int attempts = 0;
             int maxAttempts = jobNotes.Count;
-
             while (attempts < maxAttempts)
             {
                 int randomIndex = Random.Range(0, maxAttempts);
                 var jobNote = jobNotes[randomIndex];
 
                 if (!jobNote.gameObject.activeSelf)
+                {
                     return jobNote;
+                }
 
                 attempts++;
             }

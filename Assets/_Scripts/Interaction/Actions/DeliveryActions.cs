@@ -164,16 +164,30 @@ namespace CarePackage.Interaction.Delivery
     {
         [SerializeField] private SO_Package job;
         [SerializeField] private GameObject parent;
+        [SerializeField] private bool isLeft;
+        
         private Package _internalPackage;
+        
+        public SetListedJobAction() : this(null, new Package(), false) {}
+        
+        public SetListedJobAction(GameObject inParent, Package inPackage) : this(inParent, inPackage, false) {}
+
+        public SetListedJobAction(GameObject inParent, Package inPackage, bool inIsLeft)
+        {
+            parent = inParent;
+            job = DeliveryUitilities.ToScriptableObject(inPackage);
+            _internalPackage = inPackage;
+            isLeft = inIsLeft;
+        }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
-            if (job == null) return;
-            if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(job);
+            if (job == null || _internalPackage == null) return;
 
-            jobManager.SetListedDelivery(_internalPackage);
+            var packageToSet = _internalPackage == null ? DeliveryUitilities.ToPackage(job) : _internalPackage;
+            jobManager.SetListedDelivery(packageToSet, isLeft);
         }
 
         public void OnEnable()
@@ -185,14 +199,6 @@ namespace CarePackage.Interaction.Delivery
         public void OnDisable()
         {
             Debug.Log($"[IActivatable:{this.GetType()}] OnDisable");
-        }
-        
-        public void SetParent(GameObject inParent) => parent = inParent;
-
-        public void SetJob(Package inJob)
-        {
-            job = DeliveryUitilities.ToScriptableObject(inJob);
-            _internalPackage = inJob;
         }
     }
 
