@@ -124,7 +124,7 @@ namespace CarePackage.Interaction.Delivery
         {
             if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
-            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0);
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0f);
         }
     }
 
@@ -193,6 +193,31 @@ namespace CarePackage.Interaction.Delivery
         {
             job = DeliveryUitilities.ToScriptableObject(inJob);
             _internalPackage = inJob;
+        }
+    }
+
+    [Serializable]
+    public class SelectDeliveryAction : IInteractAction
+    {
+        private Package _selectablePackage;
+        private DeliveryCheckList _deliveryCheckList;
+        private bool _deliveryCheckListInitialized;
+
+        public SelectDeliveryAction() : this(null, null) {}
+        
+        public SelectDeliveryAction(DeliveryCheckList inDeliveryCheckList, Package inSelectablePackage)
+        {
+            _deliveryCheckList = inDeliveryCheckList;
+            if (_deliveryCheckList != null) _deliveryCheckListInitialized = true;
+            _selectablePackage = inSelectablePackage;
+        }
+        
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            if (!_deliveryCheckListInitialized) _deliveryCheckList = interactingPlayer.DeliveryManager.CheckList;
+            if (_deliveryCheckList == null) return;
+            _deliveryCheckList.SelectPackage(_selectablePackage);
+            interactingPlayer.DeliveryManager.SetNewJob(_selectablePackage);
         }
     }
 }

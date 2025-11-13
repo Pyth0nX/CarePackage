@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CarePackage.Delivery;
+using UnityEngine;
 
 namespace CarePackage.Persistance
 {
@@ -16,6 +17,7 @@ namespace CarePackage.Persistance
         public int day;
         public bool survived;
         public bool doneTutorial;
+        public List<Package> checkedSelectables;
         
         public float famARelationship;
 

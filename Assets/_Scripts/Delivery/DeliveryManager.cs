@@ -24,12 +24,14 @@ namespace CarePackage.Delivery
         public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
         public List<Package> Deliveries => DeliveryUitilities.ToPackageList(deliveries);
         public Package[] RequiredDeliveries => _jobBoard.GetScriptedJobsDeliveriesByDay(GameManager.Instance.CurrentDay);
+        public DeliveryCheckList CheckList => _deliveryCheckList;
         public Package CurrentDelivery => _heldDelivery;
         public int CurrentDeliveryId => _currentDeliveryId;
         public int DeliveriesToMake => deliveries.Count;
         
         private List<int> _randomNumbers = new();
         private StopWatch _deliveryTimer = new();
+        private DeliveryCheckList _deliveryCheckList;
         private Package _mainDelivery;
         private Package _heldDelivery;
         private JobBoard _jobBoard;
@@ -41,6 +43,7 @@ namespace CarePackage.Delivery
         private void Awake()
         {
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>();
+            if (_deliveryCheckList == null) _deliveryCheckList = GetComponent<DeliveryCheckList>();
             if (mailboxes == null) mailboxes = GameObject.Find("Mailboxes");
         }
 
@@ -48,7 +51,7 @@ namespace CarePackage.Delivery
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
-                GetNewJob();
+                GetRandomJob();
             }
         }
 
@@ -86,28 +89,37 @@ namespace CarePackage.Delivery
             _heldDelivery = package;
         }
 
-        public void GetNewJob()
+        public void GetRandomJob()
         {
-            var delivery = GetRandomJob();
+            var delivery = GetRandomAvailableJob();
             if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
                 delivery = _mainDelivery;
-            if (delivery == null && GameManager.Instance.ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft)
+            if (GameManager.Instance.ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft && delivery == null)
             {
                 GoalIndicator.Instance.SetGoalObject(null);
                 Invoke("EndDayEarly", 2f);
                 return;
             }
-            int wantedId = delivery.Id;
+            SetNewJob(delivery);
+        }
+
+        public void SetNewJob(Package newJobPackage)
+        {
+            if (newJobPackage == null) return;
+            var newJob = newJobPackage;
+            
+            int wantedId = newJob.Id;
+            _currentDeliveryId = wantedId;
             Debug.Log("Wanted ID: " + wantedId);
-            ToggleIndicator(wantedId, delivery);
+            ToggleIndicator(wantedId, newJob);
+            Debug.Log(newJob);
             _deliveryTimer.Start();
         }
         
-        private Package GetRandomJob()
+        private Package GetRandomAvailableJob()
         {
             if (deliveries.Count == 0) return null;
             var randomIndex = Random.Range(0, deliveries.Count);
-            _currentDeliveryId = deliveries[randomIndex].Id;
             return DeliveryUitilities.ToPackage(deliveries[randomIndex]);
         }
 
@@ -115,6 +127,7 @@ namespace CarePackage.Delivery
         {
             deliveries.Add(DeliveryUitilities.ToScriptableObject(newDelivery));
             if (special) _mainDelivery =  newDelivery;
+            _deliveryCheckList.InitializePackageList(Deliveries);
         }
 
         public void SetCurrentDelivery(Package inDelivery)
@@ -150,8 +163,9 @@ namespace CarePackage.Delivery
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
                 
                 if (packageObj != null) Destroy(packageObj);
+                _deliveryCheckList.CheckOffCurrentPackage();
                 _deliveriesMade++;
-                GetNewJob();
+                GetRandomJob();
                 
                 var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position, 
                     GameManager.Instance.Player.ActivePlayer.transform.position);
@@ -195,6 +209,7 @@ namespace CarePackage.Delivery
             }
             _jobBoard.CheckScriptedJobs();
             _jobBoard.InitRandomJobsForPackages(packages);
+            _deliveryCheckList.InitializePackageList(packages);
         }
 
         public void AssignRandomAddressesForDelivery()
@@ -221,7 +236,7 @@ namespace CarePackage.Delivery
                     deliveryAction.WantedPackage = assignedNumber;
                 }
             }
-            GetNewJob();
+            GetRandomJob();
         }
 
         public void MakeRandomNumbers(int number)
@@ -237,6 +252,7 @@ namespace CarePackage.Delivery
         private void ToggleIndicator(int wantedId, Package delivery)
         {
             GameObject deliveryLocation = FindPostBoxWithId(wantedId);
+            if (deliveryLocation == null) return;
             
             delivery.PackageData.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
             SetCurrentDelivery(delivery);

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5138696995838217909}
   - component: {fileID: 5718209564711959202}
   - component: {fileID: 4214719672869644458}
+  - component: {fileID: 311012537931015602}
   - component: {fileID: 8894910802748203241}
   - component: {fileID: 5544470459316166213}
   m_Layer: 6
@@ -72,8 +73,23 @@ MonoBehaviour:
   mailboxes: {fileID: 0}
   overrideRandomDelivery: 1
   mainPackageNumber: 3
-  newDeliveryDistanceThreshold: 0
+  newDeliveryDistanceThreshold: 60
   deliveriesToMake: 0
+--- !u!114 &311012537931015602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4684704552412156944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9c9cba25de72d4b9c690807c57a0ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.DeliveryCheckList
+  selectablePackagePrefab: {fileID: 4575295165524431398, guid: af9d44be5a74464479703efc43d76e14, type: 3}
+  selectablesContainer: {fileID: 0}
+  checkListUI: {fileID: 0}
 --- !u!114 &8894910802748203241
 MonoBehaviour:
   m_ObjectHideFlags: 0

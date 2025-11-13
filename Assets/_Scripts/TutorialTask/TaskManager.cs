@@ -12,6 +12,7 @@ namespace CarePackage.Task
         private TextMeshProUGUI _taskText;
         
         public static event System.Action<Task> OnTaskUpdated;
+        public static event System.Action OnTaskCancelled;
 
         private void Start()
         {
@@ -26,24 +27,36 @@ namespace CarePackage.Task
         private void OnEnable()
         {
             OnTaskUpdated += OnTaskUpdated_Implementation;
+            OnTaskCancelled += PopTaskInternal;
         }
 
         private void OnDisable()
         {
             OnTaskUpdated -= OnTaskUpdated_Implementation;
+            OnTaskCancelled -= PopTaskInternal;
         }
 
         private void OnTaskUpdated_Implementation(Task incomingTask)
         {
-            Tween.StopAll(taskPanel.transform);
+            PopTask();
             _taskText.text = incomingTask.description;
             taskPanel.SetActive(true);
             Tween.Delay(taskPanel.transform, taskPanelDuration).OnComplete(() => taskPanel.SetActive(false));
         }
         
-        public static void PopTaskUpdate(Task task)
+        private void PopTaskInternal()
+        {
+            Tween.StopAll(taskPanel.transform);
+        }
+        
+        public static void PushTaskUpdate(Task task)
         {
             OnTaskUpdated?.Invoke(task);
+        }
+
+        public static void PopTask()
+        {
+            OnTaskCancelled?.Invoke();
         }
     }
 }

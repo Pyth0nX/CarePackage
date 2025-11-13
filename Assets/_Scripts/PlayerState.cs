@@ -38,7 +38,7 @@ namespace CarePackage.Main
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Task.TaskManager.PopTaskUpdate(new Task.Task("Hello traveller " + 1));
+                Task.TaskManager.PushTaskUpdate(new Task.Task("Hello traveller " + 1));
             }
         }
 

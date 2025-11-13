@@ -33,9 +33,14 @@ namespace CarePackage.Task
             else if (popOnInteracted) interactable.OnInteracted -= PopTask;
         }
 
+        public void PushTask()
+        {
+            TaskManager.PushTaskUpdate(task.Task);
+        }
+
         public void PopTask()
         {
-            TaskManager.PopTaskUpdate(task.Task);
+            
         }
     }
 }

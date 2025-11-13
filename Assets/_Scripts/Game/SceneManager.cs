@@ -74,7 +74,7 @@ namespace CarePackage.Main
         {
             GameManager.Instance.StartGame();
             if (!GameManager.Instance.tutorialDone) 
-                Task.TaskManager.PopTaskUpdate(new Task.Task("Check in at the computer"));
+                Task.TaskManager.PushTaskUpdate(new Task.Task("Check in at the computer"));
         }
 
         public void LoadScene(string sceneName)
