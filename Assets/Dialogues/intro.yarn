@@ -478,24 +478,12 @@ Mailman: Good Morning Lina! More school supplies I'm guessing.
 Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
 <<showCharacter "Lina" "SofieListeningTired">>
 Sofie:...
--> Mailman: I might have something for you, let me check.
-    <<jump inventory>>
 -> Mailman: I'm glad she has it now, tomorrow will be a better day.
 	Lina: Yeah, let's hope you're right. Have a nice day.
 	Sofie: …
 	Mailman: You too.
 ===
 
-title: inventory
-color: orange
-position: -1393,-186
----
--> lollipop
--> Vera's clothes <<if $VerasClothes == true>>
--> Note for Vera <<if $noteForVera == true>>
--> Toys for kids <<if $toysForKids == true>>
--> Cookies <<if $cookies == true>>
-===
 
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamB
@@ -694,12 +682,37 @@ position: -849,553
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 title: FamB
 when: ($day == 3) && ($package == "bait") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
-color: blue
+color: red
 group: FamB && Day3
 position: -849,686
 ---
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
-.
+<<setBackground "BGFamB">>
+Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: That's the stuff! I've been waiting for this. If I catch anything good, you'll be the first to know!
+<<showCharacter "Mikkel" "Worried">>
+Mailman: I look forward to it. How are things with Mrs. Andersen?
+<<showCharacter "Gertrude" "Worried">>
+Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
+<<showCharacter "Mikkel" "Worried">>
+-> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
+    <<set $toysForKids = true>>
+    <<set $relationshipFamB += 2>>
+    <<showCharacter "Gertrude" "TalkingWorried">>
+    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
+-> Mailman: I see. I hope you feel less isolated soon. 
+    <<set $relationshipFamB += 0.5>>
+    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
+===
 ===
 
 //FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
@@ -985,7 +998,26 @@ group: FamC && Day2
 position: -74,-175
 ---
 //FAM C — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
-.
+<<setBackground "BGFamC">>
+Mailman: Good morning, Vera!
+<<showCharacter "Vera" "SpeakingTired">>
+Vera: Good morning, Mr. Mailman.
+<<showCharacter "Vera" "ListeningTired">>
+Mailman: I have a package for you. I just need your signature here.
+<<showCharacter "Vera" "SpeakingTired">>
+Vera: Sure thing! I actually might have something for you too. When we moved, I brought a box of clothes that I used to wear when I was younger. I didn't want to throw them away. Do you know anyone who would like some clothes? 
+<<showCharacter "Vera" "ListeningTired">>
+-> Mailman: Now that you mention it, I might know the perfect family. (Accept the clothes)
+    <<set $verasClothes = true>>
+    <<set $relationshipFamC += 1>>
+    <<showCharacter "Vera" "SpeakingTired">>
+    Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
+-> Mailman: I can't think of anyone, you should throw them away.
+    <<set $relationshipFamC -= 1>>
+    <<showCharacter "Vera" "SpeakingTired">>
+    Vera: I see. Well, thank you anyway. Have a nice day.
+<<hideCharacter "Vera">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 2 — SEEDS (1ST TIME DAMAGED)
@@ -1047,15 +1079,34 @@ position: -74,553
 //FAM C — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
 when: ($day == 3) && ($package == "bait") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
-color: orange
+color: red
 group: FamC && Day3
 position: -74,686
 ---
-//FAM C — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
-.
+//FAM C — DAY 3 — NOTE (WARM)
+<<setBackground "BGFamC">>
+Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
+<<showCharacter "Vera" "SpeakingTired">>
+Vera: Oh, a note? That's sweet!
+<<set $noteForVera = false>> // Item used
+<<showCharacter "Vera" "ListeningTired">>
+*Vera reads the note.*
+<<showCharacter "Vera" "SpeakingTired">>
+Vera: Oh my goodness! She's offering to babysit! And she included her number! That is incredibly thoughtful. We've been desperate for a night out.
+<<showCharacter "Jonas" "ListeningTired">>
+Jonas: That is amazing! Maybe the first time we could ask Nora to come help her, I think both of them together might survive the night.
+<<set $relationshipFamC += 2>>
+<<set $relationshipFamA += 1>> // Indirect relationship boost with Fam A
+Mailman: That's wonderful. She's being having a hard time in class, maybe Nora can help her meet new friends.
+<<showCharacter "Vera" "SpeakingTired">>
+Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
+Mailman: My pleasure. Have a great day!
+<<hideCharacter "Vera">>
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
-//FAM C — DAY 3 — BAIT (1ST TIME DAMAGED)
+//FAM C — DAY 3 — NOTE (NEUTRAL)
 title: FamC
 when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 0)
 color: orange
@@ -1066,61 +1117,16 @@ position: -74,821
 .
 ===
 
-//FAM C — DAY 3 — BAIT (2ND TIME DAMAGED)
+//FAM C — DAY 3 — NOTE (COLD)
 title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") 
 color: orange
 group: FamC && Day3
-position: -74,952
+position: -74,821
 ---
-//FAM C — DAY 3 — BAIT (2ND TIME DAMAGED)
+//FAM C — DAY 3 — BAIT (1ST TIME DAMAGED)
 .
 ===
-
-//FAM C — DAY 3 — BAIT (3RD TIME DAMAGED)
-title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 2)
-color: orange
-group: FamC && Day3
-position: -74,1083
----
-//FAM C — DAY 3 — BAIT (3RD TIME DAMAGED)
-.
-===
-
-//FAM C — DAY 3 — BAIT (1ST TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 0)
-color: orange
-group: FamC && Day3
-position: -74,1216
----
-//FAM C — DAY 3 — BAIT (1ST TIME FLATTENED / BROKEN)
-.
-===
-
-//FAM C — DAY 3 — BAIT (2ND TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 1)
-group: FamC && Day3
-position: -74,1348
-color: orange
----
-//FAM C — DAY 3 — BAIT (2ND TIME FLATTENED / BROKEN)
-.
-===
-
-//FAM C — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
-title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 2)
-color: orange
-group: FamC && Day3
-position: -74,1479
----
-//FAM C — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
-.
-===
-
 
 
 
@@ -1129,7 +1135,7 @@ title: FamC
 when: ($day == 4) && ($package != "gardenTools") 
 color: orange
 group: FamC && Day4
-position: -74,1682
+position: -74,1035
 ---
 //FAM C — DAY 4 — SEEDS (WRONG PACKAGE)
 .
@@ -1140,7 +1146,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
 color: orange
 group: FamC && Day4
-position: -74,1815
+position: -74,1168
 ---
 //FAM C — DAY 4 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 .
@@ -1151,7 +1157,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
 color: orange
 group: FamC && Day4
-position: -74,1951
+position: -78,1313
 ---
 //FAM C — DAY 4 — SEEDS (1ST TIME DAMAGED)
 .
@@ -1162,7 +1168,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
 color: orange
 group: FamC && Day4
-position: -74,2089
+position: -78,1451
 ---
 //FAM C — DAY 4 — SEEDS (2ND TIME DAMAGED)
 .
@@ -1173,7 +1179,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
 color: orange
 group: FamC && Day4
-position: -74,2221
+position: -78,1583
 ---
 //FAM C — DAY 4 — SEEDS (3RD TIME DAMAGED)
 .
@@ -1184,7 +1190,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 3)
 color: orange
 group: FamC && Day4
-position: -74,2359
+position: -78,1721
 ---
 //FAM C — DAY 4 — SEEDS (4TH TIME DAMAGED)
 .
@@ -1195,7 +1201,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
 color: orange
 group: FamC && Day4
-position: -74,2490
+position: -78,1865
 ---
 //FAM C — DAY 4 — SEEDS (1ST TIME FLATTENED / BROKEN)
 .
@@ -1206,7 +1212,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
 color: orange
 group: FamC && Day4
-position: -74,2624
+position: -74,2008
 ---
 //FAM C — DAY 4 — SEEDS (2ND TIME FLATTENED / BROKEN)
 .
@@ -1217,7 +1223,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
 color: orange
 group: FamC && Day4
-position: -74,2757
+position: -70,2154
 ---
 //FAM C — DAY 4 — SEEDS (3RD TIME FLATTENED / BROKEN)
 .
@@ -1228,7 +1234,7 @@ title: FamC
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 3)
 color: orange
 group: FamC && Day4
-position: -74,2894
+position: -74,2299
 ---
 //FAM C — DAY 4 — SEEDS (4TH TIME FLATTENED / BROKEN)
 .
