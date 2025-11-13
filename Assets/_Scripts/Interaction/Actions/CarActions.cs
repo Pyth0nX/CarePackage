@@ -29,21 +29,35 @@ namespace CarePackage.Interaction.Car
     }
     
     [Serializable]
-    public class OpenCarAction : IInteractAction
+    public class OpenCarAction : IInteractAction, IActivatable
     {
-        private static readonly int carHoodClosed = Animator.StringToHash("Close");
-        private static readonly int carHoodOpen = Animator.StringToHash("Open");
+        private static readonly int AnimOpen = Animator.StringToHash("isOpen");
+        private static readonly int AnimSpeed = Animator.StringToHash("animSpeed");
+        private static readonly int AnimOverride = Animator.StringToHash("overrideOpen");
+        
         
         [SerializeField] private Animator animator;
         
-        private bool _opened;
+        private bool _open;
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            _opened = !_opened;
-            var triggerHash = _opened ? carHoodOpen : carHoodClosed;
-            Debug.Log($"[CarAction] Triggering {triggerHash}");
-            animator.SetTrigger(triggerHash);
+            _open = !_open;
+            ToggleCarTrunk();
+        }
+
+        public void OnEnable()
+        {
+            animator.SetBool(AnimOverride, true);
+            ToggleCarTrunk();
+            PrimeTween.Tween.Delay(1.5f).OnComplete(() => { animator.SetBool(AnimOverride, false); });
+        }
+
+        public void OnDisable() {}
+
+        private void ToggleCarTrunk()
+        {
+            animator.SetBool(AnimOpen, _open);
         }
     }
     
