@@ -22,16 +22,17 @@ namespace CarePackage.Interaction.Delivery
             package = DeliveryUitilities.ToScriptableObject(inPackage);
             addedDelivery = alreadyAdded;
 
-            var packageObj = inPickupOwningObject.GetComponent<PackageObject>();
+            var packageObj = inPickupOwningObject.GetComponent<PackageBehavior>();
             var packagePickupExtension = new PackagePickupExtension(packageObj);
+            var damagePickup = new DamagableFieldExtension(new Vector3(0f, 0.6f, 1.15f), packageObj);
+
+            int additionalExtensions = inAddtioanlPickupExtensions?.Length ?? 0;
+            ExtendedLogic = new IPickupExtension[2 + additionalExtensions];
+            ExtendedLogic[0] = packagePickupExtension;
+            ExtendedLogic[1] = damagePickup;
             
-            if (inAddtioanlPickupExtensions == null || inAddtioanlPickupExtensions.Length == 0) ExtendedLogic = new IPickupExtension[] { packagePickupExtension };
-            else
-            {
-                ExtendedLogic = new IPickupExtension[inAddtioanlPickupExtensions.Length + 1];
-                ExtendedLogic[0] = packagePickupExtension;
-                Array.Copy(inAddtioanlPickupExtensions, 0, ExtendedLogic, 1, inAddtioanlPickupExtensions.Length);
-            }
+            if (additionalExtensions > 0)
+                Array.Copy(inAddtioanlPickupExtensions, 0, ExtendedLogic, 2, additionalExtensions);
         }
         
         public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension inAdditionalPickupExtension) 
@@ -56,12 +57,12 @@ namespace CarePackage.Interaction.Delivery
         }
     }
 
-    [SerializeField]
+    [Serializable]
     public class PackagePickupExtension : IPickupExtension
     {
-        private readonly PackageObject _packageObj;
+        private readonly PackageBehavior _packageObj;
 
-        public PackagePickupExtension(PackageObject inPackageObj)
+        public PackagePickupExtension(PackageBehavior inPackageObj)
         {
             _packageObj = inPackageObj;
         }
@@ -70,12 +71,14 @@ namespace CarePackage.Interaction.Delivery
         {
             _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
             _packageObj.TogglePhysics(false);
+            _packageObj.SetDamageEnabled(false);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
-            _packageObj.TogglePhysics(true);
             _packageObj.VelocityThreshold = _packageObj.DefaultVelocityThreshold;
+            _packageObj.TogglePhysics(true);
+            _packageObj.SetDamageEnabled(true);
         }
     }
 
@@ -125,6 +128,52 @@ namespace CarePackage.Interaction.Delivery
             if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
             interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0f);
+        }
+    }
+    
+    [Serializable]
+    public class DamagableFieldExtension : IPickupExtension
+    {
+        private Vector3 _offset;
+        private GameObject _damageFieldPrefab;
+        private GameObject _damageFieldObject;
+        private DamagableBehavior _damageField;
+        private PackageBehavior _packageObject;
+        private bool _isInited;
+        
+        public DamagableFieldExtension() : this(Vector3.zero, null) {}
+
+        public DamagableFieldExtension(Vector3 inOffset, PackageBehavior inPackageObject)
+        {
+            _offset = inOffset;
+            _packageObject = inPackageObject;
+            _isInited = false;
+        }
+        
+        public void ExtendedPickUp(PlayerState interactingPlayer)
+        {
+            if (!_isInited)
+            {
+                _damageFieldObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DamagableField"), interactingPlayer.ActivePlayer.transform);
+                _damageFieldObject.TryGetComponent<DamagableBehavior>(out _damageField);
+                _damageField.VelocityThreshold = _packageObject.HeldVelocityThreshold;
+                _isInited = true;
+            }
+            _damageFieldObject.transform.localPosition = _offset;
+            _damageFieldObject.SetActive(true);
+            _damageField.OnDamaged += DamagePackage;
+        }
+
+        public void ExtendedDropped(PlayerState interactingPlayer)
+        {
+            _damageField.OnDamaged -= DamagePackage;
+            _damageFieldObject.SetActive(false);
+        }
+
+        private void DamagePackage()
+        {
+            Debug.Log("Damaged Package");
+            _packageObject.DamagePackage();
         }
     }
 

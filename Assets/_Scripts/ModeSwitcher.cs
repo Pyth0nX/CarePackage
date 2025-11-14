@@ -30,7 +30,7 @@ namespace CarePackage.Main
         private GameObject _idleCarInstance;
         private GameObject _currentPlayer;
         private bool _idleCarInitialized;
-        private readonly List<PackageObject> _packageObjects = new();
+        private readonly List<PackageBehavior> _packageObjects = new();
 
         private void Awake()
         {
@@ -70,7 +70,7 @@ namespace CarePackage.Main
                 var newPackage = Instantiate(packagePrefab, positions[i], Quaternion.identity);
                 //newPackage.transform.SetParent(transitPackages.transform, true);
                 var interactable = newPackage.GetComponent<Interactable>();
-                var package = newPackage.GetComponent<PackageObject>();
+                var package = newPackage.GetComponent<PackageBehavior>();
                 var extendedPickups = new IPickupExtension[]
                 {
                     new IndicatorPickupDroppableExtension()//packages[i].Id, newPackage

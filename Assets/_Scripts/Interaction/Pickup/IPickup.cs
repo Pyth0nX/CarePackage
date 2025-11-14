@@ -45,6 +45,7 @@ namespace CarePackage.Interaction
 
         public void OnPickedUp(PlayerState interactingPlayer)
         {
+            if (owningObject != null) owningObject.GetComponent<Collider>().enabled = false;
             if (ExtendedLogic == null) return;
             foreach (var extendedPickup in ExtendedLogic)
             {
@@ -54,6 +55,7 @@ namespace CarePackage.Interaction
 
         public void OnDropped(PlayerState interactingPlayer)
         {
+            if (owningObject != null) owningObject.GetComponent<Collider>().enabled = true;
             if (ExtendedLogic == null) return;
             foreach (var extendedPickup in ExtendedLogic)
             {

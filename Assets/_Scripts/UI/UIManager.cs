@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     public GameObject GetActivePopup(int index) => _activePopups[index];
 
     private List<GameObject> _activePopups = new();
+    private List<GameObject> _elements = new();
+
+    private Transform _activeOverlay;
     
     public static event Action OnInterfaceOpened;
     public static event Action<bool> OnInterfaceClosed;
@@ -20,6 +23,11 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+    }
+
+    private void Start()
+    {
+        _activeOverlay = FindFirstObjectByType<Canvas>().transform;
     }
 
     public void OpenPopupWindow(GameObject popupWindow)
@@ -84,5 +92,21 @@ public class UIManager : MonoBehaviour
         {
             OpenPopupWindow(popupWindow);
         }
+    }
+
+    public GameObject AddElement(GameObject elementToAdd)
+    {
+        if (elementToAdd == null) return null;
+        var newElement = Instantiate(elementToAdd, _activeOverlay);
+        _elements.Add(newElement);
+        return newElement;
+    }
+
+    public void RemoveElement(GameObject elementToRemove)
+    {
+        if (!_elements.Contains(elementToRemove)) return;
+        var elementObject = _elements[_elements.IndexOf(elementToRemove)];
+        _elements.Remove(elementToRemove);
+        Destroy(elementObject);
     }
 }

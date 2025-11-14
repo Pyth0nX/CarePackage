@@ -1,6 +1,6 @@
+using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Delivery;
-using CarePackage.Interaction.Delivery;
 using UnityEngine;
 
 namespace CarePackage.Main
@@ -46,6 +46,7 @@ namespace CarePackage.Main
         
         public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
         {
+            if (IsPickupValid) DropPickup();
             SetPickup(objectToPickup, objectOfPickup);
             
             _pickup.OwningObject.transform.SetParent(pickupLocation);
@@ -84,6 +85,12 @@ namespace CarePackage.Main
             objectToDrop.OnDropped(this);
             SetPickup(objectToDrop, null);
             _pickup = null;
+        }
+
+        public void LaunchPickup(float heldDuration)
+        {
+            var launchPickupAction = new Interaction.Miscellaneous.LaunchPickupAction(PickupObject, heldDuration);
+            launchPickupAction.PerformAction(this, PickupObject);
         }
     }
 }

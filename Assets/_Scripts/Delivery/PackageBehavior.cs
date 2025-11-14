@@ -4,7 +4,7 @@ namespace CarePackage.Delivery
 {
     public enum EPackageState { Pristine = 0, SlightlyDamaged = 1, Damaged = 2, Flattened = 3, Broken = 4 }
     
-    public class PackageObject : MonoBehaviour
+    public class PackageBehavior : MonoBehaviour
     {
         [SerializeField] private Mesh[] meshes;
         [SerializeField] private EPackageState packageState;
@@ -79,6 +79,8 @@ namespace CarePackage.Delivery
                 if (impact >= _velocityThreshold) Damage();
             }
         }
+
+        public void DamagePackage() => Damage();
 
         private void Damage()
         {

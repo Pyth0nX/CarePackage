@@ -164,7 +164,7 @@ namespace CarePackage.Delivery
 
             var newPackage = Instantiate(packagePrefab, packageConveyerBelt.transform.GetChild(0).position, Quaternion.identity);
             var packageInteractable = newPackage.GetComponent<Interactable>();
-            var packageObj = newPackage.GetComponent<PackageObject>();
+            var packageObj = newPackage.GetComponent<PackageBehavior>();
 
             var extendedPickups = new IPickupExtension[]
             {

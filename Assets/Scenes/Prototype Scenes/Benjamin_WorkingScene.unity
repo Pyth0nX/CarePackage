@@ -2569,17 +2569,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 166222794}
   m_SourcePrefab: {fileID: 100100000, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
---- !u!114 &166222791 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3218121488105441465, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
-  m_PrefabInstance: {fileID: 166222790}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166222792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &166222792 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5427515837124721039, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
@@ -2619,6 +2608,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 5e809afbcd3023646b31c991eadcb10c, type: 2}
         parent: {fileID: 166222792}
+        isLeft: 0
 --- !u!1001 &167151620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2758,6 +2748,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 167151622}
+        isLeft: 0
 --- !u!1 &167936598
 GameObject:
   m_ObjectHideFlags: 0
@@ -5214,6 +5205,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 318638603}
+        isLeft: 0
 --- !u!1 &328400346
 GameObject:
   m_ObjectHideFlags: 0
@@ -7363,6 +7355,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 543152151}
+        isLeft: 0
 --- !u!1 &543478650
 GameObject:
   m_ObjectHideFlags: 0
@@ -8848,6 +8841,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 622415160}
+        isLeft: 0
 --- !u!1 &627309198
 GameObject:
   m_ObjectHideFlags: 0
@@ -9689,6 +9683,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 639784690}
+        isLeft: 0
 --- !u!1 &648603578
 GameObject:
   m_ObjectHideFlags: 0
@@ -10140,6 +10135,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 669160926}
+        isLeft: 0
 --- !u!1 &673925256
 GameObject:
   m_ObjectHideFlags: 0
@@ -11614,17 +11610,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5427515837124721039, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
   m_PrefabInstance: {fileID: 760683884}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &760683887 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3218121488105441465, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
-  m_PrefabInstance: {fileID: 760683884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 760683886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!114 &760683888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11654,6 +11639,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 5e809afbcd3023646b31c991eadcb10c, type: 2}
         parent: {fileID: 760683886}
+        isLeft: 0
 --- !u!1 &787709674
 GameObject:
   m_ObjectHideFlags: 0
@@ -11827,6 +11813,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 794120900}
+        isLeft: 0
 --- !u!1 &804593596
 GameObject:
   m_ObjectHideFlags: 0
@@ -13724,17 +13711,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 939090934}
   m_SourcePrefab: {fileID: 100100000, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
---- !u!114 &939090931 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3218121488105441465, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
-  m_PrefabInstance: {fileID: 939090930}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939090932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &939090932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5427515837124721039, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
@@ -13774,6 +13750,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 939090932}
+        isLeft: 0
 --- !u!1 &950156009
 GameObject:
   m_ObjectHideFlags: 0
@@ -16313,6 +16290,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1116942423}
+        isLeft: 0
 --- !u!1001 &1120131457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16452,6 +16430,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1120131459}
+        isLeft: 0
 --- !u!1 &1124087690
 GameObject:
   m_ObjectHideFlags: 0
@@ -24042,15 +24021,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d04e22f76f21334a87052edf35404de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.JobBoard
-  jobButtons:
-  - {fileID: 760683887}
-  - {fileID: 1724619545}
   jobListing: {fileID: 2087993820}
+  jobListingElemets: {fileID: 0}
   jobPrefab: {fileID: 0}
   jobsContainer: {fileID: 0}
+  jobNotes: []
+  maxOffset: 5
   scriptedJobs: []
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 787709674}
+  scriptedPackagesArray: []
+  scriptedPackagesList: []
 --- !u!1 &1623060246
 GameObject:
   m_ObjectHideFlags: 0
@@ -25455,17 +25436,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5427515837124721039, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
   m_PrefabInstance: {fileID: 1724619542}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1724619545 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3218121488105441465, guid: 8eb6c286b8ea83a4788b1e1f3831fe09, type: 3}
-  m_PrefabInstance: {fileID: 1724619542}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724619544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!114 &1724619546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25495,6 +25465,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1724619544}
+        isLeft: 0
 --- !u!1 &1745028503
 GameObject:
   m_ObjectHideFlags: 0
@@ -27196,6 +27167,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1852050777}
+        isLeft: 0
 --- !u!1 &1854443240
 GameObject:
   m_ObjectHideFlags: 0
@@ -28275,6 +28247,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1929514966}
+        isLeft: 0
 --- !u!1 &1929638367
 GameObject:
   m_ObjectHideFlags: 0
@@ -29162,6 +29135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   dialogueRunner: {fileID: 1989908820}
   variableStorage: {fileID: 1989908821}
+  shouldDebugDialogueNode: 0
 --- !u!114 &1989908825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29190,6 +29164,8 @@ MonoBehaviour:
       sprite: {fileID: -2134281307, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
     - emotionName: SpeakingTired
       sprite: {fileID: 1576043024, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
+  dialogueCanvas: {fileID: 0}
+  dialogueRunner: {fileID: 0}
 --- !u!1 &1990356356
 GameObject:
   m_ObjectHideFlags: 0
@@ -29418,6 +29394,7 @@ MonoBehaviour:
       data:
         job: {fileID: 11400000, guid: 956d3d3a7318cce4eb1a63eba8c214cf, type: 2}
         parent: {fileID: 1994560637}
+        isLeft: 0
 --- !u!1 &2002851256
 GameObject:
   m_ObjectHideFlags: 0
@@ -30014,15 +29991,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d04e22f76f21334a87052edf35404de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.JobBoard
-  jobButtons:
-  - {fileID: 166222791}
-  - {fileID: 939090931}
   jobListing: {fileID: 1439505259}
+  jobListingElemets: {fileID: 0}
   jobPrefab: {fileID: 0}
   jobsContainer: {fileID: 0}
+  jobNotes: []
+  maxOffset: 5
   scriptedJobs: []
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 1357124567}
+  scriptedPackagesArray: []
+  scriptedPackagesList: []
 --- !u!224 &2057262305
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31332,7 +31311,7 @@ PrefabInstance:
     - target: {fileID: 5544470459316166213, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: carCamera
       value: 
-      objectReference: {fileID: 1288789016}
+      objectReference: {fileID: 1288789018}
     - target: {fileID: 5718209564711959202, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: pickupLocation
       value: 

@@ -8544,7 +8544,7 @@ PrefabInstance:
     - target: {fileID: 7607883717365141603, guid: d60c0411a8080ff4199a9286f25ef9dd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1953460125}
     - target: {fileID: 7607883717365141603, guid: d60c0411a8080ff4199a9286f25ef9dd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
@@ -20163,6 +20163,10 @@ PrefabInstance:
       propertyPath: _collider
       value: 
       objectReference: {fileID: 364852070}
+    - target: {fileID: 1160106555430822745, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
+      propertyPath: sliderPrefab
+      value: 
+      objectReference: {fileID: 2560624365968163267, guid: 9c5bae40bba4ef1468a4608cf0da4693, type: 3}
     - target: {fileID: 1160106555430822745, guid: 99d7dcd9b7dd31d408fea79935029bce, type: 3}
       propertyPath: _groundRay.layermask.m_Bits
       value: 119

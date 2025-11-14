@@ -107,7 +107,18 @@ namespace CarePackage.Interaction
         {
             if (input.started)
             {
-                if (!ValidInteraction() || !IsActive) return;
+                if (!ValidInteraction())
+                {
+                    if (owner is PlayerState playerState)
+                    {
+                        if (playerState.IsPickupValid)
+                        {
+                            playerState.DropPickup();
+                        }
+                    }
+                    return;
+                }
+                if (!IsActive) return;
                 TryInteract();
             }
         }

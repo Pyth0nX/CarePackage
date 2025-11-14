@@ -1,6 +1,6 @@
-using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 
 namespace CarePackage.Main
 {
@@ -17,6 +17,8 @@ namespace CarePackage.Main
         [SerializeField] private GameObject playerCamera;
         [SerializeField] private bool debug;
         public float airControlRate = 2f;
+
+        [SerializeField] private GameObject sliderPrefab;
 
         // private components
         private PlayerState _owningPlayer;
@@ -253,15 +255,38 @@ namespace CarePackage.Main
                 StartJump();
             }
         }
+
+        private float _inputLeftHeldTime;
+        private float _inputRightHeldTime;
+
+        private Interaction.Miscellaneous.TweenSliderAction sliderTween;
         
         public void OnLeftClick(InputAction.CallbackContext input)
         {
             if (input.started)
             {
                 if (!_owningPlayer.IsPickupValid) return;
-                _owningPlayer.DropPickup();
+                _inputLeftHeldTime = Time.time;
+                PrimeTween.Tween.Delay(0.6f).OnComplete(() =>
+                {
+                    if (_owningPlayer.IsPickupValid) // Still valid after delay?
+                    {
+                        sliderTween = new Interaction.Miscellaneous.TweenSliderAction(sliderPrefab);
+                        sliderTween.StartTweening();
+                    }
+                });
             }
-            else if (input.canceled) Debug.Log("Let go of LeftClick");
+            else if (input.canceled)
+            {
+                Debug.Log("Let go of LeftClick");
+                if (!_owningPlayer.IsPickupValid) return;
+                var heldDuration = Time.time - _inputLeftHeldTime;
+                
+                sliderTween?.StopTweening();
+                sliderTween = null;
+                
+                _owningPlayer.LaunchPickup(heldDuration);
+            }
         }
         
         public void OnRightClick(InputAction.CallbackContext input)
