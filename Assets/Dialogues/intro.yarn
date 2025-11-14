@@ -26,9 +26,39 @@ Mailman: *Knock knock*
 <<endif>>
 ===
 
+//FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
+title: FamA
+when: ($day == 1) && ($package != "backpack")
+color: purple
+group: FamA && Day1
+position: -1657,-1030
+---
+//FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
+<<once>>
+<<recievePackage false>>
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Good afternoon! I have a package for you.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: I don't think this is my package. Can you come back when you have mine?
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Oh I'm sorry about that, I'll be back with your package.
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Okay, thank you. Have a good day!
+<<hideCharacter "Lina">>
+<<hideBackground>>
+<<else>>
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Please remember to come back with the correct package.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+<<endonce>>
+===
+
 //FAM A — DAY 1 — BACKPACK (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 1) && ($package == "backpack") && ($damage < 1)
 position: -1660,-752
 color: purple
 group: FamA && Day1
@@ -64,12 +94,11 @@ position: -1371,-936
 color: green
 group: FamA && Day1
 ---
-<<recievePackage true>>
-<<set $relationshipFamA += 2>>
+<<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: A little... but Mom promised me a brand-new backpack!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, then this must be it!
+Mailman: Oh, then this must be it! A good start is half the battle, as we used to say back at the depot.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Really? Yay! Can I open it now, please?
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -86,7 +115,6 @@ group: FamA && Day1
 color: green
 ---
 <<recievePackage true>>
-<<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thank you so much. Have a nice day.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -101,7 +129,8 @@ position: -1115,-937
 color: green
 group: FamA && Day1
 ---
-<<set $relationshipFamA += 2>>
+<<recievePackage true>>
+<<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: THANK YOU! It's perfect!
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -112,9 +141,90 @@ Mailman: Have a wonderful evening, both of you. And good luck tomorrow!
 <<hideBackground>>
 ===
 
+//FAM A — DAY 1 — BACKPACK (DAMAGED)
+title: FamA
+when: ($day == 1) && ($package == "backpack") && ($damage == 1)
+position: -1643,-120
+color: purple
+group: FamA && Day1
+---
+//FAM A — DAY 1 — BACKPACK (DAMAGED)
+<<once>>
+<<set $famA_damageCount += 1>>
+<<set $relationshipFamA -= 0.5>>
+<<setBackgroung "BGFamA">>
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Good afternoon! Are you Lina?
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: That's me. Sofie, your package is here!
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Perfect — just need your signature here.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Wait... this looks a bit damaged. What happened?
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: I'm really sorry, the road was rough on the way here.
+-> Mailman: I'll be more careful next time.
+    <<jump FamA_D1_Damaged_Kind>>
+-> Mailman: It's just the box.
+    <<jump FamA_D1_Damaged_Neutral>>
+-> Mailman: That's how it was at the Post Office.
+    <<jump FamA_D1_Damaged_Cold>>
+<<else>>
+<<setBackgroung "BGFamA">>
+...
+<<hideBackground>>
+<<endonce>>
+===
+
+title: FamA_D1_Damaged_Kind
+group: FamA && Day1
+color: green
+position: -1378,-32
+---
+<<recievePackage true>>
+<<set $relationshipFamA += 1>>
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: As long as the backpack's okay...
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Thank you for being honest. Please be careful next time.
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: You're absolutely right. It won't happen again. Have a good evening and good luck tomorrow, Sofie.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+title: FamA_D1_Damaged_Neutral
+group: FamA && Day1
+color: yellow
+position: -1384,-204
+---
+<<recievePackage true>>
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: It's not the nicest surprise, but... fine.
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Understood. Have a good evening.
+<<hideBackground>>
+<<hideCharacter "Lina">>
+===
+
+title: FamA_D1_Damaged_Cold
+group: FamA && Day1
+color: red
+position: -1143,-121
+---
+<<recievePackage true>>
+<<set $relationshipFamA -= 0.5>>
+<<showCharacter "Lina" "LinaSpeakingTired">>
+Lina: Then let's hope it doesn't happen again. Please be more careful next time.
+<<showCharacter "Lina" "LinaListeningTired">>
+Mailman: Right. Have a good evening.
+<<hideBackground>>
+<<hideCharacter "Lina">>
+===
+
 //FAM A — DAY 1 — BACKPACK (BROKEN / FLATTENED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($packageState == "Broken" || $packageState == "Flattened")
+when: ($day == 1) && ($package == "backpack") && ($damage > 1)
 position: -1650,-483
 color: purple
 group: FamA && Day1
@@ -145,6 +255,7 @@ group: FamA && Day1
 color: green
 position: -1149,-480
 ---
+<<recievePackage true>>
 <<set $relationshipFamA += 0>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Alright. Please make sure it doesn't happen again.
@@ -159,6 +270,7 @@ group: FamA && Day1
 color: yellow
 position: -1376,-595
 ---
+<<recievePackage true>>
 <<set $relationshipFamA -= 1>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Don't worry, I will report it.
@@ -173,6 +285,7 @@ group: FamA && Day1
 color: red
 position: -1384,-340
 ---
+<<recievePackage true>>
 <<set $relationshipFamA -= 2>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: So it's “not your fault”? Right. I'll be filing a complaint.
@@ -182,116 +295,12 @@ Mailman: …Have a good evening.
 <<hideBackground>>
 ===
 
-//FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
-title: FamA
-when: ($day == 1) && ($package != "backpack")
-color: purple
-group: FamA && Day1
-position: -1657,-1030
----
-//FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
-<<once>>
-<<recievePackage false>>
-<<setBackground "BGFamA">>
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Good afternoon! I have a package for you.
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: I don't think this is my package. Can you come back when you have mine?
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Oh I'm sorry about that, I'll be back with your package.
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Okay, thank you. Have a good day!
-<<hideCharacter "Lina">>
-<<hideBackground>>
-<<else>>
-<<setBackground "BGFamA">>
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Please remember to come back with the correct package.
-<<hideCharacter "Lina">>
-<<hideBackground>>
-<<endonce>>
-===
 
-//FAM A — DAY 1 — BACKPACK (DAMAGED)
-title: FamA
-when: ($day == 1) && ($package == "backpack") && ($packageState == "Damaged")
-position: -1643,-120
-color: purple
-group: FamA && Day1
----
-//FAM A — DAY 1 — BACKPACK (DAMAGED)
-<<once>>
-<<setBackgroung "BGFamA">>
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Good afternoon! Are you Lina?
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: That’s me. Sofie, your package is here!
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Perfect — just need your signature here.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Wait... this looks a bit damaged. What happened?
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I'm really sorry, the road was rough on the way here.
--> Mailman: I'll be more careful next time.
-    <<jump FamA_D1_Damaged_Kind>>
--> Mailman: It's just the box.
-    <<jump FamA_D1_Damaged_Neutral>>
--> Mailman: That's how it was at the Post Office.
-    <<jump FamA_D1_Damaged_Cold>>
-<<else>>
-<<setBackgroung "BGFamA">>
-...
-<<hideBackground>>
-<<endonce>>
-===
 
-title: FamA_D1_Damaged_Kind
-group: FamA && Day1
-color: green
-position: -1378,-32
----
-<<set $relationshipFamA += 1>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: As long as the backpack's okay...
-<<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Thank you for being honest. Please be careful next time.
-<<showCharacter "Lina" "SofieListeningTired">>
-Mailman: You're absolutely right. It won't happen again. Have a good evening and good luck tomorrow, Sofie.
-<<hideCharacter "Lina">>
-<<hideBackground>>
-===
-
-title: FamA_D1_Damaged_Neutral
-group: FamA && Day1
-color: yellow
-position: -1384,-204
----
-<<set $relationshipFamA += 0>>
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: It's not the nicest surprise, but... fine.
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Understood. Have a good evening.
-<<hideBackground>>
-<<hideCharacter "Lina">>
-===
-
-title: FamA_D1_Damaged_Cold
-group: FamA && Day1
-color: red
-position: -1143,-121
----
-<<set $relationshipFamA -= 1>>
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Then let's hope it doesn't happen again. Please be more careful next time.
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Right. Have a good evening.
-<<hideBackground>>
-<<hideCharacter "Lina">>
-===
 
 //FAM A — DAY 2 — UNIFORM (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 2) && ($package == "uniform") && ($damage < 1)
 color: purple
 group: FamA && Day2
 position: -1640,664
@@ -329,6 +338,7 @@ group: FamA && Day2
 color: green
 position: -1368,582
 ---
+<<recievePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: I didn't mean to complain… I just wish I could wear something new for once. 
@@ -347,6 +357,7 @@ group: FamA && Day2
 color: red
 position: -1374,722
 ---
+<<recievePackage true>>
 <<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: You're not my dad. You don't even know me.
@@ -361,13 +372,15 @@ Mailman: I'm sorry. Have a good evening.
 
 //FAM A — DAY 2 — UNIFORM (1ST TIME DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($packageState == "Damaged") && ($famA_damageCount == 0)
+when: ($day == 2) && ($package == "uniform") && ($damage == 1)
 //1st time damaged
 color: purple
 group: FamA && Day2
 position: -1643,317
 ---
 //FAM A — DAY 2 — UNIFORM (1ST TIME DAMAGED)
+<<set $famA_damageCount += 1>>
+<<set $relationshipFamA -= 0.5>>
 <<setBackgroung "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Good afternoon, Lina.
@@ -387,6 +400,7 @@ Sofie: It's that my new uniform?
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
+    <<recievePackage true>>
     <<showCharacter "Lina" "SofieSpeakingTired">>
 	Sofie: Thank you Mr.Mailman.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -397,13 +411,15 @@ Sofie: It's that my new uniform?
 
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
 title: FamA
-when: $day == 2 && $package == "uniform" && $damage == 2 && $packageState == "damaged"
+when: ($day == 2) && ($package == "uniform") && ($damage == 1) 
 //damaged AGAIN 
 color: purple
 group: FamA && Day2
 position: -1641,471
 ---
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
+<<set $famA_damageCount += 1>>
+<<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Morning Lina!
 <<showCharacter "Lina" "LinaSpeakingTired">>
@@ -422,6 +438,7 @@ Sofie: It's that my new uniform?
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
+    <<recievePackage true>>
 	Sofie: Thank you Mr.Mailman.
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
@@ -432,6 +449,7 @@ color:green
 group: FamA && Day2
 position: -1372,395
 ---
+<<recievePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -456,6 +474,7 @@ Mailman: Good Morning Lina! More school supplies I'm guessing.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
 <<showCharacter "Lina" "SofieListeningTired">>
+<<recievePackage true>>
 Sofie:...
 -> Mailman: I'm glad she has it now, tomorrow will be a better day.
 	Lina: Yeah, let's hope you're right. Have a nice day.
@@ -540,34 +559,41 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 1) && ($package == "backpack") && ($damage < 1)
 position: -1640,1284
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — BABYSITTING (PRISTINE / SLIGHTLY DAMAGED)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Good morning Lina, how's Sofie?
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. It's nice since their niece attends the same school as Sofie. #RESTED
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Oh! That's amazing, I hope they can get along.
-Lina:  Okay, what do you have for me?
-Mailman: 
--> Inventory + package
--> Package
-
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Yes, I wanted to give them something in return. I made a batch of cookies you can give to our neighbors.
 ===
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 1) && ($package == "backpack") && ($damage == 1)
 position: -1642,1432
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — NOT BABYSITTING (PRISTINE / SLIGHTLY DAMAGED)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Good morning Lina, how's Sofie?
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: She's hangin on, she's still mad with me for not caring enough about her social life. She says she's going to be the weirdo forever.  #TIRED
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm sorry to hear that, I was hoping that it was all part of the teen imbalance.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina:  She's been having a rough time in the new school
+<<showCharacter "Lina" "ListeningTired">>
 -> Mailman: If you don't mind me asking, why did she change schools?
 <<jump AEn1Day4>>
 -> Mailman: I wish I could help.
@@ -579,12 +605,19 @@ group: FamA && Day4
 color: green
 position: -1373,1352
 ---
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh she just had bad luck with her previous classmates, they didn't really make her part of any of the groups. 
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Oh, that's too bad. She's a lovely girl.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: She felt like she was responsible for what was happening and started to overthink every interaction she had with any of the kids. She came home exhausted every day and her grades started to take a toll.
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm glad she changed schools.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: If you meet any kid that attends her new school and seems nice enough, please tell me and maybe I can organize a hangout for them to meet Sofie.
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Will do! I'm sure she'll have a wonderful group of classmates.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I really hope so, she's been through enough.
 ===
 title: AEnd1Day4
@@ -592,23 +625,43 @@ group: FamA && Day4
 color: green
 position: -1369,1521
 ---
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: It's okay, I'm sure she'll meet amazing kids in this new school. She just needs to stop getting ahead of what's going to happen.
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: She does?
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Yes, she prepares for all the negative outcomes possible, she says it's so she knows how to react, but I bet it's exhausting for her, she has enough already getting adjusted to new teachers and subjects.
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: That does sound like a lot. I hope she meets the right kids. 
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Me too. Thank you for listening. 
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: No worries, of you need any help count with me.
 ===
 
 
+//FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
+title: FamB
+when: ($day == 1) && ($package != "gardenTools") 
+color: blue
+group: FamB && Day1
+position: -849,-1026
+---
+//FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamB">>
+.
+===
+
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamB
-when: ($day == 1) && ($package == "gardenTools") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 1) && ($package == "gardenTools") && ($damage < 1)
 color: blue
 group: FamB && Day1
 position: -852,-882
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
+<<setBackground "BGFamB">>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
@@ -636,7 +689,7 @@ group: FamB && Day1
 position: -589,-883
 ---
 <<showCharacter "Gertrude" "TalkingWorried">>
-Gertrude: Dangerous weather for us old folks, huh?. Poor you having to work, how many years until you retire?
+Gertrude: Dangerous cold for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 <<showCharacter "Gertrude" "Worried">>
 Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all day.
 //*You walk into the living room where Mr.Andersen is at*
@@ -676,22 +729,26 @@ group: FamB && Day1
 color: green
 position: -336,-991
 ---
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Oh so you got my package! Where do I sign?
-
+<<showCharacter "Mikkel" "Worried">>
 Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
-
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Done. Thank you!
-
+<<showCharacter "Mikkel" "Worried">>
 Mail man: Thank you! Have a nice afternoon.
 ===
 //FAM B — DAY 1 — GARDENING TOOLS (DAMAGED)
 title: FamB
-when: ($day == 1) && ($package == "gardenTools") && ($packageState == "Damaged")
+when: ($day == 1) && ($package == "gardenTools") && ($damage == 1)
 color: blue
 group: FamB && Day1
 position: -849,-690
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
@@ -727,10 +784,11 @@ Mikkel: You too, take care.
 
 title: BEn2Day1
 group: FamB && Day1
+color: red
 position: -589,-883
 ---
 <<showCharacter "Gertrude" "TalkingWorried">>
-Gertrude: Dangerous weather for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
+Gertrude: Dangerous cold for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 <<showCharacter "Gertrude" "Worried">>
 Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all day.
 //*You walk into the living room where Mr.Andersen is at*
@@ -745,25 +803,35 @@ Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends ha
 
 //FAM B — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
 title: FamB
-when: ($day == 1) && ($package == "gardenTools") && ($packageState == "Flattened" || $packageState == "Broken")
-color: blue
+when: ($day == 1) && ($package == "gardenTools") && ($damage > 1)
+color: red
 group: FamB && Day1
 position: -849,-516
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
-.
+<<setBackground "BGFamB">>
+Mailman: Good afternoon, is Mikkel Andersen here?
+<<showCharacter "Gertrude" "TalkingWorried">>
+Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
+<<showCharacter "Gertrude" "Worried">>
+-> Mailman: No thank you, I'll just wait out here.
+    <<showCharacter "Gertrude" "TalkingWorried">>
+    Gertrude: Alright, he'll be right out.
+    <<hideCharacter "Gertrude">>
+    *Mrs.Andersen leaves and Mr.Andersen comes*
+    <<showCharacter "Mikkel" "Worried">>
+    Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
+    <<showCharacter "Mikkel" "TalkingTired">>
+    Mikkel: Sure thing.
+    <<showCharacter "Mikkel" "Worried">>
+    Mail man: Thank you, have a lovely evening.
+    <<showCharacter "Mikkel" "TalkingTired">>
+    Mikkel: You too.
+    <<showCharacter "Mikkel" "Worried">>
+-> Mailman: Oh, thank you! It's pretty warm out here.
+    <<jump BEn1Day1>>
 ===
 
-//FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
-title: FamB
-when: ($day == 1) && ($package != "gardenTools") 
-color: blue
-group: FamB && Day1
-position: -849,-1026
----
-//FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
-.
-===
 
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
 title: FamB
@@ -773,61 +841,71 @@ group: FamB && Day2
 position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 2) && ($package == "seeds") && ($damage < 1)
 color: blue
 group: FamB && Day2
 position: -847,-175
 ---
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 2 — SEEDS (1ST TIME DAMAGED)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 0)
 color: blue
 group: FamB && Day2
 position: -848,-43
 ---
 //FAM B — DAY 2 — SEEDS (1ST TIME DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 2 — SEEDS (2ND TIME DAMAGED)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 1)
 color: blue
 group: FamB && Day2
 position: -846,88
 ---
 //FAM B — DAY 2 — SEEDS (2ND TIME DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 2 — SEEDS (1ST TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "seeds") && ($damage > 1) && ($famB_damageCount == 0)
 color: blue
 group: FamB && Day2
 position: -846,219
 ---
 //FAM B — DAY 2 — SEEDS (1ST TIME FLATTENED / BROKEN)
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "seeds") && ($damage > 1) && ($famB_damageCount == 1)
 color: blue
 group: FamB && Day2
 position: -844,354
 ---
 //FAM B — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -840,12 +918,14 @@ group: FamB && Day3
 position: -849,553
 ---
 //FAM B — DAY 3 — BAIT (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 3) && ($package == "bait") && ($damage < 1)
 color: red
 group: FamB && Day3
 position: -849,686
@@ -880,67 +960,79 @@ Mikkel: We even have a box of the children's old toys and books. They're just co
 
 //FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 0)
 color: blue
 group: FamB && Day3
 position: -847,821
 ---
 //FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (2ND TIME DAMAGED)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 1)
 color: blue
 group: FamB && Day3
 position: -846,952
 ---
 //FAM B — DAY 3 — BAIT (2ND TIME DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (3RD TIME DAMAGED)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 2)
+when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 2)
 color: blue
 group: FamB && Day3
 position: -845,1083
 ---
 //FAM B — DAY 3 — BAIT (3RD TIME DAMAGED)
+<<set $famB_damageCount += 1>>
+<<set $relationshipFamB -= 0.5>>
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (1ST TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 3) && ($package == "bait") && ($damage > 1) && ($famB_damageCount == 0)
 color: blue
 group: FamB && Day3
 position: -842,1216
 ---
 //FAM B — DAY 3 — BAIT (1ST TIME FLATTENED / BROKEN)
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (2ND TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 3) && ($package == "bait") && ($damage < 1)
 group: FamB && Day3
 position: -841,1348
 color: blue
 ---
 //FAM B — DAY 3 — BAIT (2ND TIME FLATTENED / BROKEN)
+<<setBackground "BGFamB">>
 .
 ===
 
 //FAM B — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") && ($famB_damageCount == 2)
+when: ($day == 3) && ($package == "bait") && ($damage > 1)
 color: blue
 group: FamB && Day3
 position: -840,1479
 ---
 //FAM B — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -955,6 +1047,8 @@ group: FamB && Day4
 position: -841,1684
 ---
 //FAM B — DAY 4 — SEEDS (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -966,6 +1060,7 @@ group: FamB && Day4
 position: -839,1817
 ---
 //FAM B — DAY 4 — COOKIES (WARM)
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -977,6 +1072,7 @@ group: FamB && Day4
 position: -838,1947
 ---
 //FAM B — DAY 4 — COOKIES (NEUTRAL)
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -988,6 +1084,7 @@ group: FamB && Day4
 position: -837,2078
 ---
 //FAM B — DAY 4 — COOKIES (COLD)
+<<setBackground "BGFamB">>
 .
 ===
 
@@ -1009,17 +1106,20 @@ group: FamC && Day1
 position: -77,-1026
 ---
 //FAM C — DAY 1 — DIAPERS (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
-when: ($day == 1) && ($package == "diapers") && ($damage <= 1)
+when: ($day == 1) && ($package == "diapers") && ($damage < 1)
 group: FamC && Day1
 position: -77,-840
 color: orange
 ---
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
+<<setBackground "BGFamC">>
 Mail man: Good morning! I'm looking for Jonas.
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
 Vera: YES! just in time, this was about to get ugly.
@@ -1035,6 +1135,7 @@ group: FamC && Day1
 position: 201,-929
 color: green
 ---
+<<recievePackage true>>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
 Mail man: You have my number in the receipt, call me if you need anything.
 Jonas: Thank you so much! Have a good day.
@@ -1046,32 +1147,35 @@ group: FamC && Day1
 position: 200,-764
 color: green
 ---
+<<recievePackage true>>
 Jonas, while signing: Alright, thank you. Have a good day.
 Mail man: You too.
 ===
 //FAM C — DAY 1 — DIAPERS (DAMAGED)
 title: FamC
-when: ($day == 1) && ($package == "diapers") && ($packageState == "Damaged")
+when: ($day == 1) && ($package == "diapers") && ($damage == 1)
 color: orange
 group: FamC && Day1
 position: -70,-684
 ---
 //FAM C — DAY 1 — DIAPERS (DAMAGED)
+<<set $famC_damageCount += 1>>
+<<set $relationshipFamC -= 0.5>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
 title: FamC
-when: ($day == 1) && ($package == "gardenTools") && ($packageState == "Flattened" || $packageState == "Broken")
+when: ($day == 1) && ($package == "gardenTools") && ($damage > 1)
 color: orange
 group: FamC && Day1
 position: -70,-514
 ---
 //FAM C — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
+<<setBackground "BGFamC">>
 .
 ===
-
-//FAM C — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 
 //FAM C — DAY 2 — SEEDS (WRONG PACKAGE)
 title: FamC
@@ -1081,12 +1185,13 @@ group: FamC && Day2
 position: -75,-310
 ---
 //FAM C — DAY 2 — SEEDS (WRONG PACKAGE)
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 2) && ($package == "seeds") && ($damage < 1)
 color: orange
 group: FamC && Day2
 position: -74,-175
@@ -1116,40 +1221,47 @@ Vera: Sure thing! I actually might have something for you too. When we moved, I 
 
 //FAM C — DAY 2 — SEEDS (1ST TIME DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 0)
 color: orange
 group: FamC && Day2
 position: -74,-43
 ---
 //FAM C — DAY 2 — SEEDS (1ST TIME DAMAGED)
+<<set $famC_damageCount += 1>>
+<<set $relationshipFamC -= 0.5>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 2 — SEEDS (2ND TIME DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 1)
 color: orange
 group: FamC && Day2
 position: -74,88
 ---
 //FAM C — DAY 2 — SEEDS (2ND TIME DAMAGED)
+<<set $famC_damageCount += 1>>
+<<set $relationshipFamC -= 0.5>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 2 — SEEDS (1ST TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "seeds") && ($damage > 1)
 color: orange
 group: FamC && Day2
 position: -74,219
 ---
 //FAM C — DAY 2 — SEEDS (1ST TIME FLATTENED / BROKEN)
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "seeds") && ($damage > 1)
 color: orange
 group: FamC && Day2
 position: -74,354
@@ -1167,12 +1279,14 @@ group: FamC && Day3
 position: -74,553
 ---
 //FAM C — DAY 3 — BAIT (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 3) && ($package == "bait") && ($damage < 1)
 color: red
 group: FamC && Day3
 position: -74,686
@@ -1208,17 +1322,19 @@ group: FamC && Day3
 position: -74,821
 ---
 //FAM C — DAY 3 — BAIT (1ST TIME DAMAGED)
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 3 — NOTE (COLD)
 title: FamC
-when: ($day == 3) && ($package == "bait") && ($packageState == "Damaged") 
+when: ($day == 3) && ($package == "bait") && ($damage == 1) 
 color: orange
 group: FamC && Day3
 position: -74,821
 ---
 //FAM C — DAY 3 — BAIT (1ST TIME DAMAGED)
+<<setBackground "BGFamC">>
 .
 ===
 
@@ -1232,17 +1348,20 @@ group: FamC && Day4
 position: -74,1035
 ---
 //FAM C — DAY 4 — SEEDS (WRONG PACKAGE)
+<<recievePackage false>>
+<<setBackground "BGFamC">>
 .
 ===
 
 //FAM C — DAY 4 — COOKIES (WARM)
 title: FamC
-when: ($day == 4) && ($package == "seeds") && ($packageState == "Pristine" || $packageState == "SlightlyDamaged")
+when: ($day == 4) && ($package == "seeds") && ($damage < 1)
 color: orange
 group: FamC && Day4
 position: -74,1168
 ---
 //FAM C — DAY 4 — COOKIES (WARM)
+<<setBackground "BGFamC">>
 .
 ===
 
@@ -1254,6 +1373,7 @@ group: FamC && Day4
 position: -78,1313
 ---
 //FAM C — DAY 4 — COOKIES (NEUTRAL)
+<<setBackground "BGFamC">>
 .
 ===
 
@@ -1265,5 +1385,6 @@ group: FamC && Day4
 position: -78,1451
 ---
 //FAM C — DAY 4 — COOKIES (COLD)
+<<setBackground "BGFamC">>
 .
 ===
