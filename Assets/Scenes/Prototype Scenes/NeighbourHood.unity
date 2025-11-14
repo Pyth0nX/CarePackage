@@ -676,17 +676,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_RightClickAction: {fileID: -3287500038800370785, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -41499,6 +41499,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 775279684}
     - target: {fileID: 5544470459316166213, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
+      propertyPath: idleCarPrefab
+      value: 
+      objectReference: {fileID: 5074214957411735732, guid: 8f303605494412e499ae0630029d948a, type: 3}
+    - target: {fileID: 5544470459316166213, guid: 9109e69b56de1b64dbfe640c75ce9062, type: 3}
       propertyPath: packagePrefab
       value: 
       objectReference: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
@@ -48039,6 +48043,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 209207455013024294, guid: de0aac9467f02024497902742c7ab152, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 34137166}
     - target: {fileID: 360351279044766826, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -48243,6 +48251,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6182469746297221120, guid: de0aac9467f02024497902742c7ab152, type: 3}
+      propertyPath: iInteractAction
+      value: 3802006926538047601
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182469746297221120, guid: de0aac9467f02024497902742c7ab152, type: 3}
+      propertyPath: 'managedReferences[3802006926538047601]'
+      value: Assembly-CSharp CarePackage.Interaction.Car.ExitCarAction
+      objectReference: {fileID: 0}
     - target: {fileID: 6258165903984527133, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -48277,7 +48293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7328367307721634624, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7372538628207138810, guid: de0aac9467f02024497902742c7ab152, type: 3}
       propertyPath: m_Mass

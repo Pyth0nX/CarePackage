@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CarePackage.Delivery;
 using CarePackage.Interaction;
@@ -5,6 +6,7 @@ using CarePackage.Interaction.Delivery;
 using CarePackage.Utilities;
 using PrimeTween;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CarePackage.Main
 {
@@ -45,6 +47,42 @@ namespace CarePackage.Main
         private void Start()
         {
             GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
+        }
+
+        private void Update()
+        {
+            if (_idleCarInitialized && _idleCarInstance.activeSelf)
+            {
+                var sourceAnimator = _idleCarInstance.GetComponentInChildren<Animator>();
+                var thisAnimator = Car.GetComponentInChildren<Animator>();
+                // Iterate through all the parameters in the source animator
+                foreach (AnimatorControllerParameter parameter in sourceAnimator.parameters)
+                {
+
+                    // Copy the parameter's value based on its type
+                    switch (parameter.type)
+                    {
+                        case AnimatorControllerParameterType.Float:
+                            thisAnimator.SetFloat(parameter.name, sourceAnimator.GetFloat(parameter.name));
+                            break;
+                        case AnimatorControllerParameterType.Int:
+                            thisAnimator.SetInteger(parameter.name, sourceAnimator.GetInteger(parameter.name));
+                            break;
+                        case AnimatorControllerParameterType.Bool:
+                            thisAnimator.SetBool(parameter.name, sourceAnimator.GetBool(parameter.name));
+                            break;
+                        case AnimatorControllerParameterType.Trigger:
+                            // Triggers are a bit special, as they reset after being consumed.
+                            // We check if the trigger is set on the source and then set it on the destination.
+                            if (sourceAnimator.GetBool(parameter.name))
+                            {
+                                thisAnimator.SetTrigger(parameter.name);
+                            }
+
+                            break;
+                    }
+                }
+            } 
         }
 
         private void OnDisable()
@@ -97,7 +135,7 @@ namespace CarePackage.Main
             var carRotation = originalTransform.root.rotation;
             Car.transform.position = carPosition;
             Car.transform.rotation = carRotation;
-            Car.SetActive(true);
+            SetCarVisibility(true);
             
             TransitPackages.SetParent(Car.transform.GetChild(3), true);
             RestorePackageTransforms();
@@ -110,6 +148,28 @@ namespace CarePackage.Main
             deliveryManager.ToggleIndicator(postBox, true, false);
         }
 
+        private void SetCarVisibility(bool visibility)
+        {
+            Car.GetComponent<PrometeoCarController>().enabled = visibility;
+            Car.GetComponent<InteractionComponent>().enabled = visibility;
+            Car.GetComponent<PlayerInput>().enabled = visibility;
+            Car.GetComponent<Rigidbody>().isKinematic = !visibility;
+            foreach (var componentsInChild in Car.GetComponentsInChildren<Renderer>())
+            {
+                componentsInChild.enabled = visibility;
+            }
+            
+            foreach (var componentsInChild in Car.GetComponentsInChildren<Collider>())
+            {
+                componentsInChild.enabled = visibility;
+            }
+            
+            foreach (var componentsInChild in Car.GetComponentsInChildren<AudioSource>())
+            {
+                componentsInChild.enabled = visibility;
+            }
+        }
+
         public void EnterFirstPersonMode(Transform originalTransform)
         {
             TogglePackagesDamagable(false, 0.1f);
@@ -117,7 +177,7 @@ namespace CarePackage.Main
             TransitPackages.SetParent(null, true);
 
             var carPosition = Car.transform.position;
-            Car.SetActive(false);
+            SetCarVisibility(false);
             
             // spawn IdleCar
             if (!_idleCarInitialized)
