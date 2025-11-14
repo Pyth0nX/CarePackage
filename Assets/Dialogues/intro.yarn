@@ -969,13 +969,41 @@ position: -847,821
 <<set $famB_damageCount += 1>>
 <<set $relationshipFamB -= 0.5>>
 <<setBackground "BGFamB">>
-.
+Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: That's the stuff! The box it's a bit damged, I hope everything is good inside.
+<<showCharacter "Mikkel" "Worried">>
+Mailman: I'm sorry, I hit a rough patch or two.
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: As long as it didn't spill, it's all good.
+<<showCharacter "Mikkel" "Worried">>
+Mailman: I'll be more careful next time. How's Gertrude?
+<<showCharacter "Gertrude" "Worried">>
+Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
+<<showCharacter "Mikkel" "Worried">>
+-> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
+    <<set $toysForKids = true>>
+    <<set $relationshipFamB += 2>>
+    <<showCharacter "Gertrude" "TalkingWorried">>
+    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
+-> Mailman: I see. I hope you feel less isolated soon. 
+    <<set $relationshipFamB += 0.5>>
+    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
+
 ===
 
 //FAM B — DAY 3 — BAIT (2ND TIME DAMAGED)
 title: FamB
 when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 1)
-color: blue
+color: red
 group: FamB && Day3
 position: -846,952
 ---
@@ -983,7 +1011,35 @@ position: -846,952
 <<set $famB_damageCount += 1>>
 <<set $relationshipFamB -= 0.5>>
 <<setBackground "BGFamB">>
-.
+<<setBackground "BGFamB">>
+Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: That's the stuff! The box it's damaged again, have you been driving with your eyes closed?
+<<showCharacter "Mikkel" "Worried">>
+Mailman: I'm sorry, I hit a rough patch or two.
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: As long as it didn't spill, it's all good.
+<<showCharacter "Mikkel" "Worried">>
+Mailman: I'll be more careful next time. How's Gertrude?
+<<showCharacter "Gertrude" "Worried">>
+Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
+<<showCharacter "Mikkel" "TalkingTired">>
+Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
+<<showCharacter "Mikkel" "Worried">>
+-> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
+    <<set $toysForKids = true>>
+    <<set $relationshipFamB += 2>>
+    <<showCharacter "Gertrude" "TalkingWorried">>
+    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
+-> Mailman: I see. I hope you feel less isolated soon. 
+    <<set $relationshipFamB += 0.5>>
+    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
+    <<hideCharacter "Mikkel">>
+    <<hideCharacter "Gertrude">>
+    <<hideBackground>>
 ===
 
 //FAM B — DAY 3 — BAIT (3RD TIME DAMAGED)
@@ -1361,6 +1417,7 @@ group: FamC && Day4
 position: -74,1168
 ---
 //FAM C — DAY 4 — COOKIES (WARM)
+<<giveItem "cookies">>
 <<setBackground "BGFamC">>
 .
 ===
@@ -1385,6 +1442,19 @@ group: FamC && Day4
 position: -78,1451
 ---
 //FAM C — DAY 4 — COOKIES (COLD)
+<<setBackground "BGFamC">>
+.
+===
+
+//FAM C — DAY 4 — NO COOKIES (WARM)
+title: FamC
+when: ($day == 4) && ($package == "seeds") && ($damage < 1)
+color: orange
+group: FamC && Day4
+position: -74,1168
+---
+//FAM C — DAY 4 — COOKIES (WARM)
+<<giveItem "cookies">>
 <<setBackground "BGFamC">>
 .
 ===
