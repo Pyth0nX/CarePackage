@@ -35,7 +35,6 @@ namespace CarePackage.Interaction.Car
         private static readonly int AnimSpeed = Animator.StringToHash("animSpeed");
         private static readonly int AnimOverride = Animator.StringToHash("overrideOpen");
         
-        
         [SerializeField] private Animator animator;
         
         private bool _open;
@@ -47,10 +46,10 @@ namespace CarePackage.Interaction.Car
         }
 
         public void OnEnable()
-        {
+        {/*
             animator.SetBool(AnimOverride, true);
             ToggleCarTrunk();
-            PrimeTween.Tween.Delay(1.5f).OnComplete(() => { animator.SetBool(AnimOverride, false); });
+            PrimeTween.Tween.Delay(1.5f).OnComplete(() => { animator.SetBool(AnimOverride, false); });*/
         }
 
         public void OnDisable() {}

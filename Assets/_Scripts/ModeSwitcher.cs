@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CarePackage.Delivery;
 using CarePackage.Interaction;
@@ -6,12 +5,14 @@ using CarePackage.Interaction.Delivery;
 using CarePackage.Utilities;
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace CarePackage.Main
 {
     public class ModeSwitcher : MonoBehaviour
     {
+        private static readonly int OverrideHash = Animator.StringToHash("overrideOpen");
+        private static readonly int CarOpen = Animator.StringToHash("isOpen");
+        
         [Header("References")]
         [SerializeField] private Camera carCamera;
         [SerializeField] private GameObject idleCarPrefab;
@@ -27,12 +28,13 @@ namespace CarePackage.Main
 
         private List<Vector3> _savedLocalPositions = new();
         private List<Quaternion> _savedLocalRotations = new();
+        private readonly List<PackageBehavior> _packageObjects = new();
         private GameObject _firstPersonPlayer;
         private GameObject _car;
         private GameObject _idleCarInstance;
         private GameObject _currentPlayer;
         private bool _idleCarInitialized;
-        private readonly List<PackageBehavior> _packageObjects = new();
+        private bool _savedBoolOpen;
 
         private void Awake()
         {
@@ -47,42 +49,6 @@ namespace CarePackage.Main
         private void Start()
         {
             GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
-        }
-
-        private void Update()
-        {
-            if (_idleCarInitialized && _idleCarInstance.activeSelf)
-            {
-                var sourceAnimator = _idleCarInstance.GetComponentInChildren<Animator>();
-                var thisAnimator = Car.GetComponentInChildren<Animator>();
-                // Iterate through all the parameters in the source animator
-                foreach (AnimatorControllerParameter parameter in sourceAnimator.parameters)
-                {
-
-                    // Copy the parameter's value based on its type
-                    switch (parameter.type)
-                    {
-                        case AnimatorControllerParameterType.Float:
-                            thisAnimator.SetFloat(parameter.name, sourceAnimator.GetFloat(parameter.name));
-                            break;
-                        case AnimatorControllerParameterType.Int:
-                            thisAnimator.SetInteger(parameter.name, sourceAnimator.GetInteger(parameter.name));
-                            break;
-                        case AnimatorControllerParameterType.Bool:
-                            thisAnimator.SetBool(parameter.name, sourceAnimator.GetBool(parameter.name));
-                            break;
-                        case AnimatorControllerParameterType.Trigger:
-                            // Triggers are a bit special, as they reset after being consumed.
-                            // We check if the trigger is set on the source and then set it on the destination.
-                            if (sourceAnimator.GetBool(parameter.name))
-                            {
-                                thisAnimator.SetTrigger(parameter.name);
-                            }
-
-                            break;
-                    }
-                }
-            } 
         }
 
         private void OnDisable()
@@ -129,13 +95,18 @@ namespace CarePackage.Main
             
             TogglePackagesDamagable(false, 0.1f);
             TransitPackages.SetParent(null, true);
-            if (IdleCar != null) IdleCar.SetActive(false);
+            if (IdleCar != null)
+            {
+                SaveAnimationState(IdleCar);
+                IdleCar.SetActive(false);
+            }
 
             var carPosition = originalTransform.root.position;
             var carRotation = originalTransform.root.rotation;
             Car.transform.position = carPosition;
             Car.transform.rotation = carRotation;
-            SetCarVisibility(true);
+            Car.SetActive(true);//SetCarVisibility(true);
+            RestoreAnimationState(Car);
             
             TransitPackages.SetParent(Car.transform.GetChild(3), true);
             RestorePackageTransforms();
@@ -148,28 +119,6 @@ namespace CarePackage.Main
             deliveryManager.ToggleIndicator(postBox, true, false);
         }
 
-        private void SetCarVisibility(bool visibility)
-        {
-            Car.GetComponent<PrometeoCarController>().enabled = visibility;
-            Car.GetComponent<InteractionComponent>().enabled = visibility;
-            Car.GetComponent<PlayerInput>().enabled = visibility;
-            Car.GetComponent<Rigidbody>().isKinematic = !visibility;
-            foreach (var componentsInChild in Car.GetComponentsInChildren<Renderer>())
-            {
-                componentsInChild.enabled = visibility;
-            }
-            
-            foreach (var componentsInChild in Car.GetComponentsInChildren<Collider>())
-            {
-                componentsInChild.enabled = visibility;
-            }
-            
-            foreach (var componentsInChild in Car.GetComponentsInChildren<AudioSource>())
-            {
-                componentsInChild.enabled = visibility;
-            }
-        }
-
         public void EnterFirstPersonMode(Transform originalTransform)
         {
             TogglePackagesDamagable(false, 0.1f);
@@ -177,7 +126,8 @@ namespace CarePackage.Main
             TransitPackages.SetParent(null, true);
 
             var carPosition = Car.transform.position;
-            SetCarVisibility(false);
+            SaveAnimationState(Car);
+            Car.SetActive(false);//SetCarVisibility(false);
             
             // spawn IdleCar
             if (!_idleCarInitialized)
@@ -189,6 +139,7 @@ namespace CarePackage.Main
             IdleCar.transform.position = carPosition;
             IdleCar.transform.rotation = originalTransform.root.rotation;
             IdleCar.SetActive(true);
+            RestoreAnimationState(IdleCar);
             
             var packageLocation = IdleCar.transform.GetChild(3);
             TransitPackages.SetParent(packageLocation, true);
@@ -209,6 +160,20 @@ namespace CarePackage.Main
             var wantedPackage = deliveryManager.FindDeliveryPackageWithId(deliveryManager.CurrentDeliveryId);
             GoalIndicator.Instance.Camera = FirstPersonPlayer.GetComponentInChildren<Camera>();
             deliveryManager.ToggleIndicator(wantedPackage, false, true, 0f);
+        }
+
+        private void SaveAnimationState(GameObject savingAnimatorObject)
+        {
+            var animatorToSave = savingAnimatorObject.GetComponentInChildren<Animator>();
+            _savedBoolOpen = animatorToSave.GetBool(CarOpen);
+        }
+
+        private void RestoreAnimationState(GameObject animatorObjectToRestore)
+        {
+            var animatorToRestore = animatorObjectToRestore.GetComponentInChildren<Animator>();
+            animatorToRestore.SetBool(OverrideHash, true);
+            animatorToRestore.SetBool(CarOpen, _savedBoolOpen);
+            Tween.Delay(1f).OnComplete( () => animatorToRestore.SetBool(OverrideHash, false));
         }
         
         private void SavePackageTransforms()
