@@ -256,7 +256,6 @@ color: green
 position: -1149,-480
 ---
 <<recievePackage true>>
-<<set $relationshipFamA += 0>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Alright. Please make sure it doesn't happen again.
 <<showCharacter "Lina" "LinaListeningTired">>
@@ -463,7 +462,7 @@ Sofie: Yeah, but until then I will avoid any chances of meeting my classmates ou
 
 //FAM A — DAY 2 — UNIFORM (COLD)
 title: FamA
-when: $relationshipFamA <= 3
+when: ($relationshipFamA <= 3) && ($day == 2)
 color: purple
 group: FamA && Day2
 position: -1643,169
@@ -559,7 +558,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($damage < 1)
+when: ($day == 4) && ($package == "backpack") && ($damage < 1)
 position: -1640,1284
 color: purple
 group: FamA && Day4
@@ -578,7 +577,7 @@ Lina: Yes, I wanted to give them something in return. I made a batch of cookies 
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 1) && ($package == "backpack") && ($damage == 1)
+when: ($day == 4) && ($package == "backpack") && ($damage == 1)
 position: -1642,1432
 color: purple
 group: FamA && Day4
@@ -639,6 +638,50 @@ Lina: Me too. Thank you for listening.
 Mailman: No worries, of you need any help count with me.
 ===
 
+//FAM A — DAY 5 — GOOD ENDING (WARM)
+title: FamA
+when: ($day == 5) && ($package == "backpack") && ($damage < 1)
+position: -1640,1284
+color: purple
+group: FamA && Day5
+---
+//FAM A — DAY 5 — BABYSITTING (WARM)
+<<setBackground "BGFamA">>
+Note: If this is the Mailman reading, come to Fam's C house. They're hosting a BBQ for all the neighborhood, come with us and enjoy an afternoon all together.
+===
+
+//FAM A — DAY 5 — NEUTRAL ENDING (NEUTRAL)
+title: FamA
+when: ($day == 5) && ($package == "backpack") && ($damage < 1)
+position: -1640,1284
+color: purple
+group: FamA && Day5
+---
+//FAM A — DAY 5 — BABYSITTING (NEUTRAL)
+<<setBackground "BGFamA">>
+.
+===
+
+//FAM A — DAY 5 — BAD ENDING (COLD)
+title: FamA
+when: ($day == 5) && ($package == "backpack") && ($damage < 1)
+position: -1640,1284
+color: purple
+group: FamA && Day5
+---
+//FAM A — DAY 5 — BABYSITTING (COLD)
+<<setBackground "BGFamA">>
+.
+===
+
+
+
+
+
+
+
+
+
 
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 title: FamB
@@ -650,7 +693,10 @@ position: -849,-1026
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamB">>
-.
+Mailman: Good afternoon, is Mikkel Andersen here?
+Gertrude: Yes, he should be around here. But I don't think that's he's package.  
+Mailman: Oh, you're right. I'm so sorry, I will come back with your package.
+Gertrude: Alright, see you then.
 ===
 
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
@@ -1100,7 +1146,7 @@ title: FamB
 when: ($day == 4) && ($package != "gardenTools") 
 color: blue
 group: FamB && Day4
-position: -841,1684
+position: -839,1684
 ---
 //FAM B — DAY 4 — SEEDS (WRONG PACKAGE)
 <<recievePackage false>>
@@ -1113,7 +1159,7 @@ title: FamB
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 1)
 color: blue
 group: FamB && Day4
-position: -839,1817
+position: -841,1815
 ---
 //FAM B — DAY 4 — COOKIES (WARM)
 <<setBackground "BGFamB">>
@@ -1125,7 +1171,7 @@ title: FamB
 when: ($day == 4) && ($package == "seeds") && ($packageState == "Damaged") && ($famB_damageCount == 2)
 color: blue
 group: FamB && Day4
-position: -838,1947
+position: -840,1945
 ---
 //FAM B — DAY 4 — COOKIES (NEUTRAL)
 <<setBackground "BGFamB">>
@@ -1137,9 +1183,45 @@ title: FamB
 when: ($day == 4) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 3)
 color: blue
 group: FamB && Day4
-position: -837,2078
+position: -841,2080
 ---
 //FAM B — DAY 4 — COOKIES (COLD)
+<<setBackground "BGFamB">>
+.
+===
+
+//FAM B — DAY 5 — GOOD ENDING (WARM)
+title: FamB
+when: ($day == 5) && ($damage < 1)
+position: -842,2275
+color: blue
+group: FamB && Day5
+---
+//FAM B — DAY 5 — BABYSITTING (WARM)
+<<setBackground "BGFamB">>
+.
+===
+
+//FAM B — DAY 5 — NEUTRAL ENDING (NEUTRAL)
+title: FamB
+when: ($day == 5) && ($damage < 1)
+position: -841,2412
+color: blue
+group: FamB && Day5
+---
+//FAM A — DAY 5 — BABYSITTING (NEUTRAL)
+<<setBackground "BGFamB">>
+.
+===
+
+//FAM B — DAY 5 — BAD ENDING (COLD)
+title: FamB
+when: ($day == 5) && ($damage < 1)
+position: -841,2547
+color: blue
+group: FamB && Day5
+---
+//FAM B — DAY 5 — BABYSITTING (COLD)
 <<setBackground "BGFamB">>
 .
 ===
@@ -1164,7 +1246,10 @@ position: -77,-1026
 //FAM C — DAY 1 — DIAPERS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamC">>
-.
+Mailman: Good morning! I'm looking for Jonas.
+Jonas: Oh thank god! The diapers are here. Wait a second, that's not our package.
+Mailman: Oh, I'm so sorry. I'll be back with the diapers as soon as possible.
+Jonas: Please don't take too long. I don't know how much time we have left.
 ===
 
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
@@ -1176,11 +1261,11 @@ color: orange
 ---
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamC">>
-Mail man: Good morning! I'm looking for Jonas.
+Mailman: Good morning! I'm looking for Jonas.
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
 Vera: YES! just in time, this was about to get ugly.
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
--> Mail man: Haha, I remember those days! If you ever need a hand, I'm up for a challenge. Just sign right here.
+-> Mailman: Haha, I remember those days! If you ever need a hand, I'm up for a challenge. Just sign right here.
 <<jump CEn1Day1>>
 -> Mailman: I see. You can sign right here and I'll be out of your way. 
 <<jump CEnd1Day1>>
@@ -1193,9 +1278,9 @@ color: green
 ---
 <<recievePackage true>>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
-Mail man: You have my number in the receipt, call me if you need anything.
+Mailman: You have my number in the receipt, call me if you need anything.
 Jonas: Thank you so much! Have a good day.
-Mail man: You too, good luck with the little rascal hahaha.
+Mailman: You too, good luck with the little rascal hahaha.
 ===
 
 title: CEnd1Day1
@@ -1205,7 +1290,7 @@ color: green
 ---
 <<recievePackage true>>
 Jonas, while signing: Alright, thank you. Have a good day.
-Mail man: You too.
+Mailman: You too.
 ===
 //FAM C — DAY 1 — DIAPERS (DAMAGED)
 title: FamC
@@ -1455,6 +1540,42 @@ position: -74,1168
 ---
 //FAM C — DAY 4 — COOKIES (WARM)
 <<giveItem "cookies">>
+<<setBackground "BGFamC">>
+.
+===
+
+//FAM C — DAY 5 — GOOD ENDING (WARM)
+title: FamC
+when: ($day == 5) && ($damage < 1)
+position: -77,1665
+color: orange
+group: FamC && Day5
+---
+//FAM C — DAY 5 — BABYSITTING (WARM)
+<<setBackground "BGFamC">>
+.
+===
+
+//FAM C — DAY 5 — NEUTRAL ENDING (NEUTRAL)
+title: FamC
+when: ($day == 5) && ($damage < 1)
+position: -76,1797
+color: orange
+group: FamC && Day5
+---
+//FAM C — DAY 5 — BABYSITTING (NEUTRAL)
+<<setBackground "BGFamC">>
+.
+===
+
+//FAM C — DAY 5 — BAD ENDING (COLD)
+title: FamC
+when: ($day == 5) && ($damage < 1)
+position: -73,1930
+color: orange
+group: FamC && Day5
+---
+//FAM C — DAY 5 — BABYSITTING (COLD)
 <<setBackground "BGFamC">>
 .
 ===
