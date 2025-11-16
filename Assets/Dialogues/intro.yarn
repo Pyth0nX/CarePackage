@@ -533,13 +533,13 @@ Lina: Hello Mr.Mailman. I don't think I ordered anything else...
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: This one is addressed to Sofie.
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: To... me?
+Sofie: ...
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: That's right. It's from Vera, your Neighbour.
+Mailman: It's from Vera, your Neighbour.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Vera? I don't think I know her.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: She has the cutest little boy, that's probably why you haven't seen her much. That boy is a piece of work.
+Mailman: She's busy with her kid and they recently moved here, so you might have not seen her much around.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Oh that's just perfect, we've been looking for something Sofie could do after school, she could babysit the boy from time to time. What do you think Sofie?
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -693,7 +693,7 @@ position: -849,-1026
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamB">>
-Mailman: Good afternoon, is Mikkel Andersen here?
+Mailman: Good afternoon, is Mr.Andersen here?
 Gertrude: Yes, he should be around here. But I don't think that's he's package.  
 Mailman: Oh, you're right. I'm so sorry, I will come back with your package.
 Gertrude: Alright, see you then.
@@ -858,7 +858,10 @@ position: -849,-516
 <<setBackground "BGFamB">>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
-Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
+Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
+Mailman: I'm so sorry I'm not used to this icy roads and the package must've bumped with others in the trunk.
+-> Mailman:
+I'll just go get him, come in if you'd like. 
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: No thank you, I'll just wait out here.
     <<showCharacter "Gertrude" "TalkingWorried">>
@@ -874,7 +877,7 @@ Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd 
     <<showCharacter "Mikkel" "TalkingTired">>
     Mikkel: You too.
     <<showCharacter "Mikkel" "Worried">>
--> Mailman: Oh, thank you! It's pretty warm out here.
+-> Mailman: Oh, thank you! It's pretty cold out here.
     <<jump BEn1Day1>>
 ===
 
@@ -888,7 +891,10 @@ position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
 <<setBackground "BGFamB">>
-.
+Mailman: Good afternoon Mikkel, I have a package for you.
+Mikkel: I don't think I order XXL seeds, are you sure that's my package?
+Mailman: You're right, this one is not yours. I'm sorry for the mix up, I'll be back with your seeds.
+Mikkel: Thank you, Mr.Mailman.
 ===
 
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
@@ -900,7 +906,7 @@ position: -847,-175
 ---
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
-.
+
 ===
 
 //FAM B — DAY 2 — SEEDS (1ST TIME DAMAGED)
@@ -1306,14 +1312,14 @@ position: -70,-684
 .
 ===
 
-//FAM C — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
+//FAM C — DAY 1 — DIAPERS (FLATTENED / BROKEN)
 title: FamC
 when: ($day == 1) && ($package == "gardenTools") && ($damage > 1)
 color: orange
 group: FamC && Day1
 position: -70,-514
 ---
-//FAM C — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
+//FAM C — DAY 1 — DIAPERS (FLATTENED / BROKEN)
 <<setBackground "BGFamC">>
 .
 ===
@@ -1438,6 +1444,7 @@ Mailman: Good afternoon! No package today, but I have a special delivery for you
 <<showCharacter "Vera" "SpeakingTired">>
 Vera: Oh, a note? That's sweet!
 <<set $noteForVera = false>> // Item used
+<<recieveItem "noteForVera">>
 <<showCharacter "Vera" "ListeningTired">>
 *Vera reads the note.*
 <<showCharacter "Vera" "SpeakingTired">>
