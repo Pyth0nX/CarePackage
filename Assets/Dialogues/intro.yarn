@@ -693,10 +693,16 @@ position: -849,-1026
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamB">>
+<<showCharacter "Gertrude" "">>
 Mailman: Good afternoon, is Mr.Andersen here?
+<<showCharacter "Gertrude" "">>
 Gertrude: Yes, he should be around here. But I don't think that's he's package.  
+<<showCharacter "Gertrude" "">>
 Mailman: Oh, you're right. I'm so sorry, I will come back with your package.
+<<showCharacter "Gertrude" "">>
 Gertrude: Alright, see you then.
+<<hideCharacter "Gertrude">>
+<<hideBackground>>
 ===
 
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
@@ -859,6 +865,7 @@ position: -849,-516
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
+<<showCharacter "Gertrude" "TalkingWorried">>
 Mailman: I'm so sorry I'm not used to this icy roads and the package must've bumped with others in the trunk.
 -> Mailman:
 I'll just go get him, come in if you'd like. 
@@ -891,10 +898,16 @@ position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
 <<setBackground "BGFamB">>
+<<showCharacter "Mikkel" "">>
 Mailman: Good afternoon Mikkel, I have a package for you.
+<<showCharacter "Mikkel" "">>
 Mikkel: I don't think I order XXL seeds, are you sure that's my package?
+<<showCharacter "Mikkel" "">>
 Mailman: You're right, this one is not yours. I'm sorry for the mix up, I'll be back with your seeds.
+<<showCharacter "Mikkel" "">>
 Mikkel: Thank you, Mr.Mailman.
+<<hideCharacter "Mikkel">>
+<<hideBackground>>
 ===
 
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
@@ -1252,10 +1265,16 @@ position: -77,-1026
 //FAM C — DAY 1 — DIAPERS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamC">>
+<<showCharacter "Jonas" "">>
 Mailman: Good morning! I'm looking for Jonas.
+<<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! The diapers are here. Wait a second, that's not our package.
+<<showCharacter "Jonas" "">>
 Mailman: Oh, I'm so sorry. I'll be back with the diapers as soon as possible.
+<<showCharacter "Jonas" "Talking">>
 Jonas: Please don't take too long. I don't know how much time we have left.
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
@@ -1267,10 +1286,15 @@ color: orange
 ---
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamC">>
+<<showCharacter "Jonas" "">>
 Mailman: Good morning! I'm looking for Jonas.
+<<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
+<<showCharacter "Jonas" "">>
 Vera: YES! just in time, this was about to get ugly.
+<<showCharacter "Jonas" "Talking">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
+<<showCharacter "Jonas" "">>
 -> Mailman: Haha, I remember those days! If you ever need a hand, I'm up for a challenge. Just sign right here.
 <<jump CEn1Day1>>
 -> Mailman: I see. You can sign right here and I'll be out of your way. 
@@ -1283,10 +1307,16 @@ position: 201,-929
 color: green
 ---
 <<recievePackage true>>
+<<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
+<<showCharacter "Jonas" "">>
 Mailman: You have my number in the receipt, call me if you need anything.
+<<showCharacter "Jonas" "Talking">>
 Jonas: Thank you so much! Have a good day.
+<<showCharacter "Jonas" "">>
 Mailman: You too, good luck with the little rascal hahaha.
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 title: CEnd1Day1
@@ -1295,9 +1325,14 @@ position: 200,-764
 color: green
 ---
 <<recievePackage true>>
+<<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Alright, thank you. Have a good day.
+<<showCharacter "Jonas" "">>
 Mailman: You too.
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
+
 //FAM C — DAY 1 — DIAPERS (DAMAGED)
 title: FamC
 when: ($day == 1) && ($package == "diapers") && ($damage == 1)
@@ -1309,7 +1344,19 @@ position: -70,-684
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 0.5>>
 <<setBackground "BGFamC">>
-.
+Mailman: Good morning! I'm looking for Jonas.
+<<showCharacter "Jonas" "Talking">>
+Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure everithing is okay inside of the box?
+<<showCharacter "Jonas" "">>
+Mailman: Oh, I'm so sorry. It must have recieved some damage on the way here. I'm sure everything is okay with the diapers. 
+<<showCharacter "Jonas" "Talking">>
+Jonas: I hope so, we need each and everyone.
+<<showCharacter "Jonas" "">>
+Mailman: I swear I will be more careful next time, I'm really sorry. I want to compensate you.
+-> Mailman: If you ever need any help, my number is on the reciept.
+-> Mailman: I will make sure 
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 1 — DIAPERS (FLATTENED / BROKEN)
