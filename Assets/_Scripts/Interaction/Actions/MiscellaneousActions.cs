@@ -91,6 +91,17 @@ namespace CarePackage.Interaction.Miscellaneous
     }
 
     [Serializable]
+    public class TeleportPlayer : IInteractAction
+    {
+        public Transform EndLocation;
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            interactingPlayer.ActivePlayer.transform.position = EndLocation.gameObject.transform.position;
+            Debug.Log(interactingPlayer + " has interacted with " + interactingObject.name);
+        }
+    }
+
+    [Serializable]
     public class LaunchPickupAction : IInteractAction
     {
         private GameObject _owningObject;
