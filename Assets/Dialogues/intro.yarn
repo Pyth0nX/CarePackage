@@ -80,9 +80,9 @@ Lina: Oh, so you are just like Sofie! She's starting at a new school tomorrow.
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Tomorrow? That's exciting! Big day for her then.
 -> Mailman: Feeling nervous about it?
-<<jump AEn1Day1>>
+    <<jump AEn1Day1>>
 -> Mailman: Well, I hope this brightens her evening.
-<<jump AEnd1Day1>>
+    <<jump AEnd1Day1>>
 <<else>>
 ...
 <<endonce>>
