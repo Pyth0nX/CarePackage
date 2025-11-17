@@ -13,7 +13,7 @@ namespace CarePackage.Main
         private DeliveryManager _deliveryManager;
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
-        private IPickup _pickup;
+        [SerializeReference, SerializeReferenceEditor.SR] private IPickup _pickup;
 
         public DeliveryManager DeliveryManager => _deliveryManager;
         public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
@@ -66,10 +66,10 @@ namespace CarePackage.Main
             _pickup.OnPickedUp(this);
         }
 
-        public void SetPickup(IPickup pickedupObject, GameObject pickupObject)
+        public void SetPickup(IPickup inPickeup, GameObject pickupObject)
         {
-            pickedupObject.OwningObject = pickupObject;
-            _pickup = pickedupObject;
+            inPickeup.OwningObject = pickupObject;
+            _pickup = inPickeup;
         }
 
         public void DropPickup()

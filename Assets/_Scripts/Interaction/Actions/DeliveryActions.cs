@@ -198,6 +198,7 @@ namespace CarePackage.Interaction.Delivery
             
             if (!CanReceivePackage()) return;
             var delivery = _deliveryManager.CurrentDelivery;
+            interactingPlayer.DropPickup();
             _deliveryManager.DeliverPackage(delivery);
         }
 

@@ -68,8 +68,7 @@ namespace CarePackage.Interaction.Car
         
         private int requiredDeliveries => GameManager.Instance.Player.DeliveryManager.GetDeliveryQuotas;
 
-        private bool HasTheRequiredPackages => _hasInitedRequiredPackages &&
-                                               DeliveryUitilities.DoesListContainPackages(_collectedDeliveries, _requiredPackages);
+        private bool HasTheRequiredPackages => _hasInitedRequiredPackages && DeliveryUitilities.DoesListContainPackages(_collectedDeliveries, _requiredPackages);
         
         private List<Package> _collectedDeliveries = new ();
         private List<Vector3> _packagePositions = new();

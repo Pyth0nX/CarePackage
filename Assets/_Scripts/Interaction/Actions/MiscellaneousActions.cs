@@ -37,18 +37,9 @@ namespace CarePackage.Interaction.Miscellaneous
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.Pickup(this, interactingObject);
-        }
-
-        public void OnPickedUp(PlayerState interactingPlayer)
-        {
             if (!removeAfterUse) return;
             if (hideInstedOfDestroy) OwningObject.SetActive(false);
             else GameObject.Destroy(OwningObject);
-        }
-
-        public void OnDropped(PlayerState interactingPlayer)
-        {
-            interactingPlayer.SetPickup(null, null);
         }
     }
 
@@ -94,6 +85,7 @@ namespace CarePackage.Interaction.Miscellaneous
     public class TeleportPlayer : IInteractAction
     {
         public Transform EndLocation;
+        
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
             interactingPlayer.ActivePlayer.transform.position = EndLocation.gameObject.transform.position;

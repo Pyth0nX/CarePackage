@@ -259,7 +259,8 @@ namespace CarePackage.Main
         private float _inputLeftHeldTime;
         private float _inputRightHeldTime;
 
-        private Interaction.Miscellaneous.TweenSliderAction sliderTween;
+        private Interaction.Miscellaneous.TweenSliderAction _sliderTween;
+        private PrimeTween.Tween _delayTween;
         
         public void OnLeftClick(InputAction.CallbackContext input)
         {
@@ -267,12 +268,12 @@ namespace CarePackage.Main
             {
                 if (!_owningPlayer.IsPickupValid) return;
                 _inputLeftHeldTime = Time.time;
-                PrimeTween.Tween.Delay(0.6f).OnComplete(() =>
+                _delayTween = PrimeTween.Tween.Delay(0.6f).OnComplete(() =>
                 {
                     if (_owningPlayer.IsPickupValid) // Still valid after delay?
                     {
-                        sliderTween = new Interaction.Miscellaneous.TweenSliderAction(sliderPrefab);
-                        sliderTween.StartTweening();
+                        _sliderTween = new Interaction.Miscellaneous.TweenSliderAction(sliderPrefab);
+                        _sliderTween.StartTweening();
                     }
                 });
             }
@@ -282,8 +283,11 @@ namespace CarePackage.Main
                 if (!_owningPlayer.IsPickupValid) return;
                 var heldDuration = Time.time - _inputLeftHeldTime;
                 
-                sliderTween?.StopTweening();
-                sliderTween = null;
+                _delayTween.Stop();
+                _delayTween = default;
+                
+                _sliderTween?.StopTweening();
+                _sliderTween = null;
                 
                 _owningPlayer.LaunchPickup(heldDuration);
             }

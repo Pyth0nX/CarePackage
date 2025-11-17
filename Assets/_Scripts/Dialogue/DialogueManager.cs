@@ -2,7 +2,6 @@ using CarePackage.Main;
 using CarePackage.Persistance;
 using UnityEngine;
 using Yarn.Unity;
-using Yarn.Unity.ActionAnalyser;
 
 public class DialogueManager : MonoBehaviour, IDataPersistance
 {

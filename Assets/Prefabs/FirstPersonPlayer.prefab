@@ -605,10 +605,10 @@ MonoBehaviour:
   sensitivity: 0.3
   groundCheckSize: 0.375
   groundCheckOffset: {x: 0, y: 0.8, z: 0}
-  useExtendedGroundRay: 0
   playerCamera: {fileID: 8201663292159797253}
   debug: 1
   airControlRate: 2
+  sliderPrefab: {fileID: 2560624365968163267, guid: 9c5bae40bba4ef1468a4608cf0da4693, type: 3}
 --- !u!114 &2045160749519290927
 MonoBehaviour:
   m_ObjectHideFlags: 0
