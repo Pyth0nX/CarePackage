@@ -483,7 +483,7 @@ Sofie:...
 
 //FAM A — DAY 3 — VERA'S CLOTHES (WARM)
 title: FamA
-when: ($verasClothes == true) && ($day == 3)
+when: ($day == 3) && ($package == "clothes")
 color: green
 group: FamA && Day3
 position: -1641,933
@@ -510,7 +510,6 @@ Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
-<<set $noteForVera = true>>
 Sofie: Here you have the note, I wrote my number in case she wants to contact me.
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
@@ -520,7 +519,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 3 — VERA'S CLOTHES (NEUTRAL)
 title: FamA
-when: ($verasClothes == true) && ($day == 3)
+when: ($day == 3)
 color: green
 group: FamA && Day3
 position: -1641,1078
@@ -547,7 +546,6 @@ Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
-<<set $noteForVera = true>>
 Sofie: Here you have the note, I wrote my number in case she wants to contact me.
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
