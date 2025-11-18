@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1169817697469274064}
   - component: {fileID: 6306618185583927234}
   - component: {fileID: 2108924273713791643}
+  - component: {fileID: 1516696164331760504}
   m_Layer: 0
   m_Name: NoParkingSign
   m_TagString: Untagged
@@ -90,6 +91,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1516696164331760504
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750288848472467071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 747941807972253049, guid: ad6642de62165bd489bbb424a489b4dd, type: 3}
 --- !u!1 &7730596257572866930
 GameObject:
   m_ObjectHideFlags: 0

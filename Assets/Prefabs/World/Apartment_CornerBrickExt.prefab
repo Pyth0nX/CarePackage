@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1367732245587923274}
   - component: {fileID: 6880407458077844039}
   - component: {fileID: 6617163995054452329}
+  - component: {fileID: 324237301244229964}
   m_Layer: 0
   m_Name: Apartment_CornerBrickExt
   m_TagString: Untagged
@@ -89,3 +90,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &324237301244229964
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710789786828220832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4661197911197507783, guid: 17d62bdcb7e46db4da21c6e4e4bc03f4, type: 3}
