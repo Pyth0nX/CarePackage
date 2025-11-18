@@ -1,12 +1,12 @@
 using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Persistance;
+using CarePackage.Main;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
-using CarePackage.Main;
 using TMPro;
 
 namespace CarePackage.Delivery
@@ -20,7 +20,7 @@ namespace CarePackage.Delivery
         private List<GameObject> _selectablePackageObjects = new();
         private List<Package> _packages = new();
         private List<Package> _checkedPackages = new();
-        
+
         private int _selectedPackageIndex = -1;
         private bool _toggled;
 
@@ -29,54 +29,53 @@ namespace CarePackage.Delivery
             if (packages == null || packages.Count <= 0) return;
             _checkedPackages.Clear();
             _packages.Clear();
+
             _packages = packages;
             _selectedPackageIndex = -1;
-            InitializePackageListUI();
+
+            foreach (var selectableObject in _selectablePackageObjects)
+                Destroy(selectableObject);
+            _selectablePackageObjects.Clear();
+
+            foreach (var package in _packages)
+                CreateCheckablePackage(package);
+
             _selectablePackageObjects[0].GetComponent<Interactable>().Interact(GameManager.Instance.Player);
         }
 
-        private void InitializePackageListUI()
+        private void CreateCheckablePackage(Package package)
         {
-            foreach (var selectableObject in _selectablePackageObjects)
+            var newSelectable = Instantiate(selectablePackagePrefab, selectablesContainer.transform);
+            var interactable = newSelectable.GetComponent<Interactable>();
+            if (interactable == null) return;
+
+            var selectableElements = newSelectable.transform.GetChild(1);
+            if (selectableElements == null) return;
+
+            var text = selectableElements.GetChild(1).GetComponent<TextMeshProUGUI>();
+            text.text = package.PackageData.Title;
+
+            var icon = selectableElements.GetChild(2).GetComponent<Image>();
+            if (icon == null) return;
+            icon.color = new Color();
+
+            var itemIcon = DeliveryUitilities.ToScriptableObject(package);
+            if (itemIcon.Item != null)
             {
-                var selectableObj = selectableObject;
-                Destroy(selectableObj);
+                icon.sprite = itemIcon.Item.ItemData.icon;
+                icon.color = Color.white;
+                icon.gameObject.SetActive(true);
             }
-            _selectablePackageObjects.Clear();
-            
-            foreach (var package in _packages)
-            {
-                var newSelectable = Instantiate(selectablePackagePrefab, selectablesContainer.transform);
-                var interactable = newSelectable.GetComponent<Interactable>();
-                if (interactable == null) return;
-                
-                var selectableElements = newSelectable.transform.GetChild(1);
-                if (selectableElements == null) return;
-                
-                var text = selectableElements.GetChild(1).GetComponent<TextMeshProUGUI>();
-                text.text = package.PackageData.Title;
-                
-                var icon = selectableElements.GetChild(2).GetComponent<Image>();
-                if (icon == null) return;
-                icon.color = new Color();
-                
-                var itemIcon = DeliveryUitilities.ToScriptableObject(package);
-                if (itemIcon.Item != null)
-                {
-                    icon.sprite = itemIcon.Item.ItemData.icon;
-                    icon.color = Color.white;
-                    icon.gameObject.SetActive(true);
-                }
-                
-                var selectDeliveryAction = new SelectDeliveryAction(this, package);
-                interactable.InteractAction = selectDeliveryAction;
-                _selectablePackageObjects.Add(newSelectable);
-            }
+
+            var selectDeliveryAction = new SelectDeliveryAction(this, package);
+            interactable.InteractAction = selectDeliveryAction;
+            _selectablePackageObjects.Add(newSelectable);
         }
 
         public void CheckOffCurrentPackage()
         {
             var selectedPackage = FindSelectableById(_selectedPackageIndex);
+            if (selectedPackage == null) return;
             CheckOffPackage(selectedPackage);
         }
 
@@ -89,7 +88,20 @@ namespace CarePackage.Delivery
             var selectableElements = selectedPackage.transform.GetChild(1);
             var checkMark = selectableElements.transform.GetChild(0);
             checkMark.GetChild(0).gameObject.SetActive(true);
-            
+
+            var interactable = selectedPackage.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                interactable.InteractAction = null;
+                Destroy(interactable);
+            }
+
+            var icon = selectableElements.GetChild(2).GetComponent<Image>();
+            if (icon != null) icon.color = Color.gray;
+
+            var text = selectableElements.GetChild(1).GetComponent<TextMeshProUGUI>();
+            if (text != null) text.color = Color.gray;
+
             _checkedPackages.Add(packageToCheckOff);
         }
 
@@ -116,15 +128,18 @@ namespace CarePackage.Delivery
             if (packageToFind == null) return null;
             if (!_packages.Contains(packageToFind)) return null;
             var selectableIndex = FindSelectablePackage(packageToFind);
+            if (selectableIndex < 0 || selectableIndex >= _selectablePackageObjects.Count)
+                return null;
+
             return _selectablePackageObjects[selectableIndex];
         }
-        
+
         private void ToggleCheckList()
         {
             _toggled = !_toggled;
             UIManager.Instance.TogglePopupWindow(checkListUI);
         }
-        
+
         public void OnToggleCheckList(InputAction.CallbackContext input)
         {
             if (input.started)

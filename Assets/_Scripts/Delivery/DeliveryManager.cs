@@ -101,6 +101,7 @@ namespace CarePackage.Delivery
                 return;
             }
             SetNewJob(delivery);
+            _deliveryCheckList.SelectPackage(currentDelivery);
         }
 
         public void SetNewJob(Package newJobPackage)
