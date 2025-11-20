@@ -90,6 +90,7 @@ MonoBehaviour:
   packageState: 0
   defaultVelocityThreshold: 12
   heldVelocityThreshold: 5
+  durability: 100
 --- !u!54 &2833091412667130690
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -114,9 +115,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &6861793898021509264
 BoxCollider:
   m_ObjectHideFlags: 0

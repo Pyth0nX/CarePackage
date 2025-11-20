@@ -16,6 +16,15 @@ namespace CarePackage.Interaction.Delivery
         
         private Package _internalPackage;
         
+        public PackageAction(Package inPackage)
+            : this(inPackage, false, new Vector3(0, -0.1f, 0), null) {}
+        
+        public PackageAction(Package inPackage, bool alreadyAdded)
+            : this(inPackage, alreadyAdded, new Vector3(0, -0.1f, 0), null) {}
+        
+        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension inAdditionalPickupExtension)
+            : this(inPackage, alreadyAdded, inOffset, inPickupOwningObject, new[] {inAdditionalPickupExtension}) {}
+        
         public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension[] inAddtioanlPickupExtensions = null) : base(inOffset, inPickupOwningObject)
         {
             _internalPackage = inPackage;
@@ -24,25 +33,16 @@ namespace CarePackage.Interaction.Delivery
 
             var packageObj = inPickupOwningObject.GetComponent<PackageBehavior>();
             var packagePickupExtension = new PackagePickupExtension(packageObj);
-            var damagePickup = new DamagableFieldExtension(new Vector3(0f, 0.6f, 1.15f), packageObj);
+            //var damagePickup = new DamagableFieldExtension(new Vector3(0f, 0.6f, 1.15f), packageObj);
 
             int additionalExtensions = inAddtioanlPickupExtensions?.Length ?? 0;
-            ExtendedLogic = new IPickupExtension[2 + additionalExtensions];
+            ExtendedLogic = new IPickupExtension[1 + additionalExtensions];
             ExtendedLogic[0] = packagePickupExtension;
-            ExtendedLogic[1] = damagePickup;
+            //ExtendedLogic[1] = damagePickup;
             
             if (additionalExtensions > 0)
-                Array.Copy(inAddtioanlPickupExtensions, 0, ExtendedLogic, 2, additionalExtensions);
+                Array.Copy(inAddtioanlPickupExtensions, 0, ExtendedLogic, 1, additionalExtensions);
         }
-        
-        public PackageAction(Package inPackage, bool alreadyAdded, Vector3 inOffset, GameObject inPickupOwningObject, IPickupExtension inAdditionalPickupExtension) 
-            : this(inPackage, alreadyAdded, inOffset, inPickupOwningObject, new[] {inAdditionalPickupExtension}) {}
-        
-        public PackageAction(Package inPackage, bool alreadyAdded) 
-            : this(inPackage, alreadyAdded, new Vector3(0, -0.1f, 0), null) {}
-        
-        public PackageAction(Package inPackage) 
-            : this(inPackage, false, new Vector3(0, -0.1f, 0), null) {}
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
@@ -50,9 +50,10 @@ namespace CarePackage.Interaction.Delivery
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
             interactingPlayer.Pickup(this, interactingObject);
+            interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
             
             if (addedDelivery) return;
-            interactingPlayer.DeliveryManager.AddDelivery(DeliveryUitilities.ToPackage(package));
+            interactingPlayer.DeliveryManager.AddDelivery(Package);
             addedDelivery = true;
         }
     }
@@ -70,15 +71,15 @@ namespace CarePackage.Interaction.Delivery
         public void ExtendedPickUp(PlayerState interactingPlayer)
         {
             _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
-            _packageObj.TogglePhysics(false);
-            _packageObj.SetDamageEnabled(false);
+            _packageObj.TogglePhysics(true);
+            _packageObj.SetDamageEnabled(true);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
             _packageObj.VelocityThreshold = _packageObj.DefaultVelocityThreshold;
-            _packageObj.TogglePhysics(true);
-            _packageObj.SetDamageEnabled(true);
+            //_packageObj.TogglePhysics(true);
+            //_packageObj.SetDamageEnabled(true);
         }
     }
 

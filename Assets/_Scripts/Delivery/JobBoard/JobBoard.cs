@@ -34,9 +34,6 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
 
-        public Package[] scriptedPackagesArray;
-        public List<Package> scriptedPackagesList;
-
         private List<Button> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
         private Package _displayedJob;
@@ -295,9 +292,6 @@ namespace CarePackage.Delivery
                 }
                 InitJob(scriptedJob.TargetPackage);
             }
-
-            scriptedPackagesArray = GetScriptedJobsDeliveriesByDay(day);
-            scriptedPackagesList = GetScriptedJobsDeliveriesByDay(day).ToList();
         }
 
         public int GetScriptedJobsByDayCount(int day)

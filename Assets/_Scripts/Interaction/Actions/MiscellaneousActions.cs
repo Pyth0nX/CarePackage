@@ -136,7 +136,7 @@ namespace CarePackage.Interaction.Miscellaneous
         private Vector3 GetViewAngleOfPlayer(GameObject player)
         {
             if (player == null) return Vector3.zero;
-            var view = player.transform.GetChild(2);
+            var view = player.transform.GetChild(0);
             return view.TransformDirection(Vector3.forward);
         }
         

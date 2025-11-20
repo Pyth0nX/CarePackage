@@ -148,7 +148,9 @@ namespace CarePackage.Main
             
             _momentum = horizontalMomentum + verticalMomentum;
             _momentum = transform.worldToLocalMatrix * _momentum;
-            
+            /*
+            Vector3 targetPos = _rb.position + (_velocity + _momentum) * Time.fixedDeltaTime;
+            _rb.MovePosition(targetPos);*/
             _rb.linearVelocity = _velocity + _momentum;
         }
         

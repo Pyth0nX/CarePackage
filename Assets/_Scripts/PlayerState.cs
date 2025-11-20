@@ -1,4 +1,3 @@
-using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Delivery;
 using UnityEngine;
@@ -8,17 +7,28 @@ namespace CarePackage.Main
     public class PlayerState : MonoBehaviour
     {
         [SerializeField] private Transform pickupLocation;
+        
+        [Header("PickupLogic")]
+        [SerializeField] private float breakForce = 800f;
+        [SerializeField] private bool breakIfTooMuchForce;
 
         // private Components
         private DeliveryManager _deliveryManager;
         private Inventory _inventory;
         private ModeSwitcher _switchMode;
+
         [SerializeReference, SerializeReferenceEditor.SR] private IPickup _pickup;
+        private ConfigurableJoint _pickupJoint;
+        private Rigidbody _pickupRigidbody;
 
         public DeliveryManager DeliveryManager => _deliveryManager;
-        public InteractionComponent InteractionComponent => _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
+
+        public InteractionComponent InteractionComponent =>
+            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
+
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
+        public GameObject ActivePlayer => _switchMode.ActivePlayer;
         public GameObject PickupObject => _pickup.OwningObject;
         public bool IsPickupValid => _pickup != null;
 
@@ -42,28 +52,62 @@ namespace CarePackage.Main
             }
         }
 
-        public GameObject ActivePlayer => _switchMode.ActivePlayer;
-        
         public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
         {
             if (IsPickupValid) DropPickup();
             SetPickup(objectToPickup, objectOfPickup);
+            if (!IsPickupValid) return;
             
+            AttachPickupWithJoint();
+            AttachPickupParent();
+            
+            _pickup.OnPickedUp(this);
+        }
+        
+        private void AttachPickupParent()
+        {
+            if (_pickupJoint) return;
             _pickup.OwningObject.transform.SetParent(pickupLocation);
             _pickup.OwningObject.transform.localPosition = Vector3.zero;
             _pickup.OwningObject.transform.localPosition += _pickup.Offset;
             _pickup.OwningObject.transform.localRotation = Quaternion.identity;
-            /*
-            FixedJoint joint = pickupLocation.gameObject.AddComponent<FixedJoint>();
-            joint.connectedBody = ActivePlayer.GetComponent<Rigidbody>();*/
+        }
+
+        private void AttachPickupWithJoint()
+        {
+            if (_pickup.OwningObject.transform.parent == pickupLocation) return;
+            _pickupRigidbody = _pickup.OwningObject.GetComponent<Rigidbody>();
+
+            _pickupJoint = pickupLocation.gameObject.AddComponent<ConfigurableJoint>();
+            _pickupJoint.connectedBody = _pickupRigidbody;
+            _pickupJoint.autoConfigureConnectedAnchor = false;
+            _pickupJoint.anchor = Vector3.zero;
+            _pickupJoint.connectedAnchor = Vector3.zero;
             
-            if (_pickup.OwningObject.TryGetComponent<Interactable>(out var interactable) 
-                && interactable.InteractAction is PackageAction packageAction)
+            _pickupJoint.xMotion = ConfigurableJointMotion.Limited; // locked
+            _pickupJoint.yMotion = ConfigurableJointMotion.Limited;
+            _pickupJoint.zMotion = ConfigurableJointMotion.Limited;
+
+            _pickupJoint.angularXMotion = ConfigurableJointMotion.Limited;
+            _pickupJoint.angularYMotion = ConfigurableJointMotion.Limited;
+            _pickupJoint.angularZMotion = ConfigurableJointMotion.Limited;
+            
+            JointDrive drive = new JointDrive { positionSpring = 500, positionDamper = 50, maximumForce = Mathf.Infinity };
+            _pickupJoint.xDrive = drive;
+            _pickupJoint.yDrive = drive;
+            _pickupJoint.zDrive = drive;
+            
+            SoftJointLimit limit = new SoftJointLimit { limit = 20f }; // degrees of swing
+            _pickupJoint.highAngularXLimit = limit;
+            _pickupJoint.lowAngularXLimit = limit;
+            _pickupJoint.angularYLimit = limit;
+            _pickupJoint.angularZLimit = limit;
+
+            if (breakIfTooMuchForce)
             {
-                DeliveryManager.SetCurrentHeldDelivery(packageAction.Package);
+                _pickupJoint.breakForce = breakForce;
+                _pickupJoint.breakTorque = breakForce;
             }
-            
-            _pickup.OnPickedUp(this);
         }
 
         public void SetPickup(IPickup inPickeup, GameObject pickupObject)
@@ -78,13 +122,28 @@ namespace CarePackage.Main
             Drop(_pickup);
         }
 
-        public void Drop(IPickup objectToDrop)
+        public void Drop(IPickup pickupToDrop)
         {
-            objectToDrop.OwningObject.transform.SetParent(null);
+            pickupToDrop.OnDropped(this);
+            
+            DetachPickupJoint();
+            DetachPickupParent(pickupToDrop);
+            
             DeliveryManager.SetCurrentHeldDelivery(null);
-            objectToDrop.OnDropped(this);
-            SetPickup(objectToDrop, null);
+            SetPickup(pickupToDrop, null);
             _pickup = null;
+        }
+        
+        public void DetachPickupJoint()
+        {
+            if (!_pickupJoint) return;
+            Destroy(_pickupJoint);
+        }
+
+        public void DetachPickupParent(IPickup pickupToDetach)
+        {
+            if (pickupToDetach.OwningObject.transform.parent != pickupLocation) return;
+            pickupToDetach.OwningObject.transform.SetParent(null);
         }
 
         public void LaunchPickup(float heldDuration)
