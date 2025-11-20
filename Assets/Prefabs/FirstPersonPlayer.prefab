@@ -630,6 +630,7 @@ MonoBehaviour:
   jumpForwardBias: 0
   gravity: 30
   sensitivity: 0.3
+  scrollSensitivity: 1
   groundCheckSize: 0.375
   groundCheckOffset: {x: 0, y: 0.8, z: 0}
   playerCamera: {fileID: 8201663292159797253}
@@ -817,6 +818,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 02725873-1671-4c86-9ec8-07835a6070ff
     m_ActionName: 'Player/ToggleCheckList[/Keyboard/v]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1160106555430822745}
+        m_TargetAssemblyTypeName: CarePackage.Main.PlayerController, Assembly-CSharp
+        m_MethodName: OnScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2b19a340-5a96-421a-9ab5-e43d712e5812
+    m_ActionName: 'Player/Scroll[/Mouse/scroll]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

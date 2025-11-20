@@ -17,8 +17,8 @@ namespace CarePackage.Delivery
 
         public void CheckInClicked()
         {
-            UIManager.Instance.ClosePopupWindow(checkInButton);
-            UIManager.Instance.OpenPopupWindow(desktop);
+            UI.UIManager.Instance.ClosePopupWindow(checkInButton);
+            UI.UIManager.Instance.OpenPopupWindow(desktop);
             if (!GameManager.Instance.tutorialDone)
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Select Jobs to deliver"));
 //        GameManager.StartDay();
@@ -26,19 +26,19 @@ namespace CarePackage.Delivery
     
         public void CheckOutClicked()
         {
-            int popupCount = UIManager.Instance.GetActivePopupCount();
+            int popupCount = UI.UIManager.Instance.GetActivePopupCount();
             GameObject[] popups = new GameObject[popupCount];
             for (int i = 0; i < popupCount; i++)
             {
-                popups[i] = UIManager.Instance.GetActivePopup(i);
+                popups[i] = UI.UIManager.Instance.GetActivePopup(i);
             }
-            UIManager.Instance.ClosePopupWindows(popups);
+            UI.UIManager.Instance.ClosePopupWindows(popups);
             //    GameManager.SkipDay();
         }
 
         public void OpenMailClicked()
         {
-            UIManager.Instance.TogglePopupWindow(mailWindow);
+            UI.UIManager.Instance.TogglePopupWindow(mailWindow);
             InitializeAllMails();
         }
 

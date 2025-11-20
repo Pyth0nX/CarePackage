@@ -112,20 +112,21 @@ namespace CarePackage.Delivery
 
         private void OnJobClicked(GameObject button)
         {
-            UIManager.Instance.OpenPopupWindow(jobListing);
+            UI.UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
             jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0);
         }
 
         public void OnExitJobClicked(GameObject button)
         {
-            UIManager.Instance.ClosePopupWindow(button);
+            UI.UIManager.Instance.ClosePopupWindow(button);
+            UI.UIManager.Instance.ToggleAllToggleables(false);
         }
 
         public void OnExitBoardClicked()
         {
             //var popupsToClose = new List<GameObject> {gameObject, button};
-            UIManager.Instance.CloseAllPopupWindows();
+            UI.UIManager.Instance.CloseAllPopupWindows();
         }
 
         public void OnAcceptJobClicked()
@@ -133,7 +134,7 @@ namespace CarePackage.Delivery
             if (_displayedJob == null) return;
             CreatePackageForConveyerBelt(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
-            UIManager.Instance.ClosePopupWindow(jobListing);
+            UI.UIManager.Instance.ClosePopupWindow(jobListing);
         }
 
         private void CreatePackageForConveyerBelt(Package packageData)

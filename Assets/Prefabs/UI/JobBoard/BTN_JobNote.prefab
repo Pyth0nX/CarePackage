@@ -86,9 +86,8 @@ GameObject:
   - component: {fileID: 8826838477595319899}
   - component: {fileID: 6380526281552402261}
   - component: {fileID: 8670479747380593011}
-  - component: {fileID: 7428087936247246359}
   - component: {fileID: 3858661174350001535}
-  - component: {fileID: 8573070170997200210}
+  - component: {fileID: 1253939754885793963}
   m_Layer: 8
   m_Name: BTN_JobNote
   m_TagString: Untagged
@@ -155,50 +154,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7428087936247246359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2179041019779196152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 8670479747380593011}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &3858661174350001535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +180,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
---- !u!114 &8573070170997200210
+--- !u!114 &1253939754885793963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,14 +189,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 2179041019779196152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785eaadb1ebabe8448cd3efc3c65d7f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 34fc6b2d8ac759e4f8970feefe601c92, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Task.TaskBehavior
-  task: {fileID: 11400000, guid: d8fffbc083606954384e3467982ef717, type: 2}
-  popOnAwake: 0
-  popOnInteracted: 1
-  popOnCompleted: 0
-  interactable: {fileID: 3858661174350001535}
+  m_EditorClassIdentifier: Assembly-CSharp::HoverableElement
+  toggleAble: 0
+  hoverStrategy:
+  - rid: 1019164177665359965
+  - rid: 1019164177665359966
+  references:
+    version: 2
+    RefIds:
+    - rid: 1019164177665359965
+      type: {class: HoverColor, ns: CarePackage.UI, asm: Assembly-CSharp}
+      data:
+        hoveredColor: {r: 0.92156863, g: 0.8235294, b: 0.56078434, a: 1}
+        defaultColor: {r: 0.9607843, g: 0.88235295, b: 0.5686275, a: 1}
+        duration: 0.2
+        useEasing: 1
+        ease: 1
+        _targetGraphic: {fileID: 8670479747380593011}
+    - rid: 1019164177665359966
+      type: {class: HoverScale, ns: CarePackage.UI, asm: Assembly-CSharp}
+      data:
+        axis: 0
+        ease: 1
+        scaleMultiplier: 1.2
+        duration: 0.1
+        _target: {fileID: 8826838477595319899}
 --- !u!1 &5602435022592906557
 GameObject:
   m_ObjectHideFlags: 0

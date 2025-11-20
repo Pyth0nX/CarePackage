@@ -5,6 +5,7 @@ using CarePackage.Main;
 using CarePackage.Utilities;
 using UnityEngine;
 using System;
+using PrimeTweenDemo;
 
 namespace CarePackage.Interaction.Car
 {
@@ -68,7 +69,7 @@ namespace CarePackage.Interaction.Car
         
         private int requiredDeliveries => GameManager.Instance.Player.DeliveryManager.GetDeliveryQuotas;
 
-        private bool HasTheRequiredPackages => _hasInitedRequiredPackages && DeliveryUitilities.DoesListContainPackages(_collectedDeliveries, _requiredPackages);
+        private bool HasTheRequiredPackages() => _hasInitedRequiredPackages && DeliveryUitilities.DoesListContainPackages(_collectedDeliveries, _requiredPackages);
         
         private List<Package> _collectedDeliveries = new ();
         private List<Vector3> _packagePositions = new();
@@ -77,43 +78,51 @@ namespace CarePackage.Interaction.Car
         private bool _hasInitedRequiredPackages;
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {
+        {/*
             if (!_positionsCached)
             {
                 _packagePositions = PositionUtilities.GenerateStrict2x3Grid(packageContainer.position, requiredDeliveries, .8f);
                 _positionsCached = true;
-            }
+            }*/
 
             if (!_hasInitedRequiredPackages)
             {
                 _requiredPackages = interactingPlayer.DeliveryManager.RequiredDeliveries;
                 _hasInitedRequiredPackages = true;
             }
+
+            _collectedDeliveries = interactingPlayer.DeliveryManager.Deliveries;
             
-            if (HasTheRequiredPackages && !interactingPlayer.IsPickupValid)
+            if (HasTheRequiredPackages())
+                Debug.LogWarning("[TryStartDay] you have the required packages");
+            
+            if (!HasTheRequiredPackages())
+                Debug.LogError("[TryStartDay] you do not have the required packages");
+            
+            if (ConditionMet(interactingPlayer, interactingObject))
+                Debug.LogWarning("[TryStartDay] you have met the condition");
+            
+            if (!ConditionMet(interactingPlayer, interactingObject))
+                Debug.LogError("[TryStartDay] you have not met the condition");
+            
+            if (HasTheRequiredPackages() && !interactingPlayer.IsPickupValid)
             {
+                Debug.Log("Going to new Scene");
                 var switchSceneAction = new SwitchSceneAction(sceneName);
                 switchSceneAction.PerformAction(interactingPlayer, interactingObject);
             }
             
             if (interactingPlayer.DeliveryManager == null) return;
-            if (interactingPlayer.DeliveryManager.CurrentDelivery == null)
-            {
-                Debug.Log("[DeliveryManager.CurrentDelivery] You do not have a delivery to start the day");
-                return;
-            }
-            
-            var heldDelivery = interactingPlayer.DeliveryManager.CurrentDelivery;
-            if (heldDelivery != null) _collectedDeliveries.Add(heldDelivery);
+            /*
             var package = interactingPlayer.PickupObject;
             interactingPlayer.DropPickup();
             package.transform.localPosition = _packagePositions[_collectedDeliveries.Count - 1];
-            package.transform.SetParent(packageContainer, true);
+            package.transform.SetParent(packageContainer, true);*/
         }
 
         public bool ConditionMet(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            if (_collectedDeliveries.Count >= requiredDeliveries) return true;
+            if (interactingPlayer.DeliveryManager.Deliveries.Count >= requiredDeliveries) return true;
             return false;
         }
     }

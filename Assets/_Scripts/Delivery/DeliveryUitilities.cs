@@ -69,6 +69,45 @@ namespace CarePackage.Delivery
             
             return packages.All(package => list.Contains(package));
         }
+
+        public static Package TryGetPackageFromObject(GameObject objectToGetPackageFrom)
+        {
+            var deliveryAction = TryGetActionFromObject<Interaction.Delivery.PackageAction>(objectToGetPackageFrom);
+            if (deliveryAction == null) return null;
+
+            var delivery = deliveryAction.Package;
+            if (delivery == null)
+            {
+                Debug.Log("[TryGetPackageFromObject] could not get delivery");
+                return null;
+            }
+            
+            return delivery;
+        }
+        
+        public static T TryGetActionFromObject<T>(GameObject objectToGetActionFrom) where T : class, Interaction.IInteractAction
+        {
+            var deliveryInteractable = objectToGetActionFrom.GetComponent<Interaction.Interactable>();
+            if (deliveryInteractable == null)
+            {
+                Debug.Log("[TryGetActionFromObject] could not find an interactable on " + objectToGetActionFrom);
+                return null;
+            }
+            
+            var interactAction = deliveryInteractable.InteractAction;
+            if (interactAction == null)
+            {
+                Debug.Log("[TryGetActionFromObject] could not find correct Action");
+                return null;
+            }
+
+            if (interactAction is T tAction)
+            {
+                Debug.Log("[TryGetActionFromObject] found correct action of type " + interactAction.GetType());
+                return tAction;
+            }
+            return null;
+        }
     }
 }
 

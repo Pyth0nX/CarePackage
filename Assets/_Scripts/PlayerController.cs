@@ -12,6 +12,7 @@ namespace CarePackage.Main
         [SerializeField] private float jumpForwardBias = 0.5f;
         [SerializeField] private float gravity = 30f;
         [SerializeField, Range(0.01f, 4f)] private float sensitivity = 1f;
+        [SerializeField] private float scrollSensitivity = 1;
         [SerializeField] private float groundCheckSize;
         [SerializeField] private Vector3 groundCheckOffset;
         [SerializeField] private GameObject playerCamera;
@@ -77,16 +78,16 @@ namespace CarePackage.Main
 
         private void Enable()
         {
-            Debug.Log($"[{GetType()}] Is UIManager Instance set {UIManager.Instance != null}");
-            UIManager.OnInterfaceOpened += () => ListenToUIChanges(true);
-            UIManager.OnInterfaceClosed += ListenToUIChanges;
+            Debug.Log($"[{GetType()}] Is UIManager Instance set {UI.UIManager.Instance != null}");
+            UI.UIManager.OnInterfaceOpened += () => ListenToUIChanges(true);
+            UI.UIManager.OnInterfaceClosed += ListenToUIChanges;
             LockCursor(CursorLockMode.Locked);
         }
 
         private void OnDisable()
         {
-            UIManager.OnInterfaceOpened -= () => ListenToUIChanges(true);
-            UIManager.OnInterfaceClosed -= ListenToUIChanges;
+            UI.UIManager.OnInterfaceOpened -= () => ListenToUIChanges(true);
+            UI.UIManager.OnInterfaceClosed -= ListenToUIChanges;
             LockCursor(CursorLockMode.None);
         }
 
@@ -299,6 +300,12 @@ namespace CarePackage.Main
         {
             if (input.started) Debug.Log("pressed RightClick");
             else if (input.canceled) Debug.Log("Let go of RightClick");
+        }
+        
+        public void OnScroll(InputAction.CallbackContext context)
+        {
+            Vector2 scrollDelta = context.ReadValue<Vector2>();
+            _owningPlayer.ChangePickupDistance(scrollDelta.y * scrollSensitivity);
         }
         
         private void OnDrawGizmos()

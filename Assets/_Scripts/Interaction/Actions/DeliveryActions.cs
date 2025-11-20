@@ -13,6 +13,7 @@ namespace CarePackage.Interaction.Delivery
         [SerializeField] private bool addedDelivery;
 
         public Package Package => _internalPackage;
+        public bool AlreadyAdded => addedDelivery;
         
         private Package _internalPackage;
         
@@ -51,11 +52,13 @@ namespace CarePackage.Interaction.Delivery
             
             interactingPlayer.Pickup(this, interactingObject);
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
-            
+            /*
             if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(Package);
-            addedDelivery = true;
+            Add();*/
         }
+
+        public void Add() => addedDelivery = true;
     }
 
     [Serializable]
@@ -198,7 +201,18 @@ namespace CarePackage.Interaction.Delivery
             _deliveryManager = interactingPlayer.DeliveryManager;
             
             if (!CanReceivePackage()) return;
-            var delivery = _deliveryManager.CurrentDelivery;
+            var deliveryInteractable = interactingObject.GetComponent<Interactable>();
+            if (deliveryInteractable == null) return;
+
+            var deliveryAction = deliveryInteractable.InteractAction;
+            if (deliveryAction == null) return;
+            
+            if (deliveryAction is not PackageAction packageAction) return;
+
+            var delivery = packageAction.Package;
+            if (delivery == null) return;
+            
+            if (delivery.Id != WantedPackage) return;
             interactingPlayer.DropPickup();
             _deliveryManager.DeliverPackage(delivery);
         }
@@ -207,6 +221,31 @@ namespace CarePackage.Interaction.Delivery
         {
             if (_deliveryManager.CurrentDelivery.Id == wantedPackage) return true;
             return false;
+        }
+    }
+    
+    [Serializable]
+    public class ZoneReceivePackage : IInteractAction
+    {
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            var packageAction = DeliveryUitilities.TryGetActionFromObject<PackageAction>(interactingObject);
+            if (packageAction == null)
+            {
+                Debug.Log("[ZoneReceivePackage] Could not find package action");
+                return;
+            }
+
+            packageAction.Add();
+            
+            var package = packageAction.Package;
+            if (package == null) 
+            {
+                Debug.Log("[ZoneReceivePackage] Could not find package action so no Package");
+                return;
+            }
+            
+            interactingPlayer.DeliveryManager.AddDelivery(package);
         }
     }
     

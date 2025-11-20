@@ -11,7 +11,7 @@ namespace CarePackage.Interaction.UI
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            UIManager.Instance.OpenPopupWindow(popupWindow);
+            CarePackage.UI.UIManager.Instance.OpenPopupWindow(popupWindow);
         }
     }
     
@@ -24,7 +24,7 @@ namespace CarePackage.Interaction.UI
         {
             foreach (var popup in popupWindows)
             {
-                UIManager.Instance.OpenPopupWindow(popup);
+                CarePackage.UI.UIManager.Instance.OpenPopupWindow(popup);
             }
         }
     }

@@ -11,6 +11,16 @@ namespace CarePackage.Main
         [Header("PickupLogic")]
         [SerializeField] private float breakForce = 800f;
         [SerializeField] private bool breakIfTooMuchForce;
+        
+        // public getters
+        public DeliveryManager DeliveryManager => _deliveryManager;
+        public InteractionComponent InteractionComponent =>
+            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
+        public Inventory Inventory => _inventory;
+        public ModeSwitcher SwitchMode => _switchMode;
+        public GameObject ActivePlayer => _switchMode.ActivePlayer;
+        public GameObject PickupObject => _pickup.OwningObject;
+        public bool IsPickupValid => _pickup != null;
 
         // private Components
         private DeliveryManager _deliveryManager;
@@ -21,16 +31,10 @@ namespace CarePackage.Main
         private ConfigurableJoint _pickupJoint;
         private Rigidbody _pickupRigidbody;
 
-        public DeliveryManager DeliveryManager => _deliveryManager;
-
-        public InteractionComponent InteractionComponent =>
-            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
-
-        public Inventory Inventory => _inventory;
-        public ModeSwitcher SwitchMode => _switchMode;
-        public GameObject ActivePlayer => _switchMode.ActivePlayer;
-        public GameObject PickupObject => _pickup.OwningObject;
-        public bool IsPickupValid => _pickup != null;
+        private Vector3 _pickupOffsetAnchor = new(0, 0, -0.5f);
+        private float _pickupDistanceOffset = 1;
+        private float _minDistance = -0.5f;
+        private float _maxDistance = -4f;
 
         private void Awake()
         {
@@ -81,7 +85,7 @@ namespace CarePackage.Main
             _pickupJoint = pickupLocation.gameObject.AddComponent<ConfigurableJoint>();
             _pickupJoint.connectedBody = _pickupRigidbody;
             _pickupJoint.autoConfigureConnectedAnchor = false;
-            _pickupJoint.anchor = Vector3.zero;
+            _pickupJoint.anchor = _pickupOffsetAnchor;
             _pickupJoint.connectedAnchor = Vector3.zero;
             
             _pickupJoint.xMotion = ConfigurableJointMotion.Limited; // locked
@@ -150,6 +154,15 @@ namespace CarePackage.Main
         {
             var launchPickupAction = new Interaction.Miscellaneous.LaunchPickupAction(PickupObject, heldDuration);
             launchPickupAction.PerformAction(this, PickupObject);
+        }
+
+        public void ChangePickupDistance(float incomingValue)
+        {
+            _pickupDistanceOffset = Mathf.Clamp(_pickupDistanceOffset - incomingValue, _maxDistance, _minDistance);
+            _pickupOffsetAnchor = new Vector3(0, 0, _pickupDistanceOffset);
+            
+            if (!IsPickupValid) return;
+            _pickupJoint.anchor = _pickupOffsetAnchor;
         }
     }
 }

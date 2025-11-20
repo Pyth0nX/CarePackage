@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class ConveyorBeltController : MonoBehaviour
 {
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer render;
 
     void Start()
     {
-        renderer.material = new Material(renderer.material);
+        render.material = new Material(render.material);
         SetSpeed(0f);
     }
 
     public void SetSpeed(float speed)
     {
-        renderer.material.SetFloat("T_Speed", speed);
+        render.material.SetFloat("T_Speed", speed);
     }
-    
 }

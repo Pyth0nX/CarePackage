@@ -160,7 +160,7 @@ namespace CarePackage.Interaction.Miscellaneous
         public TweenSliderAction(GameObject inSliderPrefab)
         {
             _sliderPrefab = inSliderPrefab;
-            var sliderObject = UIManager.Instance.AddElement(_sliderPrefab);
+            var sliderObject = CarePackage.UI.UIManager.Instance.AddElement(_sliderPrefab);
             _slider = sliderObject.GetComponent<UnityEngine.UI.Slider>();
         }
 
@@ -179,7 +179,7 @@ namespace CarePackage.Interaction.Miscellaneous
             _tween.Stop();
             PrimeTween.Tween.Delay(.5f).OnComplete(() =>
             {
-                UIManager.Instance.RemoveElement(_slider.gameObject);
+                CarePackage.UI.UIManager.Instance.RemoveElement(_slider.gameObject);
             });
         }
     }

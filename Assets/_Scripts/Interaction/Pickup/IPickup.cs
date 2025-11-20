@@ -6,13 +6,16 @@ namespace CarePackage.Interaction
 {
     public interface IPickup
     {
-        Vector3 Offset { get; }
-        GameObject OwningObject { get; set; }
-        IPickupExtension[] ExtendedLogic { get; set; }
+        public Vector3 Offset { get; }
+        public GameObject OwningObject { get; set; }
+        public IPickupExtension[] ExtendedLogic { get; set; }
+        public EPickupState PickupState { get; set; }
         
         void OnPickedUp(PlayerState interactingPlayer);
         void OnDropped(PlayerState interactingPlayer);
     }
+    
+    public enum EPickupState { Idle, PickedUp, Dropped }
 
     [System.Serializable]
     public class Pickup : IPickup
@@ -20,10 +23,12 @@ namespace CarePackage.Interaction
         [SerializeField] private Vector3 offset;
         [SerializeField] private GameObject owningObject;
         [SerializeReference, SR] private IPickupExtension[] extendedLogic;
+        [SerializeField] private EPickupState pickupState = EPickupState.Idle;
         
         public Vector3 Offset { get => offset; set => offset = value; }
         public GameObject OwningObject { get => owningObject; set => owningObject = value; }
         public IPickupExtension[] ExtendedLogic { get => extendedLogic; set => extendedLogic = value; }
+        public EPickupState PickupState { get => pickupState; set => pickupState = value; }
 
         public Pickup()
         {
@@ -51,6 +56,7 @@ namespace CarePackage.Interaction
             {
                 extendedPickup.ExtendedPickUp(interactingPlayer);
             }
+            pickupState =  EPickupState.PickedUp;
         }
 
         public void OnDropped(PlayerState interactingPlayer)
@@ -61,6 +67,7 @@ namespace CarePackage.Interaction
             {
                 extendedPickup.ExtendedDropped(interactingPlayer);
             }
+            pickupState = EPickupState.Dropped;
         }
     }
     

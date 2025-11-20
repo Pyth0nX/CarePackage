@@ -137,7 +137,7 @@ namespace CarePackage.Delivery
         private void ToggleCheckList()
         {
             _toggled = !_toggled;
-            UIManager.Instance.TogglePopupWindow(checkListUI);
+            UI.UIManager.Instance.TogglePopupWindow(checkListUI);
         }
 
         public void OnToggleCheckList(InputAction.CallbackContext input)

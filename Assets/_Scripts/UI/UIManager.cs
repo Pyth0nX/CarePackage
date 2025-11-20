@@ -2,111 +2,185 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UIManager : MonoBehaviour
+namespace CarePackage.UI
 {
-    private bool _popupsOpen = false;
-    
-    public int GetActivePopupCount() => _activePopups.Count;
-    
-    public GameObject GetActivePopup(int index) => _activePopups[index];
-
-    private List<GameObject> _activePopups = new();
-    private List<GameObject> _elements = new();
-
-    private Transform _activeOverlay;
-    
-    public static event Action OnInterfaceOpened;
-    public static event Action<bool> OnInterfaceClosed;
-
-    public static UIManager Instance;
-
-    private void Awake()
+    public enum ToggleMode
     {
-        if (Instance == null) Instance = this;
+        Single,
+        Multi,
+        Unlimited
     }
 
-    private void Start()
+    public class UIManager : MonoBehaviour
     {
-        _activeOverlay = FindFirstObjectByType<Canvas>().transform;
-    }
+        [SerializeField] private ToggleMode toggleMode = ToggleMode.Single;
+        [SerializeField] private int maxToggles = 3;
+        [SerializeField] private Transform hud;
+        
+        private List<HoverableElement> _toggledElements = new();
+        
+        private bool _popupsOpen = false;
 
-    public void OpenPopupWindow(GameObject popupWindow)
-    {
-        popupWindow.SetActive(true);
-        if (_activePopups.Contains(popupWindow)) return;
-        _activePopups.Add(popupWindow);
-        OnInterfaceOpened?.Invoke();
-    }
+        public int GetActivePopupCount() => _activePopups.Count;
 
-    public void OpenPopupWindows(GameObject[] popupWindows)
-    {
-        foreach (var popupWindow in popupWindows)
+        public GameObject GetActivePopup(int index) => _activePopups[index];
+        public GameObject LastClicked { get; private set; }
+        public GameObject HUD => hud.gameObject;
+
+        private List<GameObject> _activePopups = new();
+        private List<GameObject> _elements = new();
+
+        private Transform _activeOverlay;
+
+        public static event Action OnInterfaceOpened;
+        public static event Action<bool> OnInterfaceClosed;
+
+        public static UIManager Instance;
+
+        private void Awake()
         {
-            OpenPopupWindow(popupWindow);
+            if (Instance == null) Instance = this;
         }
-    }
-    
-    public void OpenPopupWindows(List<GameObject> popupWindows)
-    {
-        OpenPopupWindows(popupWindows.ToArray());
-    }
 
-    public void ClosePopupWindow(GameObject popupWindow)
-    {
-        popupWindow.SetActive(false);
-        if (!_activePopups.Contains(popupWindow)) return;
-        _activePopups.Remove(popupWindow);
-        bool morePopups = _activePopups.Count > 0;
-        OnInterfaceClosed?.Invoke(morePopups);
-    }
-
-    public void ClosePopupWindows(GameObject[] popupWindows)
-    {
-        foreach (GameObject popupWindow in popupWindows)
+        private void Start()
         {
-            ClosePopupWindow(popupWindow);
+            _activeOverlay = FindFirstObjectByType<Canvas>().transform;
         }
-    }
 
-    public void ClosePopupWindows(List<GameObject> popupWindows)
-    {
-        ClosePopupWindows(popupWindows.ToArray());
-    }
-
-    public void CloseAllPopupWindows()
-    {
-        if (_activePopups.Count == 0) return;
-        for (int i = _activePopups.Count - 1; i >= 0; i--)
+        public void OpenPopupWindow(GameObject popupWindow)
         {
-            ClosePopupWindow(_activePopups[i]);
+            popupWindow.SetActive(true);
+            if (_activePopups.Contains(popupWindow)) return;
+            _activePopups.Add(popupWindow);
+            OnInterfaceOpened?.Invoke();
         }
-    }
 
-    public void TogglePopupWindow(GameObject popupWindow)
-    {
-        if (_activePopups.Contains(popupWindow) && popupWindow.activeSelf)
+        public void OpenPopupWindows(GameObject[] popupWindows)
         {
-            ClosePopupWindow(popupWindow);
+            foreach (var popupWindow in popupWindows)
+            {
+                OpenPopupWindow(popupWindow);
+            }
         }
-        else if (!_activePopups.Contains(popupWindow) && !popupWindow.activeSelf)
+
+        public void OpenPopupWindows(List<GameObject> popupWindows)
         {
-            OpenPopupWindow(popupWindow);
+            OpenPopupWindows(popupWindows.ToArray());
         }
-    }
 
-    public GameObject AddElement(GameObject elementToAdd)
-    {
-        if (elementToAdd == null) return null;
-        var newElement = Instantiate(elementToAdd, _activeOverlay);
-        _elements.Add(newElement);
-        return newElement;
-    }
+        public void ClosePopupWindow(GameObject popupWindow)
+        {
+            popupWindow.SetActive(false);
+            if (!_activePopups.Contains(popupWindow)) return;
+            _activePopups.Remove(popupWindow);
+            bool morePopups = _activePopups.Count > 0;
+            OnInterfaceClosed?.Invoke(morePopups);
+        }
 
-    public void RemoveElement(GameObject elementToRemove)
-    {
-        if (!_elements.Contains(elementToRemove)) return;
-        var elementObject = _elements[_elements.IndexOf(elementToRemove)];
-        _elements.Remove(elementToRemove);
-        Destroy(elementObject);
+        public void ClosePopupWindows(GameObject[] popupWindows)
+        {
+            foreach (GameObject popupWindow in popupWindows)
+            {
+                ClosePopupWindow(popupWindow);
+            }
+        }
+
+        public void ClosePopupWindows(List<GameObject> popupWindows)
+        {
+            ClosePopupWindows(popupWindows.ToArray());
+        }
+
+        public void CloseAllPopupWindows()
+        {
+            if (_activePopups.Count == 0) return;
+            for (int i = _activePopups.Count - 1; i >= 0; i--)
+            {
+                ClosePopupWindow(_activePopups[i]);
+            }
+        }
+
+        public void TogglePopupWindow(GameObject popupWindow)
+        {
+            if (_activePopups.Contains(popupWindow) && popupWindow.activeSelf)
+            {
+                ClosePopupWindow(popupWindow);
+            }
+            else if (!_activePopups.Contains(popupWindow) && !popupWindow.activeSelf)
+            {
+                OpenPopupWindow(popupWindow);
+            }
+        }
+
+        public GameObject AddElement(GameObject elementToAdd)
+        {
+            if (elementToAdd == null) return null;
+            var newElement = Instantiate(elementToAdd, hud);
+            _elements.Add(newElement);
+            return newElement;
+        }
+
+        public void RemoveElement(GameObject elementToRemove)
+        {
+            if (!_elements.Contains(elementToRemove)) return;
+            var elementObject = _elements[_elements.IndexOf(elementToRemove)];
+            _elements.Remove(elementToRemove);
+            Destroy(elementObject);
+        }
+        
+        public void RegisterToggle(HoverableElement element)
+        {
+            switch (toggleMode)
+            {
+                case ToggleMode.Single:
+                    foreach (var toggleable in _toggledElements)
+                    {
+                        toggleable.Toggle(false);
+                    }
+                    _toggledElements.Clear();
+                    _toggledElements.Add(element);
+                    _toggledElements[0].Toggle(false, true);
+                    break;
+                case ToggleMode.Multi:
+                    if (!_toggledElements.Contains(element))
+                    {
+                        if (_toggledElements.Count >= maxToggles)
+                        {
+                            _toggledElements[0].Toggle(false);
+                            UnregisterToggle(_toggledElements[0]);
+                        }
+                        _toggledElements.Add(element);
+                        element.Toggle(false, true);
+                    }
+                    break;
+                case ToggleMode.Unlimited:
+                    if (!_toggledElements.Contains(element))
+                    {
+                        _toggledElements.Add(element);
+                        element.Toggle(false, true);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        public void UnregisterToggle(HoverableElement element)
+        {
+            if (_toggledElements.Contains(element)) _toggledElements.Remove(element);
+        }
+
+        public void ToggleAllToggleables(bool toggle)
+        {
+            foreach (var toggleable in _toggledElements)
+            {
+                toggleable.Toggle(false, toggle);
+            }
+            _toggledElements.Clear();
+        }
+        
+        public void ToggleHUD(bool toggle)
+        {
+            HUD.SetActive(toggle);
+        }
     }
 }
