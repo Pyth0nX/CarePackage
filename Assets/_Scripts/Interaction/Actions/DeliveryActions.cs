@@ -216,6 +216,9 @@ namespace CarePackage.Interaction.Delivery
         [SerializeField] private SO_Package job;
         [SerializeField] private GameObject parent;
         [SerializeField] private bool isLeft;
+
+        public Package Job => _internalPackage;
+        public GameObject OwningObject => parent;
         
         private Package _internalPackage;
         
@@ -236,21 +239,21 @@ namespace CarePackage.Interaction.Delivery
             var jobManager = interactingPlayer.DeliveryManager;
             if (jobManager == null) return;
             if (job == null || _internalPackage == null) return;
+            
+            Debug.Log("Clicked: " + parent.name);
 
             var packageToSet = _internalPackage == null ? DeliveryUitilities.ToPackage(job) : _internalPackage;
-            jobManager.SetListedDelivery(packageToSet, isLeft);
+            jobManager.SetListedDelivery(this, isLeft);
         }
 
         public void OnEnable()
         {
             var text = parent.GetComponentInChildren<TextMeshProUGUI>();
             text.text = _internalPackage.PackageData.Title;
+            parent.name = _internalPackage.PackageData.Title;
         }
 
-        public void OnDisable()
-        {
-            Debug.Log($"[IActivatable:{this.GetType()}] OnDisable");
-        }
+        public void OnDisable() {}
     }
 
     [Serializable]

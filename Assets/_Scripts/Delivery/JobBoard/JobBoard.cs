@@ -26,7 +26,7 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject jobListingElemets;
         [SerializeField] private GameObject jobPrefab;
         [SerializeField] private Transform jobsContainer;
-        [SerializeField] private List<Button> jobNotes;
+        [SerializeField] private List<GameObject> jobNotes;
         [SerializeField] private float maxOffset = 5f;
 
         [SerializeField] private List<ScriptedJob> scriptedJobs = new();
@@ -34,7 +34,7 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
 
-        private List<Button> _jobButtons = new();
+        private List<GameObject> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
         private Package _displayedJob;
         private GameObject _lastClickedButton;
@@ -91,40 +91,20 @@ namespace CarePackage.Delivery
             MovePackagesAlong();
         }
 
-        private void Enable()
+        public void SetJobListing(SetListedJobAction job, bool isLeft = false)
         {
-            foreach (var button in _jobButtons)
-            {
-                button.onClick.AddListener((() => OnJobClicked(button.gameObject)));
-            }
-        }
-
-        private void OnEnable()
-        {
-            Enable();
-        }
-
-        private void OnDisable()
-        {
-            foreach (var button in _jobButtons)
-            {
-                button.onClick.RemoveAllListeners();
-            }
-        }
-
-        public void SetJobListing(Package job, bool isLeft = false)
-        {
-            _displayedJob = job;
-            _jobTitle.text = job.PackageData.Title;
-            _jobDescription.text = job.PackageData.Description;
+            _displayedJob = job.Job;
+            _jobTitle.text = _displayedJob.PackageData.Title;
+            _jobDescription.text = _displayedJob.PackageData.Description;
             _jobImage.gameObject.SetActive(false);
-            var dispJobSrciptable = DeliveryUitilities.ToScriptableObject(job);
+            var dispJobSrciptable = DeliveryUitilities.ToScriptableObject(_displayedJob);
             if (dispJobSrciptable == null) return;
             if (dispJobSrciptable.Item == null) return;
             _jobImage.gameObject.SetActive(true);
             _jobImage.sprite = dispJobSrciptable.Item.ItemData.icon;
             
             _joblistingX = isLeft ? -550f : 550f;
+            OnJobClicked(job.OwningObject);
         }
 
         private void OnJobClicked(GameObject button)
@@ -132,7 +112,7 @@ namespace CarePackage.Delivery
             Debug.Log("You have clicked " + button);
             UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
-            Tween.Delay(1f).OnComplete(() => { jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0); });
+            jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0);
         }
 
         public void OnExitJobClicked(GameObject button)
@@ -187,7 +167,7 @@ namespace CarePackage.Delivery
 
             var interactable = newJob.GetComponent<Interactable>();
             interactable.InteractAction = new SetListedJobAction(newJob, job);
-            _jobButtons.Add(newJob.GetComponent<Button>());
+            _jobButtons.Add(newJob);
         }
 
         public void InitRandomJobsForPackages(List<Package> packages)
@@ -250,11 +230,10 @@ namespace CarePackage.Delivery
             interactable.InteractAction = setJobListingAction;
 
             _jobButtons.Add(jobNote);
-            jobNote.gameObject.SetActive(true);
-            Enable();
+            jobNote.SetActive(true);
         }
 
-        private Button GetAvailableJobNote()
+        private GameObject GetAvailableJobNote()
         {/*
             foreach (var jobNote in jobNotes)
             {

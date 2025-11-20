@@ -143,7 +143,7 @@ namespace CarePackage.Delivery
             return currentDelivery;
         }
         
-        public void SetListedDelivery(Package inJob, bool isLeft = false)
+        public void SetListedDelivery(SetListedJobAction inJob, bool isLeft = false)
         {
             if (inJob == null) return;
             _jobBoard.SetJobListing(inJob, isLeft);
