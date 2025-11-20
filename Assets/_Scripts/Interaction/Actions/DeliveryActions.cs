@@ -241,8 +241,6 @@ namespace CarePackage.Interaction.Delivery
             if (job == null || _internalPackage == null) return;
             
             Debug.Log("Clicked: " + parent.name);
-
-            var packageToSet = _internalPackage == null ? DeliveryUitilities.ToPackage(job) : _internalPackage;
             jobManager.SetListedDelivery(this, isLeft);
         }
 

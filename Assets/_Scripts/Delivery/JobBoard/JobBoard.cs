@@ -97,19 +97,21 @@ namespace CarePackage.Delivery
             _jobTitle.text = _displayedJob.PackageData.Title;
             _jobDescription.text = _displayedJob.PackageData.Description;
             _jobImage.gameObject.SetActive(false);
+            
             var dispJobSrciptable = DeliveryUitilities.ToScriptableObject(_displayedJob);
             if (dispJobSrciptable == null) return;
-            if (dispJobSrciptable.Item == null) return;
-            _jobImage.gameObject.SetActive(true);
-            _jobImage.sprite = dispJobSrciptable.Item.ItemData.icon;
             
+            if (dispJobSrciptable.Item != null)
+            {
+                _jobImage.gameObject.SetActive(true);
+                _jobImage.sprite = dispJobSrciptable.Item.ItemData.icon;
+            }
             _joblistingX = isLeft ? -550f : 550f;
             OnJobClicked(job.OwningObject);
         }
 
         private void OnJobClicked(GameObject button)
         {
-            Debug.Log("You have clicked " + button);
             UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
             jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0);
