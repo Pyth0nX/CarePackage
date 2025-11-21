@@ -502,9 +502,9 @@ Mailman: That's right. It's from Vera, your Neighbour.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Vera? I don't think I know her.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: She has the cutest little boy, that's probably why you haven't seen her much. That boy is a piece of work.
+Mailman: She has the cutest little boy, that's probably why you haven't seen her much. She has her hands full.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Oh that's just perfect, we've been looking for something Sofie could do after school, she could babysit the boy from time to time. What do you think Sofie?
+Lina: Oh yeah, it was not so long ago I was in that same situation, do you think they would be interested in a babysitter?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -1377,7 +1377,7 @@ Vera: YES! just in time, this was about to get ugly.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
 <<showCharacter "Jonas" "">>
--> Mailman: Haha, I remember those days! If you ever need a hand, I'm up for a challenge. Just sign right here.
+-> Mailman: Haha, I have never experienced something like that. But if you ever need a hand, I can try to find you some extra hands.
 <<jump CEn1Day1>>
 -> Mailman: I see. You can sign right here and I'll be out of your way. 
 <<jump CEnd1Day1>>
@@ -1594,7 +1594,18 @@ position: -74,553
 //FAM C — DAY 3 — BAIT (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamC">>
-.
+<<showCharacter "Vera" "Happy">>
+Mailman: Good afternoon, Vera.
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Good afternoon Mr.Mailman.
+<<showCharacter "Vera" "Happy">>
+Mailman: I have a package for you.
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Are you sure? I haven't ordered anything lately.
+<<showCharacter "Vera" "Happy">>
+Mailman: You're right, this package is not for you. I'm sorry, I'll be back when I have a package for you.
+<<hideCharacter "Vera">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
@@ -1619,9 +1630,11 @@ Vera: Oh my goodness! She's offering to babysit! And she included her number! Th
 Jonas: That is amazing! Maybe the first time we could ask Nora to come help her, I think both of them together might survive the night.
 <<set $relationshipFamC += 2>>
 <<set $relationshipFamA += 1>> // Indirect relationship boost with Fam A
-Mailman: That's wonderful. She's being having a hard time in class, maybe Nora can help her meet new friends.
+<<showCharacter "Jonas" "ListeningTired">>
+Mailman: That's wonderful. She's been having a hard time in class, maybe Nora can help her meet new friends.
 <<showCharacter "Vera" "SpeakingTired">>
 Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
+<<showCharacter "Vera" "ListeningTired">>
 Mailman: My pleasure. Have a great day!
 <<hideCharacter "Vera">>
 <<hideCharacter "Jonas">>
