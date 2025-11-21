@@ -1310,7 +1310,7 @@ position: -841,2412
 color: blue
 group: FamB && Day5
 ---
-//FAM A — DAY 5 — BABYSITTING (NEUTRAL)
+//FAM B — DAY 5 — BABYSITTING (NEUTRAL)
 <<setBackground "BGFamB">>
 .
 ===
@@ -1428,9 +1428,9 @@ position: -70,-684
 <<setBackground "BGFamC">>
 Mailman: Good morning! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
-Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure everithing is okay inside of the box?
+Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure everything is okay inside of the box?
 <<showCharacter "Jonas" "">>
-Mailman: Oh, I'm so sorry. It must have recieved some damage on the way here. I'm sure everything is okay with the diapers. 
+Mailman: Oh, I'm so sorry. It must have received some damage on the way here. I'm sure everything is okay with the diapers. 
 <<showCharacter "Jonas" "Talking">>
 Jonas: I hope so, we need each and everyone.
 <<showCharacter "Jonas" "">>
