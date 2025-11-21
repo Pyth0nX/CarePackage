@@ -6,6 +6,7 @@ using CarePackage.Interaction.Dialogue;
 using CarePackage.Persistance;
 using CarePackage.Main;
 using UnityEngine;
+using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -161,6 +162,7 @@ namespace CarePackage.Delivery
                 
                 _timeTakenToDelivery = _deliveryTimer.Stop();
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
+                CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
                 
                 if (packageObj != null) Destroy(packageObj);
                 _deliveryCheckList.CheckOffCurrentPackage();

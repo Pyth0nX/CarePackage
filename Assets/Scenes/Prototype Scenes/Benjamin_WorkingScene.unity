@@ -16478,7 +16478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbc1f4aab162ea4d9a5bf8bb14788ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyorBeltController
-  renderer: {fileID: 1124087694}
+  render: {fileID: 0}
 --- !u!65 &1124087693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24030,8 +24030,6 @@ MonoBehaviour:
   scriptedJobs: []
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 787709674}
-  scriptedPackagesArray: []
-  scriptedPackagesList: []
 --- !u!1 &1623060246
 GameObject:
   m_ObjectHideFlags: 0
@@ -30000,8 +29998,6 @@ MonoBehaviour:
   scriptedJobs: []
   packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
   packageConveyerBelt: {fileID: 1357124567}
-  scriptedPackagesArray: []
-  scriptedPackagesList: []
 --- !u!224 &2057262305
 RectTransform:
   m_ObjectHideFlags: 0

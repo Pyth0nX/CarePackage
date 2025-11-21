@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 namespace CarePackage.UI
 {
@@ -10,12 +11,27 @@ namespace CarePackage.UI
         Multi,
         Unlimited
     }
+    
+    [Serializable]
+    public struct PopupGroup 
+    {
+        [SerializeField] public GameObject[] popups;
+
+        public PopupGroup(GameObject inPopup) : this(new []{inPopup}) {}
+        
+        public PopupGroup(GameObject[] inPopups) 
+        {
+            popups = inPopups;
+        }
+    }
 
     public class UIManager : MonoBehaviour
     {
         [SerializeField] private ToggleMode toggleMode = ToggleMode.Single;
         [SerializeField] private int maxToggles = 3;
         [SerializeField] private Transform hud;
+        
+        [SerializeField] private UnityEngine.InputSystem.PlayerInput playerInput;
         
         private List<HoverableElement> _toggledElements = new();
         
@@ -27,8 +43,14 @@ namespace CarePackage.UI
         public GameObject LastClicked { get; private set; }
         public GameObject HUD => hud.gameObject;
 
+        private SettingsMenuController _settingsMenu;
         private List<GameObject> _activePopups = new();
         private List<GameObject> _elements = new();
+#if UNITY_EDITOR
+        [SerializeField] private List<PopupGroup> historyDebug = new();
+#endif
+        private Stack<PopupGroup> _popupHistory = new();
+        private Stack<PopupGroup> _popupRedo = new();
 
         private Transform _activeOverlay;
 
@@ -45,22 +67,45 @@ namespace CarePackage.UI
         private void Start()
         {
             _activeOverlay = FindFirstObjectByType<Canvas>().transform;
+            _settingsMenu = FindFirstObjectByType<SettingsMenuController>(FindObjectsInactive.Include);
+        }
+
+        public void SetPlayerInput(UnityEngine.InputSystem.PlayerInput inPlayerInput)
+        {
+            playerInput = inPlayerInput;
         }
 
         public void OpenPopupWindow(GameObject popupWindow)
         {
+            var group = new PopupGroup(popupWindow);
             popupWindow.SetActive(true);
             if (_activePopups.Contains(popupWindow)) return;
             _activePopups.Add(popupWindow);
             OnInterfaceOpened?.Invoke();
+            
+            _popupHistory.Push(group);
+#if UNITY_EDITOR
+            historyDebug.Add(group);
+#endif
+            UpdateInputSchema();
         }
 
         public void OpenPopupWindows(GameObject[] popupWindows)
         {
-            foreach (var popupWindow in popupWindows)
+            var group = new PopupGroup(popupWindows);
+            foreach (var popup in popupWindows)
             {
-                OpenPopupWindow(popupWindow);
+                //OpenPopupWindow(popupWindow);
+                popup.SetActive(true);
+                if (!_activePopups.Contains(popup)) _activePopups.Add(popup);
             }
+            _popupHistory.Push(group);
+#if UNITY_EDITOR
+            historyDebug.Add(group);
+#endif
+            _popupRedo.Clear();
+            OnInterfaceOpened?.Invoke();
+            UpdateInputSchema();
         }
 
         public void OpenPopupWindows(List<GameObject> popupWindows)
@@ -73,16 +118,33 @@ namespace CarePackage.UI
             popupWindow.SetActive(false);
             if (!_activePopups.Contains(popupWindow)) return;
             _activePopups.Remove(popupWindow);
+            
+            _popupHistory = new Stack<PopupGroup>(_popupHistory.Where(g => !g.popups.Contains(popupWindow)));
+#if UNITY_EDITOR
+            historyDebug = _popupHistory.ToList();
+#endif
+            
             bool morePopups = _activePopups.Count > 0;
             OnInterfaceClosed?.Invoke(morePopups);
+            UpdateInputSchema();
         }
 
         public void ClosePopupWindows(GameObject[] popupWindows)
         {
             foreach (GameObject popupWindow in popupWindows)
             {
-                ClosePopupWindow(popupWindow);
+                //ClosePopupWindow(popupWindow);
+                popupWindow.SetActive(false);
+                if (_activePopups.Contains(popupWindow)) _activePopups.Remove(popupWindow);
+                
+                _popupHistory = new Stack<PopupGroup>(_popupHistory.Where(g => !g.popups.Contains(popupWindow)));
+#if UNITY_EDITOR
+                historyDebug = _popupHistory.ToList();
+#endif
             }
+            bool morePopups = _activePopups.Count > 0;
+            OnInterfaceClosed?.Invoke(morePopups);
+            UpdateInputSchema();
         }
 
         public void ClosePopupWindows(List<GameObject> popupWindows)
@@ -109,6 +171,31 @@ namespace CarePackage.UI
             {
                 OpenPopupWindow(popupWindow);
             }
+        }
+        
+        public void UndoLastPopupGroup()
+        {
+            if (_popupHistory.Count == 0) return;
+
+            var group = _popupHistory.Pop();
+#if UNITY_EDITOR
+            historyDebug.RemoveAt(historyDebug.Count - 1);
+#endif
+
+            ClosePopupWindows(group.popups);
+            _popupRedo.Push(group);
+        }
+        
+        public void RedoLastPopupGroup() 
+        {
+            if (_popupRedo.Count == 0) return;
+
+            var group = _popupRedo.Pop();
+            OpenPopupWindows(group.popups);
+            _popupHistory.Push(group);
+#if UNITY_EDITOR
+            historyDebug.Add(group);
+#endif
         }
 
         public GameObject AddElement(GameObject elementToAdd)
@@ -181,6 +268,53 @@ namespace CarePackage.UI
         public void ToggleHUD(bool toggle)
         {
             HUD.SetActive(toggle);
+        }
+        
+        private void UpdateInputSchema() 
+        {
+            var schema = _activePopups.Count > 0 ? "UI" : "Player";
+            SetInputSchema(schema);
+        }
+        
+        public void SetInputSchema(string schema) 
+        {
+            playerInput.SwitchCurrentActionMap(schema);
+        }
+        
+        public void OnUndo(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Debug.Log("Undo performed");
+                UndoLastPopupGroup();
+            }
+        }
+        
+        public void OnEscape(UnityEngine.InputSystem.InputAction.CallbackContext context) 
+        {
+            if (!context.started) return;
+            SetInputSchema("UI");
+
+            if (_activePopups.Count > 0) 
+            {
+                UndoLastPopupGroup();
+            } 
+            else 
+            {
+                if (_settingsMenu != null) 
+                {
+                    if (!_settingsMenu.IsOpen) 
+                    {
+                        _settingsMenu.Open();
+                        OpenPopupWindow(_settingsMenu.gameObject);
+                    } 
+                    else 
+                    {
+                        _settingsMenu.Close();
+                        ClosePopupWindow(_settingsMenu.gameObject);
+                    }
+                }
+            }
         }
     }
 }

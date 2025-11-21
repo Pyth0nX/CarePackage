@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using PrimeTween;
 using TMPro;
+using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -135,6 +136,7 @@ namespace CarePackage.Delivery
             CreatePackageForConveyerBelt(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
             UI.UIManager.Instance.ClosePopupWindow(jobListing);
+            CompletableTracker.Instance.Initialized("Package_"+_displayedJob.PackageData.Title, CompletableTracker.CompletableType.Quest);
         }
 
         private void CreatePackageForConveyerBelt(Package packageData)

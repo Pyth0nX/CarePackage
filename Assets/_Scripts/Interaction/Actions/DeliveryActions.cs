@@ -3,6 +3,7 @@ using CarePackage.Delivery;
 using UnityEngine;
 using System;
 using TMPro;
+using Xasu.HighLevel;
 
 namespace CarePackage.Interaction.Delivery
 {
@@ -51,6 +52,7 @@ namespace CarePackage.Interaction.Delivery
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
             interactingPlayer.Pickup(this, interactingObject);
+            GameObjectTracker.Instance.Interacted("Package_" + Package.PackageData.Title, GameObjectTracker.TrackedGameObject.Item);
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
             
             if (!interactingPlayer.ParentInsteadOfPhysics) return;

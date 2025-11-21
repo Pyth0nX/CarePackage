@@ -24,7 +24,7 @@ namespace Yarn.Unity
     /// to choose from.
     /// </summary>
     [HelpURL("https://docs.yarnspinner.dev/using-yarnspinner-with-unity/components/dialogue-view/options-list-view")]
-    public sealed class OptionsPresenter : DialoguePresenterBase
+    public class OptionsPresenter : DialoguePresenterBase
     {
         [SerializeField] CanvasGroup? canvasGroup;
 

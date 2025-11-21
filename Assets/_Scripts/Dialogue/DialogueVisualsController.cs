@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Xasu.HighLevel;
 using Yarn.Unity;
 
 public class DialogueVisualsController : MonoBehaviour
@@ -51,6 +52,9 @@ public class DialogueVisualsController : MonoBehaviour
         {
             dialogueRunner.onDialogueStart.AddListener(OnDialogueStart);
             dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+            dialogueRunner.onNodeStart.AddListener((node) => CompletableTracker.Instance.Initialized("Node_" + node, CompletableTracker.CompletableType.DialogNode));
+            dialogueRunner.onNodeComplete.AddListener((node) => CompletableTracker.Instance.Completed("Node_" + node, CompletableTracker.CompletableType.DialogNode));
+            
         }
         else
         {
@@ -62,12 +66,16 @@ public class DialogueVisualsController : MonoBehaviour
     {
         if (dialogueCanvas != null)
             dialogueCanvas.enabled = true;
+        
+        CompletableTracker.Instance.Initialized("Dialogue_" + dialogueRunner.Dialogue, CompletableTracker.CompletableType.DialogFragment);
     }
 
     private void OnDialogueComplete()
     {
         if (dialogueCanvas != null)
             dialogueCanvas.enabled = false;
+        
+        CompletableTracker.Instance.Completed("Dialogue_" + dialogueRunner.Dialogue, CompletableTracker.CompletableType.DialogFragment);
     }
 
     // --- Background ---

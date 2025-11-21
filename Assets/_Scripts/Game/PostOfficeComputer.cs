@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using CarePackage.Main;
 using UnityEngine;
 using UnityEngine.UI;
+using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -23,7 +25,15 @@ namespace CarePackage.Delivery
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Select Jobs to deliver"));
 //        GameManager.StartDay();
         }
-    
+
+        private DateTime accessedTime;
+        
+        private void OnEnable()
+        {
+            accessedTime = DateTime.Now;
+            AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen);
+        }
+
         public void CheckOutClicked()
         {
             int popupCount = UI.UIManager.Instance.GetActivePopupCount();
@@ -34,6 +44,8 @@ namespace CarePackage.Delivery
             }
             UI.UIManager.Instance.ClosePopupWindows(popups);
             //    GameManager.SkipDay();
+            AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen)
+                .WithDuration(accessedTime, DateTime.Now).WithSuccess(false);
         }
 
         public void OpenMailClicked()

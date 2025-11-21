@@ -8,6 +8,8 @@ namespace CarePackage.Main.Sound
     public enum EAudioPlayCondition { Never, PlayOnAwake, PlayOnEvent, PlayOnTriggered, PlayOnCollided, PlayOnInteracted, FollowUp }
     public enum EAudioPlayLocation { Global, Local }
     
+    public enum EAudioEnums { AudioGroup, EAudioCategory, EAudioPlayCondition, EAudioPlayLocation }
+    
     [System.Serializable]
     public class AudioEntry 
     {
