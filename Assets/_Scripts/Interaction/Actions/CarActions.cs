@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using CarePackage.Interaction.Miscellaneous;
 using CarePackage.Delivery;
 using CarePackage.Main;
-using CarePackage.Utilities;
 using UnityEngine;
 using System;
-using PrimeTweenDemo;
 
 namespace CarePackage.Interaction.Car
 {
@@ -78,12 +76,12 @@ namespace CarePackage.Interaction.Car
         private bool _hasInitedRequiredPackages;
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {/*
-            if (!_positionsCached)
+        {
+            if (!_positionsCached && interactingPlayer.ParentInsteadOfPhysics)
             {
-                _packagePositions = PositionUtilities.GenerateStrict2x3Grid(packageContainer.position, requiredDeliveries, .8f);
+                _packagePositions = Utilities.PositionUtilities.GenerateStrict2x3Grid(packageContainer.position, requiredDeliveries, .8f);
                 _positionsCached = true;
-            }*/
+            }
 
             if (!_hasInitedRequiredPackages)
             {
@@ -91,19 +89,18 @@ namespace CarePackage.Interaction.Car
                 _hasInitedRequiredPackages = true;
             }
 
-            _collectedDeliveries = interactingPlayer.DeliveryManager.Deliveries;
+            if (!interactingPlayer.ParentInsteadOfPhysics) _collectedDeliveries = interactingPlayer.DeliveryManager.Deliveries;
+            else
+            {
+                if (interactingPlayer.DeliveryManager.CurrentDelivery == null)
+                {
+                    Debug.Log("[DeliveryManager.CurrentDelivery] You do not have a delivery to start the day");
+                    return;
+                }
             
-            if (HasTheRequiredPackages())
-                Debug.LogWarning("[TryStartDay] you have the required packages");
-            
-            if (!HasTheRequiredPackages())
-                Debug.LogError("[TryStartDay] you do not have the required packages");
-            
-            if (ConditionMet(interactingPlayer, interactingObject))
-                Debug.LogWarning("[TryStartDay] you have met the condition");
-            
-            if (!ConditionMet(interactingPlayer, interactingObject))
-                Debug.LogError("[TryStartDay] you have not met the condition");
+                var heldDelivery = interactingPlayer.DeliveryManager.CurrentDelivery;
+                if (heldDelivery != null) _collectedDeliveries.Add(heldDelivery);
+            }
             
             if (HasTheRequiredPackages() && !interactingPlayer.IsPickupValid)
             {
@@ -113,16 +110,17 @@ namespace CarePackage.Interaction.Car
             }
             
             if (interactingPlayer.DeliveryManager == null) return;
-            /*
+            if (!interactingPlayer.ParentInsteadOfPhysics) return;
             var package = interactingPlayer.PickupObject;
             interactingPlayer.DropPickup();
             package.transform.localPosition = _packagePositions[_collectedDeliveries.Count - 1];
-            package.transform.SetParent(packageContainer, true);*/
+            package.transform.SetParent(packageContainer, true);
         }
 
         public bool ConditionMet(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            if (interactingPlayer.DeliveryManager.Deliveries.Count >= requiredDeliveries) return true;
+            var count = interactingPlayer.ParentInsteadOfPhysics ? _collectedDeliveries.Count : interactingPlayer.DeliveryManager.Deliveries.Count;
+            if (count >= requiredDeliveries) return true;
             return false;
         }
     }

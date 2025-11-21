@@ -62,7 +62,6 @@ namespace CarePackage.Delivery
 
         private void Enable()
         {
-            Debug.Log("GameManager: " + GameManager.Instance);
             GameManager.Instance.onStartGame += OnDayStarted_Implementation;
         }
 

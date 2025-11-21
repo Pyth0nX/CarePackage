@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5cc353ee3f7b8c469968f142b2f8738, type: 3}
+  m_Name: AudioGroups
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.Sound.SO_AudioMixer
+  groups:
+  - category: 0
+    mixerGroup: {fileID: -9105559135563771884, guid: f5e4dcb96d96ab0409160f1bb71c00ef, type: 2}
+  - category: 1
+    mixerGroup: {fileID: 7930095209298258613, guid: f5e4dcb96d96ab0409160f1bb71c00ef, type: 2}
+  - category: 2
+    mixerGroup: {fileID: -5963050630655036670, guid: f5e4dcb96d96ab0409160f1bb71c00ef, type: 2}
+  - category: 3
+    mixerGroup: {fileID: 2691334696276169055, guid: f5e4dcb96d96ab0409160f1bb71c00ef, type: 2}

@@ -52,10 +52,11 @@ namespace CarePackage.Interaction.Delivery
             
             interactingPlayer.Pickup(this, interactingObject);
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
-            /*
+            
+            if (!interactingPlayer.ParentInsteadOfPhysics) return;
             if (addedDelivery) return;
             interactingPlayer.DeliveryManager.AddDelivery(Package);
-            Add();*/
+            Add();
         }
 
         public void Add() => addedDelivery = true;
@@ -74,15 +75,16 @@ namespace CarePackage.Interaction.Delivery
         public void ExtendedPickUp(PlayerState interactingPlayer)
         {
             _packageObj.VelocityThreshold = _packageObj.HeldVelocityThreshold;
-            _packageObj.TogglePhysics(true);
+            var bol = interactingPlayer.ParentInsteadOfPhysics ? false : true;
+            _packageObj.TogglePhysics(bol);
             _packageObj.SetDamageEnabled(true);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
             _packageObj.VelocityThreshold = _packageObj.DefaultVelocityThreshold;
-            //_packageObj.TogglePhysics(true);
-            //_packageObj.SetDamageEnabled(true);
+            _packageObj.TogglePhysics(true);
+            _packageObj.SetDamageEnabled(true);
         }
     }
 
@@ -201,16 +203,12 @@ namespace CarePackage.Interaction.Delivery
             _deliveryManager = interactingPlayer.DeliveryManager;
             
             if (!CanReceivePackage()) return;
-            var deliveryInteractable = interactingObject.GetComponent<Interactable>();
-            if (deliveryInteractable == null) return;
+            var delivery = DeliveryUitilities.TryGetPackageFromObject(interactingObject);
 
-            var deliveryAction = deliveryInteractable.InteractAction;
-            if (deliveryAction == null) return;
-            
-            if (deliveryAction is not PackageAction packageAction) return;
-
-            var delivery = packageAction.Package;
-            if (delivery == null) return;
+            if (interactingPlayer.ParentInsteadOfPhysics)
+            {
+                delivery = _deliveryManager.CurrentDelivery;
+            }
             
             if (delivery.Id != WantedPackage) return;
             interactingPlayer.DropPickup();
@@ -229,6 +227,7 @@ namespace CarePackage.Interaction.Delivery
     {
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
+            if (interactingPlayer.ParentInsteadOfPhysics) return;
             var packageAction = DeliveryUitilities.TryGetActionFromObject<PackageAction>(interactingObject);
             if (packageAction == null)
             {
