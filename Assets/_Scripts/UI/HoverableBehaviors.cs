@@ -74,7 +74,7 @@ namespace CarePackage.UI
     }
 
     [Serializable]
-    public class HoverColor : IHoverBehavior
+    public class HoverColor : IHoverBehavior, IActivatable
     {
         [SerializeField] private Color hoveredColor = Color.white;
         [SerializeField] private Color defaultColor = Color.white;
@@ -129,6 +129,15 @@ namespace CarePackage.UI
                 _targetGraphic.color = targetColor;
             }
         }
+
+        public void OnEnable()
+        {
+            if (_targetGraphic == null) return;
+            if (_targetGraphic.color == defaultColor) return;
+            _targetGraphic.color = defaultColor;
+        }
+
+        public void OnDisable() {}
     }
     
     [Serializable]
@@ -283,6 +292,9 @@ namespace CarePackage.UI
         [SerializeField] private float frequency = 10f;
         [SerializeField] private bool enableFalloff = true;
         [SerializeField] private Ease easeBetweenShakes = Ease.Default;
+        
+        [SerializeField] private bool shakeOnHover = true;
+        [SerializeField] private bool shakeOnClick = true;
 
         private Tween _currentTween;
 
@@ -322,6 +334,46 @@ namespace CarePackage.UI
                 duration * 0.5f,
                 frequency
             );
+        }
+
+        public void Reset()
+        {
+            _currentTween.Stop();
+            target.localPosition = Vector3.zero;
+        }
+    }
+    
+    [Serializable]
+    public class PunchHover : IHoverBehavior
+    {
+        [SerializeField] private Transform target;
+        [SerializeField] private Vector3 hoverStrength = new(5f, 5f, 0f);
+        [SerializeField] private Vector3 unhoverStrength = new(3f, 3f, 0f);
+        [SerializeField] private Vector3 clickStrength = new(10f, 10f, 0f);
+        [SerializeField] private float duration = 0.3f;
+        [SerializeField] private float frequency = 10f;
+
+        private Tween _currentTween;
+
+        public void OnHovered(PointerEventData eventData)
+        {
+            _currentTween.Stop();
+            if (hoverStrength == Vector3.zero) return;
+            _currentTween = Tween.PunchLocalPosition(target, hoverStrength, duration, frequency);
+        }
+        
+        public void OnClicked(PointerEventData eventData)
+        {
+            _currentTween.Stop();
+            if (clickStrength == Vector3.zero) return;
+            _currentTween = Tween.PunchLocalPosition(target, clickStrength, duration, frequency);
+        }
+
+        public void OnUnhovered(PointerEventData eventData)
+        {
+            _currentTween.Stop();
+            if (unhoverStrength == Vector3.zero) return;
+            _currentTween = Tween.PunchLocalPosition(target, unhoverStrength, duration, frequency);
         }
 
         public void Reset()

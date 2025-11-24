@@ -49,6 +49,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.PlayerState
   pickupLocation: {fileID: 0}
+  breakForce: 800
+  breakIfTooMuchForce: 0
+  parentInsteadOfPhysics: 0
+  _pickup:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &4214719672869644458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +76,8 @@ MonoBehaviour:
     PackageData:
       Title: 
       Description: 
-      Pay: 0
+      MinPay: 0
+      MaxPay: 0
       State: 0
     ItemGUID: 
   deliveries: []
@@ -75,6 +86,9 @@ MonoBehaviour:
   mainPackageNumber: 3
   newDeliveryDistanceThreshold: 60
   deliveriesToMake: 0
+  addressLibrary: {fileID: 11400000, guid: d8da5d25ff90a564abb2730a91012896, type: 2}
+  flavourLibrary: {fileID: 11400000, guid: 982f04fae560efe40a51b1ddb85b44db, type: 2}
+  itemLibrary: {fileID: 11400000, guid: 25a69d31a01599f4d876735a426522a9, type: 2}
 --- !u!114 &311012537931015602
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,71 +1,53 @@
+using CarePackage.Main;
+using UnityEngine.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CarePackage.UI
 {
-    public class SettingsMenuController : MonoBehaviour
+    public class SettingsMenuController : MonoBehaviour, IUserInterfaceElement
     {
-        [SerializeField] private Slider[] volumeSliders;
-        [SerializeField] private GameObject[] bojec;
-        
-        private System.Collections.Generic.List<ISettingStrategy> _settingStrategies = new();
+        [SerializeField] private GameObject areYouSurePopup;
+        [SerializeField] private PlayerController playerController;
         
         public bool IsOpen => _toggled;
         
+        private SerializedDictionary<MenuSettingElement, object>  _originalValues = new();//private readonly System.Collections.Generic.Dictionary<MenuSettingElement, object> _originalValues = new();
+        private System.Collections.Generic.List<ISettingStrategy> _settingStrategies = new();
+        private System.Collections.Generic.List<MenuSettingElement> _elements = new();
+        private bool _hasUnsavedChanges;
+        private bool _forceClose;
         private bool _toggled;
 
-        private async void Start()
+        private void Start()
         {
-            await System.Threading.Tasks.Task.Yield();
             var menuSettingObjects = transform.GetComponentsInChildren<MenuSettingElement>(true);
-            if (menuSettingObjects == null && menuSettingObjects.Length <= 0) return;
+            if (menuSettingObjects.Length == 0) return;
             
-            foreach (var obj in menuSettingObjects)
+            foreach (var element in menuSettingObjects)
             {
-                if (obj == null) continue;
-
-                var p = obj.Strategy;
-                if (p == null)
+                if (element?.Strategy == null)
                 {
-                    Debug.Log("No strategy found for " + obj.name + " bkebjhbhjb: " + obj.Strategy);
-                    return;
+                    Debug.LogWarning($"No valid strategy found for {element?.name}");
+                    continue;
                 }
-                Debug.Log(obj.Strategy);
-                var s = obj.Strategy as ISettingStrategy;
-                _settingStrategies.Add(s);
+                _elements.Add(element);
+                _settingStrategies.Add(element.Strategy);
             }
         }
 
-        private async void OnEnable()
+        private void OnEnable()
         {
-            await System.Threading.Tasks.Task.Yield();
+            PrimeTween.Tween.Delay(0.1f, InitializeAfterFrame);
+        }
+        
+        private void InitializeAfterFrame()
+        {
             foreach (var setting in _settingStrategies)
             {
-                if (setting is IActivatable activatable)
-                {
-                    activatable.OnEnable();
-                }
-            }
-            
-            foreach (var volumeSlider in volumeSliders)
-            {
-                var f = MenuSettingLibrary.TryGetStrategyFromObject<AudioSetting>(volumeSlider.transform.parent.gameObject);
-                if (f == null)
-                {
-                    Debug.LogWarning($"No AudioSetting strategy found on {volumeSlider.gameObject.name}");
-                    continue; // skip this slider
-                }
-                var category = f.Category;
-                
-                volumeSlider.onValueChanged.AddListener((newValue) => PreviewSliderValue(category, newValue));
+                (setting as IActivatable)?.OnEnable();
             }
         }
-
-        private void PreviewSliderValue(Main.Sound.EAudioCategory musicGroup, float newValue)
-        {
-            Main.Sound.AudioManager.Instance.PreviewVolume(musicGroup, newValue);
-        }
-
+        
         private void OnDisable()
         {
             foreach (var setting in _settingStrategies)
@@ -75,55 +57,181 @@ namespace CarePackage.UI
                     activatable.OnDisable();
                 }
             }
-            
-            foreach (var volumeSlider in volumeSliders)
-            {
-                volumeSlider.onValueChanged.RemoveAllListeners();
-            }
         }
         
         public void Open()
         {
+            gameObject.SetActive(true);
             _toggled = true;
+            _originalValues.Clear();
         }
 
         public void Close()
         {
-            UIManager.Instance.SetInputSchema("Player");
-            _toggled = false;
-        }
-
-        public void SaveSettings()
-        {
-            //Main.Sound.AudioManager.Instance.SaveVolumeCurrent();
-        }
-    }
-}
-
-public static class MenuSettingLibrary
-{
-    public static T TryGetStrategyFromObject<T>(GameObject obj) where T : class, CarePackage.UI.ISettingStrategy
-    {
-        var element = obj.GetComponent<CarePackage.UI.MenuSettingElement>();
-        if (element == null)
-        {
-            Debug.Log($"[TryGetStrategyFromObject] No MenuSettingElement on {obj.name}");
-            return null;
-        }
-
-        var strat = element.Strategy;
-        if (strat == null)
-        {
-            Debug.Log("[TryGetStrategyFromObject] No strategy assigned");
-            return null;
-        }
-
-        if (strat is T typed)
-        {
-            Debug.Log($"[TryGetStrategyFromObject] Found strategy of type {typed.GetType().Name}");
-            return typed;
+            if (_hasUnsavedChanges && !_forceClose)
+            {
+                ShowUnsavedChangesPopup();
+                return;
+            }
+            
+            InternalClose();
         }
         
-        return null;
+        private void InternalClose()
+        {
+            if (!_toggled) return;
+
+            _toggled = false;
+            gameObject.SetActive(false);
+            UIManager.Instance.ClosePopupWindow(areYouSurePopup);
+
+            Main.Sound.AudioManager.Instance.LoadVolumes();
+            foreach (var element in _elements)
+            {
+                element.Strategy.Load();
+            }
+        }
+        
+        public void RequestClose()
+        {
+            UIManager.Instance.ClosePopupWindow(gameObject);
+        }
+        
+        public void ConfirmClose()
+        {
+            UIManager.Instance.ClosePopupWindow(areYouSurePopup);
+            _forceClose = true;
+            UIManager.Instance.ClosePopupWindow(gameObject);
+            _forceClose = false;
+        }
+
+        public void SaveAndClose()
+        {
+            SaveSettings();
+            Close();
+        }
+
+        public void Cancel()
+        {
+            UIManager.Instance.ClosePopupWindow(areYouSurePopup);
+        }
+        
+        public void SaveSettings()
+        {
+            foreach (var element in _elements)
+            {
+                element.Strategy.Save();
+            }
+            _hasUnsavedChanges = false;
+            PlayerPrefs.Save();
+        }
+        
+        public void SaveChange(MenuSettingElement owningElement, object newValue)
+        {
+            if (!_originalValues.ContainsKey(owningElement)) 
+            {
+                _originalValues[owningElement] = newValue;
+                return;
+            }
+
+            var original = _originalValues[owningElement];
+            bool changed = !Equals(original, newValue);
+
+            if (changed) 
+            {
+                _hasUnsavedChanges = true;
+            } 
+            else 
+            {
+                _hasUnsavedChanges = AnyElementChanged();
+            }
+        }
+        
+        private void RemoveElementFromChanges(MenuSettingElement elementToRemove)
+        {
+            if (_elements.Contains(elementToRemove)) _originalValues.Remove(elementToRemove);
+        }
+        
+        private void ShowUnsavedChangesPopup()
+        {
+            UIManager.Instance.OpenPopupWindow(areYouSurePopup);
+            var popupInstance = areYouSurePopup.GetComponentInChildren<Interaction.Interactable>();
+            if (popupInstance == null) return;
+            
+            popupInstance.InteractAction = new Interaction.UI.ButtonAction(() => UIManager.Instance.ClosePopupWindow(areYouSurePopup));
+        }
+        
+        private bool AnyElementChanged() 
+        {
+            foreach (var kvp in _originalValues) 
+            {
+                if (!Equals(kvp.Value, GetCurrentValue(kvp.Key))) return true;
+                /*
+                var element = kvp.Key;
+                var original = kvp.Value;
+
+                var current = GetCurrentValue(element);
+                if (!Equals(original, current))
+                    return true;*/
+            }
+            return false;
+        }
+        
+        private object GetCurrentValue(MenuSettingElement element) 
+        {/*
+            if (element.TryGetComponent(out Slider slider)) return slider.value;
+            if (element.TryGetComponent(out Toggle toggle)) return toggle.isOn;
+            if (element.TryGetComponent(out InputField input)) return input.text;*/
+            if (element?.Strategy != null) return element.Strategy.GetValue();
+            return null;
+        }
+
+        #region Preview Save Methods
+        public void PreviewAudioSlider(MenuSettingElement owningElement, Main.Sound.EAudioCategory musicGroup, float newValue)
+        {
+            Main.Sound.AudioManager.Instance.PreviewVolume(musicGroup, newValue);
+            SaveChange(owningElement, newValue);
+        }
+        
+        public void SaveAudioSlider(MenuSettingElement owningElement, Main.Sound.EAudioCategory musicGroup)
+        {
+            Main.Sound.AudioManager.Instance.SaveVolume(musicGroup);
+            RemoveElementFromChanges(owningElement);
+        }
+        
+        public void PreviewSensitivity(MenuSettingElement owningElement, SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
+        {
+            playerController.PreviewSensitivity(sensitivityCategory, newValue);
+            SaveChange(owningElement, newValue);
+        }
+        
+        public void SaveSensitivity(MenuSettingElement owningElement, SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
+        {
+            playerController.SaveSensitivity(sensitivityCategory, newValue);
+            RemoveElementFromChanges(owningElement);
+        }
+
+        public float GetSensitivityByCategory(SensitivitySetting.ESensitivity sensitivityCategory)
+        {
+            return playerController.GetSensitivity(sensitivityCategory);
+        }
+
+        public void SetPackageAmount(MenuSettingElement owningElement, int newValue)
+        {
+            playerController.OwningPlayer.DeliveryManager.PackageMax = newValue;
+            SaveChange(owningElement, newValue);
+        }
+
+        public void SavePackageAmount(MenuSettingElement owningElement, int newValue)
+        {
+            playerController.OwningPlayer.DeliveryManager.SavePackageMax(newValue);
+            RemoveElementFromChanges(owningElement);
+        }
+
+        public int GetPackageAmount()
+        {
+            return playerController.OwningPlayer.DeliveryManager.PackageMax;
+        }
+        #endregion
     }
 }

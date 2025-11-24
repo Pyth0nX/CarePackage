@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using System;
 
 namespace CarePackage.Delivery
 {
@@ -9,32 +9,29 @@ namespace CarePackage.Delivery
         public int Id;
         public FPackageData PackageData;
         public SO_Item Item;
+        
+        public UnityEngine.UI.Image AddressImage;
     }
     
     [Serializable]
     public struct FPackageData
     {
-        public FPackageData(string inTitle = "", string inDescription = "", int inPay = 0, EPackageState inState = EPackageState.Pristine)
-        {
-            Title = inTitle;
-            Description = inDescription;
-            Pay = inPay;
-            State = inState;
-        }
-
-        public FPackageData(int inPay, string inTitle = "", string inDescription = "", EPackageState inState = EPackageState.Pristine)
-        {
-            Title = inTitle;
-            Description = inDescription;
-            Pay = inPay;
-            State = inState;
-        }
-        
         public string Title;
-        [TextArea]
-        public string Description;
-        public int Pay;
+        [TextArea] public string Description;
+        public int MinPay;
+        public int MaxPay;
         public EPackageState State;
+        
+        public FPackageData(string inTitle = "", string inDescription = "") : this(inTitle, inDescription, 0, 1, EPackageState.Pristine) {}
+
+        public FPackageData(string inTitle, string inDescription, int inMinPay, int inMaxPay, EPackageState inState = EPackageState.Pristine)
+        {
+            Title = inTitle;
+            Description = inDescription;
+            MinPay = inMinPay;
+            MaxPay = inMaxPay;
+            State = inState;
+        }
     }
     
     [Serializable]

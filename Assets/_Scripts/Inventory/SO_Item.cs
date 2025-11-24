@@ -22,7 +22,7 @@ public class SO_Item : ScriptableObject
                 return Path.ChangeExtension(relativePath, null);
             }
             #endif
-            return name;
+            return "Items/" + name;
         }
     }
 }

@@ -38,7 +38,8 @@ namespace CarePackage.Interaction
         }
 
         public void SetInteractable(IInteractable interactable)
-        {
+        {/*
+            if (interactable == null && _interactable != null) _interactable.OnHovered(false);
             _interactable = interactable;
             
             if (_interactable == null) interactionUI.SetActive(false);
@@ -46,6 +47,31 @@ namespace CarePackage.Interaction
             {
                 _interactionText.text = _interactable.InteractMessage;
                 interactionUI.SetActive(true);
+                _interactable.OnHovered(true);
+            }*/
+            
+            if (_interactable != null && owner is PlayerState ps && ps.IsPickupValid)
+            {
+                if (((MonoBehaviour)_interactable).gameObject == ps.PickupObject)
+                {
+                    _interactionText.text = "Drop";
+                    interactionUI.SetActive(true);
+                    return;
+                }
+            }
+
+            if (interactable == null && _interactable != null)
+                _interactable.OnHovered(false);
+
+            _interactable = interactable;
+
+            if (_interactable == null) 
+                interactionUI.SetActive(false);
+            else if (_interactable.ShowMessage)
+            {
+                _interactionText.text = _interactable.InteractMessage;
+                interactionUI.SetActive(true);
+                _interactable.OnHovered(true);
             }
         }
 
@@ -104,7 +130,7 @@ namespace CarePackage.Interaction
         }*/
         
         public void OnInteract(InputAction.CallbackContext input)
-        {
+        {/*
             if (input.started)
             {
                 if (!ValidInteraction())
@@ -118,6 +144,39 @@ namespace CarePackage.Interaction
                     }
                     return;
                 }
+                if (!IsActive) return;
+                TryInteract();
+            }*/
+            if (input.started)
+            {
+                // If we're aiming at our own pickup, drop it
+                if (owner is PlayerState playerState && playerState.IsPickupValid)
+                {
+                    if (_interactable != null)
+                    {
+                        if (_interactable == playerState.PickupObject.GetComponent<IInteractable>())
+                        {
+                            playerState.DropPickup();
+                            return;
+                        }
+                        
+                        if (((MonoBehaviour)_interactable).gameObject == playerState.PickupObject)
+                        {
+                            playerState.DropPickup();
+                            return;
+                        }
+                    }
+                }
+
+                if (!ValidInteraction())
+                {
+                    if (owner is PlayerState ps && ps.IsPickupValid)
+                    {
+                        ps.DropPickup();
+                    }
+                    return;
+                }
+
                 if (!IsActive) return;
                 TryInteract();
             }

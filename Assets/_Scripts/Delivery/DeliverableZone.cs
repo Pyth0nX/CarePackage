@@ -13,12 +13,14 @@ namespace CarePackage.Delivery
         [SerializeReference, SerializeReferenceEditor.SR] private IInteractAction interactLogic;
         private BoxCollider _collider;
         
+        public IInteractAction InteractLogic { get => interactLogic ; set => interactLogic = value; }
+        
         private void Start()
         {
             layerMask = LayerMask.GetMask("Interaction");
             _collider = GetComponent<BoxCollider>();
             _collider.isTrigger = true;
-            interactLogic = new ZoneReceivePackage();
+            if (interactLogic == null) interactLogic = new ZoneReceivePackage();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -44,8 +46,7 @@ namespace CarePackage.Delivery
             if (action is not IPickup pickup) return;
             if (pickup.PickupState != EPickupState.Dropped) return;
             
-            if (action is PackageAction packageAction && packageAction.AlreadyAdded) return;
-            
+            //if (action is PackageAction packageAction && packageAction.AlreadyAdded) return;
             ExecuteLogic(pickupObject);
         }
 

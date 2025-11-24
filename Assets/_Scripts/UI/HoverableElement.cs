@@ -8,8 +8,85 @@ namespace CarePackage.UI
     {
         [SerializeField] private bool toggleAble;
         [SerializeReference, SR] private IHoverBehavior[] hoverStrategy;
+        [SerializeField] private SO_HoverStyle presetStyle;
 
         private bool _toggled;
+
+        private void Start()
+        {
+            if (presetStyle == null) return;
+            var styleBehaviors = presetStyle.ApplyStyle(gameObject);
+            if (hoverStrategy == null || hoverStrategy.Length == 0)
+            {
+                hoverStrategy = styleBehaviors;
+            }
+            else
+            {
+                var merged = new IHoverBehavior[hoverStrategy.Length + styleBehaviors.Length];
+                hoverStrategy.CopyTo(merged, 0);
+                styleBehaviors.CopyTo(merged, hoverStrategy.Length);
+                hoverStrategy = merged;
+            }
+            
+            foreach (var strategy in hoverStrategy)
+            {
+                if (strategy is IActivatable activatable)
+                    activatable.OnEnable();
+            }
+        }
+
+        private void OnEnable()
+        {
+            foreach (var strategy in hoverStrategy)
+            {
+                if (strategy is IActivatable activatable)
+                    activatable.OnEnable();
+            }
+        }
+
+        private void OnDisable()
+        {
+            foreach (var strategy in hoverStrategy)
+            {
+                if (strategy is IActivatable activatable)
+                    activatable.OnDisable();
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (presetStyle == null) return;
+
+            var styleBehaviors = presetStyle.ApplyStyle(gameObject);
+            
+            if (hoverStrategy == null || hoverStrategy.Length == 0)
+            {
+                hoverStrategy = styleBehaviors;
+                return;
+            }
+            if (AreBehaviorsEqual(hoverStrategy, styleBehaviors)) return;
+            
+            var merged = new IHoverBehavior[hoverStrategy.Length + styleBehaviors.Length];
+            hoverStrategy.CopyTo(merged, 0);
+            styleBehaviors.CopyTo(merged, hoverStrategy.Length);
+            hoverStrategy = merged;
+            
+            foreach (var strategy in hoverStrategy)
+            {
+                if (strategy is IActivatable activatable)
+                    activatable.OnEnable();
+            }
+        }
+        
+        private bool AreBehaviorsEqual(IHoverBehavior[] a, IHoverBehavior[] b)
+        {
+            if (a.Length != b.Length) return false;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i].GetType() != b[i].GetType()) return false;
+            }
+            return true;
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {

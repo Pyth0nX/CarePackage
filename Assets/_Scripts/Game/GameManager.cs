@@ -126,6 +126,32 @@ namespace CarePackage.Main
             SceneController.Instance.LoadScene("PostOffice");
         }
 
+        public void SetGameSetting(UI.CheckBoxGamesSetting.EGameSetting gameSetting, bool newValue)
+        {
+            switch (gameSetting)
+            {
+                case UI.CheckBoxGamesSetting.EGameSetting.EndWhenEmpty:
+                    automaticallyEndDayWhenNoPackagesLeft = newValue;
+                    break;
+                case UI.CheckBoxGamesSetting.EGameSetting.LoseAtDay:
+                    automaticallyLoseAtSpecificDay = newValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        public void SaveDeliverySetting(UI.CheckBoxGamesSetting.EGameSetting gameSetting, bool newValue)
+        {
+            PlayerPrefs.SetInt(gameSetting.ToString(), newValue ? 1 : 0);
+        }
+        
+        public bool GetDeliverySetting(UI.CheckBoxGamesSetting.EGameSetting gameSetting)
+        {
+            var value = PlayerPrefs.GetInt(gameSetting.ToString(), 0);
+            return value == 0 ? false : true;
+        }
+
         public void LoadData(GameData loadData)
         {
             _survived = loadData.survived;

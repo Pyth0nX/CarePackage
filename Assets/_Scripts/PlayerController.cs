@@ -11,8 +11,9 @@ namespace CarePackage.Main
         [SerializeField] private float jumpForce = 5f;
         [SerializeField] private float jumpForwardBias = 0.5f;
         [SerializeField] private float gravity = 30f;
-        [SerializeField, Range(0.01f, 4f)] private float sensitivity = 1f;
-        [SerializeField] private float scrollSensitivity = 1;
+        [SerializeField, Range(0.01f, 4f)] private float sensitivityX = 1f;
+        [SerializeField, Range(0.01f, 4f)] private float sensitivityY = 1f;
+        [SerializeField, Range(0.05f, 0.5f)] private float scrollSensitivity = 0.1f;
         [SerializeField] private float groundCheckSize;
         [SerializeField] private Vector3 groundCheckOffset;
         [SerializeField] private GameObject playerCamera;
@@ -20,11 +21,15 @@ namespace CarePackage.Main
         public float airControlRate = 2f;
 
         [SerializeField] private GameObject sliderPrefab;
+        
+        public bool IsGrounded => _isGrounded;
+        public PlayerState OwningPlayer => _owningPlayer;
 
         // private components
         private PlayerState _owningPlayer;
-        private Rigidbody _rb;
         private CapsuleCollider _collider;
+        private PlayerInput _playerInput;
+        private Rigidbody _rb;
 
         // private variables
         private RaycastSensor _groundRay;
@@ -42,14 +47,16 @@ namespace CarePackage.Main
         private bool _isGrounded;
         private bool _isJumping;
 
-        public bool IsGrounded => _isGrounded;
+        public static event Action OnPlayerMoved = delegate {};
+        
         public void LockInput(bool lockMode) => _lockedInput = lockMode;
-
-        public static event Action OnPlayerMoved = delegate { };
-
+        
         private void Start()
         {
             InitializeAllComponents();
+            LoadSensitivity(UI.SensitivitySetting.ESensitivity.LookX);
+            LoadSensitivity(UI.SensitivitySetting.ESensitivity.LookY);
+            LoadSensitivity(UI.SensitivitySetting.ESensitivity.Scroll);
         }
 
         private void InitializeAllComponents()
@@ -57,6 +64,7 @@ namespace CarePackage.Main
             _rb = transform.root.GetComponent<Rigidbody>();
             _owningPlayer = GameManager.Instance.Player;
             _collider = GetComponent<CapsuleCollider>();
+            _playerInput = GetComponent<PlayerInput>();
             CalibrateGroundCheck();
         }
 
@@ -78,24 +86,31 @@ namespace CarePackage.Main
 
         private void Enable()
         {
-            Debug.Log($"[{GetType()}] Is UIManager Instance set {UI.UIManager.Instance != null}");
-            UI.UIManager.OnInterfaceOpened += () => ListenToUIChanges(true);
+            UI.UIManager.OnInterfaceOpened += OnInterfaceOpened_Implementation;
             UI.UIManager.OnInterfaceClosed += ListenToUIChanges;
             LockCursor(CursorLockMode.Locked);
         }
 
         private void OnDisable()
         {
-            UI.UIManager.OnInterfaceOpened -= () => ListenToUIChanges(true);
+            UI.UIManager.OnInterfaceOpened -= OnInterfaceOpened_Implementation;
             UI.UIManager.OnInterfaceClosed -= ListenToUIChanges;
             LockCursor(CursorLockMode.None);
+        }
+
+        private void OnInterfaceOpened_Implementation()
+        {
+            ListenToUIChanges(true);
         }
 
         private void ListenToUIChanges(bool uiChange)
         {
             LockInput(uiChange);
             LockCursor(uiChange ? CursorLockMode.None : CursorLockMode.Locked);
+            SetInputSchema(uiChange ? "UI" : "Player");
         }
+        
+        public void SetInputSchema(string schema) => _playerInput.SwitchCurrentActionMap(schema);
 
         private void Update()
         {
@@ -215,8 +230,8 @@ namespace CarePackage.Main
 
         private void HandleLook()
         {
-            _horizontalCameraSpeed = _lookVector.x * sensitivity;
-            _verticalCameraSpeed = _lookVector.y * sensitivity;
+            _horizontalCameraSpeed = _lookVector.x * sensitivityX;
+            _verticalCameraSpeed = _lookVector.y * sensitivityY;
             
             _yRotation = _horizontalCameraSpeed;
             
@@ -226,10 +241,59 @@ namespace CarePackage.Main
             
             _rb.MoveRotation(_rb.rotation * Quaternion.AngleAxis(_yRotation, Vector3.up));
         }
+
+        public void PreviewSensitivity(UI.SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
+        {
+            switch (sensitivityCategory)
+            {
+                case UI.SensitivitySetting.ESensitivity.LookX:
+                    sensitivityX = newValue;
+                    break;
+                case UI.SensitivitySetting.ESensitivity.LookY:
+                    sensitivityY = newValue;
+                    break;
+                case UI.SensitivitySetting.ESensitivity.Scroll:
+                    scrollSensitivity = newValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void SaveSensitivity(UI.SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
+        {
+            PlayerPrefs.SetFloat(sensitivityCategory.ToString(), newValue);
+            LoadSensitivity(sensitivityCategory);
+        }
+
+        public void LoadSensitivity(UI.SensitivitySetting.ESensitivity sensitivityCategory)
+        {
+            switch (sensitivityCategory)
+            {
+                case UI.SensitivitySetting.ESensitivity.LookX:
+                    sensitivityX = GetSensitivity(UI.SensitivitySetting.ESensitivity.LookX);
+                    break;
+                case UI.SensitivitySetting.ESensitivity.LookY:
+                    sensitivityY = GetSensitivity(UI.SensitivitySetting.ESensitivity.LookY);
+                    break;
+                case UI.SensitivitySetting.ESensitivity.Scroll:
+                    scrollSensitivity = GetSensitivity(UI.SensitivitySetting.ESensitivity.Scroll);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        public float GetSensitivity(UI.SensitivitySetting.ESensitivity sensitivityCategory)
+        {
+            var sens = PlayerPrefs.GetFloat(sensitivityCategory.ToString(), 1);
+            return sens;
+        }
         
         private void LockCursor(CursorLockMode lockMode)
         {
             Cursor.lockState = lockMode;
+            Cursor.visible = lockMode == CursorLockMode.None;
         }
         
         public void OnLook(InputAction.CallbackContext input)

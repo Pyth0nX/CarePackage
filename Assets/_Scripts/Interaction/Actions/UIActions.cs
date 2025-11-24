@@ -1,6 +1,7 @@
 using CarePackage.Main;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 namespace CarePackage.Interaction.UI
 {
@@ -26,6 +27,27 @@ namespace CarePackage.Interaction.UI
             {
                 CarePackage.UI.UIManager.Instance.OpenPopupWindow(popup);
             }
+        }
+    }
+    
+    [Serializable]
+    public class ButtonAction : IInteractAction
+    {
+        [SerializeField] private UnityEvent function = new();
+        
+        public ButtonAction() : this(null) {}
+
+        public ButtonAction(Action inFunction)
+        {
+            if (inFunction == null) return;
+            function.RemoveAllListeners();
+            function.AddListener(() => inFunction());
+        }
+        
+        public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
+        {
+            if (function == null) return;
+            function.Invoke();
         }
     }
 }

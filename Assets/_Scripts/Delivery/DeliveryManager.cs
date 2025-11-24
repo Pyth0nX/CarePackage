@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction.Dialogue;
+using System.Collections.Generic;
 using CarePackage.Persistance;
+using CarePackage.Interaction;
 using CarePackage.Main;
+using System.Linq;
 using UnityEngine;
 using Xasu.HighLevel;
 
@@ -19,8 +19,14 @@ namespace CarePackage.Delivery
         [SerializeField] private bool overrideRandomDelivery = false;
         [SerializeField] private int mainPackageNumber = 3;
         [SerializeField] private float newDeliveryDistanceThreshold;
+        [SerializeField] private int minPackageAmount;
+        [SerializeField] private int maxPackageAmount;
 
         [SerializeField] private int deliveriesToMake;
+
+        [SerializeField] private SO_PredeterminedAddresses addressLibrary;
+        [SerializeField] private SO_FlavourOptions flavourLibrary;
+        [SerializeField] private SO_NonStoryItems itemLibrary;
         
         public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
         public List<Package> Deliveries => DeliveryUitilities.ToPackageList(deliveries);
@@ -29,7 +35,8 @@ namespace CarePackage.Delivery
         public Package CurrentDelivery => _heldDelivery;
         public int CurrentDeliveryId => _currentDeliveryId;
         public int DeliveriesToMake => deliveries.Count;
-        
+        public int PackageMax { get => maxPackageAmount; set => maxPackageAmount = value; }
+
         private List<int> _randomNumbers = new();
         private StopWatch _deliveryTimer = new();
         private DeliveryCheckList _deliveryCheckList;
@@ -46,6 +53,11 @@ namespace CarePackage.Delivery
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>();
             if (_deliveryCheckList == null) _deliveryCheckList = GetComponent<DeliveryCheckList>();
             if (mailboxes == null) mailboxes = GameObject.Find("Mailboxes");
+        }
+
+        private void Start()
+        {
+            LoadPackageMax();
         }
 
         private void Update()
@@ -75,7 +87,7 @@ namespace CarePackage.Delivery
         {
             _deliveriesMade = 0;
             deliveries.Clear();
-            MakeRandomNumbers(Random.Range(5, 15));
+            MakeRandomNumbers(Random.Range(minPackageAmount, maxPackageAmount));
             Invoke("AssignRandomPackages", .1f);
         }
         
@@ -161,7 +173,7 @@ namespace CarePackage.Delivery
                 _randomNumbers.Remove(deliveringId);
                 
                 _timeTakenToDelivery = _deliveryTimer.Stop();
-                EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData.Pay, _timeTakenToDelivery, _directDistanceToDelivery);
+                EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData, _timeTakenToDelivery, _directDistanceToDelivery);
                 CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
                 
                 if (packageObj != null) Destroy(packageObj);
@@ -194,16 +206,30 @@ namespace CarePackage.Delivery
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
             {
-                string Title = "Delivery" + _randomNumbers[i];
-                string Description = "Go to Address: " + _randomNumbers[i];
-                var newDelivery = new Package()
+                var item = itemLibrary.GetRandomItem();
+                int minPay = Random.Range(10, 100);
+                int maxPay = Random.Range(minPay, minPay + 50);
+                string flavour = flavourLibrary.GetRandomFlavour();
+                string title = item.ItemData.name + "Delivery" + _randomNumbers[i];
+                string address = "Go to Address: " + addressLibrary.GetAddressForId(i);
+                string description =
+                    $"Deliver to: {item.ItemData.name} wanted by {flavour}\n" +
+                    "\n" +
+                    $"Address: {address}\n" +
+                    "\n" +
+                    $"Pay: {minPay}-{maxPay}\n";
+                
+                var newDelivery = new Package
                 {
                     Id = _randomNumbers[i],
-                    PackageData = new FPackageData(
-                        Title, 
-                        Description, 
-                        Random.Range(10, 150)
-                        )
+                    PackageData = new FPackageData
+                    (
+                        title, 
+                        description,
+                        minPay,
+                        maxPay
+                        ),
+                    ItemGUID = item != null ? item.ItemData.name : null,
                 };
                 //AddDelivery(newMail);
                 //_jobBoard.CreateJob(newDelivery);
@@ -214,15 +240,17 @@ namespace CarePackage.Delivery
             _deliveryCheckList.InitializePackageList(packages);
         }
 
+        public List<DeliverableZone> interactables = new();
+
         public void AssignRandomAddressesForDelivery()
         {
             var mailboxesCount = _randomNumbers.Count; 
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
             
-            List<Interactable> interactables = new();
+            interactables = new();
             for (int i = 0; i < mailboxes.transform.childCount; i++)
             {
-                var mailbox = mailboxes.transform.GetChild(i).GetComponent<Interactable>();
+                var mailbox = mailboxes.transform.GetChild(i).GetComponentInChildren<DeliverableZone>();
                 interactables.Add(mailbox);
             }
             HelperMethods.ShuffleList(_randomNumbers);
@@ -232,7 +260,7 @@ namespace CarePackage.Delivery
                 int assignedNumber = _randomNumbers[i];
                 Debug.Log($"Child {interactables[i].name} assigned number: {assignedNumber}");
                 
-                var action = interactables[i].InteractAction;
+                var action = interactables[i].InteractLogic;
                 if (action is ReceiveDeliveryAction deliveryAction)
                 {
                     deliveryAction.WantedPackage = assignedNumber;
@@ -256,7 +284,7 @@ namespace CarePackage.Delivery
             GameObject deliveryLocation = FindPostBoxWithId(wantedId);
             if (deliveryLocation == null) return;
             
-            delivery.PackageData.Pay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
+            delivery.PackageData.MinPay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
             SetCurrentDelivery(delivery);
             
             _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
@@ -316,6 +344,17 @@ namespace CarePackage.Delivery
         public void RemovePackageFromConveyerBelt(GameObject package)
         {
             _jobBoard.RemovePackageFromConveyerBelt(package);
+        }
+
+        public void SavePackageMax(int max)
+        {
+            PlayerPrefs.SetInt("PackageMax", max);
+            PackageMax = max;
+        }
+        
+        public void LoadPackageMax()
+        {
+            maxPackageAmount = PlayerPrefs.GetInt("PackageMax", 4);
         }
 
         public void LoadData(GameData loadData)

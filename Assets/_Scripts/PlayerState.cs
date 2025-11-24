@@ -11,8 +11,6 @@ namespace CarePackage.Main
         [Header("PickupLogic")]
         [SerializeField] private float breakForce = 800f;
         [SerializeField] private bool breakIfTooMuchForce;
-
-        [SerializeField] private bool parentInsteadOfPhysics;
         
         // public getters
         public DeliveryManager DeliveryManager => _deliveryManager;
@@ -23,7 +21,6 @@ namespace CarePackage.Main
         public GameObject ActivePlayer => _switchMode.ActivePlayer;
         public GameObject PickupObject => _pickup.OwningObject;
         public bool IsPickupValid => _pickup != null;
-        public bool ParentInsteadOfPhysics => parentInsteadOfPhysics;
 
         // private Components
         private DeliveryManager _deliveryManager;
@@ -34,10 +31,10 @@ namespace CarePackage.Main
         private ConfigurableJoint _pickupJoint;
         private Rigidbody _pickupRigidbody;
 
-        private Vector3 _pickupOffsetAnchor = new(0, 0, -0.5f);
+        private Vector3 _pickupOffsetAnchor = new(0, 0, -0.25f);
         private float _pickupDistanceOffset = 1;
-        private float _minDistance = -0.5f;
-        private float _maxDistance = -4f;
+        private float _minDistance = -0.25f;
+        private float _maxDistance = -1f;
 
         private void Awake()
         {
@@ -55,7 +52,7 @@ namespace CarePackage.Main
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                parentInsteadOfPhysics = !parentInsteadOfPhysics; //Task.TaskManager.PushTaskUpdate(new Task.Task("Hello traveller " + 1));
+                Task.TaskManager.PushTaskUpdate(new Task.Task("Hello traveller " + 1));
             }
         }
 
@@ -65,18 +62,9 @@ namespace CarePackage.Main
             SetPickup(objectToPickup, objectOfPickup);
             if (!IsPickupValid) return;
             
-            if (parentInsteadOfPhysics) AttachPickupParent();
-            else AttachPickupWithJoint();
+            AttachPickupWithJoint();
             
             _pickup.OnPickedUp(this);
-        }
-        
-        private void AttachPickupParent()
-        {
-            _pickup.OwningObject.transform.SetParent(pickupLocation);
-            _pickup.OwningObject.transform.localPosition = Vector3.zero;
-            _pickup.OwningObject.transform.localPosition += _pickup.Offset;
-            _pickup.OwningObject.transform.localRotation = Quaternion.identity;
         }
 
         private void AttachPickupWithJoint()
@@ -86,6 +74,10 @@ namespace CarePackage.Main
             _pickupJoint = pickupLocation.gameObject.AddComponent<ConfigurableJoint>();
             _pickupJoint.connectedBody = _pickupRigidbody;
             _pickupJoint.autoConfigureConnectedAnchor = false;
+            
+            Vector3 worldOffset = _pickup.OwningObject.transform.position - pickupLocation.position;
+            _pickupOffsetAnchor = pickupLocation.InverseTransformPoint(_pickup.OwningObject.transform.position);
+            
             _pickupJoint.anchor = _pickupOffsetAnchor;
             _pickupJoint.connectedAnchor = Vector3.zero;
             
@@ -130,9 +122,7 @@ namespace CarePackage.Main
         public void Drop(IPickup pickupToDrop)
         {
             pickupToDrop.OnDropped(this);
-            
-            if (parentInsteadOfPhysics) DetachPickupParent(pickupToDrop);
-            else DetachPickupJoint();
+            DetachPickupJoint();
             
             DeliveryManager.SetCurrentHeldDelivery(null);
             SetPickup(pickupToDrop, null);
@@ -143,11 +133,6 @@ namespace CarePackage.Main
         {
             if (!_pickupJoint) return;
             Destroy(_pickupJoint);
-        }
-
-        public void DetachPickupParent(IPickup pickupToDetach)
-        {
-            pickupToDetach.OwningObject.transform.SetParent(null);
         }
 
         public void LaunchPickup(float heldDuration)

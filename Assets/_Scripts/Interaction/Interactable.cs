@@ -17,6 +17,7 @@ namespace CarePackage.Interaction
         [SerializeField] private bool debug;
         
         private InteractionComponent _interactionComponent;
+        private Outline _outline;
         
         public IInteractAction InteractAction { get => iInteractAction; set => iInteractAction = value; }
         
@@ -27,6 +28,8 @@ namespace CarePackage.Interaction
         {
             if (interactionLayer == LayerMask.NameToLayer("Default")) interactionLayer = LayerMask.GetMask("Interaction");
             _interactionComponent = GameManager.Instance.Player.InteractionComponent;
+            _outline = GetComponent<Outline>();
+            _outline.enabled = false;
         }
 
         private void OnEnable()
@@ -61,6 +64,11 @@ namespace CarePackage.Interaction
         public bool Clickable => interactionType == InteractionType.Clicked;
         public bool Passive => interactionType == InteractionType.Passive;
 
+        public void OnHovered(bool toggle)
+        {
+            _outline.enabled = toggle;
+        }
+        
         private void OnMouseDown()
         {
             /*

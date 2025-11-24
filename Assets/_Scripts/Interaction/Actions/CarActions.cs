@@ -70,37 +70,19 @@ namespace CarePackage.Interaction.Car
         private bool HasTheRequiredPackages() => _hasInitedRequiredPackages && DeliveryUitilities.DoesListContainPackages(_collectedDeliveries, _requiredPackages);
         
         private List<Package> _collectedDeliveries = new ();
-        private List<Vector3> _packagePositions = new();
         private Package[] _requiredPackages;
         private bool _positionsCached;
         private bool _hasInitedRequiredPackages;
         
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            if (!_positionsCached && interactingPlayer.ParentInsteadOfPhysics)
-            {
-                _packagePositions = Utilities.PositionUtilities.GenerateStrict2x3Grid(packageContainer.position, requiredDeliveries, .8f);
-                _positionsCached = true;
-            }
-
             if (!_hasInitedRequiredPackages)
             {
                 _requiredPackages = interactingPlayer.DeliveryManager.RequiredDeliveries;
                 _hasInitedRequiredPackages = true;
             }
 
-            if (!interactingPlayer.ParentInsteadOfPhysics) _collectedDeliveries = interactingPlayer.DeliveryManager.Deliveries;
-            else
-            {
-                if (interactingPlayer.DeliveryManager.CurrentDelivery == null)
-                {
-                    Debug.Log("[DeliveryManager.CurrentDelivery] You do not have a delivery to start the day");
-                    return;
-                }
-            
-                var heldDelivery = interactingPlayer.DeliveryManager.CurrentDelivery;
-                if (heldDelivery != null) _collectedDeliveries.Add(heldDelivery);
-            }
+            _collectedDeliveries = interactingPlayer.DeliveryManager.Deliveries;
             
             if (HasTheRequiredPackages() && !interactingPlayer.IsPickupValid)
             {
@@ -110,16 +92,11 @@ namespace CarePackage.Interaction.Car
             }
             
             if (interactingPlayer.DeliveryManager == null) return;
-            if (!interactingPlayer.ParentInsteadOfPhysics) return;
-            var package = interactingPlayer.PickupObject;
-            interactingPlayer.DropPickup();
-            package.transform.localPosition = _packagePositions[_collectedDeliveries.Count - 1];
-            package.transform.SetParent(packageContainer, true);
         }
 
         public bool ConditionMet(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            var count = interactingPlayer.ParentInsteadOfPhysics ? _collectedDeliveries.Count : interactingPlayer.DeliveryManager.Deliveries.Count;
+            var count = interactingPlayer.DeliveryManager.Deliveries.Count;
             if (count >= requiredDeliveries) return true;
             return false;
         }

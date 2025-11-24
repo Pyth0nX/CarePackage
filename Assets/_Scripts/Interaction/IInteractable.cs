@@ -8,5 +8,6 @@ namespace CarePackage.Interaction
         InteractionType Type { get; }
         string InteractMessage { get; }
         bool ShowMessage { get; }
+        void OnHovered(bool toggle);
     }
 }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using CarePackage.Interaction.Delivery;
 using CarePackage.Interaction;
 using CarePackage.Main;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
+using System.Linq;
 using PrimeTween;
 using TMPro;
 using Xasu.HighLevel;
@@ -34,6 +34,8 @@ namespace CarePackage.Delivery
 
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
+        
+        [SerializeField] private SO_PredeterminedAddresses addressLibrary;
 
         private List<GameObject> _jobButtons = new();
         private HashSet<GameObject> _movingPackages = new();
@@ -42,6 +44,7 @@ namespace CarePackage.Delivery
         private List<GameObject> _spawnedPackages = new();
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
+        private Image _jobAddressImage;
         private Image _jobImage;
         private ConveyorBeltController _conveyorController;
         private float _joblistingX = 550f;
@@ -56,6 +59,7 @@ namespace CarePackage.Delivery
         {
             _jobTitle = jobListing.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
             _jobDescription = jobListingElemets.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+            _jobAddressImage = jobListingElemets.transform.GetChild(1).GetChild(1).GetComponentInChildren<Image>();
             _jobImage = jobListingElemets.transform.GetChild(0).GetComponentInChildren<Image>();
             _conveyorController = packageConveyerBelt.GetComponentInChildren<ConveyorBeltController>();
         }
@@ -97,6 +101,19 @@ namespace CarePackage.Delivery
             _displayedJob = job.Job;
             _jobTitle.text = _displayedJob.PackageData.Title;
             _jobDescription.text = _displayedJob.PackageData.Description;
+            
+            _jobAddressImage.gameObject.SetActive(false);
+            var address = addressLibrary.GetEntryForId(_displayedJob.Id);
+            if (address != null)
+            {
+                var sprite = address.Image;
+                if (sprite != null)
+                {
+                    _jobAddressImage.gameObject.SetActive(true);
+                    _jobAddressImage.sprite = sprite;
+                }
+            }
+            
             _jobImage.gameObject.SetActive(false);
             
             var dispJobSrciptable = DeliveryUitilities.ToScriptableObject(_displayedJob);

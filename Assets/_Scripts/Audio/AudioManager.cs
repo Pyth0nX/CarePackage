@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine;
 
 namespace CarePackage.Main.Sound
 {
@@ -8,10 +8,8 @@ namespace CarePackage.Main.Sound
     public enum EAudioPlayCondition { Never, PlayOnAwake, PlayOnEvent, PlayOnTriggered, PlayOnCollided, PlayOnInteracted, FollowUp }
     public enum EAudioPlayLocation { Global, Local }
     
-    public enum EAudioEnums { AudioGroup, EAudioCategory, EAudioPlayCondition, EAudioPlayLocation }
-    
     [System.Serializable]
-    public class AudioEntry 
+    public class AudioEntry
     {
         public EAudioCategory category;
         public AudioClip clip;
@@ -41,7 +39,6 @@ namespace CarePackage.Main.Sound
         
         private static readonly System.Collections.Generic.Dictionary<EAudioCategory, string> AudioVolumes = new()
         {
-            
             { EAudioCategory.Master, MasterKey },
             { EAudioCategory.Default, DefaultKey },
             { EAudioCategory.Ambience, AmbienceKey },
@@ -59,33 +56,45 @@ namespace CarePackage.Main.Sound
             LoadVolumes();
         }
         
-        public void SetVolume(EAudioCategory exposedParam, float value)
-        {
-            var exposedVolumeParam = GetVolumeParamByGroup(exposedParam);
-            mixer.SetFloat(exposedVolumeParam, Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
-            PlayerPrefs.SetFloat(exposedVolumeParam, value);
-        }
-        
         public void PreviewVolume(EAudioCategory category, float value) 
         {
             var exposedParam = GetVolumeParamByGroup(category);
-            mixer.SetFloat(exposedParam, Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
+            mixer.SetFloat(exposedParam, AudioMath.DecimalToDecibel(value));
         }
         
-        public void SaveVolume(EAudioCategory category, float value) 
+        public void SaveVolume(EAudioCategory category)
         {
-            PreviewVolume(category, value);
-            PlayerPrefs.SetFloat(GetVolumeParamByGroup(category), value);
-        }
-        
-        private void LoadVolumes()
-        {
-            foreach (var volume in AudioVolumes)
+            if (mixer.GetFloat(GetVolumeParamByGroup(category), out var value))
             {
-                var stored = PlayerPrefs.GetFloat(volume.Value, 1f);
-                PreviewVolume(volume.Key, stored);
+                var valueInDecimal = AudioMath.DecibelToDecimal(value);
+                PlayerPrefs.SetFloat(GetVolumeParamByGroup(category), valueInDecimal);
+                PreviewVolume(category, valueInDecimal);
             }
         }
+
+        public void SaveVolumes()
+        {
+            ForEachVolume((key, value) => SaveVolume(key));
+        }
+        
+        public void LoadVolumes()
+        {
+            ForEachVolume((category, key) => 
+            { 
+                var stored = PlayerPrefs.GetFloat(key, 1f);
+                PreviewVolume(category, stored);
+            });
+        }
+        
+        private void ForEachVolume(System.Action<EAudioCategory, string> action)
+        {
+            foreach (var kvp in AudioVolumes)
+            {
+                action(kvp.Key, kvp.Value);
+            }
+        }
+        
+        public float GetVolumeByAudioGroup(EAudioCategory category) => mixer.GetFloat(GetVolumeParamByGroup(category), out var value) ? AudioMath.DecibelToDecimal(value) : 1f;
         
         public static AudioSource PlayOneShotAtLocation(AudioClip clip, EAudioCategory category, Vector3 position, float volume = 1f)
         {
@@ -121,6 +130,19 @@ namespace CarePackage.Main.Sound
             src.spatialBlend = spatial ? 1f : 0f;
             src.Play();
             return src;
+        }
+    }
+    
+    public static class AudioMath
+    {
+        public static float DecimalToDecibel(float inDecimal)
+        {
+            return Mathf.Log10(Mathf.Clamp(inDecimal, 0.0001f, 1f)) * 20f;
+        }
+        
+        public static float DecibelToDecimal(float inDB)
+        {
+            return Mathf.Pow(10f, inDB / 20f);
         }
     }
 }

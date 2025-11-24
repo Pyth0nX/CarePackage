@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d160d66c05025ef4baa5304ac3d93746, type: 3}
+  m_Name: SettingsMenuButton
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.UI.SO_HoverStyle
+  defaultBehaviors:
+  - behavior:
+      rid: 7735813606617382994
+    targetMode: 1
+    childIndex: 0
+    childName: 
+  - behavior:
+      rid: 7735813606617382995
+    targetMode: 2
+    childIndex: 0
+    childName: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 7735813606617382994
+      type: {class: HoverScale, ns: CarePackage.UI, asm: Assembly-CSharp}
+      data:
+        axis: 0
+        ease: 1
+        scaleMultiplier: 1.2
+        duration: 0.2
+        _target: {fileID: 0}
+    - rid: 7735813606617382995
+      type: {class: HoverColor, ns: CarePackage.UI, asm: Assembly-CSharp}
+      data:
+        hoveredColor: {r: 1, g: 0, b: 0, a: 1}
+        defaultColor: {r: 0.18867922, g: 0, b: 0, a: 1}
+        duration: 0.2
+        useEasing: 1
+        ease: 0
+        _targetGraphic: {fileID: 0}

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Backpack
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.SO_Job
   Id: 33
-  Pay: 100
   PackageData:
     Title: Backpack
-    Description: "Backpack needed for a child. \n\nAddress: Homington 32."
+    Description: "Backpack needed for a child. \n\nAddress: Homington 32.\n\nPay:
+      /p"
+    Pay: 0
+    State: 0
   Item: {fileID: 11400000, guid: 9f2bc995d2dad444295af470f3492292, type: 2}
+  AddressImage: {fileID: 0}

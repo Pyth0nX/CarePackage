@@ -618,6 +618,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleCheckList",
+                    "type": "Button",
+                    "id": "e561d679-e509-49ef-9ec9-293253703661",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1058,6 +1067,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbd736f3-14ce-4999-b3ae-b94cd9be9485",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleCheckList",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,39 +1,26 @@
 using CarePackage.Main.Sound;
 using UnityEngine;
-using System;
-using TMPro;
 
 namespace CarePackage.UI
 {
-    [Serializable]
-    public class AudioSetting : ISettingStrategy, IActivatable
+    [System.Serializable]
+    public class AudioSetting : SliderSetting
     {
         [SerializeField] private EAudioCategory category;
-        [SerializeField] private TextMeshProUGUI title;
-        
-        private float currentValue;
+        [SerializeReference] private SettingsMenuController controller;
         
         public EAudioCategory Category => category;
 
-        public void SetValue(object value)
-        {
-            if (value is float f)
-            {
-                currentValue = f;
-            }
-        }
-
-        public object GetValue() => currentValue;
+        protected override string GetTitle() => category.ToString() + " Volume";
         
-        public void OnEnable()
-        {
-            title.text = category.ToString();
-            Debug.Log("Setting Title to: " + category.ToString() + " for: " + title.gameObject.name);
-        }
+        protected override void HandleValueChanged(float newValue) => controller.PreviewAudioSlider(Owner, category, newValue);
+        
+        protected override void SaveSetting() => controller.SaveAudioSlider(Owner, category);
 
-        public void OnDisable()
+        protected override void LoadSetting()
         {
-            
+            float stored = AudioManager.Instance.GetVolumeByAudioGroup(category);
+            SetValue(stored);
         }
     }
 }

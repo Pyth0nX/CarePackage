@@ -21,7 +21,7 @@ namespace CarePackage.Interaction.Dialogue
         private DialogueRunner _dialogueRunner;
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
-        {
+        {/*
             if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
             var package = _interactingPlayer.DeliveryManager.CurrentDelivery;
             _interactingObject = interactingObject;
@@ -61,6 +61,64 @@ namespace CarePackage.Interaction.Dialogue
             _dialogueRunner.StartDialogue(nodeName);
 #if UNITY_EDITOR
             DialogueManager.Instance.shouldDebugDialogueNode = true;
+#endif*/
+            
+            if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
+            _interactingObject = interactingObject;
+            
+            var packageInteractable = _interactingObject.GetComponent<Interactable>().InteractAction;
+            if (packageInteractable == null)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is not interactable!");
+                return;
+            }
+            Debug.Log("[Dialogue Action] PerformAction [] " + interactingObject.name + " " + interactingPlayer.name);
+
+            if (packageInteractable is not PackageAction packageAction)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is not a PackageAction!");
+                return;
+            }
+            var package = packageAction.Package;
+            if (package == null)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is null!");
+                return;
+            }
+            
+            if (package.Id != id) return;
+            if (DialogueManager.Instance == null) return;
+
+            _dialogueRunner = DialogueManager.Instance.dialogueRunner;
+            if (_dialogueRunner == null) return;
+
+            if (_dialogueRunner.IsDialogueRunning)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but one is already running!");
+                return;
+            }
+
+            _playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+
+            if (_playerController == null) return;
+            _playerController.LockInput(true);
+            
+            DialogueManager.Instance.SetYarnFloat("$family", familyID);
+            Debug.Log("[DialogueAction] FamilyID: " + familyID + " yarnFamId: " + DialogueManager.Instance.GetYarnFloat("$family"));
+
+            //if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform")
+            DialogueManager.Instance.SetYarnBool("$clothes", true);
+            DialogueManager.Instance.SetYarnString("$package", package.ItemGUID.Split('/').Last());
+            Debug.Log("[DialogueAction] ItemGUID: " + package.ItemGUID.Split('/').Last());
+            Debug.Log("[DialogueAction] Clothes: " + DialogueManager.Instance.GetYarnBool("$clothes"));
+            DialogueManager.Instance.SetYarnFloat("$Damage", (int)package.PackageData.State);
+
+            var stateName = package.PackageData.State.ToString();
+            DialogueManager.Instance.SetYarnString("$packageState", stateName);
+
+            _dialogueRunner.StartDialogue(nodeName);
+#if UNITY_EDITOR
+            DialogueManager.Instance.shouldDebugDialogueNode = true;
 #endif
         }
 
@@ -80,7 +138,7 @@ namespace CarePackage.Interaction.Dialogue
             DialogueManager.Instance.shouldDebugDialogueNode = false;
 
             if (_playerController == null) return;
-            _playerController.LockInput(false);
+            CarePackage.UI.UIManager.Instance.CloseInterface(false);
 
             if (packageRecieved)
             {
