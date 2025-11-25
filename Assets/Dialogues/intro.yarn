@@ -775,13 +775,13 @@ position: -849,-1026
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamB">>
-<<showCharacter "Gertrude" "">>
+<<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon, is Mr.Andersen here?
-<<showCharacter "Gertrude" "">>
+<<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, he should be around here. But I don't think that's he's package.  
-<<showCharacter "Gertrude" "">>
+<<showCharacter "Gertrude" "Worried">>
 Mailman: Oh, you're right. I'm so sorry, I will come back with your package.
-<<showCharacter "Gertrude" "">>
+<<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Alright, see you then.
 <<hideCharacter "Gertrude">>
 <<hideBackground>>
@@ -807,11 +807,11 @@ Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd 
     *Mrs.Andersen leaves and Mr.Andersen comes*
     <<showCharacter "Mikkel" "Worried">>
     Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
-    <<showCharacter "Mikkel" "TalkingTired">>
+    <<showCharacter "Mikkel" "TalkingWorried">>
     Mikkel: Sure thing.
     <<showCharacter "Mikkel" "Worried">>
     Mail man: Thank you, have a lovely evening.
-    <<showCharacter "Mikkel" "TalkingTired">>
+    <<showCharacter "Mikkel" "TalkingWorried">>
     Mikkel: You too.
     <<showCharacter "Mikkel" "Worried">>
 -> Mailman: Oh, thank you! It's pretty cold out here.
@@ -820,7 +820,7 @@ Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd 
 
 title: BEn1Day1
 group: FamB && Day1
-position: -537,-841
+position: -574,-882
 ---
 <<set $relationshipFamB += 1>>
 <<showCharacter "Gertrude" "TalkingWorried">>
@@ -842,21 +842,22 @@ group: FamB && Day1
 color: green
 position: -279,-703
 ---
-<<showCharacter "Mikkel" "TalkingTired">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Oh right, sorry! I just need you to sign right here.
-<<showCharacter "Mikkel" "TalkingTired">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Thanks! Our kids ordered them online, I wasn't sure they'd even arrive.
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: You thought they were scammers!!
 <<showCharacter "Gertrude">>
 Mailman: Well, can't be too careful! Thank you for letting me in. See you another time.
-
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Thank you for not robbing us!
-
+<<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Come back anytime for some tea!
-
+<<hideCharacter "Gertrude">>
+<<hideBackground>>
 ===
 
 title: BEnd2Day1
@@ -872,6 +873,8 @@ Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
 Mikkel: Done. Thank you!
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Thank you! Have a nice afternoon.
+<<hideCharacter "Mikkel">>
+<<hideBackground>>
 ===
 //FAM B — DAY 1 — GARDENING TOOLS (DAMAGED)
 title: FamB
@@ -903,17 +906,17 @@ Gertrude: Alright, he'll be right out.
 *Mrs.Andersen leaves and Mr.Andersen comes*
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
-<<showCharacter "Mikkel" "TalkingTired">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Wait, is this my package? It's damaged on the corner.
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Oh, I'm so sorry. It must've taken some damage on the way here. I haven't gotten used to the icy roads yet.
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: As long as the tools are okay, it's no problem.
-<<showCharacter "Mikkel" "TalkingTired">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Yeah, just be more careful next time.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I'm sorry, I'll drive slower next time. Have a good evening.
-<<showCharacter "Mikkel" "TalkingTired">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: You too, take care.
 ===
 
@@ -945,6 +948,8 @@ position: -852,-748
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
 <<setBackground "BGFamB">>
+<<showCharacter "Gertrude" "Worried">>
+<<set $relationshipFamB -= 1>>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
@@ -960,11 +965,11 @@ I'll just go get him, come in if you'd like.
     *Mrs.Andersen leaves and Mr.Andersen comes*
     <<showCharacter "Mikkel" "Worried">>
     Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
-    <<showCharacter "Mikkel" "TalkingTired">>
+    <<showCharacter "Mikkel" "TalkingWorried">>
     Mikkel: Sure thing.
     <<showCharacter "Mikkel" "Worried">>
     Mail man: Thank you, have a lovely evening.
-    <<showCharacter "Mikkel" "TalkingTired">>
+    <<showCharacter "Mikkel" "TalkingWorried">>
     Mikkel: You too.
     <<showCharacter "Mikkel" "Worried">>
 -> Mailman: Oh, thank you! It's pretty cold out here.
@@ -981,13 +986,13 @@ position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
 <<setBackground "BGFamB">>
-<<showCharacter "Mikkel" "">>
+<<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon Mikkel, I have a package for you.
-<<showCharacter "Mikkel" "">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: I don't think I order XXL seeds, are you sure that's my package?
-<<showCharacter "Mikkel" "">>
+<<showCharacter "Mikkel" "Worried">>
 Mailman: You're right, this one is not yours. I'm sorry for the mix up, I'll be back with your seeds.
-<<showCharacter "Mikkel" "">>
+<<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Thank you, Mr.Mailman.
 <<hideCharacter "Mikkel">>
 <<hideBackground>>
@@ -1002,6 +1007,7 @@ position: -847,-175
 ---
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
+
 Mailman: Good afternoon, Mikkel.
 
 Mikkel: Good afternoon, Mr.Mailman.
@@ -1427,11 +1433,11 @@ position: -77,-1026
 //FAM C — DAY 1 — DIAPERS (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamC">>
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! The diapers are here. Wait a second, that's not our package.
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. I'll be back with the diapers as soon as possible.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Please don't take too long. I don't know how much time we have left.
@@ -1448,15 +1454,15 @@ color: orange
 ---
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamC">>
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: Good afternoon! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Vera: YES! just in time, this was about to get ugly.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 -> Mailman: Haha, I have never experienced something like that. But if you ever need a hand, I can try to find you an extra pair.
 <<jump CEn1Day1>>
 -> Mailman: I see. You can sign right here and I'll be out of your way. 
@@ -1472,11 +1478,11 @@ color: green
 <<recievePackage true>>
 <<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: You have my number in the receipt, call me if you need anything.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Thank you so much! Have a good day.
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: You too, good luck with the little rascal hahaha.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
@@ -1490,7 +1496,7 @@ color: green
 <<recievePackage true>>
 <<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Alright, thank you. Have a good day.
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: You too.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
@@ -1507,14 +1513,15 @@ position: -70,-684
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 0.5>>
 <<setBackground "BGFamC">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure everything is okay inside of the box?
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here. I'm sure everything is okay with the diapers. 
 <<showCharacter "Jonas" "Talking">>
 Jonas: I hope so, we need each and everyone.
-<<showCharacter "Jonas" "">>
+<<showCharacter "Jonas" "Worried">>
 Mailman: I swear I will be more careful next time, I'm really sorry. I want to compensate you.
 -> Mailman: If you ever need any help, my number is on the receipt.
 -> Mailman: I will make sure 
