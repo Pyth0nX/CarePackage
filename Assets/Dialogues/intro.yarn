@@ -31,7 +31,7 @@ title: FamA
 when: ($day == 1) && ($package != "backpack")
 color: purple
 group: FamA && Day1
-position: -1657,-1030
+position: -1976,-1064
 ---
 //FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
 <<once>>
@@ -59,13 +59,12 @@ Lina: Please remember to come back with the correct package.
 //FAM A — DAY 1 — BACKPACK (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
 when: ($day == 1) && ($package == "backpack") && ($damage < 1)
-position: -1660,-752
+position: -1974,-860
 color: purple
 group: FamA && Day1
 ---
 //FAM A — DAY 1 — BACKPACK (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamA">>
-<<once>>
 Mailman: Good afternoon! Are you Lina?
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: That's me. Sofie, your package is here!
@@ -83,14 +82,11 @@ Mailman: Tomorrow? That's exciting! Big day for her then.
     <<jump AEn1Day1>>
 -> Mailman: Well, I hope this brightens her evening.
     <<jump AEnd1Day1>>
-<<else>>
-...
-<<endonce>>
 ===
 
 title: AEn1Day1
 //WARM
-position: -1371,-936
+position: -1326,-733
 color: green
 group: FamA && Day1
 ---
@@ -98,19 +94,19 @@ group: FamA && Day1
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: A little... but Mom promised me a brand-new backpack!
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: Oh, then this must be it! A good start is half the battle, as we used to say back at the depot.
+Mailman: Oh, then this must be it! A good start is half the battle.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Really? Yay! Can I open it now, please?
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: Go ahead, it's all yours.
+-> Mailman: Of course, here you go.
     <<jump AEnd1Day1>>
--> Mailman: I made sure it brings you good luck on your first day.
+-> Mailman: Here you go, sweetheart, I hope you have a wonderful first day of school with it.
     <<jump AEnd2Day1>>
 ===
 
 title: AEnd1Day1
 //NEUTRAL
-position: -1371,-752
+position: -1125,-346
 group: FamA && Day1
 color: green
 ---
@@ -125,7 +121,7 @@ Mailman: You too. Take care!
 
 title: AEnd2Day1
 //WARM
-position: -1115,-937
+position: -1086,-732
 color: green
 group: FamA && Day1
 ---
@@ -144,12 +140,11 @@ Mailman: Have a wonderful evening, both of you. And good luck tomorrow!
 //FAM A — DAY 1 — BACKPACK (DAMAGED)
 title: FamA
 when: ($day == 1) && ($package == "backpack") && ($damage == 1)
-position: -1643,-120
+position: -1976,-120
 color: purple
 group: FamA && Day1
 ---
 //FAM A — DAY 1 — BACKPACK (DAMAGED)
-<<once>>
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 0.5>>
 <<setBackgroung "BGFamA">>
@@ -158,10 +153,10 @@ Mailman: Good afternoon! Are you Lina?
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: That's me. Sofie, your package is here!
 <<showCharacter "Lina" "LinaListeningTired">>
-Mailman: Perfect — just need your signature here.
+Mailman: Perfect, just need your signature here.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Wait... this looks a bit damaged. What happened?
-<<showCharacter "Lina" "LinaListeningTired">>
+<<showCharacter "Lina" "SofieListeningTired">>
 Mailman: I'm really sorry, the road was rough on the way here.
 -> Mailman: I'll be more careful next time.
     <<jump FamA_D1_Damaged_Kind>>
@@ -169,34 +164,33 @@ Mailman: I'm really sorry, the road was rough on the way here.
     <<jump FamA_D1_Damaged_Neutral>>
 -> Mailman: That's how it was at the Post Office.
     <<jump FamA_D1_Damaged_Cold>>
-<<else>>
-<<setBackgroung "BGFamA">>
-...
-<<hideBackground>>
-<<endonce>>
 ===
 
 title: FamA_D1_Damaged_Kind
 group: FamA && Day1
+position: -1694,-43
 color: green
-position: -1378,-32
 ---
 <<recievePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: As long as the backpack's okay...
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: Thank you for being honest. Please be careful next time.
+Lina: Are you new around here? I haven't seen you before.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: You're absolutely right. It won't happen again. Have a good evening and good luck tomorrow, Sofie.
-<<hideCharacter "Lina">>
-<<hideBackground>>
+Mailman: Yeah, just started, actually. Still getting the hang of it, as you can see.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Oh, so you are just like Sofie! She just started in a new school.
+-> Mailman: Feeling nervous about it?
+    <<jump AEn1Day1>>
+-> Mailman: Well, I hope this brightens her evening.
+    <<jump AEnd1Day1>>
 ===
 
 title: FamA_D1_Damaged_Neutral
 group: FamA && Day1
 color: yellow
-position: -1384,-204
+position: -1698,-184
 ---
 <<recievePackage true>>
 <<showCharacter "Lina" "LinaSpeakingTired">>
@@ -210,7 +204,7 @@ Mailman: Understood. Have a good evening.
 title: FamA_D1_Damaged_Cold
 group: FamA && Day1
 color: red
-position: -1143,-121
+position: -1364,-121
 ---
 <<recievePackage true>>
 <<set $relationshipFamA -= 0.5>>
@@ -225,41 +219,48 @@ Mailman: Right. Have a good evening.
 //FAM A — DAY 1 — BACKPACK (BROKEN / FLATTENED)
 title: FamA
 when: ($day == 1) && ($package == "backpack") && ($damage > 1)
-position: -1650,-483
+position: -1964,-478
 color: purple
 group: FamA && Day1
 ---
 //FAM A — DAY 1 — BACKPACK (BROKEN / FLATTENED)
 <<set $famA_D2_damageCount = 1>>
 <<setBackground "BGFamA">>
-<<once>>
 Mailman: Good afternoon! Are you—
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Is that my daughter's package? It's completely crushed!
 <<showCharacter "Lina" "ListeningTired">>
-Mailman: I'm terribly sorry — it must've been damaged in transport.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+Mailman: I'm terribly sorry, it must've been damaged in transport.
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: This is unacceptable. She needs that backpack for tomorrow.
--> Mailman: I'll file a report and make sure it's replaced immediately.
+<<showCharacter "Lina" "ListeningTired">>
+-> Mailman: If you find the backpack damaged in any way, email me and we will compensate you.
     <<jump FamA_D1_Broken_Kind>>
 -> Mailman: You can report it to the depot if you'd like.
     <<jump FamA_D1_Broken_Neutral>>
 -> Mailman: It left the warehouse fine, these things happen.
     <<jump FamA_D1_Broken_Cold>>
-<<else>>
-...
-<<endonce>>
 ===
 title: FamA_D1_Broken_Kind
 group: FamA && Day1
 color: green
-position: -1149,-480
+position: -1717,-461
 ---
 <<recievePackage true>>
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Alright. Please make sure it doesn't happen again.
-<<showCharacter "Lina" "LinaListeningTired">>
-Mailman: I will. I'm truly sorry. Good evening.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I will. I'm truly sorry. 
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Are you new around here? I haven't seen you before.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Yeah, just started, actually. Still getting the hang of it, as you can see.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: Oh, so you are just like Sofie! She just started in a new school.
+-> Mailman: Feeling nervous about it?
+    <<jump AEn1Day1>>
+-> Mailman: Well, I hope this brightens her evening.
+    <<jump AEnd1Day1>>
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
@@ -267,7 +268,7 @@ Mailman: I will. I'm truly sorry. Good evening.
 title: FamA_D1_Broken_Neutral
 group: FamA && Day1
 color: yellow
-position: -1376,-595
+position: -1704,-615
 ---
 <<recievePackage true>>
 <<set $relationshipFamA -= 1>>
@@ -282,7 +283,7 @@ Mailman: Understood. Good evening.
 title: FamA_D1_Broken_Cold
 group: FamA && Day1
 color: red
-position: -1384,-340
+position: -1707,-325
 ---
 <<recievePackage true>>
 <<set $relationshipFamA -= 2>>
@@ -294,7 +295,29 @@ Mailman: …Have a good evening.
 <<hideBackground>>
 ===
 
-
+//FAM A — DAY 2 — UNIFORM (WRONG PACKAGE)
+title: FamA
+when: ($day == 2) && ($package != "uniform") 
+color: purple
+group: FamA && Day2
+position: -1976,161
+---
+//FAM A — DAY 2 — UNIFORM (WRONG PACKAGE)
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Good afternoon, Lina.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Good afternoon, Mr.Mailman.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I have here your package, if you could sign here.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: I don't think this is my package, it is not addressed to me.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: You are so right. I'm sorry, I will be back when I have your package.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Sounds good, see you later!
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
 
 
 //FAM A — DAY 2 — UNIFORM (PRISTINE / SLIGHTLY DAMAGED)
@@ -302,10 +325,9 @@ title: FamA
 when: ($day == 2) && ($package == "uniform") && ($damage < 1)
 color: purple
 group: FamA && Day2
-position: -1640,664
+position: -1977,305
 ---
 //FAM A — DAY 2 — UNIFORM (PRISTINE / SLIGHTLY DAMAGED)
-<<once>>
 <<setBackground "BGFamA">>
 Mailman: Good afternoon, Lina! More school supplies, I'm guessing.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -315,36 +337,31 @@ Sofie: Hello Mr.Mailman...
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Hello Sofie, are you excited about your new uniform?
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: At least I'll fit in… I still wish I had something nice to wear outside of school.
+Sofie: At least I'll fit in class, but I won't fit in once I'm out of school.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: I'm sorry, Sofie. The uniform was already too expensive.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: I know… it just feels like everyone else has cooler stuff.
 <<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: Don't be too hard on yourself. You'll find your people. 
+-> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
     <<jump FamA_D2_En_Undamaged_Kind>>
 -> Mailman: You should listen to your mother.
     <<jump FamA_D2_End_Undamaged_Cold>>
-<<else>>
-<<setBackground "BGFamA">>
-...
-<<hideBackground>>
-<<endonce>>
 ===
 
 title: FamA_D2_En_Undamaged_Kind
 group: FamA && Day2
 color: green
-position: -1368,582
+position: -1711,221
 ---
 <<recievePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: I didn't mean to complain… I just wish I could wear something new for once. 
+Sofie: Yeah, but I won't be like them, I won't fit in. I'll just be the nice girl from class.
 <<showCharacter "Lina" "SofieListeningTired">>
-Mailman: I get it. And try not to be so hard on Mom, she's doing her best.
+Mailman: Yeah, I get it. Just don't be so hard on your mom, she's trying her best.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: We'll go shopping next month, I promise. Thank you, Mr. Mailman.
+Lina: I promise that we'll go shopping next month. Thank you, Mr.Mailman.
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: You're welcome. Have a lovely evening.
 <<hideCharacter "Lina">>
@@ -354,7 +371,7 @@ Mailman: You're welcome. Have a lovely evening.
 title: FamA_D2_End_Undamaged_Cold
 group: FamA && Day2
 color: red
-position: -1374,722
+position: -1713,357
 ---
 <<recievePackage true>>
 <<set $relationshipFamA -= 0.5>>
@@ -375,7 +392,7 @@ when: ($day == 2) && ($package == "uniform") && ($damage == 1)
 //1st time damaged
 color: purple
 group: FamA && Day2
-position: -1643,317
+position: -1977,445
 ---
 //FAM A — DAY 2 — UNIFORM (1ST TIME DAMAGED)
 <<set $famA_damageCount += 1>>
@@ -385,13 +402,13 @@ position: -1643,317
 Mail man: Good afternoon, Lina.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: Sofie, come here!
-<<showCharacter "Lina" "LinaListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mail man: Wonderful! I just need your signature here.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh but this package is damaged, what happened to it?
-<<showCharacter "Lina" "LinaListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm so sorry, it was a bumpy ride.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Anyways, I'm glad it at least arrived.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: It's that my new uniform? 
@@ -414,22 +431,22 @@ when: ($day == 2) && ($package == "uniform") && ($damage == 1)
 //damaged AGAIN 
 color: purple
 group: FamA && Day2
-position: -1641,471
+position: -1972,585
 ---
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 0.5>>
-<<showCharacter "Lina" "LinaListeningTired">>
-Mail man: Morning Lina!
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "ListeningTired">>
+Mail man: Good afternoon Lina!
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Sofie, come here!
-<<showCharacter "Lina" "LinaListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mail man: Wonderful! I just need your signature here.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh but this package is damaged again, I thought you said it wasn't going to happen again.
-<<showCharacter "Lina" "LinaListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm so sorry, it was a bumpy ride.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Anyways, I'm glad it at least arrived.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: It's that my new uniform? 
@@ -442,11 +459,45 @@ Sofie: It's that my new uniform?
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
 ===
-
+//FAM A — DAY 2 — UNIFORM (BROKEN)
+title: FamA
+when: ($day == 2) && ($package == "uniform") && ($damage > 1) 
+color: purple
+group: FamA && Day2
+position: -1972,585
+---
+//FAM A — DAY 2 — UNIFORM (BROKEN)
+<<set $famA_damageCount += 1>>
+<<set $relationshipFamA -= 1>>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Good afternoon Lina! More school supplies I'm guessing.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
+Lina: Wait, the package is broken. It looks like the uniform is okay though. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I am so sorry, I don't know how it could've happened. I'll drive more carefully next time.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: It's okay, it doesn't look too bad.
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: Hello Mr.Mailman…
+<<showCharacter "Lina" "SofieListeningTired">>
+Mailman: Hello Sofie, are you excited about your new uniform?
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: At least I'll fit in class, but I still don't have cool clothes to go out with.
+<<showCharacter "Lina" "LinaSSpeakingTired">>
+Lina: I'm sorry Sofie, the uniform was already too expensive. 
+<<showCharacter "Lina" "SofieSpeakingTired">>
+Sofie: I know, but the kids all have cool stuff.
+<<showCharacter "Lina" "SofieListeningTired">>
+-> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
+    <<jump FamA_D2_En_Undamaged_Kind>>
+-> Mailman: You should listen to your mother.
+    <<jump FamA_D2_End_Undamaged_Cold>>
+===
 title: AEn3Day2
 color:green
 group: FamA && Day2
-position: -1372,395
+position: -1712,509
 ---
 <<recievePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -462,10 +513,10 @@ Sofie: Yeah, but until then I will avoid any chances of meeting my classmates ou
 
 //FAM A — DAY 2 — UNIFORM (COLD)
 title: FamA
-when: ($relationshipFamA <= 3) && ($day == 2)
+when: ($relationshipFamA < -1.5) && ($day == 2)
 color: purple
 group: FamA && Day2
-position: -1643,169
+position: -1978,731
 ---
 //FAM A — DAY 2 — UNIFORM (COLD)
 <<showCharacter "Lina" "LinaListeningTired">>
@@ -840,7 +891,7 @@ Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends ha
 title: BEnd1Day1
 group: FamB && Day1
 color: green
-position: -279,-703
+position: -312,-711
 ---
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
@@ -863,7 +914,7 @@ Gertrude: Come back anytime for some tea!
 title: BEnd2Day1
 group: FamB && Day1
 color: green
-position: -302,-492
+position: -327,-492
 ---
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Oh so you got my package! Where do I sign?
