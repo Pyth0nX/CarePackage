@@ -1,6 +1,4 @@
-using CarePackage.Delivery;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CarePackage.UI
 {
@@ -25,9 +23,27 @@ namespace CarePackage.UI
     [System.Serializable]
     public abstract class SliderSetting : ISettingStrategy<float>, IActivatable
     {
-        [SerializeField] protected TMPro.TextMeshProUGUI title;
+        public enum EValueFormat
+        {
+            Decimal = 0,
+            WholeNumber = 1,
+            Percentage = 2
+        }
+        
         [SerializeField] protected UnityEngine.UI.Slider slider;
+        [SerializeField] protected TMPro.TextMeshProUGUI title;
         [SerializeField] private TMPro.TextMeshProUGUI valueLabel;
+        
+        [Header("Internal Range")]
+        [SerializeField] protected float minValue = 0f;
+        [SerializeField] protected float maxValue = 1f;
+        [SerializeField, Range(0f, 1f)] protected float defaultValue;
+        
+        [Header("Visual Range")]
+        [SerializeField] protected float visualMin = 0f;
+        [SerializeField] protected float visualMax = 1f;
+        
+        [SerializeField] private EValueFormat valueFormat;
         
         protected float CurrentValue = 1f;
         
@@ -35,14 +51,10 @@ namespace CarePackage.UI
 
         public void SetValue(float value)
         {
-            if (value is float floatValue) 
-            {
-                CurrentValue = Mathf.Clamp(floatValue, 0, 1);
-                if (slider != null) 
-                    slider.value = floatValue;
-                if (valueLabel != null)
-                    valueLabel.text = CurrentValue.ToString();
-            }
+            CurrentValue = MapSliderToDomain(value);
+            if (slider != null)
+                slider.value = CurrentValue;
+            UpdateLabel();
         }
 
         public void SetValue(object value)
@@ -58,15 +70,56 @@ namespace CarePackage.UI
 
         public void Load() => LoadSetting();
         
+        public float GetDomainValue() => CurrentValue;
+        
+        public void SetDomainValue(float domain)
+        {
+            CurrentValue = Mathf.Clamp(domain, minValue, maxValue);
+            if (slider != null)
+                slider.value = MapDomainToSlider(CurrentValue);
+            UpdateLabel();
+        }
+
+        private void UpdateLabel()
+        {
+            if (valueLabel == null) return;
+            
+            float visual = MapInternalToVisual(CurrentValue);
+            valueLabel.text = FormatValue(visual);
+        }
+/*
+        protected virtual float MapSliderToDomain(float normalized) =>
+            Mathf.Lerp(minValue, maxValue, normalized);
+
+        protected virtual float MapDomainToSlider(float domain) =>
+            Mathf.InverseLerp(minValue, maxValue, domain);
+
+        protected virtual float MapInternalToVisual(float internalValue) =>
+            Mathf.InverseLerp(minValue, maxValue, internalValue) * (visualMax - visualMin) + visualMin;*/
+
+        protected virtual float MapSliderToDomain(float normalized) =>
+            Mathf.Lerp(minValue, maxValue, normalized);
+
+        protected virtual float MapDomainToSlider(float domain) =>
+            Mathf.InverseLerp(minValue, maxValue, domain);
+
+        protected virtual float MapInternalToVisual(float internalValue)
+        {
+            float normalized = MapDomainToSlider(internalValue);
+            return Mathf.Lerp(visualMin, visualMax, normalized);
+        }
+        
 
         public void OnEnable()
         {
             if (title != null) title.text = GetTitle();
+            CurrentValue = Mathf.Lerp(minValue, maxValue, defaultValue);//CurrentValue = Mathf.Clamp(defaultValue, minValue, maxValue);
             if (slider != null) 
             {
                 slider.onValueChanged.AddListener(OnSliderChanged);
                 slider.value = CurrentValue;
             }
+            UpdateLabel();
             Debug.Log("Setting Title to: " + GetTitle() + " for: " + title.gameObject.name);
         }
 
@@ -88,6 +141,19 @@ namespace CarePackage.UI
         protected abstract void SaveSetting();
         
         protected abstract void LoadSetting();
+        
+        protected virtual string FormatValue(float normalized)
+        {
+            float domain = MapInternalToVisual(normalized);
+
+            return valueFormat switch
+            {
+                EValueFormat.Decimal => domain.ToString("0.0"),
+                EValueFormat.WholeNumber => Mathf.RoundToInt(domain).ToString(),
+                EValueFormat.Percentage => (domain * 100f).ToString("0") + "%",
+                _ => domain.ToString()
+            };
+        }
     }
     
     [System.Serializable]
@@ -97,7 +163,7 @@ namespace CarePackage.UI
         [SerializeReference] private SettingsMenuController controller;
         
         public ESensitivity Category => category;
-        
+        /*
         private float MapSliderToDomain(float sliderValue)
         {
             return category switch
@@ -118,13 +184,13 @@ namespace CarePackage.UI
                 ESensitivity.Scroll => Mathf.InverseLerp(0.02f, 0.5f, domainValue),
                 _ => domainValue
             };
-        }
+        }*/
 
         protected override string GetTitle() => category.ToString() + " Sensitivity";
         
         protected override void HandleValueChanged(float newValue) => controller.PreviewSensitivity(Owner, category, MapSliderToDomain(newValue));
         
-        protected override void SaveSetting() => controller.SaveSensitivity(Owner, category, CurrentValue);
+        protected override void SaveSetting() => controller.SaveSensitivity(Owner, category, MapSliderToDomain(CurrentValue));
 
         protected override void LoadSetting()
         {
@@ -139,7 +205,7 @@ namespace CarePackage.UI
     public class PackageAmountSetting : SliderSetting
     {
         [SerializeReference] private SettingsMenuController controller;
-        
+        /*
         private int MapSliderToDomain(float sliderValue)
         {
             return Mathf.RoundToInt(Mathf.Lerp(1, 15, sliderValue));
@@ -148,13 +214,19 @@ namespace CarePackage.UI
         private float MapDomainToSlider(int domainValue)
         {
             return Mathf.InverseLerp(1, 15, domainValue);
-        }
+        }*/
 
         protected override string GetTitle() => "Package Amount";
         
-        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, MapSliderToDomain(newValue));
+        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, Mathf.RoundToInt(MapSliderToDomain(newValue)));
         
-        protected override void SaveSetting() => controller.SavePackageAmount(Owner, (int)MapDomainToSlider((int)CurrentValue));
+        protected override string FormatValue(float normalized)
+        {
+            int domain = Mathf.RoundToInt(MapSliderToDomain(normalized));
+            return domain.ToString();
+        }
+        
+        protected override void SaveSetting() => controller.SavePackageAmount(Owner, Mathf.RoundToInt(MapSliderToDomain(CurrentValue)));
 
         protected override void LoadSetting()
         {

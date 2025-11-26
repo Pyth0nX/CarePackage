@@ -7,10 +7,10 @@ namespace CarePackage.UI
     public class SettingsMenuController : MonoBehaviour, IUserInterfaceElement
     {
         [SerializeField] private GameObject areYouSurePopup;
-        [SerializeField] private PlayerController playerController;
         
         public bool IsOpen => _toggled;
         
+        private PlayerController _playerController;
         private SerializedDictionary<MenuSettingElement, object>  _originalValues = new();//private readonly System.Collections.Generic.Dictionary<MenuSettingElement, object> _originalValues = new();
         private System.Collections.Generic.List<ISettingStrategy> _settingStrategies = new();
         private System.Collections.Generic.List<MenuSettingElement> _elements = new();
@@ -33,6 +33,8 @@ namespace CarePackage.UI
                 _elements.Add(element);
                 _settingStrategies.Add(element.Strategy);
             }
+            
+            _playerController = GameManager.Instance.Player.ActivePlayer.GetComponent<PlayerController>();
         }
 
         private void OnEnable()
@@ -201,36 +203,36 @@ namespace CarePackage.UI
         
         public void PreviewSensitivity(MenuSettingElement owningElement, SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
         {
-            playerController.PreviewSensitivity(sensitivityCategory, newValue);
+            _playerController.PreviewSensitivity(sensitivityCategory, newValue);
             SaveChange(owningElement, newValue);
         }
         
         public void SaveSensitivity(MenuSettingElement owningElement, SensitivitySetting.ESensitivity sensitivityCategory, float newValue)
         {
-            playerController.SaveSensitivity(sensitivityCategory, newValue);
+            _playerController.SaveSensitivity(sensitivityCategory, newValue);
             RemoveElementFromChanges(owningElement);
         }
 
         public float GetSensitivityByCategory(SensitivitySetting.ESensitivity sensitivityCategory)
         {
-            return playerController.GetSensitivity(sensitivityCategory);
+            return _playerController.GetSensitivity(sensitivityCategory);
         }
 
         public void SetPackageAmount(MenuSettingElement owningElement, int newValue)
         {
-            playerController.OwningPlayer.DeliveryManager.PackageMax = newValue;
+            _playerController.OwningPlayer.DeliveryManager.PackageMax = newValue;
             SaveChange(owningElement, newValue);
         }
 
         public void SavePackageAmount(MenuSettingElement owningElement, int newValue)
         {
-            playerController.OwningPlayer.DeliveryManager.SavePackageMax(newValue);
+            _playerController.OwningPlayer.DeliveryManager.SavePackageMax(newValue);
             RemoveElementFromChanges(owningElement);
         }
 
         public int GetPackageAmount()
         {
-            return playerController.OwningPlayer.DeliveryManager.PackageMax;
+            return _playerController.OwningPlayer.DeliveryManager.PackageMax;
         }
         #endregion
     }
