@@ -179,6 +179,9 @@ namespace CarePackage.Delivery
                 CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
                 Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");
                 GetRandomJob();
+                
+                if (deliveries.Count > 1) 
+                    Task.TaskManager.PushTaskUpdate(new Task.Task("You delivered a package, go on and the deliver the next"));
 
                 var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position,
                     GameManager.Instance.Player.ActivePlayer.transform.position);
