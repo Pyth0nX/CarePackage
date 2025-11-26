@@ -9,13 +9,14 @@ namespace CarePackage.Delivery
 {
     public class PostOfficeComputer : MonoBehaviour
     {
-        [SerializeField] private Button[] buttons;
         [SerializeField] private GameObject checkInButton;
         [SerializeField] private GameObject desktop;
 
         [SerializeField] private GameObject mailPrefab;
         [SerializeField] private GameObject mailContainer;
         [SerializeField] private GameObject mailWindow;
+        
+        private DateTime _accessedTime;
 
         public void CheckInClicked()
         {
@@ -25,12 +26,10 @@ namespace CarePackage.Delivery
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Select Jobs to deliver"));
 //        GameManager.StartDay();
         }
-
-        private DateTime accessedTime;
         
         private void OnEnable()
         {
-            accessedTime = DateTime.Now;
+            _accessedTime = DateTime.Now;
             AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen);
         }
 
@@ -43,9 +42,9 @@ namespace CarePackage.Delivery
                 popups[i] = UI.UIManager.Instance.GetActivePopup(i);
             }
             UI.UIManager.Instance.ClosePopupWindows(popups);
-            //    GameManager.SkipDay();
+            //GameManager.Instance.EndDayEarly();
             AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen)
-                .WithDuration(accessedTime, DateTime.Now).WithSuccess(false);
+                .WithDuration(_accessedTime, DateTime.Now).WithSuccess(false);
         }
 
         public void OpenMailClicked()

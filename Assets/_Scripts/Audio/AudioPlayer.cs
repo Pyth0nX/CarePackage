@@ -41,7 +41,7 @@ namespace CarePackage.Main.Sound
                 case EAudioPlayCondition.PlayOnInteracted:
                     var interactable = GetComponent<Interaction.Interactable>();
                     if (interactable != null)
-                        interactable.OnInteracted += () => Play(entry);
+                        interactable.OnInteracted += (interated) => Play(entry);
                     break;
                 case EAudioPlayCondition.FollowUp:
                     int index = entries.IndexOf(entry);

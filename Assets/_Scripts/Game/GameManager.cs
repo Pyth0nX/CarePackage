@@ -17,22 +17,22 @@ namespace CarePackage.Main
         [SerializeField] private int dayToLose = 3;
         
         public bool ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft => automaticallyEndDayWhenNoPackagesLeft;
-        public bool Survived => _survived;
         public int CurrentDay => _day;
-        
+        public bool Survived => _survived;
         public bool tutorialDone = false;
         
         private int _elapsedTime;
         private int _currentSecond;
         private int _lastUpdateSecond;
-        private bool _survived;
         private int _day;
+        private bool _survived;
         
         // events
-        public event Action onStartGame;
-        public event Action onGameRestart;
-        public event Action<int> onDayStarted;
-        public event Action<int> onDayEnded;
+        public static event Action onStartGame;
+        public static event Action onGameRestart;
+        public static event Action<int> onDayStarted;
+        public static event Action<int> onDayEntered;
+        public static event Action<int> onDayEnded;
         
         public PlayerState Player;
 
@@ -49,17 +49,23 @@ namespace CarePackage.Main
             Player = player;
         }
 
+        public void EnterDay()
+        {
+            onDayEntered?.Invoke(_day);
+            _lastUpdateSecond = -1;
+            Tween.Custom(0f, dayTime, dayTime, UpdateTimer, Ease.Linear).OnComplete(EndDay);
+        }
+
         public void StartGame()
         {
             _day = 1;
             onStartGame?.Invoke();
+            SceneController.Instance.LoadScene(ECarePackageScenes.PostOffice);
         }
         
         public void StartDay()
         {
             _survived = false;
-            _lastUpdateSecond = -1;
-            Tween.Custom(0f, dayTime, dayTime, UpdateTimer, Ease.Linear).OnComplete(EndDay);
             onDayStarted?.Invoke(_day);
         }
 
@@ -96,13 +102,13 @@ namespace CarePackage.Main
         {
             Debug.Log("Lost Game");
             _survived = false;
-            SceneController.Instance.LoadScene("Ending");
+            SceneController.Instance.LoadScene(ECarePackageScenes.Ending);
         }
 
         public void WinGame()
         {
             _survived = true;
-            SceneController.Instance.LoadScene("Ending");
+            SceneController.Instance.LoadScene(ECarePackageScenes.Ending);
         }
 
         public void RestartGame()
@@ -111,7 +117,7 @@ namespace CarePackage.Main
             _day = 1;
             onGameRestart?.Invoke();
             StartGame();
-            SceneController.Instance.LoadScene("PostOffice");
+            SceneController.Instance.LoadScene(ECarePackageScenes.PostOffice);
         }
 
         public void Survive()
@@ -123,7 +129,7 @@ namespace CarePackage.Main
 
         private void Restart()
         {
-            SceneController.Instance.LoadScene("PostOffice");
+            SceneController.Instance.LoadScene(ECarePackageScenes.PostOffice);
         }
 
         public void SetGameSetting(UI.CheckBoxGamesSetting.EGameSetting gameSetting, bool newValue)

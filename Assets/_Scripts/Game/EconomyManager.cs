@@ -27,22 +27,19 @@ namespace CarePackage.Main
 
         private void OnEnable()
         {
-            Invoke("Enable", .01f);
-        }
-
-        private void Enable()
-        {
-            GameManager.Instance.onGameRestart += OnGameRestart_Implementation;
-            GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
-            GameManager.Instance.onDayEnded += OnDayEnded_Implementation;
+            GameManager.onGameRestart += OnGameRestart_Implementation;
+            GameManager.onDayStarted += OnDayStarted_Implementation;
+            GameManager.onDayEntered += OnDayEntered_Implementation;
+            GameManager.onDayEnded += OnDayEnded_Implementation;
             UpdateMoneyText();
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.onGameRestart -= OnGameRestart_Implementation;
-            GameManager.Instance.onDayStarted -= OnDayStarted_Implementation;
-            GameManager.Instance.onDayEnded -= OnDayEnded_Implementation;
+            GameManager.onGameRestart -= OnGameRestart_Implementation;
+            GameManager.onDayStarted -= OnDayStarted_Implementation;
+            GameManager.onDayEntered -= OnDayEntered_Implementation;
+            GameManager.onDayEnded -= OnDayEnded_Implementation;
         }
 
         private void OnGameRestart_Implementation()
@@ -54,8 +51,18 @@ namespace CarePackage.Main
         private void OnDayStarted_Implementation(int day)
         {
             _requiredMoney = requiredMoney * (day > 1 ? day * 1.2f : 1);
+        }
+
+        private void OnDayEntered_Implementation(int day)
+        {
             if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
             UpdateMoneyText();
+            // UI Update delay
+            /*PrimeTween.Tween.Delay(0.5f).OnComplete(() =>
+            {
+                if (requiredMoneyText != null) requiredMoneyText.text = "Required Money: " + _requiredMoney + "$";
+                UpdateMoneyText();
+            });*/
         }
 
         private void OnDayEnded_Implementation(int day)
@@ -65,7 +72,6 @@ namespace CarePackage.Main
                 GameManager.Instance.Survive();
                 return;
             }
-
             GameManager.Instance.LoseGame();
         }
 
@@ -103,10 +109,12 @@ namespace CarePackage.Main
         public void LoadData(GameData loadData)
         {
             _money = loadData.money;
+            if (loadData.requiredMoney > 0) _requiredMoney = loadData.requiredMoney;
         }
 
         public void SaveData(GameData saveData)
         {
+            saveData.requiredMoney = (int)_requiredMoney;
             saveData.money = Bank;
         }
     }

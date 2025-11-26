@@ -1,9 +1,15 @@
-using System;
 using UnityEngine;
 
 namespace CarePackage.Delivery
 {
-    public enum EPackageState { Pristine = 0, SlightlyDamaged = 1, Damaged = 2, Flattened = 3, Broken = 4 }
+    public enum EPackageState
+    {
+        Pristine = 0, 
+        SlightlyDamaged = 1, 
+        Damaged = 2, 
+        Flattened = 3, 
+        Broken = 4
+    }
     
     public class PackageBehavior : MonoBehaviour
     {
@@ -22,6 +28,8 @@ namespace CarePackage.Delivery
         private int _currentMeshIndex;
         private bool _canBeDamaged = false;
         private bool _usingGravity = false;
+        
+        public event System.Action<EPackageState, EPackageState> OnStateChanged;
 
         private void Awake()
         {
@@ -149,6 +157,8 @@ namespace CarePackage.Delivery
         }
 
         public void DamagePackage() => Damage();
+        
+        public System.Delegate[] GetStateChangedDelegates() => OnStateChanged?.GetInvocationList();
 
         private void Damage()
         {
@@ -156,12 +166,14 @@ namespace CarePackage.Delivery
             var fraction = _durability / durability;
             // Invert so 1 = full, 0 = destroyed
             var damageFraction = 1f - fraction;
-
+            var previousState = packageState;
+            
             // Map into 0–4 range
-            var stateIndex = Mathf.FloorToInt(damageFraction * Enum.GetValues(typeof(EPackageState)).Length);
+            var stateIndex = Mathf.FloorToInt(damageFraction * System.Enum.GetValues(typeof(EPackageState)).Length);
             stateIndex = Mathf.Clamp(stateIndex, 0, 4);
 
             packageState = (EPackageState)stateIndex;
+            OnStateChanged?.Invoke(previousState, packageState);
             UpdateState();
         }
         

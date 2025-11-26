@@ -2,21 +2,24 @@ using CarePackage.Main;
 using CarePackage.Delivery;
 using UnityEngine;
 using System;
+using System.Linq;
 using TMPro;
-using Xasu.HighLevel;
 
 namespace CarePackage.Interaction.Delivery
 {
     [Serializable]
-    public class PackageAction : Pickup, IInteractAction
+    public class PackageAction : Pickup, IInteractAction, IActivatable
     {
         [SerializeField] private SO_Package package;
         [SerializeField] private bool addedDelivery;
-
+        
         public Package Package => _internalPackage;
         public bool AlreadyAdded => addedDelivery;
         
+        private PackageBehavior _packageBehavior;
         private Package _internalPackage;
+        
+        public void Add() => addedDelivery = true;
         
         public PackageAction(Package inPackage)
             : this(inPackage, false, new Vector3(0, -0.1f, 0), null) {}
@@ -34,6 +37,8 @@ namespace CarePackage.Interaction.Delivery
             addedDelivery = alreadyAdded;
 
             var packageObj = inPickupOwningObject.GetComponent<PackageBehavior>();
+            _packageBehavior = packageObj;
+            _packageBehavior.OnStateChanged += OnStateChanged_Implementation;
             var packagePickupExtension = new PackagePickupExtension(packageObj);
             //var damagePickup = new DamagableFieldExtension(new Vector3(0f, 0.6f, 1.15f), packageObj);
 
@@ -52,11 +57,43 @@ namespace CarePackage.Interaction.Delivery
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
             interactingPlayer.Pickup(this, interactingObject);
-            GameObjectTracker.Instance.Interacted("Package_" + Package.PackageData.Title, GameObjectTracker.TrackedGameObject.Item);
+            Xasu.HighLevel.GameObjectTracker.Instance.Interacted("Package_" + Package.PackageData.Title, Xasu.HighLevel.GameObjectTracker.TrackedGameObject.Item);
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
         }
+        
+        public void OnEnable()
+        {
+            if (_packageBehavior == null) return;
+            if (!DelegateHelper.IsSubscribed(_packageBehavior.GetStateChangedDelegates(), (Action<EPackageState, EPackageState>)OnStateChanged_Implementation))
+            {
+                _packageBehavior.OnStateChanged += OnStateChanged_Implementation;
+            }
+        }
 
-        public void Add() => addedDelivery = true;
+        public void OnDisable()
+        {
+            if (_packageBehavior == null) return;
+            if (DelegateHelper.IsSubscribed(_packageBehavior.GetStateChangedDelegates(), (Action<EPackageState, EPackageState>)OnStateChanged_Implementation))
+            {
+                _packageBehavior.OnStateChanged -= OnStateChanged_Implementation;
+            }
+        }
+        
+        public static class DelegateHelper
+        {
+            public static bool IsSubscribed<T>(Delegate[] handlers, T method) where T : Delegate//public static bool IsSubscribed(Delegate[] handlers, Delegate target)
+            {
+                if (handlers == null || method == null)
+                    return false;
+
+                return handlers.Any(listener => listener == method);
+            }
+        }
+        
+        private void OnStateChanged_Implementation(EPackageState oldState, EPackageState newState)
+        {
+            _internalPackage.PackageData.State = newState;
+        }
     }
 
     [Serializable]
@@ -122,60 +159,14 @@ namespace CarePackage.Interaction.Delivery
         {
             if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindPostBoxWithId(_packageId);
-            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, true, false);
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, true, false);//interactingPlayer.DeliveryManager.ToggleIndicator(_packageId, true, 0);
         }
 
         public void ExtendedDropped(PlayerState interactingPlayer)
         {
             if (!_overridePackageId) _packageId = interactingPlayer.DeliveryManager.CurrentDeliveryId;
             _goalObject = interactingPlayer.DeliveryManager.FindDeliveryPackageWithId(_packageId);
-            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, false, 0f);
-        }
-    }
-    
-    [Serializable]
-    public class DamagableFieldExtension : IPickupExtension
-    {
-        private Vector3 _offset;
-        private GameObject _damageFieldPrefab;
-        private GameObject _damageFieldObject;
-        private DamagableBehavior _damageField;
-        private PackageBehavior _packageObject;
-        private bool _isInited;
-        
-        public DamagableFieldExtension() : this(Vector3.zero, null) {}
-
-        public DamagableFieldExtension(Vector3 inOffset, PackageBehavior inPackageObject)
-        {
-            _offset = inOffset;
-            _packageObject = inPackageObject;
-            _isInited = false;
-        }
-        
-        public void ExtendedPickUp(PlayerState interactingPlayer)
-        {
-            if (!_isInited)
-            {
-                _damageFieldObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DamagableField"), interactingPlayer.ActivePlayer.transform);
-                _damageFieldObject.TryGetComponent<DamagableBehavior>(out _damageField);
-                _damageField.VelocityThreshold = _packageObject.HeldVelocityThreshold;
-                _isInited = true;
-            }
-            _damageFieldObject.transform.localPosition = _offset;
-            _damageFieldObject.SetActive(true);
-            _damageField.OnDamaged += DamagePackage;
-        }
-
-        public void ExtendedDropped(PlayerState interactingPlayer)
-        {
-            _damageField.OnDamaged -= DamagePackage;
-            _damageFieldObject.SetActive(false);
-        }
-
-        private void DamagePackage()
-        {
-            Debug.Log("Damaged Package");
-            _packageObject.DamagePackage();
+            interactingPlayer.DeliveryManager.ToggleIndicator(_goalObject, false, true);//interactingPlayer.DeliveryManager.ToggleIndicator(_packageId, true, 1);
         }
     }
 
@@ -200,10 +191,15 @@ namespace CarePackage.Interaction.Delivery
             if (interactingPlayer.DeliveryManager == null) return;
             _deliveryManager = interactingPlayer.DeliveryManager;
             
-            if (!CanReceivePackage()) return;
             var delivery = DeliveryUitilities.TryGetPackageFromObject(interactingObject);
+            if (delivery == null)
+            {
+                Debug.Log("[ReceiveDeliveryAction] Could not find delivery");
+                return;
+            }
             
-            if (delivery.Id != WantedPackage) return;
+            Debug.Log("[ReceiveDeliveryAction] PerformAction " + delivery.Id);
+            if (!CanReceivePackage2(delivery.Id)) return;
             interactingPlayer.DropPickup();
             _deliveryManager.DeliverPackage(delivery);
         }
@@ -212,6 +208,12 @@ namespace CarePackage.Interaction.Delivery
         {
             if (_deliveryManager.CurrentDelivery.Id == wantedPackage) return true;
             return false;
+        }
+        
+        private bool CanReceivePackage2(int incomingPackageId)
+        {
+            if (incomingPackageId != wantedPackage) return false;
+            return true;
         }
     }
     
@@ -227,6 +229,7 @@ namespace CarePackage.Interaction.Delivery
                 return;
             }
 
+            if (packageAction.AlreadyAdded) return;
             packageAction.Add();
             
             var package = packageAction.Package;

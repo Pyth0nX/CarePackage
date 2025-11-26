@@ -232,18 +232,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  iInteractAction:
-    rid: 3802007057444110449
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 1
   debug: 1
   references:
     version: 2
     RefIds:
-    - rid: 3802007057444110449
-      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        animator: {fileID: 906830242288512273}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &2110243322251373254
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,14 +641,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f054fdba97dc08c40b8bf8c1fd5192b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.InteractionComponent
+  interactionUI: {fileID: 0}
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  debug: 0
-  castRay: 1
   rayDistance: 12.5
-  isPlayer: 1
-  interactionUI: {fileID: 0}
+  castRay: 1
+  debug: 0
 --- !u!114 &47009498550557595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +753,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02725873-1671-4c86-9ec8-07835a6070ff
+    m_ActionName: 'Player/ToggleCheckList[/Keyboard/v]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2b19a340-5a96-421a-9ab5-e43d712e5812
+    m_ActionName: 'Player/Scroll[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c47dc2f-20f9-42ac-8b93-1a781a5538a9
+    m_ActionName: 'Player/Esc[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8fcfcf16-dbd1-4584-b222-245e641c7339
+    m_ActionName: 'UI/GoBack[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: acd93816-711c-42a7-9925-316cff671a71
+    m_ActionName: 'UI/Esc[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e561d679-e509-49ef-9ec9-293253703661
+    m_ActionName: 'UI/ToggleCheckList[/Keyboard/v]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1474,8 +1495,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7058378509504139346}
-  - component: {fileID: 2727500966592144713}
   - component: {fileID: 6690679883184862830}
+  - component: {fileID: 2727500966592144713}
   m_Layer: 8
   m_Name: ExitCar
   m_TagString: Untagged
@@ -1498,6 +1519,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7709729077104487013}
   m_LocalEulerAnglesHint: {x: -60, y: 0, z: 0}
+--- !u!114 &6690679883184862830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205638521652217226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactionType: 0
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  interactAction:
+    rid: 7735813649916756149
+  interactText: Press E
+  showMessage: 0
+  debug: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 7735813649916756149
+      type: {class: ExitCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
+      data: 
 --- !u!65 &2727500966592144713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1517,35 +1565,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.049999997, z: 2.5}
-  m_Center: {x: 0, y: -0.1, z: -0.3}
---- !u!114 &6690679883184862830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6205638521652217226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
-  interactionType: 0
-  interactionLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  iInteractAction:
-    rid: 1741967866699972676
-  interactText: Press E
-  showMessage: 0
-  debug: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 1741967866699972676
-      type: {class: ExitCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data: 
+  m_Size: {x: 2.75, y: 0.049999997, z: 3.33}
+  m_Center: {x: 0, y: -0.05, z: -0.15}
 --- !u!1 &6206717815858081192
 GameObject:
   m_ObjectHideFlags: 0

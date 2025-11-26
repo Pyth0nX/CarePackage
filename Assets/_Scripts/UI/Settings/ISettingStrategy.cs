@@ -181,7 +181,7 @@ namespace CarePackage.UI
             checkMarkImage = inCheckMarkImage;
             interactable = inInteractable;
             if (interactable == null) return;
-            interactable.OnInteracted += () => SetValue(Value = !Value);
+            interactable.OnInteracted += (interacted) => SetValue(Value = !Value);
         }
         
         public void SetValue(bool value)

@@ -14,7 +14,7 @@ namespace CarePackage.Task
         public static event System.Action<Task> OnTaskUpdated;
         public static event System.Action OnTaskCancelled;
 
-        private void Start()
+        private void Awake()
         {
             FetchComponents();
         }

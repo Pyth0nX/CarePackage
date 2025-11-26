@@ -62,7 +62,6 @@ namespace CarePackage.Interaction.Car
     [Serializable]
     public class TryStartDayWithCarAction : IInteractAction
     {
-        [SerializeField] private string sceneName;
         [SerializeField] private Transform packageContainer;
         
         private int requiredDeliveries => GameManager.Instance.Player.DeliveryManager.GetDeliveryQuotas;
@@ -87,7 +86,7 @@ namespace CarePackage.Interaction.Car
             if (HasTheRequiredPackages() && !interactingPlayer.IsPickupValid)
             {
                 Debug.Log("Going to new Scene");
-                var switchSceneAction = new SwitchSceneAction(sceneName);
+                var switchSceneAction = new SwitchSceneAction(ECarePackageScenes.NeighbourHood);
                 switchSceneAction.PerformAction(interactingPlayer, interactingObject);
             }
             

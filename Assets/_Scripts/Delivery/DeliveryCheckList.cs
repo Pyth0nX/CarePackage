@@ -40,7 +40,7 @@ namespace CarePackage.Delivery
             foreach (var package in _packages)
                 CreateCheckablePackage(package);
 
-            _selectablePackageObjects[0].GetComponent<Interactable>().Interact(GameManager.Instance.Player);
+            _selectablePackageObjects[0].GetComponent<Interactable>().Interact();
         }
 
         private void CreateCheckablePackage(Package package)

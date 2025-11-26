@@ -169,11 +169,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fc6b2d8ac759e4f8970feefe601c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.UI.HoverableElement
-  toggleAble: 1
-  hoverStrategy:
+  hoverStrategies:
   - rid: 5340630825184264272
   - rid: 5340630825184264273
   presetStyle: {fileID: 0}
+  isDirtyFlags: 
+  useDirty: 0
+  toggleAble: 1
+  useOnlyPreset: 0
+  _presetOnlyBackup: []
   references:
     version: 2
     RefIds:
@@ -402,7 +406,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 220575994}
         m_TargetAssemblyTypeName: CarePackage.Main.SceneController, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: LoadSceneFromString
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -847,6 +851,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!115 &682651754
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: Clickable
+  m_Namespace: CarePackage.Interaction
+  m_AssemblyName: Assembly-CSharp
 --- !u!1001 &729883428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -987,10 +1006,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 220575994}
-        m_TargetAssemblyTypeName: CarePackage.Main.SceneController, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 2013495328}
+        m_TargetAssemblyTypeName: CarePackage.Main.GameManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1668,12 +1687,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 220575994}
         m_TargetAssemblyTypeName: CarePackage.Main.SceneController, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+        m_MethodName: LoadSceneByIndex
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: Tutorial
           m_BoolArgument: 0
@@ -2401,6 +2420,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2525503219296498052, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
+      propertyPath: requiredMoney
+      value: 125
+      objectReference: {fileID: 0}
     - target: {fileID: 3509897045478448478, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.3204
@@ -2445,7 +2468,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2525503219296498052, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2500,10 +2524,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fc6b2d8ac759e4f8970feefe601c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.UI.HoverableElement
-  toggleAble: 1
-  hoverStrategy:
+  hoverStrategies:
   - rid: 5340630825184264264
   presetStyle: {fileID: 0}
+  isDirtyFlags: 
+  useDirty: 0
+  toggleAble: 1
+  useOnlyPreset: 0
+  _presetOnlyBackup: []
   references:
     version: 2
     RefIds:
@@ -2659,8 +2687,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 708719679130084855, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1876277002}
   m_SourcePrefab: {fileID: 100100000, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+--- !u!1 &1876277001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 708719679130084855, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+  m_PrefabInstance: {fileID: 1876277000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1876277002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876277001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 682651754}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Clickable
+--- !u!114 &2013495328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
+  m_PrefabInstance: {fileID: 1741397716}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9add4ebb589014da183cebc365e0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Main.GameManager
 --- !u!1 &2029806554
 GameObject:
   m_ObjectHideFlags: 0

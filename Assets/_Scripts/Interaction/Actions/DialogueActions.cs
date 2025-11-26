@@ -66,7 +66,7 @@ namespace CarePackage.Interaction.Dialogue
             if (interactingPlayer != null) _interactingPlayer = interactingPlayer;
             _interactingObject = interactingObject;
             
-            var packageInteractable = _interactingObject.GetComponent<Interactable>().InteractAction;
+            var packageInteractable = interactingObject.GetComponent<Interactable>().InteractAction;
             if (packageInteractable == null)
             {
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is not interactable!");
@@ -79,15 +79,25 @@ namespace CarePackage.Interaction.Dialogue
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is not a PackageAction!");
                 return;
             }
+            
             var package = packageAction.Package;
             if (package == null)
             {
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package is null!");
                 return;
             }
-            
-            if (package.Id != id) return;
-            if (DialogueManager.Instance == null) return;
+
+            if (package.Id != id)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package id does not match!");
+                return;
+            }
+
+            if (DialogueManager.Instance == null)
+            {
+                Debug.LogWarning("[DialogueAction] Tried to start dialogue, but DialogueManager is null!");
+                return;
+            }
 
             _dialogueRunner = DialogueManager.Instance.dialogueRunner;
             if (_dialogueRunner == null) return;
@@ -97,21 +107,26 @@ namespace CarePackage.Interaction.Dialogue
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but one is already running!");
                 return;
             }
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
 
             _playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
+            GoalIndicator.Instance.SetGoalObject(null);
 
             if (_playerController == null) return;
             _playerController.LockInput(true);
             
             DialogueManager.Instance.SetYarnFloat("$family", familyID);
-            Debug.Log("[DialogueAction] FamilyID: " + familyID + " yarnFamId: " + DialogueManager.Instance.GetYarnFloat("$family"));
+            //Debug.LogError("[DialogueAction] FamilyID: " + familyID + " yarnFamId: " + DialogueManager.Instance.GetYarnFloat("$family"));
 
             //if (_interactingPlayer.DeliveryManager.GetCurrentDelivery().ItemGUID == "Items/Uniform")
             DialogueManager.Instance.SetYarnBool("$clothes", true);
             DialogueManager.Instance.SetYarnString("$package", package.ItemGUID.Split('/').Last());
-            Debug.Log("[DialogueAction] ItemGUID: " + package.ItemGUID.Split('/').Last());
-            Debug.Log("[DialogueAction] Clothes: " + DialogueManager.Instance.GetYarnBool("$clothes"));
-            DialogueManager.Instance.SetYarnFloat("$Damage", (int)package.PackageData.State);
+            /*
+            Debug.LogError("[DialogueAction] ItemGUID: " + package.ItemGUID.Split('/').Last());
+            Debug.LogError("[DialogueAction] Clothes: " + DialogueManager.Instance.GetYarnBool("$clothes"));
+            Debug.LogError("[DialogueAction] Package Damage: " + (int)package.PackageData.State);
+            Debug.LogError("[DialogueAction] Package State: " + package.PackageData.State);*/
+            DialogueManager.Instance.SetYarnFloat("$damage", (int)package.PackageData.State);
 
             var stateName = package.PackageData.State.ToString();
             DialogueManager.Instance.SetYarnString("$packageState", stateName);
@@ -124,12 +139,14 @@ namespace CarePackage.Interaction.Dialogue
 
         public void OnEnable()
         {
-            DialogueManager.OnPackageRecieved += OnDialogueComplete;
+            //DialogueManager.OnPackageRecieved += OnDialogueComplete;
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
         }
 
         public void OnDisable()
         {
-            DialogueManager.OnPackageRecieved -= OnDialogueComplete;
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
+            //DialogueManager.OnPackageRecieved -= OnDialogueComplete;
         }
 
         private void OnDialogueComplete(bool packageRecieved)
@@ -137,14 +154,34 @@ namespace CarePackage.Interaction.Dialogue
             Debug.Log("[DialogueAction] Dialogue finished — input");
             DialogueManager.Instance.shouldDebugDialogueNode = false;
 
-            if (_playerController == null) return;
-            CarePackage.UI.UIManager.Instance.CloseInterface(false);
+            if (_playerController == null)
+            {
+                return;
+            }
+            //CarePackage.UI.UIManager.Instance.CloseInterface(false);
+            _playerController.LockInput(false);
 
             if (packageRecieved)
             {
                 var receivePackageAction = new ReceiveDeliveryAction(id);
                 receivePackageAction.PerformAction(_interactingPlayer, _interactingObject);
             }
+        }
+        
+        private void OnDialogueComplete()
+        {
+            Debug.Log("[DialogueAction] Dialogue finished — input");
+            DialogueManager.Instance.shouldDebugDialogueNode = false;
+
+            if (_playerController == null)
+            {
+                return;
+            }
+            CarePackage.UI.UIManager.Instance.CloseInterface(false);
+            //_playerController.LockInput(false);
+
+                var receivePackageAction = new ReceiveDeliveryAction(id);
+                receivePackageAction.PerformAction(_interactingPlayer, _interactingObject);
         }
     }
 }

@@ -34,12 +34,14 @@ public class GoalIndicator : MonoBehaviour
     
     private void Enable()
     {
+        GameManager.onDayEntered += OnDayEntered_Implementation;
         PlayerController.OnPlayerMoved += CheckGoalObjectInView;
         AAMAP.MapManager.OnMapEnabled += ToggleRendererCanBeVisible;
     }
 
     private void OnDisable()
     {
+        GameManager.onDayEntered -= OnDayEntered_Implementation;
         PlayerController.OnPlayerMoved -= CheckGoalObjectInView;
         AAMAP.MapManager.OnMapEnabled -= ToggleRendererCanBeVisible;
     }
@@ -52,9 +54,15 @@ public class GoalIndicator : MonoBehaviour
         CheckGoalObjectInView();
         _elapsedTime = 0;
     }
+
+    private void OnDayEntered_Implementation(int day)
+    {
+        cam = GameManager.Instance.Player.SwitchMode.CarCamera;
+    }
     
     public void SetGoalObject(GameObject goalObj, bool mapIndicator = true, bool hidePreviousMarker = true, float upOffset = 1.33f)
     {
+        Debug.Log("Setting GoalObject to " + goalObj);
         if (obj != null && mapIndicator && hidePreviousMarker) obj.transform.GetChild(obj.transform.childCount -1).gameObject.SetActive(false);
         if (goalObj == null)
         {

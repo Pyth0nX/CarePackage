@@ -133,6 +133,7 @@ namespace CarePackage.Delivery
             UI.UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
             jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0);
+            CompletableTracker.Instance.Initialized("SelectedPackage_" + _displayedJob.PackageData.Title, CompletableTracker.CompletableType.Completable);
         }
 
         public void OnExitJobClicked(GameObject button)
@@ -153,9 +154,9 @@ namespace CarePackage.Delivery
             CreatePackageForConveyerBelt(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
             UI.UIManager.Instance.ClosePopupWindow(jobListing);
-            CompletableTracker.Instance.Initialized("Package_"+_displayedJob.PackageData.Title, CompletableTracker.CompletableType.Quest);
+            CompletableTracker.Instance.Completed("SelectedPackage_" + _displayedJob.PackageData.Title, CompletableTracker.CompletableType.Completable).WithSuccess(true);
         }
-
+        
         private void CreatePackageForConveyerBelt(Package packageData)
         {
             if (packageData == null) return;

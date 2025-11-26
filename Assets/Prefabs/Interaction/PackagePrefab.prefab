@@ -54,23 +54,17 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 7735813133548388455
+  interactAction:
+    rid: -2
+  interactActionRef: {fileID: 1781555164194001046, guid: 31ffcb3d6f6939e4a9efc7ca419b8101, type: 3}
   interactText: Press E
   showMessage: 1
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 7735813133548388455
-      type: {class: PackageAction, ns: CarePackage.Interaction.Delivery, asm: Assembly-CSharp}
-      data:
-        offset: {x: 0, y: -0.1, z: 0}
-        owningObject: {fileID: 0}
-        extendedLogic: []
-        pickupState: 0
-        package: {fileID: 0}
-        addedDelivery: 0
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &8151896957031775992
 MonoBehaviour:
   m_ObjectHideFlags: 0

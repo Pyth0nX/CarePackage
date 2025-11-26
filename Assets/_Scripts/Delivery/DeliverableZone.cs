@@ -9,11 +9,11 @@ namespace CarePackage.Delivery
     public class DeliverableZone : MonoBehaviour
     {
         [SerializeField] private LayerMask layerMask;
-        
         [SerializeReference, SerializeReferenceEditor.SR] private IInteractAction interactLogic;
-        private BoxCollider _collider;
         
         public IInteractAction InteractLogic { get => interactLogic ; set => interactLogic = value; }
+        
+        private BoxCollider _collider;
         
         private void Start()
         {

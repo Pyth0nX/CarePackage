@@ -68,16 +68,16 @@ namespace CarePackage.Interaction.Miscellaneous
     [Serializable]
     public class SwitchSceneAction : IInteractAction
     {
-        [SerializeField] private string sceneName;
+        [SerializeField] private ECarePackageScenes scene;
 
-        public SwitchSceneAction(string inSceneName)
+        public SwitchSceneAction(ECarePackageScenes inSceneName)
         {
-            sceneName = inSceneName;
+            scene = inSceneName;
         }
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            SceneController.Instance.LoadScene(sceneName);
+            SceneController.Instance.LoadScene(scene);
         }
     }
 

@@ -1,40 +1,80 @@
-using SerializeReferenceEditor;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+using System;
 using CarePackage.Main;
 using UnityEngine;
 
 namespace CarePackage.Interaction
 {
-    public class Interactable : MonoBehaviour, IInteractable, IPointerDownHandler
+    public class Interactable : MonoBehaviour, IInteractable
     {
-        [SerializeField] private InteractionType interactionType;
+        [SerializeField] private EInteractionType interactionType;
         [SerializeField] private LayerMask interactionLayer;
-        [FormerlySerializedAs("interactAction")] [SerializeReference, SR] private IInteractAction iInteractAction;
+        [SerializeReference, SerializeReferenceEditor.SR] private IInteractAction interactAction;
         [SerializeField] private string interactText;
         [SerializeField] private bool showMessage;
-        
         [SerializeField] private bool debug;
         
-        private InteractionComponent _interactionComponent;
+        public IInteractAction InteractAction { get => interactAction; set => interactAction = value; }
+        public IInteractionActivationType ActivationType => _activationType;
+        public LayerMask Layer => interactionLayer;
+        public EInteractionType Type => interactionType;
+        public string InteractMessage => interactText;
+        public bool ShowMessage => showMessage;
+        
+        private IInteractionActivationType _activationType;
         private Outline _outline;
+#if UNITY_EDITOR
+        private EInteractionType _LastType;
+#endif
         
-        public IInteractAction InteractAction { get => iInteractAction; set => iInteractAction = value; }
-        
-        public event System.Action OnInteracted;
-        public event System.Action OnInteractionFinished;
+        public event System.Action<Interactable> OnInteracted;
+        public event System.Action<Interactable> OnInteractionFinished;
+
+        private void Awake()
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            switch (interactionType)
+            {
+                case EInteractionType.Active:
+                    _activationType = new InteractionOnInteracted(this);
+                    break;
+                case EInteractionType.Passive:
+                    _activationType = new InteractionOnTriggered(this);
+                    break;
+                case EInteractionType.Clicked:
+                    _activationType = new InteractionOnClicked(this);
+                    break;
+                default:
+                    break;
+            }
+            _LastType = interactionType;
+        }
 
         private void Start()
         {
             if (interactionLayer == LayerMask.NameToLayer("Default")) interactionLayer = LayerMask.GetMask("Interaction");
-            _interactionComponent = GameManager.Instance.Player.InteractionComponent;
             _outline = GetComponent<Outline>();
+            
+            if (_outline == null) return;
             _outline.enabled = false;
         }
+/*
+        private void OnValidate()
+        {
+            if (interactionType == _LastType) return;
+            
+            if (_activationType is IDisposable disposable)
+                disposable.Dispose();
+            
+            Init();
+        }*/
 
         private void OnEnable()
         {
-            if (iInteractAction is IActivatable activatable)
+            if (interactAction is IActivatable activatable)
             {
                 activatable.OnEnable();
             }
@@ -42,83 +82,25 @@ namespace CarePackage.Interaction
 
         private void OnDisable()
         {
-            if (iInteractAction is IActivatable activatable)
+            if (interactAction is IActivatable activatable)
             {
                 activatable.OnDisable();
             }
         }
-
-        public void Interact(PlayerState interactingPlayer)
-        {
-            if (iInteractAction == null) return;
-            if (debug) Debug.Log($"[Interactable] Interacted {this.name} {Type}");
-            OnInteracted?.Invoke();
-            iInteractAction.PerformAction(interactingPlayer, gameObject);
-            OnInteractionFinished?.Invoke();
-        }
         
-        public InteractionType Type => interactionType;
-        public string InteractMessage => interactText;
-        public bool ShowMessage => showMessage;
-
-        public bool Clickable => interactionType == InteractionType.Clicked;
-        public bool Passive => interactionType == InteractionType.Passive;
+        public void Interact()
+        {
+            if (interactAction == null) return;
+            interactAction.PerformAction(GameManager.Instance.Player, gameObject);
+            if (debug) Debug.Log($"[Interactable] {interactionType} Interacted");
+            OnInteracted?.Invoke(this);
+            OnInteractionFinished?.Invoke(this);
+        }
 
         public void OnHovered(bool toggle)
         {
+            if (_outline == null) return;
             _outline.enabled = toggle;
-        }
-        
-        private void OnMouseDown()
-        {
-            /*
-                if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
-                {
-                    Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
-                    return;
-                }*/
-            if (!Clickable) return;
-            if (debug) Debug.Log($"[Interactable OnMouseDown] Triggered {this.name} {Type}");
-            if (_interactionComponent == null) return;
-            _interactionComponent.SetInteractable(this);
-            _interactionComponent.TryInteract();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            /*
-                if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
-                {
-                    Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
-                    return;
-                }*/
-            if (debug) Debug.Log($"[Interactable OnPointerDown] Triggered {this.name} {Type}");
-            if (!Clickable) return;
-            if (_interactionComponent == null) return;
-            _interactionComponent.SetInteractable(this);
-            _interactionComponent.TryInteract();
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (debug) Debug.Log($"[Interactable OnTrigger] Triggered {this.name} {Type}");/*
-            if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
-            {
-                Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
-                return;
-            }*/
-            
-            if (other.transform.root.TryGetComponent<InteractionComponent>(out _interactionComponent))
-            {
-                if (debug) Debug.Log($"[Interactable OnTrigger] Triggered {this.name} {Type} with {other.name}");
-                _interactionComponent.SetInteractable(this);
-                if (!Passive) return;
-                _interactionComponent.TryInteract();
-            }
-            else
-            {
-                Debug.Log($"[Interactable OnTrigger] could not find a Interactable component for {other.transform.root.name} {other.TryGetComponent<InteractionComponent>(out InteractionComponent inter)}");
-            }
         }
     }
 }

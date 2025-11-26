@@ -350,15 +350,15 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 1741967866699972678
+  interactAction:
+    rid: 7735813649916756147
   interactText: Press E
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 1741967866699972678
+    - rid: 7735813649916756147
       type: {class: EnterCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
       data: 
 --- !u!65 &1544365233461310926
@@ -639,18 +639,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  iInteractAction:
-    rid: 3802007057444110449
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 1
   debug: 1
   references:
     version: 2
     RefIds:
-    - rid: 3802007057444110449
-      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        animator: {fileID: 4418585344812075850}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &6547792179064630458
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,15 +908,15 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 7586773879207755856
+  interactAction:
+    rid: 7735813649916756148
   interactText: Press E
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 7586773879207755856
+    - rid: 7735813649916756148
       type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
       data:
         animator: {fileID: 4418585344812075850}

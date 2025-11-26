@@ -37,7 +37,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     private void Update()
     {
         Debug.Log("Day: " + GetYarnFloat("$day"));
-        if (!shouldDebugDialogueNode) return;
+        if (!shouldDebugDialogueNode && dialogueRunner.IsDialogueRunning) return;
         Debug.Log(dialogueRunner.Dialogue.CurrentNode);
     }
 
@@ -48,12 +48,12 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
 
     private void Enable()
     {
-        GameManager.Instance.onGameRestart += OnGameRestart_Implementation;
+        GameManager.onGameRestart += OnGameRestart_Implementation;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.onGameRestart -= OnGameRestart_Implementation;
+        GameManager.onGameRestart -= OnGameRestart_Implementation;
     }
     
     private void OnGameRestart_Implementation()

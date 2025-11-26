@@ -14,8 +14,6 @@ namespace CarePackage.Main
         
         // public getters
         public DeliveryManager DeliveryManager => _deliveryManager;
-        public InteractionComponent InteractionComponent =>
-            _switchMode.ActivePlayer.GetComponent<InteractionComponent>();
         public Inventory Inventory => _inventory;
         public ModeSwitcher SwitchMode => _switchMode;
         public GameObject ActivePlayer => _switchMode.ActivePlayer;
@@ -54,10 +52,13 @@ namespace CarePackage.Main
             {
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Hello traveller " + 1));
             }
+            
+            Debug.Log("Pickup: " + IsPickupValid);
         }
 
         public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
         {
+            Debug.Log("Picking up object " + objectOfPickup.transform.root.name);
             if (IsPickupValid) DropPickup();
             SetPickup(objectToPickup, objectOfPickup);
             if (!IsPickupValid) return;

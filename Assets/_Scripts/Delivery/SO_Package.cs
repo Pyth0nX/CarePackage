@@ -17,13 +17,13 @@ namespace CarePackage.Delivery
     public struct FPackageData
     {
         public string Title;
-        [TextArea] public string Description;
+        [TextArea]
+        public string Description;
         public int MinPay;
         public int MaxPay;
         public EPackageState State;
         
         public FPackageData(string inTitle = "", string inDescription = "") : this(inTitle, inDescription, 0, 1, EPackageState.Pristine) {}
-
         public FPackageData(string inTitle, string inDescription, int inMinPay, int inMaxPay, EPackageState inState = EPackageState.Pristine)
         {
             Title = inTitle;

@@ -48,12 +48,12 @@ namespace CarePackage.Main
 
         private void Start()
         {
-            GameManager.Instance.onDayStarted += OnDayStarted_Implementation;
+            GameManager.onDayEntered += OnDayStarted_Implementation;
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.onDayStarted -= OnDayStarted_Implementation;
+            GameManager.onDayEntered -= OnDayStarted_Implementation;
         }
 
         private void OnDayStarted_Implementation(int day)

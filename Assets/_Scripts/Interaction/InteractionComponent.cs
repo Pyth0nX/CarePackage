@@ -7,72 +7,44 @@ namespace CarePackage.Interaction
 {
     public class InteractionComponent : MonoBehaviour
     {
-        [SerializeField] private LayerMask interactionLayer;
-        [SerializeField] private bool debug;
-        [SerializeField] private bool castRay;
-        [SerializeField, Range(0.1f, 50f)] private float rayDistance = 4.5f;
-        [SerializeField] private bool isPlayer = true;
         [SerializeField] private GameObject interactionUI;
-        
-        private IInteractable _interactable;
-        private MonoBehaviour owner;
+        [SerializeField] private LayerMask interactionLayer;
+        [SerializeField, Range(0.1f, 50f)] private float rayDistance = 3.5f;
+        [SerializeField] private bool castRay;
+        [SerializeField] private bool debug;
         
         private TextMeshProUGUI _interactionText;
+        private IInteractable _interactable;
         private float _elapsedTime;
-        private bool _inInteraction;
         
         public bool ValidInteraction() => _interactable != null;
-        public bool IsPassive => _interactable.Type == InteractionType.Passive;
-        public bool IsActive => _interactable.Type == InteractionType.Active;
 
         private void Start()
         {
-            if (isPlayer) owner = GameManager.Instance.Player;
-            else owner = transform.root.GetComponent<MonoBehaviour>();
+            if (interactionUI == null) return;
             _interactionText =  interactionUI.GetComponentInChildren<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            if (castRay && !_inInteraction) CheckForInteractions();
+            if (castRay) CheckForInteractions();
         }
 
         public void SetInteractable(IInteractable interactable)
-        {/*
-            if (interactable == null && _interactable != null) _interactable.OnHovered(false);
-            _interactable = interactable;
-            
-            if (_interactable == null) interactionUI.SetActive(false);
-            else if (_interactable.ShowMessage)
-            {
-                _interactionText.text = _interactable.InteractMessage;
-                interactionUI.SetActive(true);
-                _interactable.OnHovered(true);
-            }*/
-            
-            if (_interactable != null && owner is PlayerState ps && ps.IsPickupValid)
-            {
-                if (((MonoBehaviour)_interactable).gameObject == ps.PickupObject)
-                {
-                    _interactionText.text = "Drop";
-                    interactionUI.SetActive(true);
-                    return;
-                }
-            }
-
+        {
             if (interactable == null && _interactable != null)
                 _interactable.OnHovered(false);
 
             _interactable = interactable;
-
-            if (_interactable == null) 
+/*
+            if (_interactable == null && interactionUI != null) 
                 interactionUI.SetActive(false);
             else if (_interactable.ShowMessage)
             {
                 _interactionText.text = _interactable.InteractMessage;
-                interactionUI.SetActive(true);
+                if (interactionUI != null) interactionUI.SetActive(true);
                 _interactable.OnHovered(true);
-            }
+            }*/
         }
 
         private void CheckForInteractions()
@@ -82,17 +54,17 @@ namespace CarePackage.Interaction
 
             _elapsedTime = 0;
 
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f)); // new Ray(transform.position, transform.forward);
-            RaycastHit hit;
+            var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
 
-            if (Physics.Raycast(ray, out hit, rayDistance, interactionLayer))
+            if (Physics.Raycast(ray, out var hit, rayDistance, interactionLayer))
             {
                 if (debug) Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
-                if (hit.collider.gameObject.TryGetComponent(out IInteractable rayInteractable))
+                if (hit.collider.TryGetComponent(out IInteractable rayInteractable))
                 {
                     if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
-
+                    if (rayInteractable.Type != EInteractionType.Active) return;
                     if (_interactable == rayInteractable) return;
+                    
                     SetInteractable(rayInteractable);
                     return;
                 }
@@ -100,100 +72,55 @@ namespace CarePackage.Interaction
             SetInteractable(null);
         }
 
-        /*
-        private void OnTriggerEnter(Collider other)
-        {/*
-            if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
-            {
-                Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
-                return;
-            }
-
-            if (other.gameObject.TryGetComponent<IInteractable>(out _interactable))
-            {
-                if (IsPassive)
-                {
-                    Debug.LogWarning($"[Interactable] Passive interaction: {gameObject.name}");
-                    TryInteract(owner as PlayerState);
-                }
-            }
-        }*/
-/*
-        private void OnTriggerExit(Collider other)
-        {
-            if ((interactionLayer.value & (1 << gameObject.layer)) == 0)
-            {
-                Debug.LogWarning($"[Interactable] Layer mismatch: {gameObject.name} is on layer {gameObject.layer}, not in {interactionLayer}");
-                return;
-            }
-            _interactable = null;
-        }*/
-        
         public void OnInteract(InputAction.CallbackContext input)
-        {/*
-            if (input.started)
-            {
-                if (!ValidInteraction())
-                {
-                    if (owner is PlayerState playerState)
-                    {
-                        if (playerState.IsPickupValid)
-                        {
-                            playerState.DropPickup();
-                        }
-                    }
-                    return;
-                }
-                if (!IsActive) return;
-                TryInteract();
-            }*/
-            if (input.started)
-            {
-                // If we're aiming at our own pickup, drop it
-                if (owner is PlayerState playerState && playerState.IsPickupValid)
-                {
-                    if (_interactable != null)
-                    {
-                        if (_interactable == playerState.PickupObject.GetComponent<IInteractable>())
-                        {
-                            playerState.DropPickup();
-                            return;
-                        }
-                        
-                        if (((MonoBehaviour)_interactable).gameObject == playerState.PickupObject)
-                        {
-                            playerState.DropPickup();
-                            return;
-                        }
-                    }
-                }
+        {
+            if (!input.performed) return;
 
-                if (!ValidInteraction())
-                {
-                    if (owner is PlayerState ps && ps.IsPickupValid)
-                    {
-                        ps.DropPickup();
-                    }
-                    return;
-                }
+            var player = GameManager.Instance.Player;
+            if (player == null) return;
 
-                if (!IsActive) return;
-                TryInteract();
+            if (player.IsPickupValid)
+            {/*
+                if (_interactable != null)
+                {
+                    if (_interactable == player.PickupObject.GetComponent<IInteractable>())
+                    {
+                        player.DropPickup();
+                        return;
+                    }
+
+                    if (((MonoBehaviour)_interactable).gameObject == player.PickupObject)
+                    {
+                        player.DropPickup();
+                        return;
+                    }
+                }*/
+                
+                player.DropPickup();
+                return;
             }
+            
+            /*
+            if (!ValidInteraction())
+            {
+                if (player.IsPickupValid)
+                {
+                    player.DropPickup();
+                }
+
+                return;
+            }*/
+
+            if (ValidInteraction()) TryInteract();
         }
 
         public void TryInteract()
         {
             if (debug) Debug.Log("Trying to interaction with " + _interactable);
             if (_interactable == null) return;
-            _interactable.Interact(owner as PlayerState);
+            _interactable.ActivationType.RaiseInteraction();
             _interactable = null;
-            interactionUI.SetActive(false);
-        }
-
-        public void SetCurrentlyInInteraction(bool inInteraction)
-        {
-            _inInteraction = inInteraction;
+            if (interactionUI != null) interactionUI.SetActive(false);
         }
 
         private void OnDrawGizmos()

@@ -1,17 +1,29 @@
 using CarePackage.Persistance;
-using TMPro;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine;
+using TMPro;
 
 namespace CarePackage.Main
 {
     public class SceneController : MonoBehaviour
     {
+        private System.DateTime _timeAtEnteringScene;
+        private ECarePackageScenes _activeScene;
+        private ECarePackageScenes? _lastActiveScene;
+
+        public ECarePackageScenes ActiveScene => _activeScene;
+        public ECarePackageScenes LastActiveScene => _lastActiveScene.HasValue ? _lastActiveScene.Value : default;
+        
         public static SceneController Instance;
 
         private void Awake()
         {
-            if (Instance == null) Instance = this;
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
         }
 
         private void OnEnable()
@@ -24,68 +36,166 @@ namespace CarePackage.Main
             SceneManager.sceneLoaded -= OnSceneLoaded_Implementation;
         }
         
-        /**
-         * Scene indexes
-         * 
-         * 0 = mainmenu,
-         * 1 = SwipeTutorial,
-         * 2 = postoffice,
-         * 3 = neigbourhood,
-         * 4 = houses,
-         * 5 = ending
-         */
+        public void LoadScene(ECarePackageScenes scene)
+        {
+            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
+            SceneManager.LoadScene((int)scene);
+        }
+        
+        public void LoadSceneFromString(string sceneName)
+        {
+            if (System.Enum.TryParse<ECarePackageScenes>(sceneName, true, out var sceneEnum))
+            {
+                LoadScene(sceneEnum);
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid scene name '{sceneName}' passed to LoadSceneFromString");
+            }
+        }
+        
+        public void LoadSceneByIndex(int sceneIndex)
+        {
+            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
+            LoadScene((ECarePackageScenes)sceneIndex);
+        }
+        
+        public void LoadSceneByIndex(SceneEvent sceneIndex)
+        {
+            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
+            //LoadScene(sceneIndex);
+        }
+        
         private void OnSceneLoaded_Implementation(Scene scene, LoadSceneMode sceneMode)
         {
-            Debug.Log($"Loaded Scene {scene.name}");
-            // PostOffice
-            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
+            Debug.Log($"Loaded Scene {scene.name} with index: {scene.buildIndex}");
+            _activeScene = (ECarePackageScenes)scene.buildIndex;
+
+            if (_lastActiveScene.HasValue)
             {
-                Invoke("StartTheDay", .05f);
+                CompleteTimeSpentInSceneAnalysisForScene(_lastActiveScene.Value);
             }
-            // Neighbourhood
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+            StartTimeSpentInSceneAnalysisForScenme(_activeScene);
+
+            switch (_activeScene)
             {
-                Invoke("SetMailBoxes", .01f);
+                case ECarePackageScenes.MainMenu:
+                    HandleMainMenuScene();
+                    break;
+                
+                case ECarePackageScenes.Tutorial:
+                    HandleTutorialScene();
+                    break;
+                
+                case ECarePackageScenes.PostOffice:
+                    HandlePostOfficeScene();
+                    //Invoke(nameof(HandlePostOfficeScene), 0.01f);
+                    break;
+                
+                case ECarePackageScenes.NeighbourHood:
+                    Invoke(nameof(HandleNeighbourHoodScene), 0.01f);
+                    break;
+                
+                case ECarePackageScenes.Ending:
+                    HandleEndingScene();
+                    break;
+                default:
+                    break;
             }
-            // Ending
-            else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(5))
-            {
-                if (!GameManager.Instance.Survived)
-                {
-                    GameObject.Find("UI_Failed").GetComponentInChildren<TextMeshProUGUI>().text =
-                    "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
-                }
-                else
-                {
-                    GameObject.Find("UI_Failed").SetActive(false);
-                }
-            }
+            _lastActiveScene = _activeScene;
         }
 
-        private void SetMailBoxes()
+        private void HandleMainMenuScene()
         {
-            GameManager.Instance.StartDay();
-            GameManager.Instance.Player.DeliveryManager.AssignRandomAddressesForDelivery();
-            GoalIndicator.Instance.Camera = GameManager.Instance.Player.SwitchMode.CarCamera;
+            
+        }
+        
+        private void HandleTutorialScene()
+        {
+            
+        }
+        
+        private void HandleNeighbourHoodScene()
+        {
+            GameManager.Instance.EnterDay();
         }
 
-        private void StartTheDay()
+        private void HandlePostOfficeScene()
         {
-            GameManager.Instance.StartGame();
+            Debug.Log("Entered Post Office Scene with values: lastActiveScene: " + (_lastActiveScene.HasValue ? _lastActiveScene : "null") + " activeScene: " + _activeScene);
+            if (!_lastActiveScene.HasValue || _lastActiveScene.Value != ECarePackageScenes.PostOffice)
+            {
+                Debug.Log("Starting Day in Post Office");
+                GameManager.Instance.StartDay();
+            }
             if (!GameManager.Instance.tutorialDone) 
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Check in at the computer"));
         }
-
-        public void LoadScene(string sceneName)
+        
+        private void HandleEndingScene()
         {
-            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
-            SceneManager.LoadScene(sceneName);
+            var goodEnding = GameObject.Find("UI_GoodEnding");
+            var neutralEnding = GameObject.Find("UI_NeutralEnding");
+            var badEnding = GameObject.Find("UI_BadEnding");
+            var failed = GameObject.Find("UI_Failed");
+            
+            goodEnding.SetActive(false);
+            neutralEnding.SetActive(false);
+            badEnding.SetActive(false);
+            failed.SetActive(false);
+                
+            if (!GameManager.Instance.Survived)
+            {
+                GameObject.Find("UI_Failed").SetActive(false);
+                var failedText = failed.GetComponentInChildren<TextMeshProUGUI>();
+                failedText.text = "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
+                return;
+            }
+
+            var score = DialogueManager.Instance.GetYarnFloat("$relationshipFamA");
+            if (score < -1.5)
+            {
+                badEnding.SetActive(true);
+            }
+            else if (score >= -1.5 && score < 1)
+            {
+                neutralEnding.SetActive(true);
+            }
+            else if (score >= 1)
+            {
+                goodEnding.SetActive(true);
+            }
+        }
+        
+        private void StartTimeSpentInSceneAnalysisForScenme(ECarePackageScenes scene)
+        {
+            var sceneCompletableId = "TimeSpent_" + scene;
+            Debug.Log($"Starting to track {sceneCompletableId}");
+            _timeAtEnteringScene = System.DateTime.Now;
+            Xasu.HighLevel.CompletableTracker.Instance.Initialized(sceneCompletableId, Xasu.HighLevel.CompletableTracker.CompletableType.Level);
         }
 
+        private void CompleteTimeSpentInSceneAnalysisForScene(ECarePackageScenes scene)
+        {
+            var sceneCompletableId = "TimeSpent_" + scene;
+            Debug.Log($"Completing {sceneCompletableId}");
+            Xasu.HighLevel.CompletableTracker.Instance.Completed(sceneCompletableId, Xasu.HighLevel.CompletableTracker.CompletableType.Level).WithSuccess(true).WithDuration(_timeAtEnteringScene, System.DateTime.Now);
+        }
+        
+        public static ECarePackageScenes GetActiveScene()
+        {
+            return (ECarePackageScenes)SceneManager.GetActiveScene().buildIndex;
+        }
+        
         public void QuitGame()
         {
             Debug.Log("Quit Game");
             Application.Quit();
+        }
+
+        private void OnApplicationQuit()
+        {
+            CompleteTimeSpentInSceneAnalysisForScene(ActiveScene);
         }
     }
 }

@@ -307,6 +307,7 @@ namespace CarePackage.UI
 
         public void OnHovered(PointerEventData eventData)
         {
+            if (!shakeOnHover) return;
             _currentTween.Stop();
             _currentTween = Tween.ShakeLocalPosition
             (
@@ -326,6 +327,7 @@ namespace CarePackage.UI
 
         public void OnClicked(PointerEventData eventData)
         {
+            if (!shakeOnClick) return;
             _currentTween.Stop();
             _currentTween = Tween.PunchLocalPosition
             (

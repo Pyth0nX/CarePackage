@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Pedestrian : MonoBehaviour
 {
-    [SerializeField] private float distance;
-    [SerializeField] private float speed;
+    [SerializeField] private float distance = 15f;
+    [SerializeField] private float speed = 1f;
     [SerializeField] private float minDistance = 0.1f;
     
     private Vector3 _targetLocation;
@@ -11,18 +12,16 @@ public class Pedestrian : MonoBehaviour
     private void Start()
     {
         _targetLocation = GetNewTargetLocation();
+        //InvokeRepeating("PerformWalking", 0f, 1f);
     }
 
     private void Update()
     {
-       PerformWalking(); 
+        PerformWalking();
     }
 
-    private Vector3 GetNewTargetLocation()
-    {
-        return transform.position + transform.forward * distance;
-    }
-
+    private Vector3 GetNewTargetLocation() => transform.position + transform.forward * distance;
+    
     private void PerformWalking()
     {
         if (Vector3.Distance(transform.position, _targetLocation) > minDistance)
@@ -30,7 +29,6 @@ public class Pedestrian : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _targetLocation, speed * Time.deltaTime);
             return;
         }
-        Debug.Log("ReachedTarget");
 
         transform.Rotate(0f, 180f, 0f);
         _targetLocation = GetNewTargetLocation();

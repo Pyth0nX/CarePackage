@@ -12,42 +12,42 @@ namespace CarePackage.Delivery
 {
     public class DeliveryManager : MonoBehaviour, IDataPersistance
     {
-        [SerializeField] private Package currentDelivery;
-        [SerializeField] private List<SO_Package>  deliveries = new();
         [SerializeField] private GameObject mailboxes;
+        [SerializeField] private List<SO_Package> deliveries = new();
+        [SerializeField] private Package currentDelivery;
         
-        [SerializeField] private bool overrideRandomDelivery = false;
-        [SerializeField] private int mainPackageNumber = 3;
         [SerializeField] private float newDeliveryDistanceThreshold;
-        [SerializeField] private int minPackageAmount;
+        [SerializeField] private int mainPackageNumber = 5;
+        [SerializeField] private int minPackageAmount = 1;
         [SerializeField] private int maxPackageAmount;
-
         [SerializeField] private int deliveriesToMake;
+        [SerializeField] private bool overrideRandomDelivery = false;
 
         [SerializeField] private SO_PredeterminedAddresses addressLibrary;
         [SerializeField] private SO_FlavourOptions flavourLibrary;
         [SerializeField] private SO_NonStoryItems itemLibrary;
         
-        public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
         public List<Package> Deliveries => DeliveryUitilities.ToPackageList(deliveries);
-        public Package[] RequiredDeliveries => _jobBoard.GetScriptedJobsDeliveriesByDay(GameManager.Instance.CurrentDay);
         public DeliveryCheckList CheckList => _deliveryCheckList;
+        public Package[] RequiredDeliveries => _jobBoard.GetScriptedJobsDeliveriesByDay(GameManager.Instance.CurrentDay);
         public Package CurrentDelivery => _heldDelivery;
         public int CurrentDeliveryId => _currentDeliveryId;
         public int DeliveriesToMake => deliveries.Count;
         public int PackageMax { get => maxPackageAmount; set => maxPackageAmount = value; }
+        public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
 
+        private DeliverableZone[] _deliverableSpots = System.Array.Empty<DeliverableZone>();
         private List<int> _randomNumbers = new();
         private StopWatch _deliveryTimer = new();
         private DeliveryCheckList _deliveryCheckList;
         private Package _mainDelivery;
         private Package _heldDelivery;
         private JobBoard _jobBoard;
+        private float _directDistanceToDelivery;
+        private float _timeTakenToDelivery;
         private int _deliveriesMade;
         private int _currentDeliveryId;
-        private float _timeTakenToDelivery;
-        private float _directDistanceToDelivery;
-        
+
         private void Awake()
         {
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>();
@@ -60,37 +60,32 @@ namespace CarePackage.Delivery
             LoadPackageMax();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                GetRandomJob();
-            }
-        }
-
         private void OnEnable()
         {
-            Invoke("Enable", .001f);
-        }
-
-        private void Enable()
-        {
-            GameManager.Instance.onStartGame += OnDayStarted_Implementation;
+            GameManager.onDayStarted += OnDayStarted_Implementation;
+            GameManager.onDayEntered += OnDayEntered_Implementation;
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.onStartGame -= OnDayStarted_Implementation;
+            GameManager.onDayStarted -= OnDayStarted_Implementation;
+            GameManager.onDayEntered -= OnDayEntered_Implementation;
         }
 
-        private void OnDayStarted_Implementation()
+        private void OnDayStarted_Implementation(int day)
         {
             _deliveriesMade = 0;
             deliveries.Clear();
+            
             MakeRandomNumbers(Random.Range(minPackageAmount, maxPackageAmount));
-            Invoke("AssignRandomPackages", .1f);
+            AssignRandomPackages();
         }
-        
+
+        private void OnDayEntered_Implementation(int day)
+        {
+            AssignRandomAddressesForDelivery();
+        }
+
         private void EndDayEarly()
         {
             GameManager.Instance.EndDayEarly();
@@ -104,8 +99,9 @@ namespace CarePackage.Delivery
         public void GetRandomJob()
         {
             var delivery = GetRandomAvailableJob();
-            if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null) 
+            if (overrideRandomDelivery && _deliveriesMade == mainPackageNumber && _mainDelivery != null)
                 delivery = _mainDelivery;
+            
             if (GameManager.Instance.ShouldAutomaticallyEndDayEarlyIfNoPackagesLeft && delivery == null)
             {
                 GoalIndicator.Instance.SetGoalObject(null);
@@ -120,15 +116,15 @@ namespace CarePackage.Delivery
         {
             if (newJobPackage == null) return;
             var newJob = newJobPackage;
-            
+
             int wantedId = newJob.Id;
             _currentDeliveryId = wantedId;
-            Debug.Log("Wanted ID: " + wantedId);
+            
+            CompletableTracker.Instance.Initialized("Package_" + newJob.PackageData.Title, CompletableTracker.CompletableType.Quest);
             ToggleIndicator(wantedId, newJob);
-            Debug.Log(newJob);
             _deliveryTimer.Start();
         }
-        
+
         private Package GetRandomAvailableJob()
         {
             if (deliveries.Count == 0) return null;
@@ -139,7 +135,7 @@ namespace CarePackage.Delivery
         public void AddDelivery(Package newDelivery, bool special = false)
         {
             deliveries.Add(DeliveryUitilities.ToScriptableObject(newDelivery));
-            if (special) _mainDelivery =  newDelivery;
+            if (special) _mainDelivery = newDelivery;
             _deliveryCheckList.InitializePackageList(Deliveries);
         }
 
@@ -148,51 +144,61 @@ namespace CarePackage.Delivery
             Debug.Log($"[SetCurrrentJob] setting current job with so_job: {inDelivery}");
             currentDelivery = inDelivery;
         }
-        
+
         public Package GetCurrentDelivery()
         {
             if (currentDelivery == null) return null;
             return currentDelivery;
         }
-        
+
         public void SetListedDelivery(SetListedJobAction inJob, bool isLeft = false)
         {
             if (inJob == null) return;
             _jobBoard.SetJobListing(inJob, isLeft);
         }
-        
+
         public void DeliverPackage(Package packageToDeliver)
         {
+            Debug.Log($"Delivering package: {packageToDeliver.PackageData.Title}");
             var deliveringId = packageToDeliver.Id;
             var packageToDeliverSO = DeliveryUitilities.FindById(deliveries, deliveringId);
             if (packageToDeliverSO != null)
             {
                 var packageObj = FindDeliveryPackageWithId(deliveringId);
+                if (packageObj == null) return;
                 
                 deliveries.Remove(packageToDeliverSO);
                 _randomNumbers.Remove(deliveringId);
                 
                 _timeTakenToDelivery = _deliveryTimer.Stop();
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData, _timeTakenToDelivery, _directDistanceToDelivery);
-                CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
-                
+
                 if (packageObj != null) Destroy(packageObj);
                 _deliveryCheckList.CheckOffCurrentPackage();
                 _deliveriesMade++;
+                CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
+                Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");
                 GetRandomJob();
-                
-                var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position, 
+
+                var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position,
                     GameManager.Instance.Player.ActivePlayer.transform.position);
                 Debug.Log("Goal Distance: " + distanceGoalToPlayer);
                 if (distanceGoalToPlayer > newDeliveryDistanceThreshold) return;
-                
+
                 var goalPackage = FindDeliveryPackageWithId(_currentDeliveryId);
                 if (goalPackage == null) return;
-                
+                /*
+                var deliverableSpot = FindDeliverableSpotWithId(deliveringId);
+                if (deliverableSpot == null) return;
+
+                var deliverableIndicator = deliverableSpot.GetComponentInChildren<IndicatorBehavior>();
+                if (deliverableIndicator == null) return;
+
+                deliverableIndicator.ToggleIndicator(false);*/
                 ToggleIndicator(goalPackage);
             }
         }
-        
+
         private SO_Package GetDeliveryById(int id, SO_Package packageToDeliver)
         {
             var match = deliveries.FirstOrDefault(d => d.Id == packageToDeliver.Id);
@@ -202,6 +208,7 @@ namespace CarePackage.Delivery
 
         private void AssignRandomPackages()
         {
+            Debug.Log($"Assigning {deliveriesToMake} random packages");
             var packages = new List<Package>();
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
@@ -218,49 +225,44 @@ namespace CarePackage.Delivery
                     $"Address: {address}\n" +
                     "\n" +
                     $"Pay: {minPay}-{maxPay}\n";
-                
+
                 var newDelivery = new Package
                 {
                     Id = _randomNumbers[i],
                     PackageData = new FPackageData
                     (
-                        title, 
+                        title,
                         description,
                         minPay,
                         maxPay
-                        ),
+                    ),
                     ItemGUID = item != null ? item.ItemData.name : null,
                 };
                 //AddDelivery(newMail);
                 //_jobBoard.CreateJob(newDelivery);
                 packages.Add(newDelivery);
             }
+
             _jobBoard.CheckScriptedJobs();
             _jobBoard.InitRandomJobsForPackages(packages);
             _deliveryCheckList.InitializePackageList(packages);
         }
 
-        public List<DeliverableZone> interactables = new();
-
         public void AssignRandomAddressesForDelivery()
         {
-            var mailboxesCount = _randomNumbers.Count; 
+            var mailboxesCount = _randomNumbers.Count;
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
-            
-            interactables = new();
-            for (int i = 0; i < mailboxes.transform.childCount; i++)
-            {
-                var mailbox = mailboxes.transform.GetChild(i).GetComponentInChildren<DeliverableZone>();
-                interactables.Add(mailbox);
-            }
+
+            //_deliverableSpots.Clear();
+            _deliverableSpots = FindObjectsByType<DeliverableZone>(FindObjectsSortMode.InstanceID);
             HelperMethods.ShuffleList(_randomNumbers);
-            
+
             for (int i = 0; i < mailboxesCount; i++)
             {
                 int assignedNumber = _randomNumbers[i];
-                Debug.Log($"Child {interactables[i].name} assigned number: {assignedNumber}");
-                
-                var action = interactables[i].InteractLogic;
+                Debug.Log($"Child {_deliverableSpots[i].name} assigned number: {assignedNumber}");
+
+                var action = _deliverableSpots[i].InteractLogic;
                 if (action is ReceiveDeliveryAction deliveryAction)
                 {
                     deliveryAction.WantedPackage = assignedNumber;
@@ -278,15 +280,55 @@ namespace CarePackage.Delivery
             }
             deliveriesToMake = number;
         }
-        
-        private void ToggleIndicator(int wantedId, Package delivery)
+
+        private Package GetDeliveryById(int id)
         {
-            GameObject deliveryLocation = FindPostBoxWithId(wantedId);
-            if (deliveryLocation == null) return;
+            var match = deliveries.FirstOrDefault(d => d.Id == id);
+            var package = DeliveryUitilities.ToPackage(match);
+            if (package != null) return package;
+            return null;
+        }
+        /*
+        public void ToggleIndicator(int wantedId, bool overrideThing = false, int defaultChoice = 0)
+        {
+            var delivery = GetDeliveryById(wantedId);
+            if (delivery == null) return;
+            ToggleIndicator(wantedId, delivery, overrideThing, defaultChoice);
+        }*/
+        
+        public void ToggleIndicator(int wantedId, Package delivery, bool overrideThing = false, int defaultChoice = 0)
+        {/*
+            var deliverableSpot = FindDeliverableSpotWithId(wantedId);
+            if (deliverableSpot == null) return;
             
+            delivery.PackageData.MinPay = GetBasePayBasedOnDistance(transform.position, deliverableSpot.transform.position);
+            SetCurrentDelivery(delivery);
+            _directDistanceToDelivery = Vector3.Distance(transform.position, deliverableSpot.transform.position);
+            
+            if (_directDistanceToDelivery > 30 && !overrideThing || overrideThing && defaultChoice == 0)
+            {
+                var deliverableIndicator = deliverableSpot.GetComponentInChildren<IndicatorBehavior>();
+                if (deliverableIndicator == null) return;
+                
+                deliverableIndicator.ToggleIndicator(true);
+            }
+            else if (_directDistanceToDelivery < 30 && !overrideThing || overrideThing && defaultChoice == 1)
+            {
+                var deliverablePackage = FindDeliveryPackageWithId(wantedId);
+                if (deliverablePackage == null) return;
+
+                var indicator = deliverablePackage.GetComponentInChildren<IndicatorBehavior>();
+                if (indicator == null) return;
+                
+                indicator.ToggleIndicator(true);
+            }*/
+            
+            var deliveryLocation = FindPostBoxWithId(wantedId);
+            if (deliveryLocation == null) return;
+
             delivery.PackageData.MinPay = GetBasePayBasedOnDistance(transform.position, deliveryLocation.transform.position);
             SetCurrentDelivery(delivery);
-            
+
             _directDistanceToDelivery = Vector3.Distance(transform.position, deliveryLocation.transform.position);
             ToggleIndicator(deliveryLocation);
         }
@@ -300,9 +342,9 @@ namespace CarePackage.Delivery
         {
             GameObject foundPostBox = null;
             var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
-            foreach (var postBox in postBoxes)
+            foreach (var postBox in _deliverableSpots)
             {
-                var action = postBox.InteractAction;
+                var action = postBox.InteractLogic;
                 int id = -1;
                 
                 if (action is ReceiveDeliveryAction mailAction)
@@ -313,9 +355,24 @@ namespace CarePackage.Delivery
 
                 if (id != targetId || id == -1) continue;
                 foundPostBox = postBox.gameObject;
-                Debug.Log("Delivered ID: " + id + " Found Delivery: " + foundPostBox);
             }
             return foundPostBox;
+        }
+
+        public DeliverableZone FindDeliverableSpotWithId(int targetId)
+        {
+            DeliverableZone foundDeliverableSpot = null;
+            if (_deliverableSpots.Length == 0) _deliverableSpots = FindObjectsByType<DeliverableZone>(FindObjectsSortMode.InstanceID);
+            foundDeliverableSpot = _deliverableSpots.Where(foundSpot => 
+                { 
+                    var interactAction = foundSpot.InteractLogic; 
+                    return (interactAction is ReceiveDeliveryAction receiveAction && receiveAction.WantedPackage == targetId) || 
+                           (interactAction is DialogueAction dialogueAction && dialogueAction.id == targetId); 
+                })
+                .Select(deliverableSpot => deliverableSpot)
+                .FirstOrDefault();
+            
+            return foundDeliverableSpot;
         }
 
         public GameObject FindDeliveryPackageWithId(int targetId)
@@ -341,10 +398,7 @@ namespace CarePackage.Delivery
             return (int)baseValue;
         }
 
-        public void RemovePackageFromConveyerBelt(GameObject package)
-        {
-            _jobBoard.RemovePackageFromConveyerBelt(package);
-        }
+        public void RemovePackageFromConveyerBelt(GameObject package) => _jobBoard.RemovePackageFromConveyerBelt(package);
 
         public void SavePackageMax(int max)
         {

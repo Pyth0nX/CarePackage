@@ -38,7 +38,7 @@ namespace CarePackage.Task
             TaskManager.PushTaskUpdate(task.Task);
         }
 
-        public void PopTask()
+        public void PopTask(Interactable interactedWith = null)
         {
             
         }
