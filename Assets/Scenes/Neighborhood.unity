@@ -14356,6 +14356,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: MailBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: interactLogic
+      value: 1019164335844360618
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: 'managedReferences[1019164335844360618]'
+      value: Assembly-CSharp CarePackage.Interaction.Dialogue.DialogueAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360618].id
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360618].familyID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360618].nodeName
+      value: start
+      objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1029.79
@@ -64619,6 +64639,26 @@ PrefabInstance:
     - target: {fileID: 5053995003165064266, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_Name
       value: MailBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: interactLogic
+      value: 1019164335844360617
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: 'managedReferences[1019164335844360617]'
+      value: Assembly-CSharp CarePackage.Interaction.Dialogue.DialogueAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360617].id
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360617].familyID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200320636066554775, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
+      propertyPath: managedReferences[1019164335844360617].nodeName
+      value: start
       objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -137221,6 +137261,8 @@ SceneRoots:
   - {fileID: 1271820074}
   - {fileID: 901919944}
   - {fileID: 1589445935}
+  - {fileID: 1774817603}
+  - {fileID: 714738051}
   - {fileID: 1521906660}
   - {fileID: 29110261}
   - {fileID: 548968711}
@@ -137232,6 +137274,4 @@ SceneRoots:
   - {fileID: 1901936651}
   - {fileID: 6075401733755125112}
   - {fileID: 1960820126}
-  - {fileID: 714738051}
   - {fileID: 1518334398}
-  - {fileID: 1774817603}

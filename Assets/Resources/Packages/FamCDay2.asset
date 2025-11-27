@@ -10,21 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a2ace173dc1d794680db90f0e92d842, type: 3}
-  m_Name: Uniform
-  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Job.SO_Job
-  Id: 33
+  m_Name: FamCDay2
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Delivery.SO_Package
+  Id: 0
   PackageData:
-    Title: Uniform
-    Description: 'Hello, I am in need of a school uniform.
-
-
-      Address: Homington
-      32
-
-
-      Pay: 75 - 150'
-    MinPay: 75
+    Title: Baby Cam
+    Description: "Baby Camera for a young couple. \n\nAddress: Homington 36.\n\nPay:
+      75 - 150"
+    MinPay: 90
     MaxPay: 150
     State: 0
-  Item: {fileID: 11400000, guid: 1c110f40723f2d04694da94bd890ae34, type: 2}
+  Item: {fileID: 11400000, guid: 0bb1912dd180d9f42b125e13320541bd, type: 2}
   AddressImage: {fileID: 0}
