@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using PrimeTween;
 
+
 namespace CarePackage.UI
 {
     [Serializable]
@@ -343,6 +344,39 @@ namespace CarePackage.UI
             _currentTween.Stop();
             target.localPosition = Vector3.zero;
         }
+    }
+
+    [Serializable]
+    public class HoverNewText : IHoverBehavior
+    {
+        [SerializeField] private TMPro.TextMeshProUGUI target;
+        [TextArea]
+        [SerializeField] private string text;
+        [SerializeField] private float duration = 0.2f;
+        [SerializeField] private bool animateOnHover;
+        [SerializeField] private bool animateOnClick;
+
+        private string _originalText;
+
+        public void OnHovered(PointerEventData eventData)
+        {
+            if (!animateOnHover) return;
+            _originalText = target.text;
+            target.text = text.ToString();
+        }
+
+        public void OnClicked(PointerEventData eventData)
+        {
+            if (!animateOnClick) return;
+            target.text = text;
+        }
+
+        public void OnUnhovered(PointerEventData eventData)
+        {
+            target.text = _originalText;
+        }
+
+        public void Reset() {}
     }
     
     [Serializable]

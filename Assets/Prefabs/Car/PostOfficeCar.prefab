@@ -723,19 +723,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 7735813133548388448
+  interactAction:
+    rid: -2
   interactText: Press 'E'
   showMessage: 1
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 7735813133548388448
-      type: {class: TryStartDayWithCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        sceneName: Neighborhood
-        packageContainer: {fileID: 5079886002920256588}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &1236005630673371231
 BoxCollider:
   m_ObjectHideFlags: 0

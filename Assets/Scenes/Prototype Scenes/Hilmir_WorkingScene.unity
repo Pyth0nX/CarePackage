@@ -5110,18 +5110,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 7586773879207755856
+  interactAction:
+    rid: -2
   interactText: Press E
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 7586773879207755856
-      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        animator: {fileID: 1731260848}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1001 &660024160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5776,18 +5774,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 3802007085164789839
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 3802007085164789839
-      type: {class: TeleportPlayer, ns: CarePackage.Interaction.Miscellaneous, asm: Assembly-CSharp}
-      data:
-        EndLocation: {fileID: 343965794}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &721301583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7947,6 +7943,117 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966096041}
   m_Mesh: {fileID: -9146618070568788744, guid: 13f0cf1818274b140bfe258344659361, type: 3}
+--- !u!1 &968154561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968154565}
+  - component: {fileID: 968154564}
+  - component: {fileID: 968154563}
+  - component: {fileID: 968154562}
+  m_Layer: 0
+  m_Name: GradientCupe (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &968154562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968154561}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &968154563
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968154561}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c6731f61a9f0b5e488ee55955c2fa564, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &968154564
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968154561}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &968154565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968154561}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 86.20171, y: 0.993, z: -60.08398}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!1 &982833745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8651,17 +8758,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 1741967866699972678
+  interactAction:
+    rid: -2
   interactText: Press E
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 1741967866699972678
-      type: {class: EnterCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1098517481
 GameObject:
   m_ObjectHideFlags: 0
@@ -8935,18 +9041,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  iInteractAction:
-    rid: 3802007057444110449
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 1
   debug: 1
   references:
     version: 2
     RefIds:
-    - rid: 3802007057444110449
-      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        animator: {fileID: 1731260848}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &1105759922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9175,6 +9279,117 @@ Transform:
   - {fileID: 1033325868}
   m_Father: {fileID: 1005614206}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1134359414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1134359418}
+  - component: {fileID: 1134359417}
+  - component: {fileID: 1134359416}
+  - component: {fileID: 1134359415}
+  m_Layer: 0
+  m_Name: GradientCupe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1134359415
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134359414}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1134359416
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134359414}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c6731f61a9f0b5e488ee55955c2fa564, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1134359417
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134359414}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1134359418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134359414}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 86.20171, y: 0.993, z: -60.08398}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1137907005
 GameObject:
   m_ObjectHideFlags: 0
@@ -10696,18 +10911,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 3802007085164789838
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 0
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: 3802007085164789838
-      type: {class: TeleportPlayer, ns: CarePackage.Interaction.Miscellaneous, asm: Assembly-CSharp}
-      data:
-        EndLocation: {fileID: 660230834}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &1324415570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19272,14 +19485,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f054fdba97dc08c40b8bf8c1fd5192b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.InteractionComponent
+  interactionUI: {fileID: 747122659}
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  debug: 1
-  castRay: 1
   rayDistance: 12.5
-  isPlayer: 1
-  interactionUI: {fileID: 747122659}
+  castRay: 1
+  debug: 1
 --- !u!1 &4606502464281869629
 GameObject:
   m_ObjectHideFlags: 0
@@ -19821,17 +20033,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  iInteractAction:
-    rid: 1741967866699972676
+  interactAction:
+    rid: -2
   interactText: Press E
   showMessage: 0
   debug: 1
   references:
     version: 2
     RefIds:
-    - rid: 1741967866699972676
-      type: {class: ExitCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data: 
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &6654248946345873733
 Transform:
   m_ObjectHideFlags: 0
@@ -20053,18 +20264,16 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  iInteractAction:
-    rid: 3802007057444110449
+  interactAction:
+    rid: -2
   interactText: 
   showMessage: 1
   debug: 1
   references:
     version: 2
     RefIds:
-    - rid: 3802007057444110449
-      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
-      data:
-        animator: {fileID: 4692455260474635984}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!65 &7800685229590890043
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20461,3 +20670,5 @@ SceneRoots:
   - {fileID: 1689554474}
   - {fileID: 5341219076954109989}
   - {fileID: 205303787}
+  - {fileID: 1134359418}
+  - {fileID: 968154565}
