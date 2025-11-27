@@ -224,10 +224,11 @@
       "url": "https://packages.unity.com"
     },
     "dev.yarnspinner.unity": {
-      "version": "file:YarnSpinner",
+      "version": "https://github.com/YarnSpinnerTool/YarnSpinner-Unity.git#v3.0.3",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "608d08904508f20b106b27ae2f7c12e2cde45191"
     },
     "es.e-ucm.xasu": {
       "version": "https://github.com/e-ucm/xasu.git",

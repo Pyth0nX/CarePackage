@@ -86,7 +86,7 @@ Mailman: Tomorrow? That's exciting! Big day for her then.
 
 title: AEn1Day1
 //WARM
-position: -1400,-739
+position: -1434,-775
 color: green
 group: FamA && Day1
 ---
@@ -106,7 +106,7 @@ Sofie: Really? Yay! Can I open it now, please?
 
 title: AEnd1Day1
 //NEUTRAL
-position: -1202,-337
+position: -1215,-424
 group: FamA && Day1
 color: green
 ---
@@ -607,7 +607,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "backpack") && ($damage < 1)
+when: ($day == 4) && ($package == "groceries") && ($damage < 1)
 position: -1967,1628
 color: purple
 group: FamA && Day4
@@ -657,7 +657,7 @@ Lina: I wanted to give something nice back to our community. Now I feel like I'm
 
 //FAM A — DAY 4 —  (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "backpack") && ($damage == 1)
+when: ($day == 4) && ($package == "groceries") && ($damage == 1)
 position: -1969,1466
 color: purple
 group: FamA && Day4
@@ -720,7 +720,7 @@ Mailman: No worries, of you need any help count with me.
 
 //FAM A — DAY 4 —  (1ST TIME DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "backpack") && ($damage < 1)
+when: ($day == 4) && ($package == "groceries") && ($damage < 1)
 position: -1969,1783
 color: purple
 group: FamA && Day4
@@ -1589,7 +1589,7 @@ Mailman: I swear I will be more careful next time, I'm really sorry. I want to c
 
 //FAM C — DAY 1 — DIAPERS (FLATTENED / BROKEN)
 title: FamC
-when: ($day == 1) && ($package == "gardenTools") && ($damage > 1)
+when: ($day == 1) && ($package == "diapers") && ($damage > 1)
 color: orange
 group: FamC && Day1
 position: -70,-514
@@ -1619,7 +1619,7 @@ Jonas: You too.
 
 //FAM C — DAY 2 — BABY CAM (WRONG PACKAGE)
 title: FamC
-when: ($day == 2) && ($package != "gardenTools") 
+when: ($day == 2) && ($package != "babyCam") 
 color: orange
 group: FamC && Day2
 position: -75,-310
@@ -1646,7 +1646,7 @@ Mailman: See you later.
 
 //FAM C — DAY 2 — BABY CAM (PRISTINE / SLIGHTLY DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($damage < 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage < 1)
 color: orange
 group: FamC && Day2
 position: -74,-175
@@ -1673,14 +1673,14 @@ Vera: Sure thing! I actually might have something for you too. When we moved, I 
 <<hideBackground>>
 ===
 
-//FAM C — DAY 2 — SEEDS (1ST TIME DAMAGED)
+//FAM C — DAY 2 — BABY CAM (1ST TIME DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "babyCam") && ($damage == 1) && ($famB_damageCount == 0)
 color: orange
 group: FamC && Day2
 position: -74,-43
 ---
-//FAM C — DAY 2 — SEEDS (1ST TIME DAMAGED)
+//FAM C — DAY 2 — BABY CAM (1ST TIME DAMAGED)
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 0.5>>
 <<setBackground "BGFamC">>
@@ -1715,7 +1715,7 @@ Vera: Actually, I might have something for you too. When we moved I brought a bo
 
 //FAM C — DAY 2 — BABY CAM (2ND TIME DAMAGED)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage == 1) && ($famB_damageCount == 1)
 color: orange
 group: FamC && Day2
 position: -74,88
@@ -1756,7 +1756,7 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
 
 //FAM C — DAY 2 — BABY CAM (1ST TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($damage > 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage > 1)
 color: orange
 group: FamC && Day2
 position: -74,219
@@ -1794,14 +1794,14 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
 <<hideBackground>>
 ===
 
-//FAM C — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
+//FAM C — DAY 2 — BABY CAM (2ND TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "seeds") && ($damage > 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage > 1)
 color: orange
 group: FamC && Day2
 position: -74,354
 ---
-//FAM C — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
+//FAM C — DAY 2 — BABY CAM (2ND TIME FLATTENED / BROKEN)
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 1>>
 <<setBackground "BGFamC">>
