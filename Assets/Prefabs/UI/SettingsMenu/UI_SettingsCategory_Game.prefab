@@ -472,6 +472,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_SettingSlider_PackageAmount
       objectReference: {fileID: 0}
+    - target: {fileID: 1291633714122728355, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291633714122728355, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1883372366455969663, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -537,6 +545,22 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].maxValue
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].minValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].visualMax
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].visualMin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].valueLabel
       value: 
       objectReference: {fileID: 0}
@@ -547,6 +571,22 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383181].valueLabel
       value: 
+      objectReference: {fileID: 6431833773265763745}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].valueFormat
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].defaultValue
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].decimalPrecision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+      propertyPath: managedReferences[7735813606617383181].useNormalizedNormal
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6956367024373621882, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -700,6 +740,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &6431833773265763745 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1491756325886154220, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+  m_PrefabInstance: {fileID: 5616479962723739725}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &7057746230084281820
 PrefabInstance:
   m_ObjectHideFlags: 0

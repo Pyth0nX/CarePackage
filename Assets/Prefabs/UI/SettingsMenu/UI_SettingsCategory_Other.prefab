@@ -388,19 +388,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].maxValue
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].minValue
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].visualMax
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].visualMin
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].controller
@@ -409,18 +409,18 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].valueLabel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 724081139431776874}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].valueFormat
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].defaultValue
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].decimalPrecision
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].useNormalizedNormal
@@ -562,6 +562,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &724081139431776874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1491756325886154220, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+  m_PrefabInstance: {fileID: 2215695752859416454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &2239842572102064258 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 119978158957408004, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
@@ -641,7 +652,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360534].title
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5537338915937979290}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].title
       value: 
@@ -649,7 +660,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360534].slider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6173625446231248153}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].slider
       value: 
@@ -705,7 +716,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360534].valueLabel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6467559810626417010}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].controller
       value: 
@@ -898,6 +909,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &6467559810626417010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1491756325886154220, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+  m_PrefabInstance: {fileID: 5580711008170157214}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &7797242782905074060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -961,7 +983,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360533].title
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7899139474485882504}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].title
       value: 
@@ -969,7 +991,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360533].slider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8424803637581850635}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].slider
       value: 
@@ -1009,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[1019164335844360533].valueLabel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8684794435200603232}
     - target: {fileID: 4756472564670927253, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
       propertyPath: managedReferences[7735813606617383157].controller
       value: 
@@ -1186,3 +1208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &8684794435200603232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1491756325886154220, guid: a562e885951ad8c4f95a77f1f7b979c4, type: 3}
+  m_PrefabInstance: {fileID: 7797242782905074060}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
