@@ -29418,6 +29418,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 60621448985203424, guid: e85d28f5b2ece884bb7be9814f2ab8df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.95
+      objectReference: {fileID: 0}
     - target: {fileID: 343104518792007574, guid: e85d28f5b2ece884bb7be9814f2ab8df, type: 3}
       propertyPath: interactAction
       value: 7735813649916756146
@@ -29430,6 +29434,10 @@ PrefabInstance:
       propertyPath: managedReferences[7735813649916756146].packageContainer
       value: 
       objectReference: {fileID: 4794171745829123667}
+    - target: {fileID: 1194380870868600379, guid: e85d28f5b2ece884bb7be9814f2ab8df, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5079886002920256588, guid: e85d28f5b2ece884bb7be9814f2ab8df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.45
