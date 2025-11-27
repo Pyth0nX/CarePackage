@@ -487,7 +487,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 708719679130084855, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: m_Name
-      value: UI_Button
+      value: UI_Button_Restart
       objectReference: {fileID: 0}
     - target: {fileID: 708719679130084855, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: m_IsActive
@@ -604,6 +604,14 @@ PrefabInstance:
     - target: {fileID: 717724228177104310, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: managedReferences[7735813649916756124].function.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608586472301788141, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608586472301788141, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: 'managedReferences[-2]'
@@ -724,6 +732,10 @@ PrefabInstance:
     - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: managedReferences[7735813649916756122].easeBetweenShakes
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5466884175322398772, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      propertyPath: m_text
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 5466884175322398772, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: m_fontSize

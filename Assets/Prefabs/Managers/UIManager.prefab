@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3318439573051592761}
   - component: {fileID: 3878317019932009551}
+  - component: {fileID: 1938650701889637025}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -44,3 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5843844f16e686458372f9fec177c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  toggleMode: 0
+  maxToggles: 3
+  hud: {fileID: 0}
+  playerInput: {fileID: 0}
+  historyDebug: []
+--- !u!114 &1938650701889637025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609244579207249033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94bd00f54cfd12b46a54dfb21b1004fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Task.TaskManager
+  taskPanel: {fileID: 0}
+  taskPanelDuration: 2
