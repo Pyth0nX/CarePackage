@@ -1,4 +1,3 @@
-using System;
 using CarePackage.Main;
 using UnityEngine;
 
@@ -22,9 +21,7 @@ namespace CarePackage.Interaction
         
         private IInteractionActivationType _activationType;
         private Outline _outline;
-#if UNITY_EDITOR
-        private EInteractionType _LastType;
-#endif
+        private EInteractionType _lastType;
         
         public event System.Action<Interactable> OnInteracted;
         public event System.Action<Interactable> OnInteractionFinished;
@@ -50,7 +47,7 @@ namespace CarePackage.Interaction
                 default:
                     break;
             }
-            _LastType = interactionType;
+            _lastType = interactionType;
         }
 
         private void Start()

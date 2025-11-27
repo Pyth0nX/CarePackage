@@ -60,12 +60,6 @@ namespace CarePackage.Main
             LoadScene((ECarePackageScenes)sceneIndex);
         }
         
-        public void LoadSceneByIndex(SceneEvent sceneIndex)
-        {
-            if (DataPersistanceManager.Instance != null) DataPersistanceManager.Instance.SaveGame();
-            //LoadScene(sceneIndex);
-        }
-        
         private void OnSceneLoaded_Implementation(Scene scene, LoadSceneMode sceneMode)
         {
             Debug.Log($"Loaded Scene {scene.name} with index: {scene.buildIndex}");

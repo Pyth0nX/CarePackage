@@ -12,7 +12,9 @@ namespace CarePackage.UI
         public EAudioCategory Category => category;
 
         protected override string GetTitle() => category.ToString() + " Volume";
-        
+
+        protected override string GetCategoryKey() => AudioManager.Instance.GetVolumeParamByGroup(category);
+
         protected override void HandleValueChanged(float newValue) => controller.PreviewAudioSlider(Owner, category, newValue);
         
         protected override void SaveSetting() => controller.SaveAudioSlider(Owner, category);
@@ -20,7 +22,7 @@ namespace CarePackage.UI
         protected override void LoadSetting()
         {
             float stored = AudioManager.Instance.GetVolumeByAudioGroup(category);
-            SetValue(stored);
+            SetValueWithDomain(stored);
         }
     }
 }

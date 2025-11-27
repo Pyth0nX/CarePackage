@@ -13,53 +13,75 @@ namespace CarePackage.UI
     
     public interface ISettingStrategy<T> : ISettingStrategy
     {
-        MenuSettingElement Owner { get; set; }
         void SetValue(T value);
         T GetValue();
-        void Save();
-        void Load();
     }
 
     [System.Serializable]
     public abstract class SliderSetting : ISettingStrategy<float>, IActivatable
     {
-        public enum EValueFormat
-        {
-            Decimal = 0,
-            WholeNumber = 1,
-            Percentage = 2
-        }
-        
         [SerializeField] protected UnityEngine.UI.Slider slider;
         [SerializeField] protected TMPro.TextMeshProUGUI title;
         [SerializeField] private TMPro.TextMeshProUGUI valueLabel;
-        
-        [Header("Internal Range")]
+
+        [Header("Internal Range")] 
         [SerializeField] protected float minValue = 0f;
         [SerializeField] protected float maxValue = 1f;
-        [SerializeField, Range(0f, 1f)] protected float defaultValue;
-        
-        [Header("Visual Range")]
-        [SerializeField] protected float visualMin = 0f;
-        [SerializeField] protected float visualMax = 1f;
-        
-        [SerializeField] private EValueFormat valueFormat;
-        
-        protected float CurrentValue = 1f;
-        
-        public MenuSettingElement Owner { get; set; }
+        [SerializeField] protected float defaultValue;
 
-        public void SetValue(float value)
+        [Header("Visual Range")] [SerializeField]
+        protected float visualMin = 0f;
+
+        [SerializeField] protected float visualMax = 1f;
+
+        [SerializeField] private bool useNormalizedNormal;
+        [SerializeField] private EValueFormat valueFormat;
+        [SerializeField, Range(0, 4)] private int decimalPrecision = 1;
+
+        protected float CurrentValue = 1f;
+        protected float VisualValue;
+
+        public MenuSettingElement Owner { get; set; }
+        
+        public SliderSetting() : this(0, 1, 0, 1, 1, EValueFormat.Number) {}
+
+        public SliderSetting(float inMinValue, float inMaxValue, float inVisualMin, float inVisualMax, float inStartingValue, EValueFormat inValueFormat)
         {
-            CurrentValue = MapSliderToDomain(value);
-            if (slider != null)
-                slider.value = CurrentValue;
-            UpdateLabel();
+            minValue = inMinValue;
+            maxValue = inMaxValue;
+            visualMin = inVisualMin;
+            visualMax = inVisualMax;
+            defaultValue = inStartingValue;
+            valueFormat = inValueFormat;
+            Init();
         }
 
+        public void Init()
+        {
+            if (useNormalizedNormal) SetValue(Mathf.Lerp(0, 1, defaultValue));
+            else SetValueWithDomain(Mathf.Lerp(minValue, maxValue, defaultValue));
+        }
+        
         public void SetValue(object value)
         {
             if (value is float floatValue) SetValue(floatValue);
+        }
+        
+        public void SetValue(float value)
+        {
+            CurrentValue = MapSliderToDomain(value);
+            VisualValue = MapInternalToVisual(CurrentValue);
+            
+            if (slider != null)
+                slider.value = value;
+            
+            UpdateLabel();
+        }
+
+        public void SetValueWithDomain(float domainValue)
+        {
+            var normalizedDomainValue = MapDomainToSlider(domainValue);
+            SetValue(normalizedDomainValue);
         }
 
         object ISettingStrategy.GetValue() => GetValue();
@@ -68,34 +90,17 @@ namespace CarePackage.UI
         
         public void Save() => SaveSetting();
 
-        public void Load() => LoadSetting();
-        
-        public float GetDomainValue() => CurrentValue;
-        
-        public void SetDomainValue(float domain)
+        public void Load()
         {
-            CurrentValue = Mathf.Clamp(domain, minValue, maxValue);
-            if (slider != null)
-                slider.value = MapDomainToSlider(CurrentValue);
-            UpdateLabel();
+            if (!SettingsMenuController.IsSettingSaved(GetCategoryKey())) Init();
+            else LoadSetting();
         }
 
         private void UpdateLabel()
         {
             if (valueLabel == null) return;
-            
-            float visual = MapInternalToVisual(CurrentValue);
-            valueLabel.text = FormatValue(visual);
+            valueLabel.text = FormatValue();
         }
-/*
-        protected virtual float MapSliderToDomain(float normalized) =>
-            Mathf.Lerp(minValue, maxValue, normalized);
-
-        protected virtual float MapDomainToSlider(float domain) =>
-            Mathf.InverseLerp(minValue, maxValue, domain);
-
-        protected virtual float MapInternalToVisual(float internalValue) =>
-            Mathf.InverseLerp(minValue, maxValue, internalValue) * (visualMax - visualMin) + visualMin;*/
 
         protected virtual float MapSliderToDomain(float normalized) =>
             Mathf.Lerp(minValue, maxValue, normalized);
@@ -109,23 +114,21 @@ namespace CarePackage.UI
             return Mathf.Lerp(visualMin, visualMax, normalized);
         }
         
-
         public void OnEnable()
         {
             if (title != null) title.text = GetTitle();
-            CurrentValue = Mathf.Lerp(minValue, maxValue, defaultValue);//CurrentValue = Mathf.Clamp(defaultValue, minValue, maxValue);
-            if (slider != null) 
-            {
+            Load();
+            if (slider != null)
                 slider.onValueChanged.AddListener(OnSliderChanged);
-                slider.value = CurrentValue;
-            }
-            UpdateLabel();
+            
             Debug.Log("Setting Title to: " + GetTitle() + " for: " + title.gameObject.name);
         }
 
         public void OnDisable()
         {
-            if (slider != null) slider.onValueChanged.RemoveListener(OnSliderChanged);
+            Load();
+            if (slider != null) 
+                slider.onValueChanged.RemoveListener(OnSliderChanged);
         }
         
         protected virtual void OnSliderChanged(float newValue) 
@@ -135,6 +138,8 @@ namespace CarePackage.UI
         }
         
         protected abstract string GetTitle();
+
+        protected abstract string GetCategoryKey();
         
         protected abstract void HandleValueChanged(float newValue);
         
@@ -142,17 +147,36 @@ namespace CarePackage.UI
         
         protected abstract void LoadSetting();
         
-        protected virtual string FormatValue(float normalized)
+        private static readonly int[] Multipliers = {1, 10, 100, 1000, 10000};
+        
+        protected virtual string FormatValue()
         {
-            float domain = MapInternalToVisual(normalized);
-
             return valueFormat switch
             {
-                EValueFormat.Decimal => domain.ToString("0.0"),
-                EValueFormat.WholeNumber => Mathf.RoundToInt(domain).ToString(),
-                EValueFormat.Percentage => (domain * 100f).ToString("0") + "%",
-                _ => domain.ToString()
+                EValueFormat.Number => FormatSmartDecimal(VisualValue),
+                EValueFormat.Percentage => (VisualValue * 100f).ToString("0") + "%",
+                _ => VisualValue.ToString()
             };
+
+            string FormatSmartDecimal(float value)
+            {
+                var multiplier = 1;
+                for (int i = 0; i < decimalPrecision; i++)
+                    multiplier *= 10;
+                
+                float rounded = Mathf.Round(value * multiplier) / multiplier;
+                
+                if (decimalPrecision == 0 || Mathf.Abs(rounded % 1f) < 0.001f)
+                    return ((int)rounded).ToString();
+                
+                return rounded.ToString("F" + decimalPrecision);
+            }
+        }
+        
+        public enum EValueFormat
+        {
+            Number = 0,
+            Percentage = 1
         }
     }
     
@@ -186,18 +210,20 @@ namespace CarePackage.UI
             };
         }*/
 
-        protected override string GetTitle() => category.ToString() + " Sensitivity";
+        protected override string GetTitle() => category + " Sensitivity";
+
+        protected override string GetCategoryKey() => category.ToString();
+
+        protected override void HandleValueChanged(float newValue) => controller.PreviewSensitivity(Owner, category, CurrentValue);
         
-        protected override void HandleValueChanged(float newValue) => controller.PreviewSensitivity(Owner, category, MapSliderToDomain(newValue));
-        
-        protected override void SaveSetting() => controller.SaveSensitivity(Owner, category, MapSliderToDomain(CurrentValue));
+        protected override void SaveSetting() => controller.SaveSensitivity(Owner, category, CurrentValue);
 
         protected override void LoadSetting()
         {
-            float stored = MapDomainToSlider(controller.GetSensitivityByCategory(category));
-            SetValue(stored);
+            float loadedSens = controller.GetSensitivityByCategory(category);
+            SetValueWithDomain(loadedSens);
         }
-        
+
         public enum ESensitivity { LookX, LookY, Scroll }
     }
     
@@ -217,21 +243,17 @@ namespace CarePackage.UI
         }*/
 
         protected override string GetTitle() => "Package Amount";
+
+        protected override string GetCategoryKey() => "PackageMax";
+
+        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, (int)newValue);
         
-        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, Mathf.RoundToInt(MapSliderToDomain(newValue)));
-        
-        protected override string FormatValue(float normalized)
-        {
-            int domain = Mathf.RoundToInt(MapSliderToDomain(normalized));
-            return domain.ToString();
-        }
-        
-        protected override void SaveSetting() => controller.SavePackageAmount(Owner, Mathf.RoundToInt(MapSliderToDomain(CurrentValue)));
+        protected override void SaveSetting() => controller.SavePackageAmount(Owner, (int)CurrentValue);
 
         protected override void LoadSetting()
         {
-            float stored = MapDomainToSlider(controller.GetPackageAmount());
-            SetValue(stored);
+            float loadedMaxPackageNum = controller.GetPackageAmount();
+            SetValueWithDomain(loadedMaxPackageNum);
         }
     }
 

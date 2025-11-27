@@ -62,9 +62,17 @@ MonoBehaviour:
     - rid: 1019164204780224588
       type: {class: AudioSetting, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
-        title: {fileID: 119978158957408004}
         slider: {fileID: 1792349888864135559}
+        title: {fileID: 119978158957408004}
         valueLabel: {fileID: 1491756325886154220}
+        minValue: 0
+        maxValue: 1
+        defaultValue: 1
+        visualMin: 0
+        visualMax: 1
+        useNormalizedNormal: 0
+        valueFormat: 1
+        decimalPrecision: 0
         category: 0
         controller: {fileID: 0}
 --- !u!222 &5076845913677526678

@@ -235,5 +235,11 @@ namespace CarePackage.UI
             return _playerController.OwningPlayer.DeliveryManager.PackageMax;
         }
         #endregion
+
+        public static bool IsSettingSaved(string settingKey)
+        {
+            if (PlayerPrefs.HasKey(settingKey)) return true;
+            return false;
+        }
     }
 }
