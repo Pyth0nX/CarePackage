@@ -5,10 +5,13 @@ color: yellow
 <<declare $family = 0>>
 <<declare $day = 1>>
 <<declare $famA_damageCount = 0>>
+<<declare $famA_breakCount = 0>>
 <<declare $relationshipFamA = 0>>
 <<declare $famB_damageCount = 0>>
+<<declare $famB_breakCount = 0>>
 <<declare $relationshipFamB = 0>>
 <<declare $famC_damageCount = 0>>
+<<declare $famC_breakCount = 0>>
 <<declare $relationshipFamC = 0>>
 ===
 
@@ -1572,6 +1575,7 @@ Mailman: Good afternoon! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
 <<showCharacter "Jonas" "Worried">>
+<<recievePackage true>>
 Vera: YES! just in time, this was about to get ugly.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
@@ -1633,6 +1637,7 @@ Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure every
 <<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here. I'm sure everything is okay with the diapers.
 <<showCharacter "Jonas" "Talking">>
+<<recievePackage true>>
 Jonas: I hope so, we need each and everyone. We have no time to spare, I would do anything for an extra pair of hands.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: If you ever need to file a complaint, the email is in the receipt
@@ -1670,6 +1675,7 @@ Mailman: Good morning! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! The diapers are here. The box is broken. Are you sure everything is okay inside of the box?
 <<showCharacter "Jonas" "Worried">>
+<<recievePackage true>>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here, I'm sure everything is okay with the diapers inside. If that isn't the case you can write an email and we will look for solutions to compensate you.
 <<showCharacter "Jonas" "Talking">>
 Jonas: I hope so, we need each and everyone.
