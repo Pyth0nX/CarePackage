@@ -1430,24 +1430,28 @@ Mailman: You are right, I'll be back when I have a package for you.
 
 //FAM B — DAY 4 — COOKIES (WARM)
 title: FamB
-when: ($day == 4) && ($package == "cookies") && ($packageState == "Damaged") && ($famB_damageCount == 1)
+when: ($day == 4) && ($package == "cookies") 
 color: blue
 group: FamB && Day4
 position: -841,1815
 ---
 //FAM B — DAY 4 — COOKIES (WARM)
 <<setBackground "BGFamB">>
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Good afternoon Mr.Mailman. I'm glad to see you, do you come for a cup of tea?
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: Oh no, I came to give you a special package. Some cookies one of your neighbours, Lina, made. 
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Oh, that's so kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her though.
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 ->Mailman: Maybe you can call Vera, Lina's daughter should be in her house babysitting. They could give you her phone number.
+    <<showCharacter "Gertrude" "TalkingHappy">>
+    Gertrude: Do you have it?
 
 ->Mailman: You'll surely see each other in the neighborhood sometime.
+    Gertrude: Yeah, you are orobably right. Have a good evening.
 
+    Mailman: You too.
 ===
 
 //FAM B — DAY 4 — COOKIES (NEUTRAL)
@@ -1484,6 +1488,7 @@ group: FamB && Day5
 //FAM B — DAY 5 — BABYSITTING (WARM)
 <<setBackground "BGFamB">>
 Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up to take us. They say you are invited if you want to come.
+<<hideBackground>>
 ===
 
 //FAM B — DAY 5 — NEUTRAL ENDING (NEUTRAL)
@@ -1495,7 +1500,8 @@ group: FamB && Day5
 ---
 //FAM B — DAY 5 — BABYSITTING (NEUTRAL)
 <<setBackground "BGFamB">>
-Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up to take us. Have a great evening.
+Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up to take us, we can recieve any packages tomorrow. Have a great evening.
+<<hideBackground>>
 ===
 
 
@@ -1910,24 +1916,25 @@ position: -74,686
 ---
 //FAM C — DAY 3 — NOTE (WARM)
 <<setBackground "BGFamC">>
+<<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
-<<showCharacter "Vera" "SpeakingTired">>
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
 <<set $noteForVera = false>> // Item used
 <<recieveItem "noteForVera">>
-<<showCharacter "Vera" "ListeningTired">>
+<<showCharacter "Vera" "Happy">>
 *Vera reads the note.*
-<<showCharacter "Vera" "SpeakingTired">>
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh my goodness! She's offering to babysit! And she included her number! That is incredibly thoughtful. We've been desperate for a night out.
-<<showCharacter "Jonas" "ListeningTired">>
+<<showCharacter "Vera" "Happy">>
 Jonas: That is amazing! Maybe the first time we could ask Nora to come help her, I think both of them together might survive the night.
 <<set $relationshipFamC += 2>>
 <<set $relationshipFamA += 1>> 
-<<showCharacter "Jonas" "ListeningTired">>
+<<showCharacter "Vera" "Happy">>
 Mailman: That's wonderful. She's been having a hard time in class, maybe Nora can help her meet new friends.
-<<showCharacter "Vera" "SpeakingTired">>
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
-<<showCharacter "Vera" "ListeningTired">>
+<<showCharacter "Vera" "Happy">>
 Mailman: My pleasure. Have a great day!
 <<hideCharacter "Vera">>
 <<hideCharacter "Jonas">>
@@ -1943,29 +1950,30 @@ position: -74,821
 ---
 //FAM C — DAY 3 — NOTE (NEUTRAL)
 <<setBackground "BGFamC">>
-
+<<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
-
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
-
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: She's offering to babysit! That is thoughtful. We've been looking for an opportunity to have a relaxing afternoon.
-
+<<showCharacter "Jonas" "Talking">>
 Jonas: Maybe the first time we could ask Nora to come help her, she could tell her all she needs to know.
-
+<<showCharacter "Jonas" "Worried">>
 ->Mailman: That's wonderful. She's been having a hard time in class, maybe Nora can help her meet new friends.
-
-Jonas: Oh, if that's the case we could turn it in a “hangout” for them to get to know eachoter too.
-
-Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
-
--> Mailman: My pleasure. Have a great day!
+    <<showCharacter "Jonas" "Talking">>
+    Jonas: Oh, if that's the case we could turn it in a “hangout” for them to get to know eachoter too.
+    <<showCharacter "Vera" "TalkingWorried">>
+    Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
+    <<showCharacter "Vera" "Happy">>
+    Mailman: My pleasure. Have a great rest of your day!
 
 -> Mailman: Good.
-
-Vera: We'll text her right now.
-
-Mailman: Have a good one.
-
+    <<showCharacter "Vera" "TalkingWorried">>
+    Vera: We'll text her right now.
+    <<showCharacter "Vera" "Happy">>
+    Mailman: Have a good one.
+<<hideCharacter "Vera">>
+<<hideBackground>>
 ===
 
 
@@ -1982,15 +1990,16 @@ position: -74,1035
 <<recievePackage false>>
 <<setBackground "BGFamC">>
 Mailman: Good afternoon Jonas.
-
+<<showCharacter "Jonas" "Talking">>
 Jonas: Good afternoon Mr.Mailman. Is there anything I can help you with?
-
+<<showCharacter "Jonas" "Worried">>
 Mailman: I just came to give you a package.
-
+<<showCharacter "Jonas" "Talking">>
 Jonas: We haven't ordered anything, are you sure that package is ours? 
-
+<<showCharacter "Jonas" "Worried">>
 Mailman: Oh right, I will be back when I have a package for you. 
-
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 4 — COOKIES (WARM)
@@ -2003,17 +2012,18 @@ position: -74,1168
 //FAM C — DAY 4 — COOKIES (WARM)
 <<giveItem "cookies">>
 <<setBackground "BGFamC">>
-
+<<showCharacter "Jonas" "Worried">>
 Mailman: Good afternoon Jonas.
-
+<<showCharacter "Jonas" "Talking">>
 Jonas: Good afternoon Mr.Mailman. Is there anything I can help you with?
-
+<<showCharacter "Jonas" "Worried">>
 Mailman: I just came to give you a package.
-
+<<showCharacter "Jonas" "Talking">>
 Jonas: We haven't ordered anything, are you sure that package is ours? 
-
+<<showCharacter "Jonas" "Worried">>
 Mailman: Oh right, I will be back when I have a package for you. 
-
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 4 — COOKIES (NEUTRAL)
@@ -2025,7 +2035,24 @@ position: -78,1313
 ---
 //FAM C — DAY 4 — COOKIES (NEUTRAL)
 <<setBackground "BGFamC">>
-.
+<<showCharacter "Jonas" "Worried">>
+Mailman: Hello!
+<<showCharacter "Jonas" "Talking">>
+Jonas: Hello, I don't think we have ordered anything.
+<<showCharacter "Jonas" "Worried">>
+-> Mailman: Oh right! Sorry for the missunderstanding.
+    <<showCharacter "Jonas" "Talking">>
+    Jonas: No worries, we'll be waiting our next package.
+    <<showCharacter "Jonas" "Worried">>
+    Mailman: Perfect then, have a good evening.
+    <<showCharacter "Jonas" "Talking">>
+    Jonas: You too.
+<<showCharacter "Jonas" "Worried">>
+-> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
+    <<showCharacter "Jonas" "Talking">>
+	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
+<<hideCharacter "Jonas">>
+<<hideBackground>>
 ===
 
 
@@ -2039,30 +2066,30 @@ group: FamC && Day5
 ---
 //FAM C — DAY 5 — BABYSITTING (WARM)
 <<setBackground "BGFamC">>
-
-Vera: Welcome Mr.Mailman, I'm so glad you got here.
-
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Welcome Mr.Mailman, I'm so glad you came. We weren't sure if you would see the "invitations".
+<<showCharacter "Vera" "Happy">>
 Mailman: I'm so glad you invited me.
-
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Of course, none of this would have been possible without you.
-
+<<showCharacter "Vera" "Happy">>
 Mailman: You are too nice, I was just doing my job.
-
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: That's not true, you did much more than that.
-
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: You cared, you decided to listen to us and to get involved.
-
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Yeah, most people wouldn't have stopped to listen and talk. It would have been easier for you to just deliver our packages.
-
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: That's because all of you are worth listening to, you are so kind and thoughtful.
-
-Mikkel: Hey! Mr.Mailman, did you come to challenge me.
-
+<<showCharacter "Mikkel" "TalkingHappy">>
+Mikkel: Hey! Mr.Mailman, have you come to challenge me?
+<<showCharacter "Mikkel" "Worried">>
 Mailman: You wish, I am here because I heard I could get some free meat hahahaha.
-
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: I have brought all we need to go to my secret spot and see who is the best fishing.
-
-
+<<hideCharacter "Mikkel">>
+<<hideBackground>>
 ===
 
 //FAM C — DAY 5 — NEUTRAL ENDING (NEUTRAL)
