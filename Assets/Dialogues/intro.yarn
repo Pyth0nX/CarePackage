@@ -1466,6 +1466,7 @@ Gertrude: Good afternoon Mr.Mailman. I'm glad to see you, do you come for a cup 
 <<showCharacter "Gertrude" "Happy">>
 Mailman: Oh no, I came to give you a special package. Some cookies one of your neighbours, Lina, made. 
 <<showCharacter "Gertrude" "TalkingHappy">>
+<<giveItem "cookies">>
 Gertrude: Oh, that's so kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her though.
 <<showCharacter "Gertrude" "Happy">>
 ->Mailman: Maybe you can call Vera, Lina's daughter should be in her house babysitting. They could give you her phone number.
@@ -1493,6 +1494,7 @@ Mailman: Good afternoon Gertrude.
 Gertrude: Good afternoon MrMailman. Is there anything I can help you with?
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Oh no, I came to give you a package. Some cookies one of your neighbours, Lina, made. 
+<<giveItem "cookies">>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Oh, that's too kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her tho.
 <<showCharacter "Gertrude" "Worried">>
@@ -1733,6 +1735,7 @@ Vera: Good morning, Mr. Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you. I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
+<<recievePackage true>>
 Vera: Sure thing! I actually might have something for you too. When we moved, I brought a box of clothes that I used to wear when I was younger. I didn't want to throw them away. Do you know anyone who would like some clothes? 
 <<showCharacter "Vera" "Happy">>
 -> Mailman: Now that you mention it, I might know the perfect family. (Accept the clothes)
@@ -1770,6 +1773,7 @@ Vera: Sure thing! This is a bit damaged, are you sure this is my package?
 Mailman: Oh no, it is your package. I guess it received some damage on the way here, I am so sorry.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the content inside didn't get damaged.
+<<recievePackage true>>
 <<showCharacter "Vera" "Happy">>
 Mailman: I am really sorry, I will drive slower.
 <<showCharacter "Vera" "TalkingWorried">>
@@ -1805,6 +1809,7 @@ Vera: Good afternoon Mr.Mailman
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
+<<recievePackage true>>
 Vera: Sure thing! This is a bit damaged, yesterday's diapers were also damaged.
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, I might need to figure out new paths to get here, with less bumps.
@@ -1846,7 +1851,9 @@ Vera: Good afternoon Mr.Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
-Vera: Sure thing! It's broken, how could this happen?
+Vera: Sure thing! 
+<<recievePackage true>>
+Vera: It's broken! how could this happen?
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, it must have bumped with some of the other packages.
 <<showCharacter "Vera" "TalkingWorried">>
@@ -1886,7 +1893,9 @@ Vera: Good afternoon Mr.Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
-Vera: Sure thing! It's broken, how could this happen again?
+Vera: Sure thing! 
+<<recievePackage true>>
+Vera: It's broken, how could this happen again?
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, I will try to avoid any bumps on the way next time.
 <<showCharacter "Vera" "TalkingWorried">>
@@ -1917,7 +1926,7 @@ color: orange
 group: FamC && Day3
 position: -74,553
 ---
-//FAM C — DAY 3 — BAIT (WRONG PACKAGE)
+//FAM C — DAY 3 — NOTE (WRONG PACKAGE)
 <<recievePackage false>>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
@@ -1934,7 +1943,7 @@ Mailman: You're right, this package is not for you. I'm sorry, I'll be back when
 <<hideBackground>>
 ===
 
-//FAM C — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
+//FAM C — DAY 3 — NOTE (WARM)
 title: FamC
 when: ($day == 3) && ($package == "note") && ($damage < 1)
 color: red
@@ -2040,15 +2049,22 @@ position: -74,1168
 <<giveItem "cookies">>
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
-Mailman: Good afternoon Jonas.
+Mailman: Hello!
 <<showCharacter "Jonas" "Talking">>
-Jonas: Good afternoon Mr.Mailman. Is there anything I can help you with?
+Jonas: Hello, I don't think we have ordered anything.
 <<showCharacter "Jonas" "Worried">>
-Mailman: I just came to give you a package.
-<<showCharacter "Jonas" "Talking">>
-Jonas: We haven't ordered anything, are you sure that package is ours? 
+-> Mailman: Oh right! Sorry for the missunderstanding.
+    <<showCharacter "Jonas" "Talking">>
+    Jonas: No worries, we'll be waiting our next package.
+    <<showCharacter "Jonas" "Worried">>
+    Mailman: Perfect then, have a good evening.
+    <<showCharacter "Jonas" "Talking">>
+    Jonas: You too.
 <<showCharacter "Jonas" "Worried">>
-Mailman: Oh right, I will be back when I have a package for you. 
+-> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
+    <<showCharacter "Jonas" "Talking">>
+    <<giveItem "cookies">>
+	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
 ===
@@ -2127,18 +2143,6 @@ color: orange
 group: FamC && Day5
 ---
 //FAM C — DAY 5 — BABYSITTING (NEUTRAL)
-<<setBackground "BGFamC">>
-.
-===
-
-//FAM C — DAY 5 — BAD ENDING (COLD)
-title: FamC
-when: ($day == 5) && ($damage < 1)
-position: -73,1930
-color: orange
-group: FamC && Day5
----
-//FAM C — DAY 5 — BABYSITTING (COLD)
 <<setBackground "BGFamC">>
 .
 ===
