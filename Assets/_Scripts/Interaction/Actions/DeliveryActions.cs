@@ -56,7 +56,7 @@ namespace CarePackage.Interaction.Delivery
             if (_internalPackage == null) _internalPackage = DeliveryUitilities.ToPackage(package);
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
-            interactingPlayer.Pickup(this, interactingObject);
+            interactingPlayer.Pickup(this);
             Xasu.HighLevel.GameObjectTracker.Instance.Interacted("Package_" + Package.PackageData.Title, Xasu.HighLevel.GameObjectTracker.TrackedGameObject.Item);
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
         }

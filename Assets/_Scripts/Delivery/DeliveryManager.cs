@@ -187,7 +187,7 @@ namespace CarePackage.Delivery
                 Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");
                 GetRandomJob();
                 
-                if (deliveries.Count > 1) 
+                if (_deliveriesMade == 1 && GameManager.Instance.CurrentDay == 1)
                     Task.TaskManager.PushTaskUpdate(new Task.Task("You delivered a package, go on and the deliver the next"));
 
                 var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position,

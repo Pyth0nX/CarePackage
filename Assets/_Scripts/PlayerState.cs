@@ -46,11 +46,10 @@ namespace CarePackage.Main
             _switchMode = GetComponent<ModeSwitcher>();
         }
 
-        public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
+        public void Pickup(IPickup objectToPickup)
         {
-            Debug.Log("Picking up object " + objectOfPickup.transform.root.name);
             if (IsPickupValid) DropPickup();
-            SetPickup(objectToPickup, objectOfPickup);
+            SetPickup(objectToPickup);
             if (!IsPickupValid) return;
             
             AttachPickupWithJoint();
@@ -98,9 +97,8 @@ namespace CarePackage.Main
             }
         }
 
-        public void SetPickup(IPickup inPickeup, GameObject pickupObject)
+        public void SetPickup(IPickup inPickeup)
         {
-            inPickeup.OwningObject = pickupObject;
             _pickup = inPickeup;
         }
 
@@ -116,7 +114,7 @@ namespace CarePackage.Main
             DetachPickupJoint();
             
             DeliveryManager.SetCurrentHeldDelivery(null);
-            SetPickup(pickupToDrop, null);
+            SetPickup(pickupToDrop);
             _pickup = null;
         }
         

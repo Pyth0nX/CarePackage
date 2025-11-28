@@ -138,7 +138,8 @@ namespace CarePackage.Delivery
         {
             _toggled = !_toggled;
             UI.UIManager.Instance.TogglePopupWindow(checkListUI);
-            Task.TaskManager.PushTaskUpdate(new Task.Task("Here you can select what package you want to deliver"));
+            if (GameManager.Instance.CurrentDay == 1) 
+                Task.TaskManager.PushTaskUpdate(new Task.Task("Here you can select what package you want to deliver"));
         }
 
         public void OnToggleCheckList(InputAction.CallbackContext input)

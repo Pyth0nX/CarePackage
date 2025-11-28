@@ -122,7 +122,7 @@ namespace CarePackage.Main
                 Debug.Log("Starting Day in Post Office");
                 GameManager.Instance.StartDay();
             }
-            if (!GameManager.Instance.tutorialDone) 
+            if (GameManager.Instance.CurrentDay == 1) 
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Check in at the computer"));
         }
         
