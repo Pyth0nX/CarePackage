@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace CarePackage.Interaction
         public void RaiseInteraction();
     }
 
-    public abstract class InteractionActivationBase : IInteractionActivationType, IDisposable
+    public abstract class InteractionActivationBase : IInteractionActivationType, System.IDisposable
     {
         private readonly Interactable _owner;
         
@@ -60,12 +59,13 @@ namespace CarePackage.Interaction
         }
     }
 
-    public class Clickable : MonoBehaviour, IPointerDownHandler
+    public class Clickable : MonoBehaviour, IPointerClickHandler
     {
         public event System.Action OnClicked;
         
-        public void OnPointerDown(PointerEventData eventData) => OnClicked?.Invoke();
-        private void OnMouseDown() => OnClicked?.Invoke();
+        //public void OnPointerDown(PointerEventData eventData) => OnClicked?.Invoke();
+        //private void OnMouseDown() => OnClicked?.Invoke();
+        public void OnPointerClick(PointerEventData eventData) => OnClicked?.Invoke();
     }
     
     public class InteractionOnTriggered : InteractionActivationBase

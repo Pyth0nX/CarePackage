@@ -223,14 +223,14 @@ namespace CarePackage.Delivery
             HelperMethods.ShuffleList(_randomNumbers);
             for (int i = 0; i < _randomNumbers.Count; i++)
             {
-                var item = itemLibrary.GetRandomItem();
+                //var item = itemLibrary.GetRandomItem();
                 int minPay = Random.Range(10, 100);
                 int maxPay = Random.Range(minPay, minPay + 50);
                 string flavour = flavourLibrary.GetRandomFlavour();
-                string title = item.ItemData.name + "Delivery" + _randomNumbers[i];
+                string title = "Delivery" + _randomNumbers[i];//item.ItemData.name + "Delivery" + _randomNumbers[i];
                 string address = "Go to Address: " + addressLibrary.GetAddressForId(i);
                 string description =
-                    $"Deliver to: {item.ItemData.name} wanted by {flavour}\n" +
+                    $"Deliver to: someone wanted by {flavour}\n" +
                     "\n" +
                     $"Address: {address}\n" +
                     "\n" +
@@ -246,7 +246,7 @@ namespace CarePackage.Delivery
                         minPay,
                         maxPay
                     ),
-                    ItemGUID = item != null ? item.ItemData.name : null,
+                    //ItemGUID = item != null ? item.ItemData.name : null,
                 };
                 //AddDelivery(newMail);
                 //_jobBoard.CreateJob(newDelivery);
