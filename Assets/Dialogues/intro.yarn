@@ -397,7 +397,7 @@ position: -1974,573
 //FAM A — DAY 2 — UNIFORM (1ST TIME DAMAGED)
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 0.5>>
-<<setBackgroung "BGFamA">>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mail man: Good afternoon, Lina.
 <<showCharacter "Lina" "LinaSpeakingTired">>
