@@ -31892,6 +31892,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 67484784f30ba224e87779ace375382b, type: 2}
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
+      propertyPath: dayToLose
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: mailboxes
       value: 
       objectReference: {fileID: 0}
@@ -32037,7 +32041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: automaticallyLoseAtSpecificDay
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3006058282879213457, guid: 6a54569749b15da4b8700c3c57edf1cc, type: 3}
       propertyPath: automaticallyEndDayWhenNoPackagesLeft
