@@ -7,6 +7,7 @@ namespace CarePackage.Main
         Tutorial = 1,
         PostOffice = 2,
         NeighbourHood = 3,
-        Ending = 4
+        Ending = 4,
+        Credits = 5
     }
 }
