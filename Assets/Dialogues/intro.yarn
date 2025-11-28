@@ -147,7 +147,7 @@ group: FamA && Day1
 //FAM A — DAY 1 — BACKPACK (DAMAGED)
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 0.5>>
-<<setBackgroung "BGFamA">>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "LinaListeningTired">>
 Mailman: Good afternoon! Are you Lina?
 <<showCharacter "Lina" "LinaSpeakingTired">>
