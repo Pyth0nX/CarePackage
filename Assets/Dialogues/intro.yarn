@@ -1956,7 +1956,6 @@ position: -74,686
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
-<<set $noteForVera = false>> // Item used
 <<recieveItem "noteForVera">>
 <<showCharacter "Vera" "Happy">>
 *Vera reads the note.*
@@ -1988,6 +1987,7 @@ position: -74,821
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
+<<giveItem "note">>
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
 <<showCharacter "Vera" "TalkingWorried">>
@@ -2093,6 +2093,7 @@ Jonas: Hello, I don't think we have ordered anything.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
     <<showCharacter "Jonas" "Talking">>
+    <<giveItem "cookies">>
 	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
