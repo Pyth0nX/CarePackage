@@ -196,6 +196,7 @@ color: yellow
 position: -1698,-184
 ---
 <<recievePackage true>>
+<<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: It's not the nicest surprise, but... fine.
 <<showCharacter "Lina" "ListeningTired">>
@@ -358,6 +359,7 @@ group: FamA && Day2
 color: green
 position: -1709,329
 ---
+<<set $relationshipFamA += 0.5>>
 <<recievePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yeah, but I won't be like them, I won't fit in. I'll just be the nice girl from class.
@@ -502,6 +504,7 @@ color:green
 group: FamA && Day2
 position: -1714,653
 ---
+<<set $relationshipFamA += 0.5>>
 <<recievePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
@@ -650,7 +653,8 @@ Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
 <<showCharacter "Lina" "ListeningRested">>
--> Mailman: I'm glad you feel that way, I can assure you they feel the same way (+1)
+-> Mailman: I'm glad you feel that way, I can assure you they feel the same way 
+    <<set $relationshipFamA += 0.5>>
     <<showCharacter "Lina" "SpeakingRested">>
 	Lina: This wouldn't have been possible without you Mr.Mailman, you have done a lot for this community.
     <<showCharacter "Lina" "Listeningrested">>
@@ -724,6 +728,7 @@ group: FamA && Day4
 color: green
 position: -1689,1663
 ---
+<<set $relationshipFamA += 0.5>>
 <<showCharacter "Lina" "SpeakingRested">>
 <<recievePackage true>>
 Lina: It's okay, I'm sure she'll meet amazing kids in this new school. She just needs to stop getting ahead of what's going to happen.
@@ -817,20 +822,10 @@ group: FamA && Day5
 ---
 //FAM A — DAY 5 — BABYSITTING (NEUTRAL)
 <<setBackground "BGFamA">>
-.
+Note: Out for the day, come back tomorrow.
+<<hideBackground>>
 ===
 
-//FAM A — DAY 5 — BAD ENDING (COLD)
-title: FamA
-when: ($day == 5) && ($package == "backpack") && ($damage < 1)
-position: -1978,2304
-color: purple
-group: FamA && Day5
----
-//FAM A — DAY 5 — BABYSITTING (COLD)
-<<setBackground "BGFamA">>
-.
-===
 
 
 
@@ -918,6 +913,7 @@ group: FamB && Day1
 color: green
 position: -312,-711
 ---
+<<set $relationshipFamB += 0.5>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
 <<showCharacter "Mikkel" "Worried">>
