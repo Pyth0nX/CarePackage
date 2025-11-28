@@ -6,7 +6,8 @@ namespace CarePackage.Main
 {
     public class PlayerController : MonoBehaviour
     {
-        // Editor variables
+        [SerializeField] private GameObject playerCamera;
+        [SerializeField] private GameObject sliderPrefab;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float jumpForce = 5f;
         [SerializeField] private float jumpForwardBias = 0.5f;
@@ -16,11 +17,8 @@ namespace CarePackage.Main
         [SerializeField, Range(0.05f, 0.5f)] private float scrollSensitivity = 0.1f;
         [SerializeField] private float groundCheckSize;
         [SerializeField] private Vector3 groundCheckOffset;
-        [SerializeField] private GameObject playerCamera;
         [SerializeField] private bool debug;
         [SerializeField] private bool startLocked = true;
-
-        [SerializeField] private GameObject sliderPrefab;
         
         public bool IsGrounded => _isGrounded;
         public PlayerState OwningPlayer => _owningPlayer;
@@ -161,13 +159,6 @@ namespace CarePackage.Main
             {
                 var jumpDirection = _velocity.normalized * jumpForwardBias + transform.up;
                 verticalMomentum = jumpDirection.normalized * jumpForce;
-            }
-            
-            if (IsGrounded)
-            {
-                Vector3 slopeNormal = _groundRay.GetNormal();
-                Vector3 slopeVelocity = Vector3.ProjectOnPlane(_velocity, slopeNormal).normalized * _velocity.magnitude;
-                horizontalMomentum = slopeVelocity;
             }
             
             _momentum = horizontalMomentum + verticalMomentum;
