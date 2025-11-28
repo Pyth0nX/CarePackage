@@ -18,7 +18,7 @@ namespace CarePackage.Main
         [SerializeField] private Vector3 groundCheckOffset;
         [SerializeField] private GameObject playerCamera;
         [SerializeField] private bool debug;
-        public float airControlRate = 2f;
+        [SerializeField] private bool startLocked = true;
 
         [SerializeField] private GameObject sliderPrefab;
         
@@ -43,6 +43,7 @@ namespace CarePackage.Main
         private float _xRotation;
         private float _yRotation;
         private float _sprintBonus = 1f;
+        private float _airControlRate = 2f;
         private bool _lockedInput;
         private bool _isGrounded;
         private bool _isJumping;
@@ -145,7 +146,7 @@ namespace CarePackage.Main
             var verticalMomentum = VectorMath.ExtractDotVector(_momentum, transform.up);
             var horizontalMomentum = _momentum - verticalMomentum;
             
-            verticalMomentum -= transform.up * gravity * Time.fixedDeltaTime;
+            verticalMomentum -=  Time.fixedDeltaTime * gravity * transform.up;
             
             if (IsGrounded && VectorMath.GetDotProduct(verticalMomentum, transform.up) < 0f)
                 verticalMomentum = Vector3.zero;
@@ -198,11 +199,11 @@ namespace CarePackage.Main
                 {
                     inputDirection = VectorMath.RemoveDotVector(inputDirection, horizontalMomentum.normalized);
                 }
-                horizontalMomentum += inputDirection * (Time.deltaTime * airControlRate * 0.25f);
+                horizontalMomentum += inputDirection * (Time.deltaTime * _airControlRate * 0.25f);
             }
             else
             {
-                horizontalMomentum += inputDirection * (Time.deltaTime * airControlRate);
+                horizontalMomentum += inputDirection * (Time.deltaTime * _airControlRate);
                 horizontalMomentum = Vector3.ClampMagnitude(horizontalMomentum, speed);
             }
         }
@@ -237,7 +238,7 @@ namespace CarePackage.Main
             
             _xRotation -= _verticalCameraSpeed;
             _xRotation = Mathf.Clamp(_xRotation, -90, 60);
-            playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+            if (playerCamera != null) playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
             
             _rb.MoveRotation(_rb.rotation * Quaternion.AngleAxis(_yRotation, Vector3.up));
         }
@@ -369,6 +370,7 @@ namespace CarePackage.Main
         public void OnScroll(InputAction.CallbackContext context)
         {
             Vector2 scrollDelta = context.ReadValue<Vector2>();
+            if (_owningPlayer == null) return;
             _owningPlayer.ChangePickupDistance(scrollDelta.y * scrollSensitivity);
         }
         

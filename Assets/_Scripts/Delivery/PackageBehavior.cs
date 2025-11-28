@@ -26,8 +26,8 @@ namespace CarePackage.Delivery
         private Rigidbody _rigidbody;
         private float _velocityThreshold;
         private int _currentMeshIndex;
-        private bool _canBeDamaged = false;
-        private bool _usingGravity = false;
+        private bool _canBeDamaged;
+        private bool _usingGravity;
         
         public event System.Action<EPackageState, EPackageState> OnStateChanged;
 
@@ -73,6 +73,12 @@ namespace CarePackage.Delivery
         private void OnCollisionEnter(Collision other)
         {
             if (!_canBeDamaged) return;
+            
+            int otherLayer = other.gameObject.layer;
+            if (otherLayer == LayerMask.NameToLayer("Interaction") ||
+                otherLayer == LayerMask.NameToLayer("Player") ||
+                otherLayer == LayerMask.NameToLayer("UI"))
+                return;
             /*
             float impulse = 0f;
             impulse = other.impulse.magnitude;

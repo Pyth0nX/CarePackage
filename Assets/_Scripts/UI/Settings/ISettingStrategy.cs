@@ -58,8 +58,8 @@ namespace CarePackage.UI
 
         public void Init()
         {
-            if (useNormalizedNormal) SetValue(Mathf.Lerp(0, 1, defaultValue));
-            else SetValueWithDomain(Mathf.Lerp(minValue, maxValue, defaultValue));
+            if (useNormalizedNormal) SetValue(defaultValue);
+            else SetValueWithDomain(defaultValue);
         }
         
         public void SetValue(object value)
@@ -147,8 +147,6 @@ namespace CarePackage.UI
         
         protected abstract void LoadSetting();
         
-        private static readonly int[] Multipliers = {1, 10, 100, 1000, 10000};
-        
         protected virtual string FormatValue()
         {
             return valueFormat switch
@@ -187,28 +185,6 @@ namespace CarePackage.UI
         [SerializeReference] private SettingsMenuController controller;
         
         public ESensitivity Category => category;
-        /*
-        private float MapSliderToDomain(float sliderValue)
-        {
-            return category switch
-            {
-                ESensitivity.LookX => Mathf.Lerp(0.1f, 2f, sliderValue),
-                ESensitivity.LookY => Mathf.Lerp(0.1f, 2f, sliderValue),
-                ESensitivity.Scroll => Mathf.Lerp(0.02f, 0.5f, sliderValue),
-                _ => sliderValue
-            };
-        }
-
-        private float MapDomainToSlider(float domainValue)
-        {
-            return category switch
-            {
-                ESensitivity.LookX => Mathf.InverseLerp(0.1f, 2f, domainValue),
-                ESensitivity.LookY => Mathf.InverseLerp(0.1f, 2f, domainValue),
-                ESensitivity.Scroll => Mathf.InverseLerp(0.02f, 0.5f, domainValue),
-                _ => domainValue
-            };
-        }*/
 
         protected override string GetTitle() => category + " Sensitivity";
 
@@ -231,6 +207,7 @@ namespace CarePackage.UI
     public class PackageAmountSetting : SliderSetting
     {
         [SerializeReference] private SettingsMenuController controller;
+        [SerializeField] private bool changeMaxAmount;
         /*
         private int MapSliderToDomain(float sliderValue)
         {
@@ -244,15 +221,15 @@ namespace CarePackage.UI
 
         protected override string GetTitle() => "Package Amount";
 
-        protected override string GetCategoryKey() => "PackageMax";
+        protected override string GetCategoryKey() => changeMaxAmount ? "PackageMax" : "PackageMin";
 
-        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, (int)newValue);
+        protected override void HandleValueChanged(float newValue) => controller.SetPackageAmount(Owner, (int)newValue, changeMaxAmount);
         
-        protected override void SaveSetting() => controller.SavePackageAmount(Owner, (int)CurrentValue);
+        protected override void SaveSetting() => controller.SavePackageAmount(Owner, (int)CurrentValue, changeMaxAmount);
 
         protected override void LoadSetting()
         {
-            float loadedMaxPackageNum = controller.GetPackageAmount();
+            float loadedMaxPackageNum = controller.GetPackageAmount(changeMaxAmount);
             SetValueWithDomain(loadedMaxPackageNum);
         }
     }

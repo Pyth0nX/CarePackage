@@ -15,13 +15,13 @@ namespace CarePackage.UI
 
         protected override string GetCategoryKey() => AudioManager.Instance.GetVolumeParamByGroup(category);
 
-        protected override void HandleValueChanged(float newValue) => controller.PreviewAudioSlider(Owner, category, newValue);
+        protected override void HandleValueChanged(float newValue) => controller.PreviewAudioSlider(Owner, category, CurrentValue);
         
-        protected override void SaveSetting() => controller.SaveAudioSlider(Owner, category);
+        protected override void SaveSetting() => controller.SaveAudioSlider(Owner, category, CurrentValue);
 
         protected override void LoadSetting()
         {
-            float stored = AudioManager.Instance.GetVolumeByAudioGroup(category);
+            float stored = AudioManager.Instance.GetStoredVolume(category);
             SetValueWithDomain(stored);
         }
     }

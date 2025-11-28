@@ -56,34 +56,46 @@ namespace CarePackage.Main.Sound
             LoadVolumes();
         }
         
+        public float GetStoredVolume(EAudioCategory category)
+        {
+            return PlayerPrefs.GetFloat(GetVolumeParamByGroup(category), 0f);
+        }
+        
         public void PreviewVolume(EAudioCategory category, float value) 
         {
             var exposedParam = GetVolumeParamByGroup(category);
-            mixer.SetFloat(exposedParam, AudioMath.DecimalToDecibel(value));
+            mixer.SetFloat(exposedParam,value);
         }
         
-        public void SaveVolume(EAudioCategory category)
+        public void SaveVolume(EAudioCategory category, float volume)
         {
+            PlayerPrefs.SetFloat(GetVolumeParamByGroup(category), volume);
+            PreviewVolume(category, volume);
+            /* // old
             if (mixer.GetFloat(GetVolumeParamByGroup(category), out var value))
             {
                 var valueInDecimal = AudioMath.DecibelToDecimal(value);
-                PlayerPrefs.SetFloat(GetVolumeParamByGroup(category), valueInDecimal);
-                PreviewVolume(category, valueInDecimal);
-            }
-        }
-
-        public void SaveVolumes()
-        {
-            ForEachVolume((key, value) => SaveVolume(key));
+                
+            }*/
         }
         
         public void LoadVolumes()
         {
+            ForEachVolume((category, key) =>
+            {
+                float stored = PlayerPrefs.HasKey(key) ? 
+                    PlayerPrefs.GetFloat(key)
+                    : mixer.GetFloat(key, out var mixerValue) ? 
+                        mixerValue 
+                        : 1f;
+                PreviewVolume(category, stored);
+            });
+            /* simplified
             ForEachVolume((category, key) => 
             { 
                 var stored = PlayerPrefs.GetFloat(key, 1f);
                 PreviewVolume(category, stored);
-            });
+            });*/
         }
         
         private void ForEachVolume(System.Action<EAudioCategory, string> action)
@@ -93,8 +105,6 @@ namespace CarePackage.Main.Sound
                 action(kvp.Key, kvp.Value);
             }
         }
-        
-        public float GetVolumeByAudioGroup(EAudioCategory category) => mixer.GetFloat(GetVolumeParamByGroup(category), out var value) ? AudioMath.DecibelToDecimal(value) : 1f;
         
         public static AudioSource PlayOneShotAtLocation(AudioClip clip, EAudioCategory category, Vector3 position, float volume = 1f)
         {
@@ -135,11 +145,6 @@ namespace CarePackage.Main.Sound
     
     public static class AudioMath
     {
-        public static float DecimalToDecibel(float inDecimal)
-        {
-            return Mathf.Log10(Mathf.Clamp(inDecimal, 0.0001f, 1f)) * 20f;
-        }
-        
         public static float DecibelToDecimal(float inDB)
         {
             return Mathf.Pow(10f, inDB / 20f);

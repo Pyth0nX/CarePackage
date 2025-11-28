@@ -30,6 +30,7 @@ namespace CarePackage.UI
         [SerializeField] private ToggleMode toggleMode = ToggleMode.Single;
         [SerializeField] private int maxToggles = 3;
         [SerializeField] private Transform hud;
+        [SerializeField] private Transform pauseMenu;
         
         [SerializeField] private UnityEngine.InputSystem.PlayerInput playerInput;
         
@@ -334,6 +335,20 @@ namespace CarePackage.UI
         {
             playerInput.SwitchCurrentActionMap(schema);
         }*/
+
+        public void ToggleSettingsMenu()
+        {
+            if (_settingsMenu == null) return;
+            
+            if (!_settingsMenu.IsOpen)
+            {
+                OpenPopupWindow(_settingsMenu.gameObject);
+            }
+            else
+            {
+                _settingsMenu.RequestClose();
+            }
+        }
         
         public void OnUndo(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
@@ -347,26 +362,14 @@ namespace CarePackage.UI
         public void OnEscape(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             if (!context.performed) return;
+            TogglePopupWindow(pauseMenu.gameObject);
+        }
 
-            if (playerInput.currentActionMap.name == "UI")
+        public void OnEscapeUI(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            if (_activePopups.Count > 0)
             {
-                if (_activePopups.Count > 0)
-                {
-                    UndoLastPopupGroup();
-                }
-                return;
-            }
-
-            if (_settingsMenu != null)
-            {
-                if (!_settingsMenu.IsOpen)
-                {
-                    OpenPopupWindow(_settingsMenu.gameObject);
-                }
-                else
-                {
-                    _settingsMenu.RequestClose();
-                }
+                UndoLastPopupGroup();
             }
         }
     }

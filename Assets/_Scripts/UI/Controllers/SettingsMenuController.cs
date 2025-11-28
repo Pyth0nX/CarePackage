@@ -66,6 +66,11 @@ namespace CarePackage.UI
             gameObject.SetActive(true);
             _toggled = true;
             _originalValues.Clear();
+            
+            foreach (var element in _elements)
+            {
+                element.Strategy.Load();
+            }
         }
 
         public void Close()
@@ -86,12 +91,12 @@ namespace CarePackage.UI
             _toggled = false;
             gameObject.SetActive(false);
             UIManager.Instance.ClosePopupWindow(areYouSurePopup);
-
+/*
             Main.Sound.AudioManager.Instance.LoadVolumes();
             foreach (var element in _elements)
             {
                 element.Strategy.Load();
-            }
+            }*/
         }
         
         public void RequestClose()
@@ -195,9 +200,9 @@ namespace CarePackage.UI
             SaveChange(owningElement, newValue);
         }
         
-        public void SaveAudioSlider(MenuSettingElement owningElement, Main.Sound.EAudioCategory musicGroup)
+        public void SaveAudioSlider(MenuSettingElement owningElement, Main.Sound.EAudioCategory musicGroup, float volume)
         {
-            Main.Sound.AudioManager.Instance.SaveVolume(musicGroup);
+            Main.Sound.AudioManager.Instance.SaveVolume(musicGroup, volume);
             RemoveElementFromChanges(owningElement);
         }
         
@@ -218,21 +223,22 @@ namespace CarePackage.UI
             return _playerController.GetSensitivity(sensitivityCategory);
         }
 
-        public void SetPackageAmount(MenuSettingElement owningElement, int newValue)
+        public void SetPackageAmount(MenuSettingElement owningElement, int newValue, bool isMax)
         {
-            _playerController.OwningPlayer.DeliveryManager.PackageMax = newValue;
+            _playerController.OwningPlayer.DeliveryManager.SetPackageAmount(newValue, isMax);
             SaveChange(owningElement, newValue);
         }
 
-        public void SavePackageAmount(MenuSettingElement owningElement, int newValue)
+        public void SavePackageAmount(MenuSettingElement owningElement, int newValue, bool isMax)
         {
-            _playerController.OwningPlayer.DeliveryManager.SavePackageMax(newValue);
+            _playerController.OwningPlayer.DeliveryManager.SavePackageAmount(newValue, isMax);
             RemoveElementFromChanges(owningElement);
         }
 
-        public int GetPackageAmount()
+        public int GetPackageAmount(bool max)
         {
-            return _playerController.OwningPlayer.DeliveryManager.PackageMax;
+            var packageAmount = max ? PlayerPrefs.GetInt("PackageMax", 4) : PlayerPrefs.GetInt("PackageMin", 1);
+            return packageAmount;
         }
         #endregion
 

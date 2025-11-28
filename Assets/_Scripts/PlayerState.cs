@@ -46,16 +46,6 @@ namespace CarePackage.Main
             _switchMode = GetComponent<ModeSwitcher>();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                Task.TaskManager.PushTaskUpdate(new Task.Task("Hello traveller " + 1));
-            }
-            
-            Debug.Log("Pickup: " + IsPickupValid);
-        }
-
         public void Pickup(IPickup objectToPickup, GameObject objectOfPickup)
         {
             Debug.Log("Picking up object " + objectOfPickup.transform.root.name);

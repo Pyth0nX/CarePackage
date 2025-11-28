@@ -18,7 +18,7 @@ namespace CarePackage.Delivery
         
         [SerializeField] private float newDeliveryDistanceThreshold;
         [SerializeField] private int mainPackageNumber = 5;
-        [SerializeField] private int minPackageAmount = 1;
+        [SerializeField] private int minPackageAmount;
         [SerializeField] private int maxPackageAmount;
         [SerializeField] private int deliveriesToMake;
         [SerializeField] private bool overrideRandomDelivery = false;
@@ -33,7 +33,6 @@ namespace CarePackage.Delivery
         public Package CurrentDelivery => _heldDelivery;
         public int CurrentDeliveryId => _currentDeliveryId;
         public int DeliveriesToMake => deliveries.Count;
-        public int PackageMax { get => maxPackageAmount; set => maxPackageAmount = value; }
         public int GetDeliveryQuotas => deliveriesToMake + _jobBoard.GetScriptedJobsByDayCount(GameManager.Instance.CurrentDay);
 
         private DeliverableZone[] _deliverableSpots = System.Array.Empty<DeliverableZone>();
@@ -53,6 +52,8 @@ namespace CarePackage.Delivery
             if (_jobBoard == null) _jobBoard = FindFirstObjectByType<JobBoard>();
             if (_deliveryCheckList == null) _deliveryCheckList = GetComponent<DeliveryCheckList>();
             if (mailboxes == null) mailboxes = GameObject.Find("Mailboxes");
+            minPackageAmount = PlayerPrefs.GetInt("PackageMin", 1);
+            maxPackageAmount = PlayerPrefs.GetInt("PackageMax", 4);
         }
 
         private void Start()
@@ -89,6 +90,12 @@ namespace CarePackage.Delivery
         private void EndDayEarly()
         {
             GameManager.Instance.EndDayEarly();
+        }
+
+        public void SetPackageAmount(int amount, bool isMax)
+        {
+            if (isMax) maxPackageAmount = amount;
+            else minPackageAmount = amount;
         }
 
         public void SetCurrentHeldDelivery(Package package)
@@ -403,10 +410,18 @@ namespace CarePackage.Delivery
 
         public void RemovePackageFromConveyerBelt(GameObject package) => _jobBoard.RemovePackageFromConveyerBelt(package);
 
-        public void SavePackageMax(int max)
+        public void SavePackageAmount(int amounnt, bool isMax)
         {
-            PlayerPrefs.SetInt("PackageMax", max);
-            PackageMax = max;
+            if (isMax)
+            {
+                PlayerPrefs.SetInt("PackageMax", amounnt);
+                maxPackageAmount = amounnt;
+            }
+            else
+            {
+                PlayerPrefs.SetInt("PackageMin", amounnt);
+                minPackageAmount = amounnt;
+            }
         }
         
         public void LoadPackageMax()
