@@ -163,6 +163,13 @@ namespace CarePackage.Main
                 verticalMomentum = jumpDirection.normalized * jumpForce;
             }
             
+            if (IsGrounded)
+            {
+                Vector3 slopeNormal = _groundRay.GetNormal();
+                Vector3 slopeVelocity = Vector3.ProjectOnPlane(_velocity, slopeNormal).normalized * _velocity.magnitude;
+                horizontalMomentum = slopeVelocity;
+            }
+            
             _momentum = horizontalMomentum + verticalMomentum;
             _momentum = transform.worldToLocalMatrix * _momentum;
             /*

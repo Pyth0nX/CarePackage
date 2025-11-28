@@ -55,7 +55,7 @@ namespace CarePackage.Main
             onDayEntered?.Invoke(_day);
             _lastUpdateSecond = -1;
             Tween.Custom(0f, dayTime, dayTime, UpdateTimer, Ease.Linear).OnComplete(EndDay);
-            TaskManager.PushTaskUpdate(new Task.Task("Press V to get an overview of all the packages you need"));
+            if (_day == 1) TaskManager.PushTaskUpdate(new Task.Task("Press V to get an overview of all the packages you need"));
         }
 
         public void StartGame()

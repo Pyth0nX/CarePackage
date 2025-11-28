@@ -36,7 +36,7 @@ namespace CarePackage.Interaction.Miscellaneous
 
         public void PerformAction(PlayerState interactingPlayer, GameObject interactingObject)
         {
-            interactingPlayer.Pickup(this, interactingObject);
+            interactingPlayer.Pickup(this);
             if (!removeAfterUse) return;
             if (hideInstedOfDestroy) OwningObject.SetActive(false);
             else GameObject.Destroy(OwningObject);
