@@ -1031,10 +1031,10 @@ Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
 <<recievePackage true>>
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "Worried">>
 Mailman: I'm so sorry I'm not used to this icy roads and the package must've bumped with others in the trunk.
--> Mailman:
-I'll just go get him, come in if you'd like. 
+<<showCharacter "Gertrude" "TalkingWorried">>
+Gertrude: I'll just go get him, come in if you'd like. 
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: No thank you, I'll just wait out here.
     <<showCharacter "Gertrude" "TalkingWorried">>
