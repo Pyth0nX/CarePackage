@@ -84,16 +84,24 @@ namespace CarePackage.Delivery
             
             return delivery;
         }
-        
-        public static T TryGetActionFromObject<T>(GameObject objectToGetActionFrom) where T : class, Interaction.IInteractAction
+
+        public static T TryGetActionFromObject<T>(GameObject objectToGetActionFrom)
+        where T : class, Interaction.IInteractAction
         {
+            if (objectToGetActionFrom == null)
+            {
+                Debug.Log("[TryGetActionFromObject] object is null or has been destroyed.");
+                return null;
+            }
+
             var deliveryInteractable = objectToGetActionFrom.GetComponent<Interaction.Interactable>();
+
             if (deliveryInteractable == null)
             {
                 Debug.Log("[TryGetActionFromObject] could not find an interactable on " + objectToGetActionFrom);
                 return null;
             }
-            
+
             var interactAction = deliveryInteractable.InteractAction;
             if (interactAction == null)
             {
@@ -106,8 +114,10 @@ namespace CarePackage.Delivery
                 Debug.Log("[TryGetActionFromObject] found correct action of type " + interactAction.GetType());
                 return tAction;
             }
+
             return null;
         }
+
     }
 }
 
