@@ -1655,7 +1655,7 @@ Jonas: I hope so, we need each and everyone. We have no time to spare, I would d
 -> Mailman: If you ever need to file a complaint, the email is in the receipt
     <<showCharacter "Jonas" "Talking">>
     Jonas: Okay, thanks for the info.
-<<showCharacter "Jonas" "Worried">>
+    <<showCharacter "Jonas" "Worried">>
     Mailman: No worries, have a good evening.
     <<showCharacter "Jonas" "Talking">>
     Jonas: You too.
@@ -1739,6 +1739,7 @@ position: -74,-175
 ---
 //FAM C — DAY 2 — BABY CAM (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamC">>
+<<showCharacter "Vera" "Happy">>
 Mailman: Good morning, Vera!
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Good morning, Mr. Mailman.
