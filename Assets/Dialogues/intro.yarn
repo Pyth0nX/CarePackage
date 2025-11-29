@@ -788,7 +788,7 @@ Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
 <<showCharacter "Lina" "ListeningTired">>
--> Mailman: I'm glad you feel that way, I can assure you they feel the same way (+1)
+-> Mailman: I'm glad you feel that way, I can assure you they feel the same way 
     <<showCharacter "Lina" "LinaSpeakingTired">>
 	Lina: This wouldn't have been possible without you Mr.Mailman, you have done a lot for this community.
     <<showCharacter "Lina" "ListeningTired">>
@@ -918,6 +918,7 @@ position: -312,-711
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Oh right, sorry! I just need you to sign right here.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Thanks! Our kids ordered them online, I wasn't sure they'd even arrive.
 <<showCharacter "Gertrude" "TalkingWorried">>
@@ -941,6 +942,7 @@ position: -327,-492
 Mikkel: Oh so you got my package! Where do I sign?
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Done. Thank you!
 <<showCharacter "Mikkel" "Worried">>
@@ -962,6 +964,7 @@ position: -856,-611
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
+<<recievePackage true>>
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: No thank you, I'll just wait out here.
     <<jump BEnd3Day1>>
@@ -1024,6 +1027,7 @@ position: -852,-748
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
+<<recievePackage true>>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Mailman: I'm so sorry I'm not used to this icy roads and the package must've bumped with others in the trunk.
 -> Mailman:
@@ -1056,6 +1060,7 @@ group: FamB && Day2
 position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
+<<recievePackage false>>
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon Mikkel, I have a package for you.
@@ -1084,6 +1089,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Yeah, they're probably going to be my last seeds for some time. Yesterday, after talking to you, I went to the attic to look for my equipment. 
 <<showCharacter "Mikkel" "Worried">>
@@ -1119,6 +1125,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: A bit damaged I see, if my vegetables aren't so good this time I know who to blame.
 <<showCharacter "Mikkel" "Worried">>
@@ -1157,6 +1164,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Broken I see, I hope I won't be down any seeds.
 <<showCharacter "Mikkel" "Worried">>
@@ -1193,6 +1201,7 @@ position: -846,248
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Broken I see, I hope I won't be down any seeds.
 <<showCharacter "Mikkel" "Worried">>
@@ -1245,6 +1254,7 @@ position: -849,686
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
 Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: That's the stuff! I've been waiting for this. If I catch anything good, you'll be the first to know!
 <<showCharacter "Mikkel" "Worried">>
@@ -1283,6 +1293,7 @@ position: -847,821
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: That's the stuff! The box it's a bit damged, I hope everything is good inside.
 <<showCharacter "Mikkel" "Worried">>
@@ -1326,6 +1337,7 @@ position: -846,952
 <<setBackground "BGFamB">>
 <<setBackground "BGFamB">>
 Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "TalkingTired">>
 Mikkel: That's the stuff! The box it's damaged again, have you been driving with your eyes closed?
 <<showCharacter "Mikkel" "Worried">>
@@ -1381,6 +1393,7 @@ Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come
 Mailman: I would never surrender. Are you scared to lose? 
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Scared of you? Never! You, in fact, have tried to sabotage me by breaking the package.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Are these the worms? 
 <<showCharacter "Mikkel" "TalkingWorried">>
@@ -1409,6 +1422,7 @@ position: -840,1479
 Mailman: Good afternoon Mikkel 
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Good afternoon, Mr.Mailman. I see you haven't fixed your issue with the icy roads, another broken package.
+<<recievePackage true>>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Yes, I don't know how it could happen.
 <<showCharacter "Mikkel" "TalkingWorried">>
