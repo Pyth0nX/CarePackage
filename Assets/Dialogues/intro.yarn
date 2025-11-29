@@ -898,14 +898,13 @@ position: -574,-882
 Gertrude: Dangerous cold for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 <<showCharacter "Gertrude" "Worried">>
 Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all day.
-//*You walk into the living room where Mr.Andersen is at*
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends have passed away, and the rest can't make it up the stairs anymore.
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: I know the feeling. That's why I became a mailman! But I'm always up for a bit of fishing if you ever feel like it.
-<<jump BEnd1Day1>>
+    <<jump BEnd1Day1>>
 -> Mailman: Yeah, I know… that's why I needed something to keep busy.
-<<jump BEnd2Day1>>
+    <<jump BEnd2Day1>>
 ===
 
 title: BEnd1Day1
@@ -950,6 +949,7 @@ Mail man: Thank you! Have a nice afternoon.
 <<hideCharacter "Mikkel">>
 <<hideBackground>>
 ===
+
 //FAM B — DAY 1 — GARDENING TOOLS (DAMAGED)
 title: FamB
 when: ($day == 1) && ($package == "gardenTools") && ($damage == 1)
@@ -971,6 +971,7 @@ Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd 
 -> Mailman: Oh, thank you! It's pretty cold out here.
     <<jump BEn2Day1>>
 ===
+
 title: BEnd3Day1
 color: green
 position: -561,-656
@@ -1008,9 +1009,9 @@ Mail man: Oh I'm already retired. I just couldn't stay at home doing nothing all
 Gertrude: Same here! Mikkel here barely leaves the house. Half of our friends have passed away, and the rest can't make it up the stairs anymore.
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: Haha, I know the feeling. That's why I became a mailman! But I'm always up for a bit of fishing if you ever feel like it.
-<<jump BEnd1Day1>>
+    <<jump BEnd1Day1>>
 -> Mailman: Yeah, I know… that's why I needed something to keep busy.
-<<jump BEnd2Day1>>
+    <<jump BEnd2Day1>>
 ===
 
 //FAM B — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
@@ -1593,9 +1594,9 @@ Vera: YES! just in time, this was about to get ugly.
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: Haha, I have never experienced something like that. But if you ever need a hand, I can try to find you an extra pair.
-<<jump CEn1Day1>>
+    <<jump CEn1Day1>>
 -> Mailman: I see. You can sign right here and I'll be out of your way. 
-<<jump CEnd1Day1>>
+    <<jump CEnd1Day1>>
 ===
 
 title: CEn1Day1
