@@ -994,6 +994,8 @@ Mikkel: Yeah, just be more careful next time.
 Mailman: I'm sorry, I'll drive slower next time. Have a good evening.
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: You too, take care.
+<<hideCharacter "Mikkel">>
+<<hideBackground>>
 ===
 
 title: BEn2Day1
@@ -1047,7 +1049,8 @@ I'll just go get him, come in if you'd like.
     Mail man: Thank you, have a lovely evening.
     <<showCharacter "Mikkel" "TalkingWorried">>
     Mikkel: You too.
-    <<showCharacter "Mikkel" "Worried">>
+    <<hideCharacter "Mikkel">>
+    <<hideBackground>>
 -> Mailman: Oh, thank you! It's pretty cold out here.
     <<jump BEn1Day1>>
 ===
@@ -1242,7 +1245,8 @@ Mailman: I have here a package for Mikkel.
 Gertrude: Are you sure this is Mikkel's package? It looks a bit big for what he ordered.
 <<showCharacter "Gertrude" "Worried">>
 Mailman: You are right, this package is not addressed to you guys. I'm so sorry, I will be back with your package.
-
+<<hideCharacter "Mikkel">>
+<<hideBackground>>
 ===
 
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
