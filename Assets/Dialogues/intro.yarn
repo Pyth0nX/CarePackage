@@ -68,6 +68,7 @@ group: FamA && Day1
 ---
 //FAM A — DAY 1 — BACKPACK (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon! Are you Lina?
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: That's me. Sofie, your package is here!
@@ -307,6 +308,7 @@ group: FamA && Day2
 position: -1975,160
 ---
 //FAM A — DAY 2 — UNIFORM (WRONG PACKAGE)
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon, Lina.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -428,6 +430,8 @@ Sofie: It's that my new uniform?
 	Lina: Bye Mr.Mailman.
     <<showCharacter "Lina" "SofieListeningTired">>
 	Mailman: Have a nice day.
+    <<hideCharacter "Lina">>
+    <<hideBackground>>
 ===
 
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
@@ -441,6 +445,7 @@ position: -1976,715
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 0.5>>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mail man: Good afternoon Lina!
 <<showCharacter "Lina" "SpeakingTired">>
@@ -463,6 +468,8 @@ Sofie: It's that my new uniform?
 	Sofie: Thank you Mr.Mailman.
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
+    <<hideCharacter "Lina">>
+    <<hideBackground>>
 ===
 //FAM A — DAY 2 — UNIFORM (BROKEN)
 title: FamA
@@ -474,6 +481,7 @@ position: -1976,434
 //FAM A — DAY 2 — UNIFORM (BROKEN)
 <<set $famA_damageCount += 1>>
 <<set $relationshipFamA -= 1>>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina! More school supplies I'm guessing.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -515,6 +523,8 @@ Sofie: Yeah, but until then I will avoid any chances of meeting my classmates ou
 <<showCharacter "Lina" "SofieListeningTired">>
 -> Mailman: I might have something to fix that, just wait here while I look in my truck.
 -> Mailman: Wow, that's a lot of free time
+<<hideCharacter "Lina">>
+<<hideBackground>>
 ===
 
 //FAM A — DAY 2 — UNIFORM (COLD)
@@ -525,6 +535,7 @@ group: FamA && Day2
 position: -1977,851
 ---
 //FAM A — DAY 2 — UNIFORM (COLD)
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good Morning Lina! More school supplies I'm guessing.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -539,6 +550,14 @@ Sofie:...
 	Sofie: …
 	Mailman: You too.
 
+-> Mailman: *node*
+    <<showCharacter "Lina" "LinaSSpeakingTired">>
+	Lina: Alright. Have a nice day.
+    <<showCharacter "Lina" "SofieListeningTired">>
+	Sofie: …
+	Mailman: You too.
+<<hideCharacter "Lina">>
+<<hideBackground>>
 ===
 
 //FAM A — DAY 3 — VERA'S CLOTHES (WARM)
@@ -550,6 +569,7 @@ color: purple
 ---
 //FAM A — DAY 3 — VERA'S CLOTHES (WARM)
 <<set $relationshipFamA += 2>>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina!
 <<showCharacter "Lina" "SpeakingTired">>
@@ -588,6 +608,7 @@ position: -1976,1201
 ---
 //FAM A — DAY 3 — VERA'S CLOTHES (NEUTRAL)
 <<set $relationshipFamA += 1>>
+<<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina!
 <<showCharacter "Lina" "SpeakingTired">>
@@ -689,9 +710,9 @@ Mailman: I'm sorry to hear that, I was hoping that it was all part of the teen i
 Lina:  She's been having a rough time in the new school.
 <<showCharacter "Lina" "ListeningRested">>
 -> Mailman: If you don't mind me asking, why did she change schools?
-<<jump AEn1Day4>>
+    <<jump AEn1Day4>>
 -> Mailman: I wish I could help.
-<<jump AEnd1Day4>>
+    <<jump AEnd1Day4>>
 ===
 
 title: AEn1Day4
@@ -2161,5 +2182,8 @@ group: FamC && Day5
 ---
 //FAM C — DAY 5 — BABYSITTING (NEUTRAL)
 <<setBackground "BGFamC">>
-.
+...
+*Knock knock*
+Vera: Oh hello Mr.Mailman, do you have any packages for me?
+Mailman: Not really
 ===
