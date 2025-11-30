@@ -328,7 +328,7 @@ Lina: Sounds good, see you later!
 
 //FAM A — DAY 2 — UNIFORM (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($damage < 1)
+when: ($day == 2) && ($package == "uniform") && ($damage < 1) && ($relationshipFamA > -1.5)
 color: purple
 group: FamA && Day2
 position: -1970,302
@@ -395,7 +395,7 @@ Mailman: I'm sorry. Have a good evening.
 
 //FAM A — DAY 2 — UNIFORM (1ST TIME DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($damage == 1) && ($famA_damageCount == 0)
+when: ($day == 2) && ($package == "uniform") && ($damage == 1) && ($famA_damageCount == 0) && ($relationshipFamA > -1.5)
 //1st time damaged
 color: purple
 group: FamA && Day2
@@ -436,7 +436,7 @@ Sofie: It's that my new uniform?
 
 //FAM A — DAY 2 — UNIFORM (2ND TIME DAMAGED)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($damage == 1) && ($famA_damageCount == 1)
+when: ($day == 2) && ($package == "uniform") && ($damage == 1) && ($famA_damageCount == 1) && ($relationshipFamA > -1.5)
 //damaged AGAIN 
 color: purple
 group: FamA && Day2
@@ -474,7 +474,7 @@ Sofie: It's that my new uniform?
 
 //FAM A — DAY 2 — UNIFORM (1ST TIME BROKEN)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($damage > 1) && ($famA_breakCount == 0) 
+when: ($day == 2) && ($package == "uniform") && ($damage > 1) && ($famA_breakCount == 0) && ($relationshipFamA > -1.5)
 color: purple
 group: FamA && Day2
 position: -1967,476
@@ -532,7 +532,7 @@ Sofie: Yeah, but until then I will avoid any chances of meeting my classmates ou
 
 //FAM A — DAY 2 — UNIFORM (2ND TIME BROKEN)
 title: FamA
-when: ($day == 2) && ($package == "uniform") && ($damage > 1) && ($famA_breakCount == 1) 
+when: ($day == 2) && ($package == "uniform") && ($damage > 1) && ($famA_breakCount == 1) && ($relationshipFamA > -1.5)
 color: purple
 group: FamA && Day2
 position: -1969,628
@@ -571,7 +571,7 @@ Sofie: I know, but the kids all have cool stuff.
 
 //FAM A — DAY 2 — UNIFORM (COLD)
 title: FamA
-when: ($relationshipFamA < -1.5) && ($day == 2)
+when: ($relationshipFamA < -1.5) && ($day == 2) && ($package == "uniform")
 color: purple
 group: FamA && Day2
 position: -1968,1053
@@ -644,7 +644,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 3 — VERA'S CLOTHES (NEUTRAL)
 title: FamA
-when: ($day == 3) && ($package == "clothes") && ($relationshipFamA < 1) && ($relationshipFamA > -1)
+when: ($day == 3) && ($package == "clothes") && ($relationshipFamA < 1) 
 color: purple
 group: FamA && Day3
 position: -1966,1398
@@ -684,7 +684,7 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 
 //FAM A — DAY 4 — GROCERIES (WRONG PACKAGE)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($SofieBabysitting == true)
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) 
 position: -1967,1608
 color: purple
 group: FamA && Day4
@@ -717,6 +717,7 @@ color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — BABYSITTING (PRISTINE / SLIGHTLY DAMAGED)
+<<set $relationshipFamA += 1>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
@@ -847,6 +848,8 @@ color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — GROCERIES (1ST TIME DAMAGED)
+<<set $famA_damageCount += 1>>
+<<re>>
 <<showBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
