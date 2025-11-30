@@ -1331,6 +1331,7 @@ position: -852,-748
 //FAM B — DAY 1 — GARDENING TOOLS (FLATTENED / BROKEN)
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "Worried">>
+<<set $famB_breakCount += 1>>
 <<set $relationshipFamB -= 1>>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
@@ -1417,9 +1418,9 @@ Mikkel: May the best man win.
 <<hideBackground>>
 ===
 
-//FAM B — DAY 2 — SEEDS (1ST TIME DAMAGED)
+//FAM B — DAY 2 — SEEDS (1ST AND 2ND TIME DAMAGED)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 0)
+when: ($day == 2) && ($package == "seeds") && ($damage == 1) && ($famB_damageCount == 0 || $famB_damageCount == 1)
 color: blue
 group: FamB && Day2
 position: -848,-43
@@ -1498,7 +1499,7 @@ Mikkel: May the best man win.
 
 //FAM B — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 2) && ($package == "seeds") && ($damage > 1) && ($famB_damageCount == 1)
+when: ($day == 2) && ($package == "seeds") && ($damage > 1) && ($famB_breakCount == 1)
 color: blue
 group: FamB && Day2
 position: -846,248
@@ -1506,6 +1507,7 @@ position: -846,248
 //FAM B — DAY 2 — SEEDS (2ND TIME FLATTENED / BROKEN)
 <<setBackground "BGFamB">>
 <<set $relationshipFamB -= 1>>
+<<set $famB_breakCount += 1>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
@@ -1649,6 +1651,7 @@ position: -842,1216
 ---
 //FAM B — DAY 3 — BAIT (1ST AND 2ND TIME FLATTENED / BROKEN)
 <<setBackground "BGFamB">>
+<<set $famB_breakCount += 1>>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon Gertrude! 
 <<showCharacter "Gertrude" "TalkingWorried">>
