@@ -1586,7 +1586,8 @@ Mikkel: That's right, we have everything ready. Whenever you feel ready to chall
 <<showCharacter "Mikkel" "Worried">>
 Mailman: That's right and if you want to surrender you have my phone number on the receipt.
 <<showCharacter "Gertrude" "TalkingHappy">>
-Gertrude: For him to surrender he would have to die, here you have the toys. I hope the kids can enjoy it.
+Gertrude: For him to surrender he would have to die, here you have the vegetables. I hope the kids can enjoy them.
+<<giveItem "vegetables">>
 <<showCharacter "Gertrude" "Happy">>
 Mailman: I will make sure they receive it. Be ready Mikkel.
 <<hideCharacter "Mikkel">>
@@ -1594,44 +1595,45 @@ Mailman: I will make sure they receive it. Be ready Mikkel.
 <<hideBackground>>
 ===
 
-//FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
+//FAM B — DAY 3 — BAIT (DAMAGED)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 0)
+when: ($day == 3) && ($package == "bait") && ($damage == 1) 
 color: blue
 group: FamB && Day3
 position: -847,821
 ---
-//FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
+//FAM B — DAY 3 — BAIT (DAMAGED)
 <<set $famB_damageCount += 1>>
 <<set $relationshipFamB -= 0.5>>
 <<setBackground "BGFamB">>
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: Good afternoon Gertrude! 
-
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Just the person I was hoping to see, I have here a box of vegetables that we are not going to eat. Do you know anyone who might want them?
-
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I might know a boy that might benefit from adding home grown vegetables to his meals, he is just about one year old now so he needs the best food to grow strong.
-
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so he can receive the package you brought.
-
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I would appreciate it a lot, we have matters to discuss.
-
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come to surrender?
-
+<<showCharacter "Mikkel" "Worried">>
 Mailman: I would never surrender. Are you scared to lose? 
-
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Scared of you? Never! You, in fact, have tried to sabotage me by damaging the package.
-
+<<showCharacter "Mikkel" "Worried">>
 Mailman: Are these the worms? 
-
+<<receivePackage true>>
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: That's right, I'm sure your attempts to cheat were unsuccessful. Whenever you feel ready to challenge me like a real man, you know where to find me. 
-
+<<showCharacter "Mikkel" "Worried">>
 Mailman: That's right and if you want to surrender you have my phone number on the receipt.
-
-Gertrude: For him to surrender he would have to die, here you have the toys. I hope the kids can enjoy it.
-
+<<showCharacter "Gertrude" "TalkingHappy">>
+Gertrude: For him to surrender he would have to die, here you have the vegetables. I hope the kids can enjoy them.
+<<giveItem "vegetables">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I will make sure they receive it. Be ready Mikkel.
-
 <<hideCharacter "Mikkel">>
 <<hideCharacter "Gertrude">>
 <<hideBackground>>
@@ -1650,9 +1652,9 @@ position: -842,1216
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon Gertrude! 
 <<showCharacter "Gertrude" "TalkingWorried">>
-Gertrude: Just the person I was hoping to see, I have here a box of toys that my grandchildren aren't gonna use anymore. Do you know any kids that might like them?
+Gertrude: Just the person I was hoping to see, I have here a box of vegetables that we are not going to eat. Do you know anyone who might want them?
 <<showCharacter "Gertrude" "Worried">>
-Mailman: I might know a boy that might benefit from toys like the ones we had in our time.
+Mailman: I might know a boy that might benefit from adding home grown vegetables to his meals, he is just about one year old now so he needs the best food to grow strong.
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so he can receive the package you brought.
 <<showCharacter "Gertrude" "Worried">>
@@ -1671,7 +1673,8 @@ Mikkel: That's right, I'm sure your attempts to cheat were unsuccessful. Wheneve
 <<showCharacter "Gertrude" "Worried">>
 Mailman: That's right and if you want to surrender you have my phone number on the receipt.
 <<showCharacter "Gertrude" "TalkingWorried">>
-Gertrude: For him to surrender he would have to die, here you have the toys. I hope the kids can enjoy it.
+Gertrude: For him to surrender he would have to die, here you have the vegetables. I hope the kids can enjoy them.
+<<giveItem "vegetables">>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: I will make sure they receive it. Be ready Mikkel.
 <<hideCharacter "Mikkel">>
