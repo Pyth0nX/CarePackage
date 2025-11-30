@@ -1749,17 +1749,29 @@ Gertrude: Good afternoon Mr.Mailman. I'm glad to see you, do you come for a cup 
 <<showCharacter "Gertrude" "Happy">>
 Mailman: Oh no, I came to give you a special package. Some cookies one of your neighbours, Lina, made. 
 <<showCharacter "Gertrude" "TalkingHappy">>
-<<giveItem "cookies">>
+<<receivePackage true>>
 Gertrude: Oh, that's so kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her though.
 <<showCharacter "Gertrude" "Happy">>
 ->Mailman: Maybe you can call Vera, Lina's daughter should be in her house babysitting. They could give you her phone number.
     <<showCharacter "Gertrude" "TalkingHappy">>
     Gertrude: Do you have it?
+    <<showCharacter "Gertrude" "Happy">>
+    Mailman: Actually, I do. I'll write it in a piece of papaer for you.
+    <<showCharacter "Gertrude" "TalkingHappy">>
+    Gertrude: You are so kind, thank you. 
+    <<showCharacter "Gertrude" "Happy">>
+    Mailman: No worries, have a great evening. 
+    <<showCharacter "Gertrude" "TalkingHappy">>
+    Gertrude: You too.
 
 ->Mailman: You'll surely see each other in the neighborhood sometime.
-    Gertrude: Yeah, you are orobably right. Have a good evening.
-
+    <<showCharacter "Gertrude" "TalkingHappy">>
+    Gertrude: Yeah, you are probably right. Have a good evening.
+    <<showCharacter "Gertrude" "Happy">>
     Mailman: You too.
+
+<<hideCharacter "Gertrude">>
+<<hideBackground>>
 ===
 
 //FAM B — DAY 4 — COOKIES (NEUTRAL)
@@ -1777,6 +1789,7 @@ Mailman: Good afternoon Gertrude.
 Gertrude: Good afternoon MrMailman. Is there anything I can help you with?
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Oh no, I came to give you a package. Some cookies one of your neighbours, Lina, made. 
+<<receivePackage true>>
 <<giveItem "cookies">>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Oh, that's too kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her tho.
