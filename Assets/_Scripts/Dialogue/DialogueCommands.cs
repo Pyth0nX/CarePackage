@@ -6,10 +6,10 @@ namespace CarePackage.Dialogue
 {
     public class DialogueCommands : MonoBehaviour
     {
-        [YarnCommand("recievePackage")]
-        public static void RecievePackage(bool recievePackage)
+        [YarnCommand("receivePackage")]
+        public static void ReceivePackage(bool receivePackage)
         {
-            DialogueManager.RecievedPackage(recievePackage);
+            DialogueManager.ReceivedPackage(receivePackage);
         }
 
         [YarnCommand("giveItem")]
@@ -17,7 +17,7 @@ namespace CarePackage.Dialogue
         {
             var itemGUID = "Items/" + itemToGive;
             var item = InventoryUtilities.LoadItem(itemGUID);
-            GameManager.Instance.Player.Inventory.AddItem(item);
+            GameManager.Instance.Player.Inventory.AddUnacceptedItem(item);
         }
 
     }

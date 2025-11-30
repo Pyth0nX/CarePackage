@@ -38,7 +38,7 @@ position: -1976,-1064
 ---
 //FAM A — DAY 1 — WRONG PACKAGE (NOT BACKPACK)
 <<once>>
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon! I have a package for you.
@@ -114,7 +114,7 @@ position: -1215,-424
 group: FamA && Day1
 color: green
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Thank you so much. Have a nice day.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -129,7 +129,7 @@ position: -1144,-774
 color: green
 group: FamA && Day1
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: THANK YOU! It's perfect!
@@ -175,7 +175,7 @@ group: FamA && Day1
 position: -1694,-43
 color: green
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA += 1>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: As long as the backpack's okay...
@@ -196,7 +196,7 @@ group: FamA && Day1
 color: yellow
 position: -1698,-184
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "LinaSpeakingTired">>
 Lina: It's not the nicest surprise, but... fine.
@@ -211,7 +211,7 @@ group: FamA && Day1
 color: red
 position: -1364,-121
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Then let's hope it doesn't happen again. Please be more careful next time.
@@ -251,7 +251,7 @@ group: FamA && Day1
 color: green
 position: -1717,-461
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Alright. Please make sure it doesn't happen again.
 <<showCharacter "Lina" "ListeningTired">>
@@ -275,7 +275,7 @@ group: FamA && Day1
 color: yellow
 position: -1704,-615
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA -= 1>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: Don't worry, I will report it.
@@ -290,7 +290,7 @@ group: FamA && Day1
 color: red
 position: -1707,-325
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA -= 2>>
 <<showCharacter "Lina" "LinaSSpeakingTired">>
 Lina: So it's “not your fault”? Right. I'll be filing a complaint.
@@ -362,7 +362,7 @@ color: green
 position: -1709,329
 ---
 <<set $relationshipFamA += 0.5>>
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Yeah, but I won't be like them, I won't fit in. I'll just be the nice girl from class.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -380,7 +380,7 @@ group: FamA && Day2
 color: red
 position: -1708,474
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<set $relationshipFamA -= 0.5>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: You're not my dad. You don't even know me.
@@ -423,7 +423,7 @@ Sofie: It's that my new uniform?
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
-    <<recievePackage true>>
+    <<receivePackage true>>
     <<showCharacter "Lina" "SofieSpeakingTired">>
 	Sofie: Thank you Mr.Mailman.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -464,7 +464,7 @@ Sofie: It's that my new uniform?
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
-    <<recievePackage true>>
+    <<receivePackage true>>
 	Sofie: Thank you Mr.Mailman.
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
@@ -513,7 +513,7 @@ group: FamA && Day2
 position: -1714,653
 ---
 <<set $relationshipFamA += 0.5>>
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
 <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -541,7 +541,7 @@ Mailman: Good Morning Lina! More school supplies I'm guessing.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
 <<showCharacter "Lina" "SofieListeningTired">>
-<<recievePackage true>>
+<<receivePackage true>>
 Sofie:...
 -> Mailman: I'm glad she has it now, tomorrow will be a better day.
     <<showCharacter "Lina" "LinaSSpeakingTired">>
@@ -589,6 +589,7 @@ Mailman: She has the cutest little boy, that's probably why you haven't seen her
 Lina: Oh yeah, it was not so long ago I was in that same situation, do you think they would be interested in a babysitter?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
+<<giveItem == "note">>
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -628,6 +629,7 @@ Mailman: She's busy with her kid and they recently moved here, so you might have
 Lina: Oh that's just perfect, we've been looking for something Sofie could do after school, she could babysit the boy from time to time. What do you think Sofie?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
+<<giveItem == "note">>
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -638,6 +640,32 @@ Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 <<hideBackground>>
 ===
 
+//FAM A — DAY 4 — GROCERIES (WRONG PACKAGE)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($SofieBabysitting == true)
+position: -1967,1628
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — GROCERIES (WRONG PACKAGE)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Good afternoon, Mr.Mailman.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I have a package here for you.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Are you sure? That doesn't quite look like my groceries.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: You are right, I am so sorry. I'd lose my mind if it wasn't attached to my head.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: I get it, you have a lot of packages. Just come back when you have my groceries.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Will do, sorry for the inconvenience. 
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
 
 //FAM A — DAY 4 — GROCERIES (PRISTINE / SLIGHTLY DAMAGED)
 title: FamA
@@ -655,20 +683,22 @@ Lina: Good afternoon Mr.Mailman.
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: How is Sofie doing?
 <<showCharacter "Lina" "SpeakingRested">>
-Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. It's nice since their niece attends the same school as Sofie.
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out, she lives closer to the coast so she can't help as often.
+Lina: It's nice since their niece attends the same school as Sofie.
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Oh! That's amazing, I hope they can get along.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: Yes, I am really grateful. So, what do you have for me today?
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: I think these are your groceries.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: Thank you! I'm learning new recipes and I needed some ingredients. 
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
+<<giveItem == "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "SpeakingRested">>
@@ -700,15 +730,15 @@ group: FamA && Day4
 ---
 //FAM A — DAY 4 — NOT BABYSITTING (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamA">>
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Good morning Lina, how's Sofie?
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: She's hangin on, she's still mad with me for not caring enough about her social life. She says she's going to be the weirdo forever.  
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm sorry to hear that, I was hoping that it was all part of the teen imbalance.
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina:  She's been having a rough time in the new school.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 -> Mailman: If you don't mind me asking, why did she change schools?
     <<jump AEn1Day4>>
 -> Mailman: I wish I could help.
@@ -720,26 +750,26 @@ group: FamA && Day4
 color: green
 position: -1690,1423
 ---
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh she just had bad luck with her previous classmates, they didn't really make her part of any of the groups. 
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Oh, that's too bad. She's a lovely girl.
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: She felt like she was responsible for what was happening and started to overthink every interaction she had with any of the kids. She came home exhausted every day and her grades started to take a toll.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm glad she changed schools.
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: If you meet any kid that attends her new school and seems nice enough, please tell me and maybe I can organize a hangout for them to meet Sofie.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Will do! I'm sure she'll have a wonderful group of classmates.
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I really hope so, she's been through enough. Anyways, I think you have my groceries.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Oh right sorry! These are yours.
-<<recievePackage true>>
-<<showCharacter "Lina" "SpeakingRested">>
+<<receivePackage true>>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Thank you, for the groceries and for letting me rant.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Of course, any time. 
 <<hideCharacter "Lina">>
 <<hideBackground>>
@@ -750,77 +780,332 @@ color: green
 position: -1689,1663
 ---
 <<set $relationshipFamA += 0.5>>
-<<showCharacter "Lina" "SpeakingRested">>
-<<recievePackage true>>
+<<showCharacter "Lina" "SpeakingTired">>
+<<receivePackage true>>
 Lina: It's okay, I'm sure she'll meet amazing kids in this new school. She just needs to stop getting ahead of what's going to happen.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: She does?
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Yes, she prepares for all the negative outcomes possible, she says it's so she knows how to react, but I bet it's exhausting for her, she has enough already getting adjusted to new teachers and subjects.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: That does sound like a lot, I hope she meets the right kids. 
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Me too. Thank you for listening and delivering my groceries.
-<<showCharacter "Lina" "ListeningRested">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: No worries.
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
 
-//FAM A — DAY 4 —  (1ST TIME DAMAGED)
+//FAM A — DAY 4 — GROCERIES (1ST TIME DAMAGED)
 title: FamA
 when: ($day == 4) && ($package == "groceries") && ($damage == 1)
 position: -1969,1783
 color: purple
 group: FamA && Day4
 ---
-//FAM A — DAY 4 — BABYSITTING (1ST TIME DAMAGED)
+//FAM A — DAY 4 — GROCERIES (1ST TIME DAMAGED)
 <<showBackground "BGFamA">>
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: Good afternoon Mr.Mailman.
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: How is Sofie doing?
-<<showCharacter "Lina" "LinaSpeakingTired">>
-Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. It's nice since their niece attends the same school as Sofie.
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out, she lives closer to the coast so she can't help as often.
+Lina: It's nice since their niece attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: Oh! Tha's amazing, I hope they can get along.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: Yes, I am really grateful. So, what do you have for me today?
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: I think these are your groceries.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: Thank you! This is a bit damaged though.
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: I'm so sorry, today's drive was a bit rough.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: As long as my eggs are okay…
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: I am really sorry, I'll make sure to be more careful next time.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: It's okay, these things happen. I'm just learning new recipes and I needed some ingredients. 
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: That sounds so good, really.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<showCharacter "Lina" "ListeningTired">>
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 -> Mailman: I'm glad you feel that way, I can assure you they feel the same way 
-    <<showCharacter "Lina" "LinaSpeakingTired">>
+    <<showCharacter "Lina" "LinaSpeakingRested">>
 	Lina: This wouldn't have been possible without you Mr.Mailman, you have done a lot for this community.
-    <<showCharacter "Lina" "ListeningTired">>
+    <<showCharacter "Lina" "ListeningRested">>
 	Mailman: I only deliver, take care Lina.
-    <<showCharacter "Lina" "LinaSpeakingTired">>
+    <<showCharacter "Lina" "LinaSpeakingRested">>
 	Lina: You too Mr.Mailman.
 
 ->Mailman: That's nice, see you tomorrow.
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
+
+//FAM A — DAY 4 — GROCERIES (2ND TIME DAMAGED)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage == 1)
+position: -1969,1783
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — GROCERIES (2ND TIME DAMAGED)
+<<showBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Good afternoon Mr.Mailman.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: How is Sofie doing?
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out, she lives closer to the coast so she can't help as often.
+Lina: It's nice since their niece attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Oh! That's amazing, I hope they can get along.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Yes, I am really grateful. So, what do you have for me today?
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I think these are your groceries.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Thank you! This is a bit damaged again.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I'm so sorry, I don't know how it happened again.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: As long as my eggs are okay…
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I am really sorry, I'll make sure to be more careful next time.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: It's okay, these things happen. I'm just learning new recipes and I needed some ingredients. 
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: That sounds so good, really.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: That is amazing, they're going to be so happy. You are too kind.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
+<<showCharacter "Lina" "ListeningRested">>
+-> Mailman: I'm glad you feel that way, I can assure you they feel the same way.
+    <<showCharacter "Lina" "SpeakingRested">>
+	Lina: This wouldn't have been possible without you Mr.Mailman, you have done a lot for this community.
+    <<showCharacter "Lina" "ListeningRested">>
+	Mailman: I only deliver, take care Lina.
+    <<showCharacter "Lina" "SpeakingRested">>
+	Lina: You too Mr.Mailman.
+->Mailman: That's nice, see you tomorrow.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+//FAM A — DAY 4 — GROCERIES (3RD TIME DAMAGED)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage == 1)
+position: -1969,1783
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — BABYSITTING (3RD TIME DAMAGED)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Good afternoon Mr.Mailman.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: How is Sofie doing?
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out, she lives closer to the coast so she can't help as often. 
+Lina: It's nice since she attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Oh! That's amazing, I hope they can get along.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Yes, I am really grateful. So what do you have for me today?
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I think these are your groceries.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Thank you! This is a bit damaged again. What is happening on your rides here?
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I'm so sorry, I don't know how this could happen again.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: As long as my eggs are okay…
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I am really sorry, I swear I'm being careful.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: It's okay, these things happen. I'm just learning new recipes and I needed some ingredients. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: That sounds so good, really.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: They're going to be so happy, you are too kind.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: That's nice, see you tomorrow
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+//FAM A — DAY 4 — GROCERIES (1ST TIME BROKEN)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 1)
+position: -1969,1783
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — GROCERIES (1ST TIME BROKEN)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Good afternoon Mr.Mailman.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: How is Sofie doing?
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. 
+Lina: It's nice since their niece attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: Oh! That's amazing, I hope they can get along.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Yes, I am really grateful. So what do you have for me today?
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I think these are your groceries.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: Thank you! Oh but the box is broken. What happened?
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I'm so sorry, I think today's ride was a little bumpy.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: As long as my eggs are okay…
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: I am really sorry.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: It's okay, it was an accident. I'm just learning new recipes and I needed some ingredients. 
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: That sounds so good, really.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: They're going to be so happy, you are too kind.
+<<showCharacter "Lina" "SpeakingRested">>
+Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
+<<showCharacter "Lina" "ListeningRested">>
+Mailman: That's nice, see you tomorrow
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+//FAM A — DAY 4 — GROCERIES (2ND TIME BROKEN)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 2)
+position: -1969,1783
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — GROCERIES (2ND TIME BROKEN)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Good afternoon Mr.Mailman.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: How is Sofie doing?
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. 
+Lina: It's nice since their niece attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Oh! That's amazing, I hope they can get along.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Yes, I am really grateful. So what do you have for me today?
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I think these are your groceries.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Thank you! Oh but the box is broken. What happened? I thought you were going to be more careful.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I'm so sorry, I tried to be more careful. 
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: As long as my eggs are okay…
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I am really sorry.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: It's okay, these things happen sometimes. I'm just learning new recipes and I needed some ingredients. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: That sounds so good, really.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: They're going to be so happy, you are too kind.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: That's nice, see you tomorrow.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
+//FAM A — DAY 4 — GROCERIES (3RD TIME BROKEN)
+title: FamA
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 2)
+position: -1969,1783
+color: purple
+group: FamA && Day4
+---
+//FAM A — DAY 4 — GROCERIES (3RD TIME BROKEN)
+<<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Good afternoon Lina.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Good afternoon Mr.Mailman.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: How is Sofie doing?
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out. 
+Lina: It's nice since their niece attends the same school as Sofie.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: Oh! That's amazing, I hope they can get along.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Yes, I am really grateful. So what do you have for me today?
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I think these are your groceries.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Thank you! Oh but the box is broken. What happened? I thought you were going to be more careful.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I'm so sorry, I tried to be more careful. 
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: As long as my eggs are okay…
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: I am really sorry.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: It's okay, these things happen sometimes. I'm just learning new recipes and I needed some ingredients. 
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: That sounds so good, really.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: For now I made a batch of chocolate chip cookies, I made some extra to take to our neighbours.
+<<giveItem == "cookies">>
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: They're going to be so happy, you are too kind.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Thank you, have a great evening.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: You too.
+<<hideCharacter "Lina">>
+<<hideBackground>>
+===
+
 //FAM A — DAY 5 — GOOD ENDING (WARM)
 title: FamA
 when: ($day == 5) && ($package == "backpack") && ($damage < 1)
@@ -865,7 +1150,7 @@ group: FamB && Day1
 position: -849,-1026
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon, is Mr.Andersen here?
@@ -938,7 +1223,7 @@ position: -312,-711
 Mikkel: I might take you up on that offer some time. For now I'll just keep gardening. What reminds me, do you have my package?
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Oh right, sorry! I just need you to sign right here.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Thanks! Our kids ordered them online, I wasn't sure they'd even arrive.
 <<showCharacter "Gertrude" "TalkingWorried">>
@@ -962,7 +1247,7 @@ position: -327,-492
 Mikkel: Oh so you got my package! Where do I sign?
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Oh yeah, sorry. I completely forgot. You can sign right here.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Done. Thank you!
 <<showCharacter "Mikkel" "Worried">>
@@ -985,7 +1270,7 @@ position: -856,-611
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Gertrude" "Worried">>
 -> Mailman: No thank you, I'll just wait out here.
     <<jump BEnd3Day1>>
@@ -1000,7 +1285,6 @@ position: -561,-656
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Alright, he'll be right out.
 <<hideCharacter "Gertrude">>
-*Mrs.Andersen leaves and Mr.Andersen comes*
 <<showCharacter "Mikkel" "Worried">>
 Mail man: Mr.Andersen, I've got a package for you, if you could sign here?
 <<showCharacter "Mikkel" "TalkingWorried">>
@@ -1051,7 +1335,7 @@ position: -852,-748
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. Is that his package? What happened to it?
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: I'm so sorry I'm not used to this icy roads and the package must've bumped with others in the trunk.
 <<showCharacter "Gertrude" "TalkingWorried">>
@@ -1085,7 +1369,7 @@ group: FamB && Day2
 position: -847,-309
 ---
 //FAM B — DAY 2 — SEEDS (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon Mikkel, I have a package for you.
@@ -1114,7 +1398,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Yeah, they're probably going to be my last seeds for some time. Yesterday, after talking to you, I went to the attic to look for my equipment. 
 <<showCharacter "Mikkel" "Worried">>
@@ -1150,7 +1434,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: A bit damaged I see, if my vegetables aren't so good this time I know who to blame.
 <<showCharacter "Mikkel" "Worried">>
@@ -1189,7 +1473,7 @@ Mailman: Good afternoon, Mikkel.
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Broken I see, I hope I won't be down any seeds.
 <<showCharacter "Mikkel" "Worried">>
@@ -1226,7 +1510,7 @@ position: -846,248
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Broken I see, I hope I won't be down any seeds.
 <<showCharacter "Mikkel" "Worried">>
@@ -1254,7 +1538,7 @@ group: FamB && Day3
 position: -849,553
 ---
 //FAM B — DAY 3 — BAIT (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon Gertrude.
@@ -1279,31 +1563,35 @@ position: -849,686
 ---
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
-Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
-<<recievePackage true>>
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: That's the stuff! I've been waiting for this. If I catch anything good, you'll be the first to know!
+Mailman: Good afternoon Gertrude! 
+<<showCharacter "Gertrude" "TalkingHappy">>
+Gertrude: Just the person I was hoping to see, I have here a box of vegetables that we are not going to eat. Do you know anyone who might want them?
+<<showCharacter "Gertrude" "Happy">>
+Mailman: I might know a boy that might benefit from adding home grown vegetables to his meals, he is just about one year old now so he needs the best food to grow strong.
+<<showCharacter "Gertrude" "TalkingHappy">>
+Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so he can receive the package you brought.
 <<showCharacter "Mikkel" "Worried">>
-Mailman: I look forward to it. How are things with Mrs. Andersen?
-<<showCharacter "Gertrude" "Worried">>
-Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
+Mailman: I would appreciate it a lot, we have matters to discuss.
+<<showCharacter "Mikkel" "TalkingHappy">>
+Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come to surrender?
 <<showCharacter "Mikkel" "Worried">>
--> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
-    <<set $toysForKids = true>>
-    <<set $relationshipFamB += 2>>
-    <<showCharacter "Gertrude" "TalkingWorried">>
-    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
--> Mailman: I see. I hope you feel less isolated soon. 
-    <<set $relationshipFamB += 0.5>>
-    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
+Mailman: I would never surrender. Are you scared to lose? 
+<<showCharacter "Mikkel" "TalkingHappy">>
+Mikkel: Scared of you? Never! You are, in fact, holding the main part of our bet.
+<<showCharacter "Mikkel" "Worried">>
+Mailman: Are these the worms? 
+<<receivePackage true>>
+<<showCharacter "Mikkel" "TalkingHappy">>
+Mikkel: That's right, we have everything ready. Whenever you feel ready to challenge me, you know where to find me. 
+<<showCharacter "Mikkel" "Worried">>
+Mailman: That's right and if you want to surrender you have my phone number on the receipt.
+<<showCharacter "Gertrude" "TalkingHappy">>
+Gertrude: For him to surrender he would have to die, here you have the toys. I hope the kids can enjoy it.
+<<showCharacter "Gertrude" "Happy">>
+Mailman: I will make sure they receive it. Be ready Mikkel.
+<<hideCharacter "Mikkel">>
+<<hideCharacter "Gertrude">>
+<<hideBackground>>
 ===
 
 //FAM B — DAY 3 — BAIT (1ST TIME DAMAGED)
@@ -1318,79 +1606,35 @@ position: -847,821
 <<set $relationshipFamB -= 0.5>>
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
-Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
-<<recievePackage true>>
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: That's the stuff! The box it's a bit damged, I hope everything is good inside.
-<<showCharacter "Mikkel" "Worried">>
-Mailman: I'm sorry, I hit a rough patch or two.
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: As long as it didn't spill, it's all good.
-<<showCharacter "Mikkel" "Worried">>
-Mailman: I'll be more careful next time. How's Gertrude?
-<<showCharacter "Gertrude" "Worried">>
-Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
-<<showCharacter "Mikkel" "Worried">>
--> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
-    <<set $toysForKids = true>>
-    <<set $relationshipFamB += 2>>
-    <<showCharacter "Gertrude" "TalkingWorried">>
-    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
--> Mailman: I see. I hope you feel less isolated soon. 
-    <<set $relationshipFamB += 0.5>>
-    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
+Mailman: Good afternoon Gertrude! 
 
-===
+Gertrude: Just the person I was hoping to see, I have here a box of vegetables that we are not going to eat. Do you know anyone who might want them?
 
-//FAM B — DAY 3 — BAIT (2ND TIME DAMAGED)
-title: FamB
-when: ($day == 3) && ($package == "bait") && ($damage == 1) && ($famB_damageCount == 1)
-color: red
-group: FamB && Day3
-position: -846,952
----
-//FAM B — DAY 3 — BAIT (2ND TIME DAMAGED)
-<<set $famB_damageCount += 1>>
-<<set $relationshipFamB -= 0.5>>
-<<setBackground "BGFamB">>
-<<setBackground "BGFamB">>
-Mailman: Good afternoon, Mr. Andersen. Got your fishing bait right here.
-<<recievePackage true>>
-<<showCharacter "Mikkel" "TalkingTired">>
-Mikkel: That's the stuff! The box it's damaged again, have you been driving with your eyes closed?
-<<showCharacter "Mikkel" "Worried">>
-Mailman: I'm sorry, I hit a rough patch or two.
-<<showCharacter "Mikkel" "TalkingTired">>
-Mikkel: As long as it didn't spill, it's all good.
-<<showCharacter "Mikkel" "Worried">>
-Mailman: I'll be more careful next time. How's Gertrude?
-<<showCharacter "Gertrude" "Worried">>
-Gertrude: It's these long days. You just get so lonely. We wish we could help more in the neighborhood, but we're stuck in the house...
-<<showCharacter "Mikkel" "TalkingTired">>
-Mikkel: We even have a box of the children's old toys and books. They're just collecting dust.
-<<showCharacter "Mikkel" "Worried">>
--> Mailman: Those could be useful! I know a young family with a toddler who might love them. (Accept toys)
-    <<set $toysForKids = true>>
-    <<set $relationshipFamB += 2>>
-    <<showCharacter "Gertrude" "TalkingWorried">>
-    Gertrude: Oh, that would be lovely! Let me grab them for you! It feels good to know they'll be used.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
--> Mailman: I see. I hope you feel less isolated soon. 
-    <<set $relationshipFamB += 0.5>>
-    Mailman: Well, I hope you have a great fishing trip. Good day to both of you.
-    <<hideCharacter "Mikkel">>
-    <<hideCharacter "Gertrude">>
-    <<hideBackground>>
+Mailman: I might know a boy that might benefit from adding home grown vegetables to his meals, he is just about one year old now so he needs the best food to grow strong.
+
+Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so he can receive the package you brought.
+
+Mailman: I would appreciate it a lot, we have matters to discuss.
+
+Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come to surrender?
+
+Mailman: I would never surrender. Are you scared to lose? 
+
+Mikkel: Scared of you? Never! You, in fact, have tried to sabotage me by damaging the package.
+
+Mailman: Are these the worms? 
+
+Mikkel: That's right, I'm sure your attempts to cheat were unsuccessful. Whenever you feel ready to challenge me like a real man, you know where to find me. 
+
+Mailman: That's right and if you want to surrender you have my phone number on the receipt.
+
+Gertrude: For him to surrender he would have to die, here you have the toys. I hope the kids can enjoy it.
+
+Mailman: I will make sure they receive it. Be ready Mikkel.
+
+<<hideCharacter "Mikkel">>
+<<hideCharacter "Gertrude">>
+<<hideBackground>>
 ===
 
 
@@ -1419,7 +1663,7 @@ Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come
 Mailman: I would never surrender. Are you scared to lose? 
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Scared of you? Never! You, in fact, have tried to sabotage me by breaking the package.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Are these the worms? 
 <<showCharacter "Mikkel" "TalkingWorried">>
@@ -1448,7 +1692,7 @@ position: -840,1479
 Mailman: Good afternoon Mikkel 
 <<showCharacter "Mikkel" "TalkingWorried">>
 Mikkel: Good afternoon, Mr.Mailman. I see you haven't fixed your issue with the icy roads, another broken package.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Yes, I don't know how it could happen.
 <<showCharacter "Mikkel" "TalkingWorried">>
@@ -1472,7 +1716,7 @@ group: FamB && Day4
 position: -839,1684
 ---
 //FAM B — DAY 4 — SEEDS (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good morning Gertrude.
@@ -1562,7 +1806,7 @@ group: FamB && Day5
 ---
 //FAM B — DAY 5 — BABYSITTING (NEUTRAL)
 <<setBackground "BGFamB">>
-Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up to take us, we can recieve any packages tomorrow. Have a great evening.
+Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up to take us, we can receive any packages tomorrow. Have a great evening.
 <<hideBackground>>
 ===
 
@@ -1585,7 +1829,7 @@ group: FamC && Day1
 position: -77,-1026
 ---
 //FAM C — DAY 1 — DIAPERS (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
@@ -1613,7 +1857,7 @@ Mailman: Good afternoon! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
 <<showCharacter "Jonas" "Worried">>
-<<recievePackage true>>
+<<receivePackage true>>
 Vera: YES! just in time, this was about to get ugly.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
@@ -1630,7 +1874,7 @@ position: 201,-929
 color: green
 ---
 <<set $relationshipFamC += 1>>
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
 <<showCharacter "Jonas" "Worried">>
@@ -1648,7 +1892,7 @@ group: FamC && Day1
 position: 200,-764
 color: green
 ---
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Alright, thank you. Have a good day.
 <<showCharacter "Jonas" "Worried">>
@@ -1675,7 +1919,7 @@ Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure every
 <<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here. I'm sure everything is okay with the diapers.
 <<showCharacter "Jonas" "Talking">>
-<<recievePackage true>>
+<<receivePackage true>>
 Jonas: I hope so, we need each and everyone. We have no time to spare, I would do anything for an extra pair of hands.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: If you ever need to file a complaint, the email is in the receipt
@@ -1713,7 +1957,7 @@ Mailman: Good morning! I'm looking for Jonas.
 <<showCharacter "Jonas" "Talking">>
 Jonas: Oh thank god! The diapers are here. The box is broken. Are you sure everything is okay inside of the box?
 <<showCharacter "Jonas" "Worried">>
-<<recievePackage true>>
+<<receivePackage true>>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here, I'm sure everything is okay with the diapers inside. If that isn't the case you can write an email and we will look for solutions to compensate you.
 <<showCharacter "Jonas" "Talking">>
 Jonas: I hope so, we need each and everyone.
@@ -1772,7 +2016,7 @@ Vera: Good morning, Mr. Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you. I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
-<<recievePackage true>>
+<<receivePackage true>>
 Vera: Sure thing! I actually might have something for you too. When we moved, I brought a box of clothes that I used to wear when I was younger. I didn't want to throw them away. Do you know anyone who would like some clothes? 
 <<showCharacter "Vera" "Happy">>
 -> Mailman: Now that you mention it, I might know the perfect family. (Accept the clothes)
@@ -1810,7 +2054,7 @@ Vera: Sure thing! This is a bit damaged, are you sure this is my package?
 Mailman: Oh no, it is your package. I guess it received some damage on the way here, I am so sorry.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the content inside didn't get damaged.
-<<recievePackage true>>
+<<receivePackage true>>
 <<showCharacter "Vera" "Happy">>
 Mailman: I am really sorry, I will drive slower.
 <<showCharacter "Vera" "TalkingWorried">>
@@ -1846,7 +2090,7 @@ Vera: Good afternoon Mr.Mailman
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
-<<recievePackage true>>
+<<receivePackage true>>
 Vera: Sure thing! This is a bit damaged, yesterday's diapers were also damaged.
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, I might need to figure out new paths to get here, with less bumps.
@@ -1889,7 +2133,7 @@ Vera: Good afternoon Mr.Mailman.
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Sure thing! 
-<<recievePackage true>>
+<<receivePackage true>>
 Vera: It's broken! how could this happen?
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, it must have bumped with some of the other packages.
@@ -1931,7 +2175,7 @@ Vera: Good afternoon Mr.Mailman.
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Sure thing! 
-<<recievePackage true>>
+<<receivePackage true>>
 Vera: It's broken, how could this happen again?
 <<showCharacter "Vera" "Happy">>
 Mailman: I am sorry, I will try to avoid any bumps on the way next time.
@@ -1964,7 +2208,7 @@ group: FamC && Day3
 position: -74,553
 ---
 //FAM C — DAY 3 — NOTE (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon, Vera.
@@ -1993,7 +2237,7 @@ position: -74,686
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
-<<recieveItem "noteForVera">>
+<<receivePackage true>>
 <<showCharacter "Vera" "Happy">>
 *Vera reads the note.*
 <<showCharacter "Vera" "TalkingWorried">>
@@ -2060,7 +2304,7 @@ group: FamC && Day4
 position: -74,1035
 ---
 //FAM C — DAY 4 — COOKIES (WRONG PACKAGE)
-<<recievePackage false>>
+<<receivePackage false>>
 <<setBackground "BGFamC">>
 Mailman: Good afternoon Jonas.
 <<showCharacter "Jonas" "Talking">>

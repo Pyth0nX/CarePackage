@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
     public DialogueRunner dialogueRunner;
     public InMemoryVariableStorage variableStorage;
 
-    public static event System.Action<bool> OnPackageRecieved;
+    public static event System.Action<bool> OnPackageReceived;
 
     public bool shouldDebugDialogueNode = false;
 
@@ -117,9 +117,9 @@ public class DialogueManager : MonoBehaviour, IDataPersistance
         variableStorage.SetValue(varName, value);
     }
 
-   public static void RecievedPackage (bool recievedCorrectPackage)
+   public static void ReceivedPackage (bool recievedCorrectPackage)
     {
-        OnPackageRecieved?.Invoke(recievedCorrectPackage);
+        OnPackageReceived?.Invoke(recievedCorrectPackage);
     }
 
     public void LoadData(GameData loadData)

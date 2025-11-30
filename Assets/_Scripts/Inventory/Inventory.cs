@@ -19,6 +19,11 @@ namespace CarePackage.Main
             items.Add(item);
         }
 
+        public void AddUnacceptedItem(SO_Item item)
+        {
+            unacceptedItems.Add(item);
+        }
+
         public void RemoveItem(SO_Item item)
         {
             items.Remove(item);
