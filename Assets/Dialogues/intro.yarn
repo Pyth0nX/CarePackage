@@ -337,7 +337,7 @@ position: -1970,302
 <<set $relationshipFamA += 1>>
 <<setBackground "BGFamA">>
 Mailman: Good afternoon, Lina! More school supplies, I'm guessing.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: You guessed right. Sofie's uniform finally arrived.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Hello Mr.Mailman...
@@ -612,13 +612,13 @@ color: purple
 //FAM A — DAY 3 — VERA'S CLOTHES (WARM)
 <<set $relationshipFamA += 2>>
 <<setBackground "BGFamA">>
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina!
-<<showCharacter "Lina" "SpeakingTired">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Hello Mr.Mailman. I don't think I ordered anything else...
-<<showCharacter "Lina" "ListeningTired">>
+<<showCharacter "Lina" "ListeningRested">>
 Mailman: This one is addressed to Sofie.
-<<showCharacter "Lina" "SpeakingTired">>
+<<showCharacter "Lina" "SpeakingRested">>
 Sofie: To... me?
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: That's right. It's from Vera, your Neighbour.
@@ -650,7 +650,7 @@ group: FamA && Day3
 position: -1966,1398
 ---
 //FAM A — DAY 3 — VERA'S CLOTHES (NEUTRAL)
-<<set $relationshipFamA += 1>>
+<<set $relationshipFamA += 1.5>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina!
@@ -842,14 +842,14 @@ Mailman: No worries.
 
 //FAM A — DAY 4 — GROCERIES (1ST TIME DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage == 1)
+when: ($day == 4) && ($package == "groceries") && ($damage == 1) && ($famA_damageCount == 0)
 position: -1968,2002
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — GROCERIES (1ST TIME DAMAGED)
 <<set $famA_damageCount += 1>>
-<<re>>
+<<set $relationshipFamA -= 0.5>>
 <<showBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
@@ -901,12 +901,14 @@ Lina: I wanted to give something nice back to our community. Now I feel like I'm
 
 //FAM A — DAY 4 — GROCERIES (2ND TIME DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage == 1)
+when: ($day == 4) && ($package == "groceries") && ($damage == 1) && ($famA_damageCount == 1)
 position: -1965,2133
 group: FamA && Day4
 color: purple
 ---
 //FAM A — DAY 4 — GROCERIES (2ND TIME DAMAGED)
+<<set $relationshipFamA -= 0.5>>
+<<set $famA_damageCount += 1>>
 <<showBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
@@ -957,12 +959,14 @@ Lina: I wanted to give something nice back to our community. Now I feel like I'm
 
 //FAM A — DAY 4 — GROCERIES (3RD TIME DAMAGED)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage == 1)
+when: ($day == 4) && ($package == "groceries") && ($damage == 1) && ($famA_damageCount == 2)
 position: -1965,2265
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — BABYSITTING (3RD TIME DAMAGED)
+<<set $relationshipFamA -= 0.5>>
+<<set $famA_damageCount += 1>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina.
@@ -1006,12 +1010,14 @@ Mailman: That's nice, see you tomorrow
 
 //FAM A — DAY 4 — GROCERIES (1ST TIME BROKEN)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 1)
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 0)
 position: -1964,2396
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — GROCERIES (1ST TIME BROKEN)
+<<set $relationshipFamA -= 1>>
+<<set $famA_breakCount += 1>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
@@ -1055,12 +1061,14 @@ Mailman: That's nice, see you tomorrow
 
 //FAM A — DAY 4 — GROCERIES (2ND TIME BROKEN)
 title: FamA
-when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 2)
+when: ($day == 4) && ($package == "groceries") && ($damage < 1) && ($famA_breakCount == 1)
 position: -1965,2537
 color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — GROCERIES (2ND TIME BROKEN)
+<<set $relationshipFamA -= 1>>
+<<set $famA_breakCount += 1>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina.
@@ -1110,6 +1118,8 @@ color: purple
 group: FamA && Day4
 ---
 //FAM A — DAY 4 — GROCERIES (3RD TIME BROKEN)
+<<set $relationshipFamA -= 1>>
+<<set $famA_breakCount += 1>>
 <<setBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon Lina.
@@ -1218,6 +1228,7 @@ position: -852,-882
 ---
 //FAM B — DAY 1 — GARDENING TOOLS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
+<<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon, is Mikkel Andersen here?
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Yes, that would be my husband. I'll just go get him, come in if you'd like. 
@@ -1440,24 +1451,25 @@ position: -847,-175
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon, Mikkel.
-<<showCharacter "Mikkel" "TalkingWorried">>
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Good afternoon, Mr.Mailman.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I have a package for you here. 
 <<receivePackage true>>
-<<showCharacter "Mikkel" "TalkingWorried">>
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Yeah, they're probably going to be my last seeds for some time. Yesterday, after talking to you, I went to the attic to look for my equipment. 
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Maybe the next package I deliver for you is a can of worms hahaha.
-<<showCharacter "Mikkel" "TalkingWorried">>
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Worms?! Do you think I'm an amateur? I use the best crabs to fish.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Crabs? I've always used squid.
-<<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: We should make it interesting, we both should try to fish with worms and see who gets more fish with the worst bait. At the end of the day it's not the tool that matters, it's the master and the ability to adapt.
+<<showCharacter "Mikkel" "TalkingHappy">>
+Mikkel: We should make it interesting, we both should try to fish with worms and see who gets more fish with the worst bait. 
+Mikkel: At the end of the day it's not the tool that matters, it's the master and the ability to adapt.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I accept the challenge.
-<<showCharacter "Mikkel" "TalkingWorried">>
+<<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: May the best man win.
 <<hideCharacter "Mikkel">>
 <<hideBackground>>
@@ -1533,7 +1545,8 @@ Mikkel: Worms?! Do you think I'm an amateur? I use the best crabs to fish.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Crabs? I've always used squid.
 <<showCharacter "Mikkel" "TalkingWorried">>
-Mikkel: We should make it interesting, we both should try to fish with worms and see who gets more fish with the worst bait. At the end of the day it's not the tool that matters, it's the master and the ability to adapt and if your ability fishing is anything like your ability delivering packages this will be easy.
+Mikkel: We should make it interesting, we both should try to fish with worms and see who gets more fish with the worst bait. 
+Mikkel: At the end of the day it's not the tool that matters, it's the master and the ability to adapt and if your ability fishing is anything like your ability delivering packages this will be easy.
 <<showCharacter "Mikkel" "Worried">>
 Mailman: I accept the challenge.
 <<showCharacter "Mikkel" "TalkingWorried">>
@@ -1609,7 +1622,9 @@ group: FamB && Day3
 position: -849,686
 ---
 //FAM B — DAY 3 — BAIT (PRISTINE / SLIGHTLY DAMAGED)
+<<set $relationshipFamB += 1>>
 <<setBackground "BGFamB">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: Good afternoon Gertrude! 
 <<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Just the person I was hoping to see, I have here a box of vegetables that we are not going to eat. Do you know anyone who might want them?
@@ -1689,12 +1704,13 @@ Mailman: I will make sure they receive it. Be ready Mikkel.
 
 //FAM B — DAY 3 — BAIT (1ST AND 2ND TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($damage > 1) && ($famB_damageCount == 0)
+when: ($day == 3) && ($package == "bait") && ($damage > 1) && ($famB_damageCount == 0 || $famB_damageCount == 1)
 color: blue
 group: FamB && Day3
 position: -842,1216
 ---
 //FAM B — DAY 3 — BAIT (1ST AND 2ND TIME FLATTENED / BROKEN)
+<<set $relationshipFamB -= 1>>
 <<setBackground "BGFamB">>
 <<set $famB_breakCount += 1>>
 <<showCharacter "Gertrude" "Worried">>
@@ -1732,12 +1748,14 @@ Mailman: I will make sure they receive it. Be ready Mikkel.
 
 //FAM B — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
 title: FamB
-when: ($day == 3) && ($package == "bait") && ($damage > 1)
+when: ($day == 3) && ($package == "bait") && ($damage > 1) && ($famB_breakCount == 2)
 color: blue
 group: FamB && Day3
 position: -840,1479
 ---
 //FAM B — DAY 3 — BAIT (3RD TIME FLATTENED / BROKEN)
+<<set $relationshipFamB -= 1>>
+<<set $famB_breakCount += 1>>
 <<setBackground "BGFamB">>
 <<showCharacter "Mikkel" "Worried">>
 Mailman: Good afternoon Mikkel 
@@ -1791,6 +1809,7 @@ group: FamB && Day4
 position: -841,1815
 ---
 //FAM B — DAY 4 — COOKIES (WARM)
+<<set $relationshipFamB += 2>>
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Good afternoon Mr.Mailman. I'm glad to see you, do you come for a cup of tea?
@@ -1830,6 +1849,7 @@ group: FamB && Day4
 position: -840,1945
 ---
 //FAM B — DAY 4 — COOKIES (NEUTRAL)
+<<set $relationshipFamB += 1.5>>
 <<setBackground "BGFamB">>
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Good afternoon Gertrude.
@@ -1915,6 +1935,7 @@ position: -77,-840
 color: orange
 ---
 //FAM C — DAY 1 — DIAPERS (PRISTINE / SLIGHTLY DAMAGED)
+<<set $relationshipFamC += 1>>
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good afternoon! I'm looking for Jonas.
@@ -1937,7 +1958,7 @@ group: FamC && Day1
 position: 201,-929
 color: green
 ---
-<<set $relationshipFamC += 1>>
+<<set $relationshipFamC += 0.5>>
 <<receivePackage true>>
 <<showCharacter "Jonas" "Talking">>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
@@ -2015,6 +2036,7 @@ position: -70,-514
 ---
 //FAM C — DAY 1 — DIAPERS (FLATTENED / BROKEN)
 <<set $relationshipFamC -= 1>>
+<<set $famC_breakCount += 1>>
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
@@ -2072,6 +2094,7 @@ group: FamC && Day2
 position: -74,-175
 ---
 //FAM C — DAY 2 — BABY CAM (PRISTINE / SLIGHTLY DAMAGED)
+<<set $relationshipFamC +=1>>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good morning, Vera!
@@ -2180,13 +2203,13 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
 
 //FAM C — DAY 2 — BABY CAM (1ST TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "babyCam") && ($damage > 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage > 1) && ($famC_breakCount == 0)
 color: orange
 group: FamC && Day2
 position: -74,219
 ---
 //FAM C — DAY 2 — BABY CAM (1ST TIME FLATTENED / BROKEN)
-<<set $famC_damageCount += 1>>
+<<set $famC_breakCount += 1>>
 <<set $relationshipFamC -= 1>>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
