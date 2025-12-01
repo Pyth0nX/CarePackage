@@ -697,11 +697,19 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      propertyPath: hoverStrategies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: 'hoverStrategy.Array.data[1]'
       value: 7735813649916756122
       objectReference: {fileID: 0}
     - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
       propertyPath: 'hoverStrategy.Array.data[2]'
+      value: 7735813649916756122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
+      propertyPath: 'hoverStrategies.Array.data[1]'
       value: 7735813649916756122
       objectReference: {fileID: 0}
     - target: {fileID: 4385325980138759916, guid: 5563865290053f046925ad1c96d7586e, type: 3}
@@ -1207,9 +1215,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: autoStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: startNode
+      value: endings
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: yarnProject
       value: 
       objectReference: {fileID: 7545569452688597077, guid: c7f157a57431d1841a497866db4f744f, type: 3}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: runSelectedOptionAsLine
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9078442560890639579, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1304,64 +1324,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueVisualsController
   backgroundImage: {fileID: 129561870}
   backgrounds:
-  - name: BGFamA
-    sprite: {fileID: 21300000, guid: 5ffd8afd9804f5c498c2097b2ef4e924, type: 3}
-  - name: BGFamB
-    sprite: {fileID: 21300000, guid: 4c3a67b4e5d537b499c679db0d697829, type: 3}
-  - name: BGFamC
-    sprite: {fileID: 21300000, guid: 88eddc111b2fe6c4692dc53965778c07, type: 3}
-  characters:
-  - characterName: Lina
-    image: {fileID: 639909978}
-    emotions:
-    - emotionName: ListeningTired
-      sprite: {fileID: -472375619, guid: 8c2f118ae417d244693554d137496689, type: 3}
-    - emotionName: ListeningRested
-      sprite: {fileID: 1766587752, guid: 8c2f118ae417d244693554d137496689, type: 3}
-    - emotionName: SpeakingRested
-      sprite: {fileID: -2134281307, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
-    - emotionName: SpeakingTired
-      sprite: {fileID: 1576043024, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
-    - emotionName: SofieListeningTired
-      sprite: {fileID: 1905211881, guid: 598da34ca24c6b448bbfc74287daceff, type: 3}
-    - emotionName: LinaSSpeakingTired
-      sprite: {fileID: 368689239, guid: b41b7b6694401ca43adcb0a607bb9ea0, type: 3}
-    - emotionName: SofieSpeakingTired
-      sprite: {fileID: -1036097290, guid: 6035e27cef22a454eb9104fe221af16b, type: 3}
-  - characterName: Mikkel
-    image: {fileID: 639909978}
-    emotions:
-    - emotionName: TalkingHappy
-      sprite: {fileID: 1551219508, guid: 85cc8971e07d635449a3f60502f805e0, type: 3}
-    - emotionName: TalkingWorried
-      sprite: {fileID: -1113577886, guid: 4eed7c22dc903ee4e8b8a5875aed4870, type: 3}
-    - emotionName: Worried
-      sprite: {fileID: 1319880285, guid: 178e4ff2a357b144081f90c74d05ac73, type: 3}
-  - characterName: Gertrude
-    image: {fileID: 639909978}
-    emotions:
-    - emotionName: Happy
-      sprite: {fileID: -472375619, guid: 8c2f118ae417d244693554d137496689, type: 3}
-    - emotionName: TalkingHappy
-      sprite: {fileID: -228063516, guid: 471eff38cf577604497b9228593d85fc, type: 3}
-    - emotionName: TalkingWorried
-      sprite: {fileID: 528205276, guid: 09f6b2e8bddccc14b83fbe4192746659, type: 3}
-    - emotionName: Worried
-      sprite: {fileID: 1162464435, guid: 8b6d457876faef345abb8eb55a12d6f4, type: 3}
-  - characterName: Vera
-    image: {fileID: 639909978}
-    emotions:
-    - emotionName: Happy
-      sprite: {fileID: -113019751, guid: 30b49cbbb268bec4fa12a0efa51d3e6b, type: 3}
-    - emotionName: TalkingWorried
-      sprite: {fileID: 1465932842, guid: 78b1713d3425114478ef57b7fd6980a1, type: 3}
-  - characterName: Jonas
-    image: {fileID: 639909978}
-    emotions:
-    - emotionName: Worried
-      sprite: {fileID: 1093759107, guid: 80bbd491882b6ac4ebb675b1c8d864e7, type: 3}
-    - emotionName: Talking
-      sprite: {fileID: 713985261, guid: 4ae0a1340d188f04c94b105344da5bd1, type: 3}
+  - name: GoodEnding
+    sprite: {fileID: 634073018, guid: 3253d03d13626fd46bfc395bda6a25b7, type: 3}
+  - name: NeutralEnding
+    sprite: {fileID: 1828569359, guid: 4ed0963e60a971e4e869bb28984269d5, type: 3}
+  - name: BadEnding
+    sprite: {fileID: -1805436020, guid: 24248ad0613d0ec4594fdbbf6fa94024, type: 3}
+  characters: []
   dialogueCanvas: {fileID: 0}
   dialogueRunner: {fileID: 0}
 --- !u!1 &639909977

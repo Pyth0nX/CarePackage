@@ -15,17 +15,36 @@ color: yellow
 <<declare $relationshipFamC = 0>>
 ===
 
+title: endings
+color: blue
+---
+<<if $ending == "Good Ending">>
+    <<setBackground "GoodEnding">>
+<<elseif $ending == "Neutral Ending">>
+    <<setBackground "NeutralEnding">>
+<<elseif $ending == "Bad Ending">>
+    <<setBackground "BadEnding">>
+    Manager: Good afternoon is this Mr.Mailman?
+    Mailman: That's me, what can I help you with Manager?
+    Manager: Sadly we've received several complaints about broken and damaged packages and we are going to have to let you go.
+    Mailman: Is there anything I could do to change this? I could practise my routes every weekend.
+    Manager: I am so sorry, there's nothing you can do. 
+    Manager: You must leave the truck keys on your way out, and the post office keys can go into the mailbox.
+<<endif>>
+<<hideBackground>>
+===
+
 title: start
 color: blue
 position: -508,-1812
 ---
 Mailman: *Knock knock*
 <<if $family == 1>>
-<<jump FamA>>
+    <<jump FamA>>
 <<elseif $family == 2>>
-<<jump FamB>>
+    <<jump FamB>>
 <<elseif $family == 3>>
-<<jump FamC>>
+    <<jump FamC>>
 <<endif>>
 ===
 
@@ -2478,6 +2497,7 @@ color: orange
 group: FamC && Day5
 ---
 //FAM C — DAY 5 — GOOD ENDING (WARM)
+<<set $ending = "Good Ending">>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Welcome Mr.Mailman, I'm so glad you came. We weren't sure if you would see the "invitations".
@@ -2513,6 +2533,7 @@ color: orange
 group: FamC && Day5
 ---
 //FAM C — DAY 5 — BABYSITTING (NEUTRAL)
+<<set $ending = "Neutral Ending">>
 <<setBackground "BGFamC">>
 ...
 *Knock knock*
@@ -2524,6 +2545,28 @@ Mailman: Yeah, I just need you to sign here.
 Vera: Sure! Thank you, have a nice evening.
 <<showCharacter "Vera" "Happy">>
 Mailman: You too...
+<<hideCharacter "Vera">>
+<<hideBackground>>
+===
+
+//FAM C — DAY 5 — BAD ENDING (NEUTRAL)
+title: FamC
+when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0)
+position: -76,1797
+color: orange
+group: FamC && Day5
+---
+//FAM C — DAY 5 — BAD ENDING (BAD)
+<<set $ending = "Bad Ending">>
+<<setBackground "BGFamC">>
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Hello Mr.Mailman, do you have any packages for me?
+<<showCharacter "Vera" "Happy">>
+Mailman: Yeah, I just need you to sign here.
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Sure, thanks. Bye bye.
+<<showCharacter "Vera" "Happy">>
+Mailman: Bye...
 <<hideCharacter "Vera">>
 <<hideBackground>>
 ===
