@@ -183,8 +183,15 @@ namespace CarePackage.Main
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-                TogglePause();
+            {
+                if (SceneController.Instance != null && SceneController.Instance.ActiveScene == ECarePackageScenes.NeighbourHood)
+                {
+                    TogglePause();
+                }
+            }
         }
+           
+
 
         public void TogglePause()
         {
