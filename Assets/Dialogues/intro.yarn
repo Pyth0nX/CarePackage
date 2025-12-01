@@ -31,7 +31,6 @@ color: blue
     Manager: I am so sorry, there's nothing you can do. 
     Manager: You must leave the truck keys on your way out, and the post office keys can go into the mailbox.
 <<endif>>
-<<hideBackground>>
 ===
 
 title: start
@@ -2551,7 +2550,7 @@ Mailman: You too...
 
 //FAM C — DAY 5 — BAD ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0)
+when: ($day == 5) && ($relationshipFamC < 0)
 position: -76,1797
 color: orange
 group: FamC && Day5
