@@ -1163,7 +1163,7 @@ Mailman: You too.
 
 //FAM A — DAY 5 — GOOD ENDING (WARM)
 title: FamA
-when: ($day == 5) && ($package == "backpack") && ($damage < 1)
+when: ($day == 5) && ($relationshipFamA >= 3.5)
 position: -1978,2879
 color: purple
 group: FamA && Day5
@@ -1176,7 +1176,7 @@ Note: If this is the Mailman reading, come to Fam's C house. They're hosting a B
 
 //FAM A — DAY 5 — NEUTRAL ENDING (NEUTRAL)
 title: FamA
-when: ($day == 5) && ($package == "backpack") && ($damage < 1)
+when: ($day == 5) && ($relationshipFamA < 3.5 || $relationshipFamA >= 0)
 position: -1977,3013
 color: purple
 group: FamA && Day5
@@ -1870,7 +1870,7 @@ Mailman: You'll surely see each other in the neighborhood sometime.
 
 //FAM B — DAY 5 — GOOD ENDING (WARM)
 title: FamB
-when: ($day == 5) && ($damage < 1)
+when: ($day == 5) && ($relationshipFamB >= 4)
 position: -842,2275
 color: blue
 group: FamB && Day5
@@ -1883,7 +1883,7 @@ Note: Hey! We've been invited to the Jonas and Vera's BBQ and Linda picked us up
 
 //FAM B — DAY 5 — NEUTRAL ENDING (NEUTRAL)
 title: FamB
-when: ($day == 5) && ($damage < 1)
+when: ($day == 5) && ($relationshipFamB < 4 || $relationshipFamB >= 0)
 position: -841,2412
 color: blue
 group: FamB && Day5
@@ -2245,13 +2245,13 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
 
 //FAM C — DAY 2 — BABY CAM (2ND TIME FLATTENED / BROKEN)
 title: FamC
-when: ($day == 2) && ($package == "babyCam") && ($damage > 1)
+when: ($day == 2) && ($package == "babyCam") && ($damage > 1) && ($famC_breakCount == 1)
 color: orange
 group: FamC && Day2
 position: -74,354
 ---
 //FAM C — DAY 2 — BABY CAM (2ND TIME FLATTENED / BROKEN)
-<<set $famC_damageCount += 1>>
+<<set $famC_breakCount += 1>>
 <<set $relationshipFamC -= 1>>
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
@@ -2313,7 +2313,7 @@ Mailman: You're right, this package is not for you. I'm sorry, I'll be back when
 
 //FAM C — DAY 3 — NOTE (WARM)
 title: FamC
-when: ($day == 3) && ($package == "note") && ($damage < 1)
+when: ($day == 3) && ($package == "note") && ($relationshipFamC > 1)
 color: red
 group: FamC && Day3
 position: -74,686
@@ -2346,7 +2346,7 @@ Mailman: My pleasure. Have a great day!
 
 //FAM C — DAY 3 — NOTE (NEUTRAL)
 title: FamC
-when: ($day == 3) && ($package == "note") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 3) && ($package == "note") && ($relationshipFamC < 1)
 color: orange
 group: FamC && Day3
 position: -74,821
@@ -2358,6 +2358,7 @@ Mailman: Good afternoon! No package today, but I have a special delivery for you
 <<giveItem "note">>
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
+*Vera reads the note.*
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: She's offering to babysit! That is thoughtful. We've been looking for an opportunity to have a relaxing afternoon.
 <<showCharacter "Jonas" "Talking">>
@@ -2408,7 +2409,7 @@ Mailman: Oh right, I will be back when I have a package for you.
 
 //FAM C — DAY 4 — COOKIES (WARM)
 title: FamC
-when: ($day == 4) && ($package == "cookies") && ($damage < 1)
+when: ($day == 4) && ($package == "cookies") && ($relationshipFamC > 1)
 color: orange
 group: FamC && Day4
 position: -74,1168
@@ -2439,7 +2440,7 @@ Jonas: Hello, I don't think we have ordered anything.
 
 //FAM C — DAY 4 — COOKIES (NEUTRAL)
 title: FamC
-when: ($day == 4) && ($package == "cookies") && ($packageState == "Damaged") && ($famB_damageCount == 0)
+when: ($day == 4) && ($package == "cookies") && ($relationshipFamC < 1)
 color: orange
 group: FamC && Day4
 position: -78,1313
@@ -2471,12 +2472,12 @@ Jonas: Hello, I don't think we have ordered anything.
 
 //FAM C — DAY 5 — GOOD ENDING (WARM)
 title: FamC
-when: ($day == 5) && ($damage < 1)
+when: ($day == 5) && ($relationshipFamC >= 4)
 position: -77,1665
 color: orange
 group: FamC && Day5
 ---
-//FAM C — DAY 5 — BABYSITTING (WARM)
+//FAM C — DAY 5 — GOOD ENDING (WARM)
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Welcome Mr.Mailman, I'm so glad you came. We weren't sure if you would see the "invitations".
@@ -2506,7 +2507,7 @@ Mikkel: I have brought all we need to go to my secret spot and see who is the be
 
 //FAM C — DAY 5 — NEUTRAL ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($damage < 1)
+when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0)
 position: -76,1797
 color: orange
 group: FamC && Day5
@@ -2515,6 +2516,14 @@ group: FamC && Day5
 <<setBackground "BGFamC">>
 ...
 *Knock knock*
+<<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh hello Mr.Mailman, do you have any packages for me?
-Mailman: Not really
+<<showCharacter "Vera" "Happy">>
+Mailman: Yeah, I just need you to sign here.
+<<showCharacter "Vera" "TalkingWorried">>
+Vera: Sure! Thank you, have a nice evening.
+<<showCharacter "Vera" "Happy">>
+Mailman: You too...
+<<hideCharacter "Vera">>
+<<hideBackground>>
 ===
