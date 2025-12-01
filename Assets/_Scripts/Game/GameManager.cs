@@ -21,7 +21,8 @@ namespace CarePackage.Main
         public int CurrentDay => _day;
         public bool Survived => _survived;
         public bool tutorialDone = false;
-        
+        private bool _isPaused = false;
+
         private int _elapsedTime;
         private int _currentSecond;
         private int _lastUpdateSecond;
@@ -178,5 +179,32 @@ namespace CarePackage.Main
             saveData.day = _day;
             saveData.doneTutorial = tutorialDone;
         }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                TogglePause();
+        }
+
+        public void TogglePause()
+        {
+            if (_isPaused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
+
+        private void PauseGame()
+        {
+            _isPaused = true;
+            Time.timeScale = 0f;
+        }
+
+        private void ResumeGame()
+        {
+            _isPaused = false;
+            Time.timeScale = 1f;
+        }
+
     }
 }

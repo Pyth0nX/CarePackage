@@ -16,7 +16,8 @@ public class GoalIndicator : MonoBehaviour
     private bool _canBeVisible = true;
 
     public GameObject GoalObject => obj;
-    public Transform GoalTransform => obj.transform;
+    public Transform GoalTransform => obj != null ? obj.transform : null;
+
     public Camera Camera { get => cam; set => cam = value; }
     
     public static GoalIndicator Instance;
