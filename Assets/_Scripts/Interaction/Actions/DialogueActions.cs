@@ -87,7 +87,7 @@ namespace CarePackage.Interaction.Dialogue
                 return;
             }
 
-            if (package.Id != id)
+            if (package.Id != id && package.Id != 42)
             {
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but package id does not match!");
                 return;

@@ -190,6 +190,8 @@ namespace CarePackage.Delivery
                 if (_deliveriesMade == 1 && GameManager.Instance.CurrentDay == 1)
                     Task.TaskManager.PushTaskUpdate(new Task.Task("You delivered a package, go on and the deliver the next"));
 
+                if (GoalIndicator.Instance.GoalTransform == null) return;
+                
                 var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position,
                     GameManager.Instance.Player.ActivePlayer.transform.position);
                 Debug.Log("Goal Distance: " + distanceGoalToPlayer);

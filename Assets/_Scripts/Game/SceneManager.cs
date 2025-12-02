@@ -64,12 +64,12 @@ namespace CarePackage.Main
         {
             Debug.Log($"Loaded Scene {scene.name} with index: {scene.buildIndex}");
             _activeScene = (ECarePackageScenes)scene.buildIndex;
-
+/*
             if (_lastActiveScene.HasValue)
             {
                 CompleteTimeSpentInSceneAnalysisForScene(_lastActiveScene.Value);
             }
-            StartTimeSpentInSceneAnalysisForScenme(_activeScene);
+            StartTimeSpentInSceneAnalysisForScenme(_activeScene);*/
 
             switch (_activeScene)
             {
@@ -127,7 +127,8 @@ namespace CarePackage.Main
         }
         
         private void HandleEndingScene()
-        {
+        {/*
+            Debug.Log("Entered Ending Scene");
             var goodEnding = GameObject.Find("UI_GoodEnding");
             var neutralEnding = GameObject.Find("UI_NeutralEnding");
             var badEnding = GameObject.Find("UI_BadEnding");
@@ -140,7 +141,7 @@ namespace CarePackage.Main
                 
             if (!GameManager.Instance.Survived)
             {
-                GameObject.Find("UI_Failed").SetActive(false);
+                failed.SetActive(true);
                 var failedText = failed.GetComponentInChildren<TextMeshProUGUI>();
                 failedText.text = "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
                 return;
@@ -158,13 +159,14 @@ namespace CarePackage.Main
             else if (score >= 1)
             {
                 goodEnding.SetActive(true);
-            }
+            }*/
         }
         
         private void StartTimeSpentInSceneAnalysisForScenme(ECarePackageScenes scene)
         {
             var sceneCompletableId = "TimeSpent_" + scene;
             Debug.Log($"Starting to track {sceneCompletableId}");
+            if (Xasu.XasuTracker.Instance == null) return;
             _timeAtEnteringScene = System.DateTime.Now;
             Xasu.HighLevel.CompletableTracker.Instance.Initialized(sceneCompletableId, Xasu.HighLevel.CompletableTracker.CompletableType.Level);
         }
@@ -173,6 +175,7 @@ namespace CarePackage.Main
         {
             var sceneCompletableId = "TimeSpent_" + scene;
             Debug.Log($"Completing {sceneCompletableId}");
+            if (Xasu.XasuTracker.Instance == null) return;
             Xasu.HighLevel.CompletableTracker.Instance.Completed(sceneCompletableId, Xasu.HighLevel.CompletableTracker.CompletableType.Level).WithSuccess(true).WithDuration(_timeAtEnteringScene, System.DateTime.Now);
         }
         

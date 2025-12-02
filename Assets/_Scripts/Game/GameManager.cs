@@ -7,6 +7,12 @@ using TMPro;
 
 namespace CarePackage.Main
 {
+    public interface ISceneController
+    {
+        void OnEnter();
+        void OnExit();
+    }
+    
     public class GameManager : MonoBehaviour, IDataPersistance
     {
         [SerializeField] private float dayTime = 120f;
@@ -71,7 +77,7 @@ namespace CarePackage.Main
             _survived = false;
             onDayStarted?.Invoke(_day);
         }
-
+        
         void UpdateTimer(float elapsed)
         {
             _currentSecond = Mathf.FloorToInt(elapsed);

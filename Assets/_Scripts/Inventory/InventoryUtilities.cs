@@ -42,7 +42,5 @@ namespace CarePackage.Delivery
             }
             return itemGUIDs;
         }
-
-
     }
 }

@@ -157,6 +157,8 @@ namespace CarePackage.Delivery
             CompletableTracker.Instance.Completed("SelectedPackage_" + _displayedJob.PackageData.Title, CompletableTracker.CompletableType.Completable).WithSuccess(true);
         }
         
+        public void CreatePackage(Package packageData) => CreatePackageForConveyerBelt(packageData);
+        
         private void CreatePackageForConveyerBelt(Package packageData)
         {
             if (packageData == null) return;

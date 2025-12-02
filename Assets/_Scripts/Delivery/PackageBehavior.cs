@@ -24,10 +24,14 @@ namespace CarePackage.Delivery
         
         private MeshFilter _meshFilter;
         private Rigidbody _rigidbody;
+        private UnityEngine.UI.Image _packageItemImage;
         private float _velocityThreshold;
         private int _currentMeshIndex;
         private bool _canBeDamaged;
         private bool _usingGravity;
+        public float durability = 100;
+        private float _durability;
+        public float fragility = .8f;
         
         public event System.Action<EPackageState, EPackageState> OnStateChanged;
 
@@ -41,6 +45,8 @@ namespace CarePackage.Delivery
         {
             _meshFilter = GetComponentInChildren<MeshFilter>();
             _rigidbody = GetComponent<Rigidbody>();
+            _packageItemImage = GetComponentInChildren<UnityEngine.UI.Image>();
+            _packageItemImage.enabled = false;
         }
 
         private void Start()
@@ -65,10 +71,6 @@ namespace CarePackage.Delivery
             _rigidbody.isKinematic = !_usingGravity;
             _rigidbody.useGravity = _usingGravity;
         }
-
-        public float durability = 100;
-        private float _durability;
-        public float fragility = .8f;
 
         private void OnCollisionEnter(Collision other)
         {
@@ -188,6 +190,14 @@ namespace CarePackage.Delivery
             int index = (int)packageState;
             _meshFilter.mesh = meshes[index];
             Debug.Log($"Package damaged updated mesh to {packageState}");
+        }
+
+        public void SetImage(Sprite icon)
+        {
+            if (icon == null) return;
+            if (_packageItemImage == null) return;
+            _packageItemImage.sprite = icon;
+            _packageItemImage.enabled = true;
         }
     }
 }

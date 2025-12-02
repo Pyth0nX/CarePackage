@@ -17,6 +17,12 @@ namespace CarePackage.Delivery
         [SerializeField] private GameObject mailWindow;
         
         private DateTime _accessedTime;
+        private JobBoard _jobBoard;
+
+        private void Start()
+        {
+            _jobBoard = FindFirstObjectByType<JobBoard>(FindObjectsInactive.Include);
+        }
 
         public void CheckInClicked()
         {
@@ -89,6 +95,20 @@ namespace CarePackage.Delivery
             GameManager.Instance.Player.Inventory.AcceptItem(index);
             parent.onClick.RemoveAllListeners();
             Destroy(parent.transform.parent.gameObject);
+            if (_jobBoard == null) return;
+            var specialPackage = new Package
+            {
+                Id = 42,
+                PackageData = new FPackageData
+                (
+                    "Special Delivery " + index.ItemData.name,
+                    $"Deliver to: a little special something {index.ItemData.name}\n",
+                    0,
+                    0
+                ),
+                ItemGUID = index != null ? index.GUID : null,
+            };
+            _jobBoard.CreatePackage(specialPackage);
         }
     }
 }

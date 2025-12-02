@@ -39,6 +39,9 @@ namespace CarePackage.Interaction.Delivery
             var packageObj = inPickupOwningObject.GetComponent<PackageBehavior>();
             _packageBehavior = packageObj;
             _packageBehavior.OnStateChanged += OnStateChanged_Implementation;
+
+            if (package != null) _packageBehavior.SetImage(package.Item.ItemData.icon);
+            
             var packagePickupExtension = new PackagePickupExtension(packageObj);
             //var damagePickup = new DamagableFieldExtension(new Vector3(0f, 0.6f, 1.15f), packageObj);
 
