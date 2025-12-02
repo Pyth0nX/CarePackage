@@ -25754,6 +25754,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7458491022968742613, guid: 531b0481bf27f7d4f9302d774cf86446, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1209166008}
+    - targetCorrespondingSourceObject: {fileID: 7458491022968742613, guid: 531b0481bf27f7d4f9302d774cf86446, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1209166009}
   m_SourcePrefab: {fileID: 100100000, guid: 531b0481bf27f7d4f9302d774cf86446, type: 3}
 --- !u!1 &416918624
 GameObject:
@@ -75536,8 +75539,8 @@ Transform:
   m_GameObject: {fileID: 1203916617}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.033576753, y: -0.32797718, z: 0.4982965}
-  m_LocalScale: {x: 0.1873658, y: 0.6798551, z: 0.066755675}
+  m_LocalPosition: {x: 0.033576753, y: -0.1189, z: 0.4982965}
+  m_LocalScale: {x: 0.1873658, y: 0.51268554, z: 0.066755675}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 295201408}
@@ -75559,15 +75562,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   interactAction:
-    rid: -2
+    rid: 7069949980743827535
   interactText: Click 'E' to go back to post office
   showMessage: 1
   debug: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 7069949980743827535
+      type: {class: ToggleObjectAction, ns: CarePackage.Interaction.Miscellaneous, asm: Assembly-CSharp}
+      data:
+        enable: 1
+        toggleItself: 0
+        targetSelf: 1
+        objectToToggle: {fileID: 0}
 --- !u!65 &1203916620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75898,6 +75906,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.25
+--- !u!64 &1209166009
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209166006}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &1209246781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87231,7 +87261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.55
+      value: 64.678
       objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -87239,7 +87269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.37
+      value: 18.359
       objectReference: {fileID: 0}
     - target: {fileID: 5754348055488991862, guid: d6f4d1767f4edbf4da0a63c1dcd886b2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -146381,6 +146411,7 @@ GameObject:
   - component: {fileID: 2789932525596146691}
   - component: {fileID: 8095211590645360249}
   - component: {fileID: 8095211590645360250}
+  - component: {fileID: 8095211590645360251}
   m_Layer: 0
   m_Name: Megan
   m_TagString: Untagged
@@ -152832,6 +152863,7 @@ GameObject:
   - component: {fileID: 5743352362396927477}
   - component: {fileID: 1825172121197485967}
   - component: {fileID: 5743352362396927478}
+  - component: {fileID: 5743352362396927479}
   m_Layer: 0
   m_Name: Lewis
   m_TagString: Untagged
@@ -154957,6 +154989,7 @@ GameObject:
   - component: {fileID: 4615965354880743228}
   - component: {fileID: 1652566922183634246}
   - component: {fileID: 5423711245152644487}
+  - component: {fileID: 5423711245152644488}
   m_Layer: 0
   m_Name: Kate
   m_TagString: Untagged
@@ -154979,6 +155012,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &5423711245152644488
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423711245152644486}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &5424504672340661668
 GameObject:
   m_ObjectHideFlags: 0
@@ -156206,6 +156261,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &5743352362396927479
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971881800870764367}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &5757038180253244899
 GameObject:
   m_ObjectHideFlags: 0
@@ -163876,6 +163953,7 @@ GameObject:
   - component: {fileID: 7832305939777825477}
   - component: {fileID: 7832305939777825479}
   - component: {fileID: 7832305939777825478}
+  - component: {fileID: 7832305939777825480}
   m_Layer: 0
   m_Name: Judith
   m_TagString: Untagged
@@ -164592,6 +164670,7 @@ GameObject:
   - component: {fileID: 7013533711439688293}
   - component: {fileID: 4014184001625073695}
   - component: {fileID: 7646764089303541984}
+  - component: {fileID: 7646764089303541985}
   m_Layer: 0
   m_Name: Martha
   m_TagString: Untagged
@@ -164614,6 +164693,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &7646764089303541985
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7646764089303541983}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &7655929723636705128
 GameObject:
   m_ObjectHideFlags: 0
@@ -164729,6 +164830,7 @@ GameObject:
   - component: {fileID: 7051841304251413634}
   - component: {fileID: 3980338304224128760}
   - component: {fileID: 7680604259081350713}
+  - component: {fileID: 7680604259081350714}
   m_Layer: 0
   m_Name: Leonard
   m_TagString: Untagged
@@ -164751,6 +164853,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &7680604259081350714
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7680604259081350712}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &7680885492452370369
 GameObject:
   m_ObjectHideFlags: 0
@@ -165235,6 +165359,7 @@ GameObject:
   - component: {fileID: 7441970555964146318}
   - component: {fileID: 3577859344619084020}
   - component: {fileID: 7785844584568363061}
+  - component: {fileID: 7785844584568363062}
   m_Layer: 0
   m_Name: Adam
   m_TagString: Untagged
@@ -165257,6 +165382,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &7785844584568363062
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7785844584568363060}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &7790375147987546166
 Transform:
   m_ObjectHideFlags: 0
@@ -165546,6 +165693,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!64 &7832305939777825480
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492336586266505343}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &7833486048241480340
 Transform:
   m_ObjectHideFlags: 0
@@ -166588,6 +166757,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &8095211590645360251
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313528327297771193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &8095412543966733000
 Transform:
   m_ObjectHideFlags: 0
@@ -167480,6 +167671,7 @@ GameObject:
   - component: {fileID: 8654182509915828634}
   - component: {fileID: 3385011406575479776}
   - component: {fileID: 8654182509915828635}
+  - component: {fileID: 8654182509915828636}
   m_Layer: 0
   m_Name: David
   m_TagString: Untagged
@@ -169039,6 +169231,28 @@ MonoBehaviour:
   distance: 15
   speed: 1
   minDistance: 0.1
+--- !u!64 &8654182509915828636
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309710346514213664}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &8673122197890497221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6929922650468293875, guid: 3e65e0154f77f904e95fdf383104b502, type: 3}
