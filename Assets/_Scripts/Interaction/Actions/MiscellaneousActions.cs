@@ -70,6 +70,8 @@ namespace CarePackage.Interaction.Miscellaneous
     {
         [SerializeField] private ECarePackageScenes scene;
 
+        public SwitchSceneAction() : this(ECarePackageScenes.MainMenu) {}
+
         public SwitchSceneAction(ECarePackageScenes inSceneName)
         {
             scene = inSceneName;
