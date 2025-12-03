@@ -3,7 +3,6 @@ using UnityEngine;
 using System;
 using PrimeTween;
 
-
 namespace CarePackage.UI
 {
     [Serializable]
@@ -14,17 +13,17 @@ namespace CarePackage.UI
         [SerializeField] private float scaleMultiplier = 1.2f;
         [SerializeField] private float duration = 0.2f;
 
-        [SerializeField] private Transform _target;
+        [SerializeField] private RectTransform target;
         private Vector3 _originalScale;
         private Tween _currentTween;
         private bool _isClicked;
         
         public HoverScale() : this(null) {}
 
-        public HoverScale(Transform targetTransform)
+        public HoverScale(RectTransform inTarget)
         {
-            _target = targetTransform;
-            if (_target != null) _originalScale = _target.localScale;
+            target = inTarget;
+            if (target != null) _originalScale = target.localScale;
             else _originalScale = Vector3.one;
         }
 
@@ -34,18 +33,19 @@ namespace CarePackage.UI
             Vector3 targetScale = GetTargetScale();
             TweenTo(targetScale);
         }
-
-        public void OnUnhovered(PointerEventData eventData)
-        {
-            if (_isClicked) return;
-            TweenTo(_originalScale);
-        }
-
+        
         public void OnClicked(PointerEventData eventData)
         {
             _isClicked = true;
             _currentTween.Stop();
-            _target.localScale = GetTargetScale();
+            target.localScale = GetTargetScale();
+            Reset();
+        }
+
+        public void OnUnhovered(PointerEventData eventData)
+        {
+            if (_isClicked) return;
+            Reset();
         }
 
         public void Reset()
@@ -67,10 +67,10 @@ namespace CarePackage.UI
 
         private void TweenTo(Vector3 targetScale)
         {
-            if (_target.localScale == targetScale) return;
+            if (target.localScale == targetScale) return;
             
             _currentTween.Stop();
-            _currentTween = Tween.Scale(_target, targetScale, duration, ease);
+            _currentTween = Tween.Scale(target, targetScale, duration, ease);
         }
     }
 
@@ -240,7 +240,7 @@ namespace CarePackage.UI
     [Serializable]
     public class HoverRotation : IHoverBehavior
     {
-        [SerializeField] private Transform target;
+        [SerializeField] private RectTransform target;
         [SerializeField] private Vector3 hoveredRotation = new Vector3(0, 0, 10);
         [SerializeField] private float duration = 0.2f;
         [SerializeField] private Ease ease = Ease.OutQuad;
@@ -250,9 +250,9 @@ namespace CarePackage.UI
 
         public HoverRotation() : this(null) {}
 
-        public HoverRotation(Transform t)
+        public HoverRotation(RectTransform inTarget)
         {
-            target = t;
+            target = inTarget;
             if (target != null) _originalRotation = target.localRotation;
         }
 
@@ -287,7 +287,7 @@ namespace CarePackage.UI
     [Serializable]
     public class HoverShake : IHoverBehavior
     {
-        [SerializeField] private Transform target;
+        [SerializeField] private RectTransform target;
         [SerializeField] private Vector2 strength = new Vector2(10f, 10f);
         [SerializeField] private float duration = 0.5f;
         [SerializeField] private float frequency = 10f;
@@ -297,13 +297,15 @@ namespace CarePackage.UI
         [SerializeField] private bool shakeOnHover = true;
         [SerializeField] private bool shakeOnClick = true;
 
+        private Vector3 _defaultPosition;
         private Tween _currentTween;
-
+        
         public HoverShake() : this(null) {}
 
-        public HoverShake(Transform inTarget)
+        public HoverShake(RectTransform inTarget)
         {
             target = inTarget;
+            _defaultPosition = inTarget != null ? inTarget.anchoredPosition : Vector3.zero;
         }
 
         public void OnHovered(PointerEventData eventData)
@@ -320,12 +322,7 @@ namespace CarePackage.UI
                 easeBetweenShakes
             );
         }
-
-        public void OnUnhovered(PointerEventData eventData)
-        {
-            _currentTween.Stop();
-        }
-
+        
         public void OnClicked(PointerEventData eventData)
         {
             if (!shakeOnClick) return;
@@ -337,12 +334,21 @@ namespace CarePackage.UI
                 duration * 0.5f,
                 frequency
             );
+            Reset();
+        }
+
+        public void OnUnhovered(PointerEventData eventData)
+        {
+            if (!shakeOnHover) return;
+            Reset();
         }
 
         public void Reset()
         {
+            Debug.Log("[OnShake localPos: ]" + target.localPosition);
             _currentTween.Stop();
-            target.localPosition = Vector3.zero;
+            target.anchoredPosition = _defaultPosition;
+            Debug.Log("[OnShake localPos after reset: ]" + target.localPosition);
         }
     }
 
@@ -362,7 +368,7 @@ namespace CarePackage.UI
         {
             if (!animateOnHover) return;
             _originalText = target.text;
-            target.text = text.ToString();
+            target.text = text;
         }
 
         public void OnClicked(PointerEventData eventData)
@@ -373,10 +379,14 @@ namespace CarePackage.UI
 
         public void OnUnhovered(PointerEventData eventData)
         {
-            target.text = _originalText;
+            if (!animateOnHover) return;
+            Reset();
         }
 
-        public void Reset() {}
+        public void Reset()
+        {
+            target.text = _originalText;
+        }
     }
     
     [Serializable]
@@ -407,7 +417,7 @@ namespace CarePackage.UI
 
         public void OnUnhovered(PointerEventData eventData)
         {
-            _currentTween.Stop();
+            Reset();
             if (unhoverStrength == Vector3.zero) return;
             _currentTween = Tween.PunchLocalPosition(target, unhoverStrength, duration, frequency);
         }
@@ -453,10 +463,7 @@ namespace CarePackage.UI
 
         public void OnUnhovered(PointerEventData eventData)
         {
-            if (unhoverClip != null)
-            {
-                Main.Sound.AudioManager.PlayOneShotAtLocation(unhoverClip, Main.Sound.EAudioCategory.UI, Vector3.zero);
-            }
+            Reset();
         }
 
         public void Reset()
