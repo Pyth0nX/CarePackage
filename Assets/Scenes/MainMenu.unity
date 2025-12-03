@@ -4515,7 +4515,7 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        target: {fileID: 0}
+        target: {fileID: 1325081222}
     - rid: 3802007356141732516
       type: {class: HoverShake, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
@@ -4539,12 +4539,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
@@ -4828,12 +4831,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
@@ -4870,12 +4876,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
@@ -4912,12 +4921,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
@@ -4954,12 +4966,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
@@ -5245,7 +5260,7 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        target: {fileID: 0}
+        target: {fileID: 683180729}
     - rid: 3802007356141732515
       type: {class: HoverShake, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
@@ -5298,7 +5313,7 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        target: {fileID: 0}
+        target: {fileID: 1782862492}
     - rid: 3802007356141732516
       type: {class: HoverShake, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
@@ -5351,7 +5366,7 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        target: {fileID: 0}
+        target: {fileID: 1205650561}
     - rid: 3802007356141732514
       type: {class: HoverShake, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
@@ -5395,7 +5410,7 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        target: {fileID: 0}
+        target: {fileID: 267599624}
     - rid: 3802007356141732498
       type: {class: HoverColor, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
