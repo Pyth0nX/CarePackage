@@ -20,43 +20,40 @@ namespace CarePackage.Interaction
     [System.Serializable]
     public class Pickup : IPickup
     {
-        [SerializeField] private Vector3 offset;
         [SerializeField] private GameObject owningObject;
         [SerializeReference, SR] private IPickupExtension[] extendedLogic;
+        [SerializeField] private Vector3 offset;
         [SerializeField] private EPickupState pickupState = EPickupState.Idle;
         
-        public Vector3 Offset { get => offset; set => offset = value; }
         public GameObject OwningObject { get => owningObject; set => owningObject = value; }
         public IPickupExtension[] ExtendedLogic { get => extendedLogic; set => extendedLogic = value; }
+        public Vector3 Offset { get => offset; set => offset = value; }
         public EPickupState PickupState { get => pickupState; set => pickupState = value; }
-
-        public Pickup()
-        {
-            offset = Vector3.zero;
-            owningObject = null;
-            ExtendedLogic = null;
-        }
-
-        public Pickup(Vector3 inOffset, GameObject inOwningObject)
-        {
-            Offset = inOffset;
-            OwningObject = inOwningObject;
-        }
         
-        public Pickup(Vector3 inOffset, GameObject inOwningObject, IPickupExtension[] inPickupExtensions) : this(inOffset, inOwningObject)
+        private Outline _pickUpOutline;
+
+        public Pickup() : this(Vector3.zero, null, null) {}
+
+        public Pickup(Vector3 inOffset, GameObject inOwningObject) : this(inOffset, inOwningObject, null) {}
+        
+        public Pickup(Vector3 inOffset, GameObject inOwningObject, IPickupExtension[] inPickupExtensions)
         {
+            OwningObject = inOwningObject;
+            Offset = inOffset;
             ExtendedLogic = inPickupExtensions;
+            _pickUpOutline = inOwningObject != null ? inOwningObject.GetComponentInChildren<Outline>() : null;
         }
 
         public void OnPickedUp(PlayerState interactingPlayer)
         {
-            //if (owningObject != null) owningObject.GetComponent<Collider>().enabled = false;
             if (ExtendedLogic == null) return;
             foreach (var extendedPickup in ExtendedLogic)
             {
                 extendedPickup.ExtendedPickUp(interactingPlayer);
             }
             pickupState =  EPickupState.PickedUp;
+            if (_pickUpOutline == null) return;
+            _pickUpOutline.enabled = true;
         }
 
         public void OnDropped(PlayerState interactingPlayer)
@@ -68,6 +65,8 @@ namespace CarePackage.Interaction
                 extendedPickup.ExtendedDropped(interactingPlayer);
             }
             pickupState = EPickupState.Dropped;
+            if (_pickUpOutline == null) return;
+            _pickUpOutline.enabled = false;
         }
     }
     

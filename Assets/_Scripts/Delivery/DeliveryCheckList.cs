@@ -72,13 +72,6 @@ namespace CarePackage.Delivery
             _selectablePackageObjects.Add(newSelectable);
         }
 
-        public void CheckOffCurrentPackage()
-        {
-            var selectedPackage = FindSelectableById(_selectedPackageIndex);
-            if (selectedPackage == null) return;
-            CheckOffPackage(selectedPackage);
-        }
-
         public void CheckOffPackage(Package packageToCheckOff)
         {
             if (packageToCheckOff == null) return;

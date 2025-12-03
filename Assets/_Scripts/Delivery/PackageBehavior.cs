@@ -24,7 +24,7 @@ namespace CarePackage.Delivery
         
         private MeshFilter _meshFilter;
         private Rigidbody _rigidbody;
-        private UnityEngine.UI.Image _packageItemImage;
+        private UnityEngine.UI.Image[] _packageItemImages;
         private float _velocityThreshold;
         private int _currentMeshIndex;
         private bool _canBeDamaged;
@@ -45,8 +45,11 @@ namespace CarePackage.Delivery
         {
             _meshFilter = GetComponentInChildren<MeshFilter>();
             _rigidbody = GetComponent<Rigidbody>();
-            _packageItemImage = GetComponentInChildren<UnityEngine.UI.Image>();
-            _packageItemImage.enabled = false;
+            _packageItemImages = GetComponentsInChildren<UnityEngine.UI.Image>();
+            foreach (var packageImage in _packageItemImages)
+            {
+                packageImage.enabled = false;
+            }
         }
 
         private void Start()
@@ -195,9 +198,12 @@ namespace CarePackage.Delivery
         public void SetImage(Sprite icon)
         {
             if (icon == null) return;
-            if (_packageItemImage == null) return;
-            _packageItemImage.sprite = icon;
-            _packageItemImage.enabled = true;
+            if (_packageItemImages == null || _packageItemImages.Length == 0) return;
+            foreach (var packageImage in _packageItemImages)
+            {
+                packageImage.sprite = icon;
+                packageImage.enabled = true;
+            }
         }
     }
 }
