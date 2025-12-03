@@ -719,12 +719,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: -2
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  interactAction:
-    rid: -2
   interactText: Press 'E'
   showMessage: 1
   debug: 0
@@ -908,12 +911,20 @@ PrefabInstance:
       value: Assembly-CSharp CarePackage.Interaction.Delivery.ZoneReceivePackage
       objectReference: {fileID: 0}
     - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5175
       objectReference: {fileID: 0}
     - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.816
+      value: 1.45
       objectReference: {fileID: 0}
     - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -946,6 +957,22 @@ PrefabInstance:
     - target: {fileID: 3014856441308118093, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981708595046907318, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981708595046907318, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981708595046907318, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981708595046907318, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.45
       objectReference: {fileID: 0}
     - target: {fileID: 6164504966109879086, guid: d035fd3af49bdc84eaa0dc5f186f81ce, type: 3}
       propertyPath: m_IsActive
@@ -995,7 +1022,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5325029901883653374}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

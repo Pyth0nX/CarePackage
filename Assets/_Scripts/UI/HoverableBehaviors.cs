@@ -1,7 +1,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
-using System;
 using PrimeTween;
+using System;
 
 namespace CarePackage.UI
 {

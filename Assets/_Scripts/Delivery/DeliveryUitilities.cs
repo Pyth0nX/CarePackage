@@ -72,6 +72,7 @@ namespace CarePackage.Delivery
 
         public static Package TryGetPackageFromObject(GameObject objectToGetPackageFrom)
         {
+            if (objectToGetPackageFrom == null) return null;
             var deliveryAction = TryGetActionFromObject<Interaction.Delivery.PackageAction>(objectToGetPackageFrom);
             if (deliveryAction == null) return null;
 
@@ -85,8 +86,7 @@ namespace CarePackage.Delivery
             return delivery;
         }
 
-        public static T TryGetActionFromObject<T>(GameObject objectToGetActionFrom)
-        where T : class, Interaction.IInteractAction
+        public static T TryGetActionFromObject<T>(GameObject objectToGetActionFrom) where T : class, Interaction.IInteractAction
         {
             if (objectToGetActionFrom == null)
             {
@@ -114,10 +114,30 @@ namespace CarePackage.Delivery
                 Debug.Log("[TryGetActionFromObject] found correct action of type " + interactAction.GetType());
                 return tAction;
             }
-
             return null;
         }
+        
+        public static T TryGetInterfaceFromObject<T>(GameObject objectToGetComponent) where T : class
+        {
+            if (objectToGetComponent == null) return null;
+            return objectToGetComponent.GetComponent<T>();
+        }
+        
+        public static T TryGetActionFromObjectNonRestrictive<T>(GameObject obj) where T : class
+        {
+            if (obj == null) return null;
 
+            var interactable = TryGetInterfaceFromObject<Interaction.Interactable>(obj);
+            if (interactable == null) return null;
+
+            return interactable.InteractAction as T;
+        }
+        
+        public static Interaction.IPickup TryGetPickupFromObject(GameObject obj)
+        {
+            var interactable = obj.GetComponent<Interaction.Interactable>();
+            return interactable?.InteractAction as Interaction.IPickup;
+        }
     }
 }
 

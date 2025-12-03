@@ -6,10 +6,10 @@ namespace CarePackage.Interaction
 {
     public interface IPickup
     {
-        public Vector3 Offset { get; }
         public GameObject OwningObject { get; set; }
         public IPickupExtension[] ExtendedLogic { get; set; }
-        public EPickupState PickupState { get; set; }
+        public Vector3 Offset { get; }
+        public ObservableEnum<EPickupState, IPickup> PickupState { get; set; }
         
         void OnPickedUp(PlayerState interactingPlayer);
         void OnDropped(PlayerState interactingPlayer);
@@ -24,12 +24,11 @@ namespace CarePackage.Interaction
         [SerializeReference, SR] private IPickupExtension[] extendedLogic;
         [SerializeField] private FOutlineStyle pickupOutline = new(Color.lawnGreen, 2f);
         [SerializeField] private Vector3 offset;
-        [SerializeField] private EPickupState pickupState = EPickupState.Idle;
         
         public GameObject OwningObject { get => owningObject; set => owningObject = value; }
         public IPickupExtension[] ExtendedLogic { get => extendedLogic; set => extendedLogic = value; }
+        public ObservableEnum<EPickupState, IPickup> PickupState { get; set; }
         public Vector3 Offset { get => offset; set => offset = value; }
-        public EPickupState PickupState { get => pickupState; set => pickupState = value; }
         
         private Outline _pickUpOutline;
 
@@ -42,6 +41,7 @@ namespace CarePackage.Interaction
             OwningObject = inOwningObject;
             Offset = inOffset;
             ExtendedLogic = inPickupExtensions;
+            PickupState = new ObservableEnum<EPickupState, IPickup>(this, EPickupState.Idle);
             _pickUpOutline = inOwningObject != null ? inOwningObject.GetComponentInChildren<Outline>() : null;
         }
 
@@ -52,7 +52,7 @@ namespace CarePackage.Interaction
             {
                 extendedPickup.ExtendedPickUp(interactingPlayer);
             }
-            pickupState =  EPickupState.PickedUp;
+            PickupState.Value =  EPickupState.PickedUp;
             if (_pickUpOutline == null) return;
             pickupOutline.ApplyTo(_pickUpOutline);
             _pickUpOutline.enabled = true;
@@ -66,7 +66,7 @@ namespace CarePackage.Interaction
             {
                 extendedPickup.ExtendedDropped(interactingPlayer);
             }
-            pickupState = EPickupState.Dropped;
+            PickupState.Value = EPickupState.Dropped;
             if (_pickUpOutline == null) return;
             _pickUpOutline.enabled = false;
         }
@@ -76,5 +76,32 @@ namespace CarePackage.Interaction
     {
         public void ExtendedPickUp(PlayerState interactingPlayer);
         public void ExtendedDropped(PlayerState interactingPlayer);
+    }
+    
+    public class ObservableEnum<TEnum, TOwner> where TEnum : struct, System.Enum
+    {
+        private TEnum _value;
+        private TOwner _owner;
+        
+        public event System.Action<TOwner, TEnum> OnValueChanged;
+
+        public TEnum Value
+        {
+            get => _value;
+            set
+            {
+                if (!System.Collections.Generic.EqualityComparer<TEnum>.Default.Equals(_value, value))
+                {
+                    _value = value;
+                    OnValueChanged?.Invoke(_owner, _value);
+                }
+            }
+        }
+
+        public ObservableEnum(TOwner owner, TEnum initialValue)
+        {
+            _owner = owner;
+            _value = initialValue;
+        }
     }
 }

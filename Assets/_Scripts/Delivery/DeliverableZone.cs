@@ -1,3 +1,4 @@
+using System;
 using CarePackage.Interaction;
 using CarePackage.Interaction.Delivery;
 using CarePackage.Main;
@@ -31,6 +32,12 @@ namespace CarePackage.Delivery
                 return;
             }
             
+            var pickup = DeliveryUitilities.TryGetActionFromObjectNonRestrictive<IPickup>(other.gameObject);
+            if (pickup == null) return;
+            
+            OnPickupStateChanged(pickup, pickup.PickupState.Value);
+            pickup.PickupState.OnValueChanged += OnPickupStateChanged;
+            /*
             var interactable = other.GetComponent<Interactable>();
             if (interactable == null) return;
 
@@ -44,16 +51,23 @@ namespace CarePackage.Delivery
             var pickupObject = other.gameObject;
 
             if (action is not IPickup pickup) return;
-            if (pickup.PickupState != EPickupState.Dropped) return;
-            
-            //if (action is PackageAction packageAction && packageAction.AlreadyAdded) return;
-            ExecuteLogic(pickupObject);
+            if (pickup.PickupState.Value == EPickupState.Idle) return;;*/
         }
 
-        private void ExecuteLogic(GameObject interactedObject)
+        private void OnTriggerExit(Collider other)
         {
-            Debug.Log("Doing something to: " + interactedObject.name);
-            interactLogic.PerformAction(GameManager.Instance.Player, interactedObject);
+            var pickup = DeliveryUitilities.TryGetActionFromObjectNonRestrictive<IPickup>(other.gameObject);
+            if (pickup == null) return;
+            
+            pickup.PickupState.OnValueChanged -= OnPickupStateChanged;
+        }
+
+        private void OnPickupStateChanged(IPickup pickup, EPickupState pickupState)
+        {
+            if (pickupState != EPickupState.Dropped) return;
+
+            Debug.Log("Doing something to: " + pickup.OwningObject.name);
+            interactLogic.PerformAction(GameManager.Instance.Player, pickup.OwningObject);
         }
         
         private void OnDrawGizmos()
