@@ -1468,25 +1468,25 @@ position: -847,-175
 ---
 //FAM B — DAY 2 — SEEDS (PRISTINE / SLIGHTLY DAMAGED)
 <<setBackground "BGFamB">>
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: Good afternoon, Mikkel.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Good afternoon, Mr.Mailman.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: I have a package for you here. 
 <<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Yeah, they're probably going to be my last seeds for some time. Yesterday, after talking to you, I went to the attic to look for my equipment. 
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: Maybe the next package I deliver for you is a can of worms hahaha.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Worms?! Do you think I'm an amateur? I use the best crabs to fish.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: Crabs? I've always used squid.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: We should make it interesting, we both should try to fish with worms and see who gets more fish with the worst bait. 
 Mikkel: At the end of the day it's not the tool that matters, it's the master and the ability to adapt.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: I accept the challenge.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: May the best man win.
@@ -1619,17 +1619,17 @@ position: -849,553
 //FAM B — DAY 3 — BAIT (WRONG PACKAGE)
 <<receivePackage false>>
 <<setBackground "BGFamB">>
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: Good afternoon Gertrude.
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Good afternoon Mr.Mailman.
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I have here a package for Mikkel.
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Are you sure this is Mikkel's package? It looks a bit big for what he ordered.
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: You are right, this package is not addressed to you guys. I'm so sorry, I will be back with your package.
-<<hideCharacter "Mikkel">>
+<<hideCharacter "Gertrude">>
 <<hideBackground>>
 ===
 
@@ -1651,20 +1651,20 @@ Gertrude: Just the person I was hoping to see, I have here a box of vegetables t
 Mailman: I might know a boy that might benefit from adding home grown vegetables to his meals, he is just about one year old now so he needs the best food to grow strong.
 <<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so he can receive the package you brought.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I would appreciate it a lot, we have matters to discuss.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come to surrender?
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: I would never surrender. Are you scared to lose? 
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Scared of you? Never! You are, in fact, holding the main part of our bet.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: Are these the worms? 
 <<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: That's right, we have everything ready. Whenever you feel ready to challenge me, you know where to find me. 
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: That's right and if you want to surrender you have my phone number on the receipt.
 <<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: For him to surrender he would have to die, here you have the vegetables. I hope the kids can enjoy them.
@@ -1699,16 +1699,16 @@ Gertrude: That's wonderful! I'm going to get the box, I'll also call Mikkel so h
 Mailman: I would appreciate it a lot, we have matters to discuss.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Good afternoon, Mr.Mailman. I thought you were avoiding me, did you come to surrender?
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: I would never surrender. Are you scared to lose? 
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Scared of you? Never! You, in fact, have tried to sabotage me by damaging the package.
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: Are these the worms? 
 <<receivePackage true>>
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: That's right, I'm sure your attempts to cheat were unsuccessful. Whenever you feel ready to challenge me like a real man, you know where to find me. 
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: That's right and if you want to surrender you have my phone number on the receipt.
 <<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: For him to surrender he would have to die, here you have the vegetables. I hope the kids can enjoy them.
@@ -1806,15 +1806,15 @@ position: -839,1684
 //FAM B — DAY 4 — SEEDS (WRONG PACKAGE)
 <<receivePackage false>>
 <<setBackground "BGFamB">>
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: Good morning Gertrude.
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Good morning Mr.Mailman.
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: I have a package for you.
-<<showCharacter "Gertrude" "TalkingWorried">>
+<<showCharacter "Gertrude" "TalkingHappy">>
 Gertrude: Are you sure? We haven't ordered anything.
-<<showCharacter "Gertrude" "Worried">>
+<<showCharacter "Gertrude" "Happy">>
 Mailman: You are right, I'll be back when I have a package for you.
 <<hideCharacter "Gertrude">>
 <<hideBackground>>
@@ -1935,11 +1935,11 @@ position: -77,-1026
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Oh thank god! The diapers are here. Wait a second, that's not our package.
 <<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. I'll be back with the diapers as soon as possible.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Please don't take too long. I don't know how much time we have left.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
@@ -2088,17 +2088,17 @@ position: -75,-310
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon, Vera.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Good afternoon Mr.Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you, I just need your signature here.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Are you sure, I don't think that package is mine.
 <<showCharacter "Vera" "Happy">>
 Mailman: Oh you are right, this is not addressed to you. I will be right back with your package.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: That's alright, see you later.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "Happy">>
 Mailman: See you later.
 <<hideCharacter "Vera">>
 <<hideBackground>>
@@ -2116,23 +2116,23 @@ position: -74,-175
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good morning, Vera!
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Good morning, Mr. Mailman.
 <<showCharacter "Vera" "Happy">>
 Mailman: I have a package for you. I just need your signature here.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 <<receivePackage true>>
 Vera: Sure thing! I actually might have something for you too. When we moved, I brought a box of clothes that I used to wear when I was younger. I didn't want to throw them away. Do you know anyone who would like some clothes? 
 <<showCharacter "Vera" "Happy">>
 -> Mailman: Now that you mention it, I might know the perfect family. (Accept the clothes)
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 1>>
-    <<showCharacter "Vera" "TalkingWorried">>
+    <<showCharacter "Vera" "TalkingHappy">>
     <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
-    <<showCharacter "Vera" "TalkingWorried">>
-    Vera: I see. Well, thank you anyway. Have a nice day.
+    <<showCharacter "Vera" "TalkingHappy">>
+    Vera: I see. Well, thank you anyways. Have a nice day.
 <<hideCharacter "Vera">>
 <<hideBackground>>
 ===
@@ -2148,24 +2148,25 @@ position: -74,-43
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 0.5>>
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Good afternoon, Vera.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Good afternoon Mr.Mailman.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Sure thing! This is a bit damaged, are you sure this is my package?
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Oh no, it is your package. I guess it received some damage on the way here, I am so sorry.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the content inside didn't get damaged.
 <<receivePackage true>>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am really sorry, I will drive slower.
 <<showCharacter "Vera" "TalkingWorried">>
-Vera: Actually, I might have something for you too. When we moved I brought a box of clothes that I used to wear when I was younger, I didn't want to throw them away so we've been keeping it here, do you know anyone that would like some clothes? 
-<<showCharacter "Vera" "Happy">>
+Vera: Actually, I might have something for you too. When we moved I brought a box of clothes that I used to wear when I was younger.
+Vera: I didn't want to throw them away so we've been keeping it here, do you know anyone that would like some clothes? 
+<<showCharacter "Vera" "Worried">>
 -> Mailman: Now that you mention it I might know the perfect family.
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
@@ -2190,24 +2191,25 @@ position: -74,88
 <<set $famC_damageCount += 1>>
 <<set $relationshipFamC -= 0.5>>
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Good afternoon, Vera
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Good afternoon Mr.Mailman
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 <<receivePackage true>>
 Vera: Sure thing! This is a bit damaged, yesterday's diapers were also damaged.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am sorry, I might need to figure out new paths to get here, with less bumps.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the baby cam inside didn't get damaged.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am really sorry, if the baby cam seems to have any damage send us an email and we will make sure to replace it or compensate you in some way.
 <<showCharacter "Vera" "TalkingWorried">>
-Vera: Actually, I might ask you for a favor. When we moved I brought a box of clothes that I used to wear when I was in college, they don't fit anymore but I didn't want to throw them away so we've been keeping it here. Do you know anyone that would like some clothes? 
-<<showCharacter "Vera" "Happy">>
+Vera: Actually, I might ask you for a favor. When we moved I brought a box of clothes that I used to wear when I was in college, they don't fit anymore.
+Vera: I didn't want to throw them away so we've been keeping it here. Do you know anyone that would like some clothes? 
+<<showCharacter "Vera" "Worried ">>
 -> Mailman: Now that you mention it I might know the perfect family.
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
@@ -2233,25 +2235,26 @@ position: -74,219
 <<set $famC_breakCount += 1>>
 <<set $relationshipFamC -= 1>>
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Good afternoon, Vera.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Good afternoon Mr.Mailman.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Sure thing! 
 <<receivePackage true>>
 Vera: It's broken! how could this happen?
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am sorry, it must have bumped with some of the other packages.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the baby cam inside didn't get damaged.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am really sorry, if the baby cam seems to have any damage send us an email and we will make sure to replace it or compensate you in some way.
 <<showCharacter "Vera" "TalkingWorried">>
-Vera: Actually, I might ask you for a favor. When we moved I brought a box of clothes that I used to wear when I was in college, they don't fit anymore but I didn't want to throw them away so we've been keeping it here. Do you know anyone that would like some clothes? 
-<<showCharacter "Vera" "Happy">>
+Vera: Actually, I might ask you for a favor. When we moved I brought a box of clothes that I used to wear when I was in college, they don't fit anymore.
+Vera: I didn't want to throw them away so we've been keeping it here. Do you know anyone that would like some clothes? 
+<<showCharacter "Vera" "Worried">>
 -> Mailman: Now that you mention it I might know the perfect family.
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
@@ -2276,25 +2279,25 @@ position: -74,354
 <<set $famC_breakCount += 1>>
 <<set $relationshipFamC -= 1>>
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Good afternoon, Vera.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Good afternoon Mr.Mailman.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I have a package for you, I just need your signature here.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Sure thing! 
 <<receivePackage true>>
 Vera: It's broken, how could this happen again?
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am sorry, I will try to avoid any bumps on the way next time.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: It's okay, as long as the baby cam inside didn't get damaged.
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: I am really sorry, if the baby cam seems to have any damage send us an email and we will make sure to replace it or compensate you in some way.
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Actually, I might ask you for a favor. When we moved I brought a box of clothes that I used to wear when I was in college, they don't fit anymore but I didn't want to throw them away so we've been keeping it here. Do you know anyone that would like some clothes?
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 -> Mailman: Now that you mention it I might know the perfect family.
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
@@ -2345,12 +2348,11 @@ position: -74,686
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
-<<showCharacter "Vera" "TalkingWorried">>
-Vera: Oh, a note? That's sweet!
+<<showCharacter "Vera" "TalkingHappy">>
 <<receivePackage true>>
 <<showCharacter "Vera" "Happy">>
 *Vera reads the note.*
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Oh my goodness! She's offering to babysit! And she included her number! That is incredibly thoughtful. We've been desperate for a night out.
 <<showCharacter "Vera" "Happy">>
 Jonas: That is amazing! Maybe the first time we could ask Nora to come help her, I think both of them together might survive the night.
@@ -2358,7 +2360,7 @@ Jonas: That is amazing! Maybe the first time we could ask Nora to come help her,
 <<set $relationshipFamA += 1>> 
 <<showCharacter "Vera" "Happy">>
 Mailman: That's wonderful. She's been having a hard time in class, maybe Nora can help her meet new friends.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
 <<showCharacter "Vera" "Happy">>
 Mailman: My pleasure. Have a great day!
@@ -2376,7 +2378,7 @@ position: -74,821
 ---
 //FAM C — DAY 3 — NOTE (NEUTRAL)
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "Happy">>
+<<showCharacter "Vera" "Worried">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
 <<receivePackage true>>
 <<showCharacter "Vera" "TalkingWorried">>
@@ -2384,21 +2386,21 @@ Vera: Oh, a note? That's sweet!
 *Vera reads the note.*
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: She's offering to babysit! That is thoughtful. We've been looking for an opportunity to have a relaxing afternoon.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Maybe the first time we could ask Nora to come help her, she could tell her all she needs to know.
 <<showCharacter "Jonas" "Worried">>
 ->Mailman: That's wonderful. She's been having a hard time in class, maybe Nora can help her meet new friends.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingWorried">>
     Jonas: Oh, if that's the case we could turn it in a “hangout” for them to get to know eachoter too.
     <<showCharacter "Vera" "TalkingWorried">>
     Vera: Thank you so much for doing this, Mr. Mailman. We'll text her right now.
-    <<showCharacter "Vera" "Happy">>
+    <<showCharacter "Vera" "Worried">>
     Mailman: My pleasure. Have a great rest of your day!
 
 -> Mailman: Good.
     <<showCharacter "Vera" "TalkingWorried">>
     Vera: We'll text her right now.
-    <<showCharacter "Vera" "Happy">>
+    <<showCharacter "Vera" "Worried">>
     Mailman: Have a good one.
 <<hideCharacter "Vera">>
 <<hideBackground>>
@@ -2439,21 +2441,21 @@ position: -74,1168
 ---
 //FAM C — DAY 4 — COOKIES (WARM)
 <<setBackground "BGFamC">>
-<<showCharacter "Jonas" "Worried">>
+<<showCharacter "Jonas" "Happy">>
 Mailman: Hello!
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingHappy">>
 Jonas: Hello, I don't think we have ordered anything.
-<<showCharacter "Jonas" "Worried">>
+<<showCharacter "Jonas" "Happy">>
 -> Mailman: Oh right! Sorry for the missunderstanding.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingHappy">>
     Jonas: No worries, we'll be waiting our next package.
-    <<showCharacter "Jonas" "Worried">>
+    <<showCharacter "Jonas" "Happy">>
     Mailman: Perfect then, have a good evening.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingHappy">>
     Jonas: You too.
-<<showCharacter "Jonas" "Worried">>
+<<showCharacter "Jonas" "Happy">>
 -> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingHappy">>
     <<receivePackage true>>
 	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
 <<hideCharacter "Jonas">>
