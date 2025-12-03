@@ -2504,11 +2504,11 @@ group: FamC && Day5
 //FAM C — DAY 5 — GOOD ENDING (WARM)
 <<set $ending = "Good Ending">>
 <<setBackground "BGFamC">>
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Welcome Mr.Mailman, I'm so glad you came. We weren't sure if you would see the "invitations".
 <<showCharacter "Vera" "Happy">>
 Mailman: I'm so glad you invited me.
-<<showCharacter "Vera" "TalkingWorried">>
+<<showCharacter "Vera" "TalkingHappy">>
 Vera: Of course, none of this would have been possible without you.
 <<showCharacter "Vera" "Happy">>
 Mailman: You are too nice, I was just doing my job.
@@ -2522,7 +2522,7 @@ Lina: Yeah, most people wouldn't have stopped to listen and talk. It would have 
 Mailman: That's because all of you are worth listening to, you are so kind and thoughtful.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: Hey! Mr.Mailman, have you come to challenge me?
-<<showCharacter "Mikkel" "Worried">>
+<<showCharacter "Mikkel" "Happy">>
 Mailman: You wish, I am here because I heard I could get some free meat hahahaha.
 <<showCharacter "Mikkel" "TalkingHappy">>
 Mikkel: I have brought all we need to go to my secret spot and see who is the best fishing.
