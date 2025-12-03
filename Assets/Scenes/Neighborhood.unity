@@ -37903,12 +37903,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756150
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  interactAction:
-    rid: 7735813649916756150
   interactText: 
   showMessage: 0
   debug: 0
@@ -75557,12 +75560,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7069949980743827535
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  interactAction:
-    rid: 7069949980743827535
   interactText: Click 'E' to go back to post office
   showMessage: 1
   debug: 0
@@ -77504,7 +77510,7 @@ MonoBehaviour:
   - name: BGFamB
     sprite: {fileID: 21300000, guid: 4c3a67b4e5d537b499c679db0d697829, type: 3}
   - name: BGFamBLivingroom
-    sprite: {fileID: -1879060009, guid: 16b8dc3d4f3b8a4438ac7b9c061a6617, type: 3}
+    sprite: {fileID: -1799462457, guid: 16b8dc3d4f3b8a4438ac7b9c061a6617, type: 3}
   - name: BGFamC
     sprite: {fileID: 21300000, guid: 88eddc111b2fe6c4692dc53965778c07, type: 3}
   characters:
@@ -110583,12 +110589,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756151
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  interactAction:
-    rid: 7735813649916756151
   interactText: 
   showMessage: 0
   debug: 0
@@ -121451,12 +121460,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: -2
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
-  interactAction:
-    rid: -2
   interactText: 
   showMessage: 0
   debug: 0
