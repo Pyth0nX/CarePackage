@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 3502250587182924415}
   - component: {fileID: 3273679238998753235}
   - component: {fileID: 3935217559519182291}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: TruckBackdoorMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,17 +638,19 @@ MonoBehaviour:
   interactionType: 0
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   interactAction:
-    rid: -2
-  interactText: 
+    rid: 4406188471372742755
+  interactText: Press E to open the trunk!
   showMessage: 1
-  debug: 1
+  debug: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 4406188471372742755
+      type: {class: OpenCarAction, ns: CarePackage.Interaction.Car, asm: Assembly-CSharp}
+      data:
+        animator: {fileID: 4418585344812075850}
 --- !u!1 &6547792179064630458
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,8 +912,8 @@ MonoBehaviour:
     m_Bits: 256
   interactAction:
     rid: 7735813649916756148
-  interactText: Press E
-  showMessage: 0
+  interactText: Press E to open the trunk!
+  showMessage: 1
   debug: 0
   references:
     version: 2
