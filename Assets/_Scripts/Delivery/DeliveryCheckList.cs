@@ -79,7 +79,7 @@ namespace CarePackage.Delivery
             CheckOffPackage(selectedPackage);
         }
 
-        private void CheckOffPackage(Package packageToCheckOff)
+        public void CheckOffPackage(Package packageToCheckOff)
         {
             if (packageToCheckOff == null) return;
             var selectedPackage = FindSelectableByPackage(packageToCheckOff);

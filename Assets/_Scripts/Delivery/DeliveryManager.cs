@@ -181,7 +181,7 @@ namespace CarePackage.Delivery
                 EconomyManager.Instance.CalculateMoneyEarned(packageToDeliver.PackageData, _timeTakenToDelivery, _directDistanceToDelivery);
 
                 if (packageObj != null) Destroy(packageObj);
-                _deliveryCheckList.CheckOffCurrentPackage();
+                _deliveryCheckList.CheckOffPackage(packageToDeliver);
                 _deliveriesMade++;
                 CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
                 Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");

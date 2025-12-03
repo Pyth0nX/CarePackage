@@ -107,7 +107,7 @@ namespace CarePackage.Interaction.Dialogue
                 Debug.LogWarning("[DialogueAction] Tried to start dialogue, but one is already running!");
                 return;
             }
-            DialogueManager.Instance.dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete?.AddListener(OnDialogueComplete);
 
             _playerController = _interactingPlayer.SwitchMode.FirstPersonPlayer.GetComponentInChildren<PlayerController>();
             GoalIndicator.Instance.SetGoalObject(null);
@@ -140,12 +140,12 @@ namespace CarePackage.Interaction.Dialogue
         public void OnEnable()
         {
             //DialogueManager.OnPackageRecieved += OnDialogueComplete;
-            DialogueManager.Instance.dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete?.AddListener(OnDialogueComplete);
         }
 
         public void OnDisable()
         {
-            DialogueManager.Instance.dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
+            DialogueManager.Instance.dialogueRunner.onDialogueComplete?.RemoveListener(OnDialogueComplete);
             //DialogueManager.OnPackageRecieved -= OnDialogueComplete;
         }
 
