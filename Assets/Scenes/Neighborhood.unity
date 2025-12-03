@@ -77503,6 +77503,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 5ffd8afd9804f5c498c2097b2ef4e924, type: 3}
   - name: BGFamB
     sprite: {fileID: 21300000, guid: 4c3a67b4e5d537b499c679db0d697829, type: 3}
+  - name: BGFamBLivingroom
+    sprite: {fileID: -1879060009, guid: 16b8dc3d4f3b8a4438ac7b9c061a6617, type: 3}
   - name: BGFamC
     sprite: {fileID: 21300000, guid: 88eddc111b2fe6c4692dc53965778c07, type: 3}
   characters:
@@ -77517,12 +77519,6 @@ MonoBehaviour:
       sprite: {fileID: -2134281307, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
     - emotionName: SpeakingTired
       sprite: {fileID: 1576043024, guid: 2d41e73a301026f48b696f1b4f2305c0, type: 3}
-    - emotionName: SofieListeningTired
-      sprite: {fileID: 1905211881, guid: 598da34ca24c6b448bbfc74287daceff, type: 3}
-    - emotionName: LinaSSpeakingTired
-      sprite: {fileID: 368689239, guid: b41b7b6694401ca43adcb0a607bb9ea0, type: 3}
-    - emotionName: SofieSpeakingTired
-      sprite: {fileID: -1036097290, guid: 6035e27cef22a454eb9104fe221af16b, type: 3}
   - characterName: Mikkel
     image: {fileID: 574994669}
     emotions:
@@ -77532,6 +77528,8 @@ MonoBehaviour:
       sprite: {fileID: -1113577886, guid: 4eed7c22dc903ee4e8b8a5875aed4870, type: 3}
     - emotionName: Worried
       sprite: {fileID: 1319880285, guid: 178e4ff2a357b144081f90c74d05ac73, type: 3}
+    - emotionName: Happy
+      sprite: {fileID: 415455534, guid: 3197d71c910e9e440a6a274dfcb4c930, type: 3}
   - characterName: Gertrude
     image: {fileID: 574994669}
     emotions:
@@ -77550,15 +77548,28 @@ MonoBehaviour:
       sprite: {fileID: -113019751, guid: 30b49cbbb268bec4fa12a0efa51d3e6b, type: 3}
     - emotionName: TalkingWorried
       sprite: {fileID: 1465932842, guid: 78b1713d3425114478ef57b7fd6980a1, type: 3}
+    - emotionName: Worried
+      sprite: {fileID: -1114430632, guid: 6f89f471969854a4b8d0e3a347342138, type: 3}
+    - emotionName: TalkingHappy
+      sprite: {fileID: 1075712566, guid: c219aadc310fcc442ad924a6204e6c05, type: 3}
   - characterName: Jonas
     image: {fileID: 574994669}
     emotions:
     - emotionName: Worried
       sprite: {fileID: 1093759107, guid: 80bbd491882b6ac4ebb675b1c8d864e7, type: 3}
-    - emotionName: Talking
+    - emotionName: TalkingWorried
       sprite: {fileID: 713985261, guid: 4ae0a1340d188f04c94b105344da5bd1, type: 3}
-  dialogueCanvas: {fileID: 0}
-  dialogueRunner: {fileID: 0}
+    - emotionName: TalkingHappy
+      sprite: {fileID: -1444681954, guid: dede903daba32464b95f0faecaf9e40b, type: 3}
+    - emotionName: Happy
+      sprite: {fileID: -1741102159, guid: f062f8e69b745a5439ac973d7e5e21d7, type: 3}
+  - characterName: Sofie
+    image: {fileID: 574994669}
+    emotions:
+    - emotionName: Listening
+      sprite: {fileID: 797787657, guid: 326c508a1a27ac44fa5391440f0f058d, type: 3}
+    - emotionName: Talking
+      sprite: {fileID: -1483602966, guid: 326c508a1a27ac44fa5391440f0f058d, type: 3}
 --- !u!4 &1237238928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8705768563110678305, guid: f06fe2e65aed075448f91c6df0fe0e07, type: 3}

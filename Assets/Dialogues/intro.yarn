@@ -94,11 +94,11 @@ Lina: That's me. Sofie, your package is here!
 Mailman: Wonderful! I just need your signature right here.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Of course. I don't think I've seen you around before, are you new?
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Yeah, just started actually. Still getting the hang of it. You'll have to be patient with this old man, hahaha.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh, so you are just like Sofie! She's starting at a new school tomorrow.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Tomorrow? That's exciting! Big day for her then.
 -> Mailman: Feeling nervous about it?
     <<jump AEn1Day1>>
@@ -113,13 +113,13 @@ color: green
 group: FamA && Day1
 ---
 <<set $relationshipFamA += 1>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: A little... but Mom promised me a brand-new backpack!
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Oh, then this must be it! A good start is half the battle.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Really? Yay! Can I open it now, please?
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: Of course, here you go.
     <<jump AEnd1Day1>>
 -> Mailman: Here you go, sweetheart, I hope you have a wonderful first day of school with it.
@@ -133,9 +133,9 @@ group: FamA && Day1
 color: green
 ---
 <<receivePackage true>>
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Thank you so much. Have a nice day.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: You too. Take care!
 <<hideCharacter "Lina">>
 <<hideBackground>>
@@ -149,11 +149,11 @@ group: FamA && Day1
 ---
 <<receivePackage true>>
 <<set $relationshipFamA += 1>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: THANK YOU! It's perfect!
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Thanks again! We'll see you around.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Have a wonderful evening, both of you. And good luck tomorrow!
 <<hideCharacter "Lina">>
 <<hideBackground>>
@@ -176,9 +176,9 @@ Mailman: Good afternoon! Are you Lina?
 Lina: That's me. Sofie, your package is here!
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Perfect, just need your signature here.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Wait... this looks a bit damaged. What happened?
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: I'm really sorry, the road was rough on the way here.
 -> Mailman: I'll be more careful next time.
     <<jump FamA_D1_Damaged_Kind>>
@@ -195,13 +195,13 @@ color: green
 ---
 <<receivePackage true>>
 <<set $relationshipFamA += 1>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: As long as the backpack's okay...
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Are you new around here? I haven't seen you before.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Yeah, just started, actually. Still getting the hang of it, as you can see.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Feeling nervous about it?
     <<jump AEn1Day1>>
@@ -216,7 +216,7 @@ position: -1698,-184
 ---
 <<receivePackage true>>
 <<set $relationshipFamA -= 0.5>>
-<<showCharacter "Lina" "LinaSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: It's not the nicest surprise, but... fine.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Understood. Have a good evening.
@@ -1273,6 +1273,7 @@ group: FamB && Day1
 position: -574,-882
 ---
 <<set $relationshipFamB += 1>>
+<<setBackground "BGFamBLivingroom">>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Dangerous cold for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 <<showCharacter "Gertrude" "Worried">>
@@ -1381,6 +1382,7 @@ group: FamB && Day1
 color: red
 position: -558,-512
 ---
+<<setBackground "BGFamBLivingroom">>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Dangerous cold for us old folks, huh?. Poor you having to work in this weather, how many years until you retire?
 <<showCharacter "Gertrude" "Worried">>
