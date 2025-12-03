@@ -15,6 +15,7 @@ namespace CarePackage.Dialogue
         [YarnCommand("giveItem")]
         public static void GiveItem(string itemToGive)
         {
+            Debug.Log("Trying to give Item: " + itemToGive); 
             var itemGUID = "Items/" + itemToGive;
             var item = InventoryUtilities.LoadItem(itemGUID);
             GameManager.Instance.Player.Inventory.AddUnacceptedItem(item);

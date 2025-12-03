@@ -640,7 +640,7 @@ Mailman: This one is addressed to Sofie.
 Sofie: To... me?
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: That's right. It's from Vera, your Neighbour.
-<<giveItem "verasClothes">>
+<<receivePackage true>>
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Vera? I don't think I know her.
 <<showCharacter "Lina" "SofieListeningTired">>
@@ -649,7 +649,7 @@ Mailman: She has the cutest little boy, that's probably why you haven't seen her
 Lina: Oh yeah, it was not so long ago I was in that same situation, do you think they would be interested in a babysitter?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
-<<giveItem == "note">>
+<<giveItem "note">>
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -680,7 +680,7 @@ Mailman: This one is addressed to Sofie.
 Sofie: ...
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: It's from Vera, your Neighbour.
-<<giveItem "verasClothes">>
+<<receivePackage true>>
 <<showCharacter "Lina" "SpeakingTired">>
 Sofie: Vera? I don't think I know her.
 <<showCharacter "Lina" "ListeningTired">>
@@ -689,7 +689,6 @@ Mailman: She's busy with her kid and they recently moved here, so you might have
 Lina: Oh that's just perfect, we've been looking for something Sofie could do after school, she could babysit the boy from time to time. What do you think Sofie?
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
-<<giveItem == "note">>
 <<showCharacter "Lina" "SofieListeningTired">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
 <<showCharacter "Lina" "SofieSpeakingTired">>
@@ -759,7 +758,7 @@ Lina: Thank you! I'm learning new recipes and I needed some ingredients.
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "SpeakingRested">>
@@ -898,7 +897,7 @@ Lina: It's okay, these things happen. I'm just learning new recipes and I needed
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "LinaSpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "LinaSpeakingRested">>
@@ -957,7 +956,7 @@ Lina: It's okay, these things happen. I'm just learning new recipes and I needed
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
 <<showCharacter "Lina" "SpeakingRested">>
@@ -1015,7 +1014,7 @@ Lina: It's okay, these things happen. I'm just learning new recipes and I needed
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: They're going to be so happy, you are too kind.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -1066,7 +1065,7 @@ Lina: It's okay, it was an accident. I'm just learning new recipes and I needed 
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: They're going to be so happy, you are too kind.
 <<showCharacter "Lina" "SpeakingRested">>
@@ -1117,7 +1116,7 @@ Lina: It's okay, these things happen sometimes. I'm just learning new recipes an
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: They're going to be so happy, you are too kind.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -1168,7 +1167,7 @@ Lina: It's okay, these things happen sometimes. I'm just learning new recipes an
 Mailman: That sounds so good, really.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra to take to our neighbours.
-<<giveItem == "cookies">>
+<<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: They're going to be so happy, you are too kind.
 <<showCharacter "Lina" "SpeakingTired">>
@@ -1876,7 +1875,6 @@ Gertrude: Good afternoon MrMailman. Is there anything I can help you with?
 <<showCharacter "Gertrude" "Worried">>
 Mailman: Oh no, I came to give you a package. Some cookies one of your neighbours, Lina, made. 
 <<receivePackage true>>
-<<giveItem "cookies">>
 <<showCharacter "Gertrude" "TalkingWorried">>
 Gertrude: Oh, that's too kind of her. I will tell Mikkel to prepare some vegetables to give to her, I wouldn't know how to reach her tho.
 <<showCharacter "Gertrude" "Worried">>
@@ -2128,6 +2126,7 @@ Vera: Sure thing! I actually might have something for you too. When we moved, I 
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 1>>
     <<showCharacter "Vera" "TalkingWorried">>
+    <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
     <<showCharacter "Vera" "TalkingWorried">>
@@ -2169,6 +2168,7 @@ Vera: Actually, I might have something for you too. When we moved I brought a bo
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
     <<showCharacter "Vera" "TalkingWorried">>
+    <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
     <<showCharacter "Vera" "TalkingWorried">>
@@ -2210,6 +2210,7 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
     <<showCharacter "Vera" "TalkingWorried">>
+    <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
     <<showCharacter "Vera" "TalkingWorried">>
@@ -2253,6 +2254,7 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
     <<showCharacter "Vera" "TalkingWorried">>
+    <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
     <<showCharacter "Vera" "TalkingWorried">>
@@ -2295,6 +2297,7 @@ Vera: Actually, I might ask you for a favor. When we moved I brought a box of cl
     <<set $verasClothes = true>>
     <<set $relationshipFamC += 0.5>>
     <<showCharacter "Vera" "TalkingWorried">>
+    <<giveItem "clothes">>
     Vera: Oh, that's wonderful! They are in the box right here. Thank you for your help! Have a nice day!
 -> Mailman: I can't think of anyone, you should throw them away.
     <<showCharacter "Vera" "TalkingWorried">>
@@ -2373,7 +2376,7 @@ position: -74,821
 <<setBackground "BGFamC">>
 <<showCharacter "Vera" "Happy">>
 Mailman: Good afternoon! No package today, but I have a special delivery for you from your neighbour, Sofie.
-<<giveItem "note">>
+<<receivePackage true>>
 <<showCharacter "Vera" "TalkingWorried">>
 Vera: Oh, a note? That's sweet!
 *Vera reads the note.*
@@ -2433,7 +2436,6 @@ group: FamC && Day4
 position: -74,1168
 ---
 //FAM C — DAY 4 — COOKIES (WARM)
-<<giveItem "cookies">>
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Hello!
@@ -2450,7 +2452,7 @@ Jonas: Hello, I don't think we have ordered anything.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
     <<showCharacter "Jonas" "Talking">>
-    <<giveItem "cookies">>
+    <<receivePackage true>>
 	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
@@ -2480,7 +2482,7 @@ Jonas: Hello, I don't think we have ordered anything.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: Actually, Lina gave me some cookies for you guys. She's really grateful since you let Sofie babysit and introduced her to your niece.
     <<showCharacter "Jonas" "Talking">>
-    <<giveItem "cookies">>
+    <<receivePackage true>>
 	Jonas: Oh that's so nice, we were about to leave but we'll make sure to thank her later.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
