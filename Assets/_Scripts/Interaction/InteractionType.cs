@@ -11,6 +11,26 @@ namespace CarePackage.Interaction
         Clicked, // interaction happening when clicked in UI or on the object with mouse pointer
     }
 
+    [System.Serializable]
+    public struct FOutlineStyle
+    {
+        public Color color;
+        public float width;
+
+        public FOutlineStyle(Color inColor, float inWidth)
+        {
+            color = inColor;
+            width = inWidth;
+        }
+
+        public void ApplyTo(Outline outline)
+        {
+            if (outline == null) return;
+            outline.OutlineColor = color;
+            outline.OutlineWidth = width;
+        }
+    }
+
     public interface IInteractionActivationType
     {
         public void RaiseInteraction();

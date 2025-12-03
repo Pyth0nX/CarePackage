@@ -22,6 +22,7 @@ namespace CarePackage.Interaction
     {
         [SerializeField] private GameObject owningObject;
         [SerializeReference, SR] private IPickupExtension[] extendedLogic;
+        [SerializeField] private FOutlineStyle pickupOutline = new(Color.lawnGreen, 2f);
         [SerializeField] private Vector3 offset;
         [SerializeField] private EPickupState pickupState = EPickupState.Idle;
         
@@ -53,6 +54,7 @@ namespace CarePackage.Interaction
             }
             pickupState =  EPickupState.PickedUp;
             if (_pickUpOutline == null) return;
+            pickupOutline.ApplyTo(_pickUpOutline);
             _pickUpOutline.enabled = true;
         }
 

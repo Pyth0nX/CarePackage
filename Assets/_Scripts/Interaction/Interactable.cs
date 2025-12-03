@@ -5,9 +5,10 @@ namespace CarePackage.Interaction
 {
     public class Interactable : MonoBehaviour, IInteractable
     {
+        [SerializeReference, SerializeReferenceEditor.SR] private IInteractAction interactAction;
+        [SerializeField] private FOutlineStyle interactedOutline;
         [SerializeField] private EInteractionType interactionType;
         [SerializeField] private LayerMask interactionLayer;
-        [SerializeReference, SerializeReferenceEditor.SR] private IInteractAction interactAction;
         [SerializeField] private string interactText;
         [SerializeField] private bool showMessage;
         [SerializeField] private bool debug;
@@ -53,7 +54,7 @@ namespace CarePackage.Interaction
         private void Start()
         {
             if (interactionLayer == LayerMask.NameToLayer("Default")) interactionLayer = LayerMask.GetMask("Interaction");
-            _outline = GetComponent<Outline>();
+            _outline = GetComponentInChildren<Outline>();
             
             if (_outline == null) return;
             _outline.enabled = false;
@@ -97,6 +98,8 @@ namespace CarePackage.Interaction
         public void OnHovered(bool toggle)
         {
             if (_outline == null) return;
+            
+            interactedOutline.ApplyTo(_outline);
             _outline.enabled = toggle;
         }
     }

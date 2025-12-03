@@ -32,19 +32,21 @@ namespace CarePackage.Interaction
 
         public void SetInteractable(IInteractable interactable)
         {
-            if (interactable == null && _interactable != null)
-                _interactable.OnHovered(false);
-
-            _interactable = interactable;
-/*
-            if (_interactable == null && interactionUI != null) 
-                interactionUI.SetActive(false);
-            else if (_interactable.ShowMessage)
+            if (_interactable != null && _interactable != interactable)
             {
-                _interactionText.text = _interactable.InteractMessage;
-                if (interactionUI != null) interactionUI.SetActive(true);
+                _interactable.OnHovered(false);
+                if (_interactable.ShowMessage && _interactionText != null)
+                    interactionUI.SetActive(false);
+            }
+            
+            _interactable = interactable;
+
+            if (_interactable != null)
+            {
                 _interactable.OnHovered(true);
-            }*/
+                if (_interactable.ShowMessage && interactionUI != null)
+                    interactionUI.SetActive(true);
+            }
         }
 
         private void CheckForInteractions()
@@ -61,6 +63,12 @@ namespace CarePackage.Interaction
                 if (debug) Debug.Log($"[Interaction] raycast hit {hit.transform.name}");
                 if (hit.collider.TryGetComponent(out IInteractable rayInteractable))
                 {
+                    var player = GameManager.Instance.Player;
+                    if (player != null && player.IsPickupValid)
+                    {
+                        if (player.PickupObject != null && hit.collider.gameObject == player.PickupObject) return;
+                    }
+                    
                     if (debug) Debug.Log($"[Interaction] raycast got {rayInteractable.GetType().Name}");
                     if (rayInteractable.Type != EInteractionType.Active) return;
                     if (_interactable == rayInteractable) return;
@@ -80,45 +88,21 @@ namespace CarePackage.Interaction
             if (player == null) return;
 
             if (player.IsPickupValid)
-            {/*
-                if (_interactable != null)
-                {
-                    if (_interactable == player.PickupObject.GetComponent<IInteractable>())
-                    {
-                        player.DropPickup();
-                        return;
-                    }
-
-                    if (((MonoBehaviour)_interactable).gameObject == player.PickupObject)
-                    {
-                        player.DropPickup();
-                        return;
-                    }
-                }*/
-                
+            {
                 player.DropPickup();
                 return;
             }
-            
-            /*
-            if (!ValidInteraction())
-            {
-                if (player.IsPickupValid)
-                {
-                    player.DropPickup();
-                }
-
-                return;
-            }*/
-
             if (ValidInteraction()) TryInteract();
         }
 
         public void TryInteract()
         {
             if (debug) Debug.Log("Trying to interaction with " + _interactable);
+            
             if (_interactable == null) return;
+            _interactable.OnHovered(false);
             _interactable.ActivationType.RaiseInteraction();
+            
             _interactable = null;
             if (interactionUI != null) interactionUI.SetActive(false);
         }

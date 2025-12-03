@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02d5dc2c-10e0-4e05-80b6-7bdc9c41451c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/single_mombackround.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/World/Small_Birch_Tree.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/World/Spruce Tree.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/PostOffice.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/PostOffice.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Delivery/DeliveryCheckList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Delivery/DeliveryCheckList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Delivery/DeliveryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Delivery/DeliveryManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Game/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarePackage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarePackage/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interaction/PackagePrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interaction/PackagePrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Actions/DeliveryActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Actions/DeliveryActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Interactable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Interactable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interaction/InteractionComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interaction/InteractionComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interaction/InteractionType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interaction/InteractionType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Pickup/IPickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/Interaction/Pickup/IPickup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +55,18 @@
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Builds/pc\CarePackage.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\floph\Documents\Unity Projects\CarePackage\Builds\pc" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.2.7f2\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;C:\Users\floph\Documents\Unity Projects\CarePackage&quot; -debugCodeOptimization" />
@@ -123,6 +133,7 @@
       <workItem from="1763630199622" duration="16864000" />
       <workItem from="1763715990595" duration="21112000" />
       <workItem from="1764158364845" duration="742000" />
+      <workItem from="1764754372860" duration="5731000" />
     </task>
     <servers />
   </component>
