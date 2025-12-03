@@ -22,7 +22,7 @@ color: blue
     <<setBackground "GoodEnding">>
 <<elseif $ending == "Neutral Ending">>
     <<setBackground "NeutralEnding">>
-<<elseif $ending == "Bad Ending">>
+<<elseif $ending == "Bad Ending" || $day != 5>>
     <<setBackground "BadEnding">>
     Manager: Good afternoon is this Mr.Mailman?
     Mailman: That's me, what can I help you with Manager?
