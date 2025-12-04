@@ -1,7 +1,6 @@
 using CarePackage.Persistance;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using TMPro;
 
 namespace CarePackage.Main
 {
@@ -64,12 +63,14 @@ namespace CarePackage.Main
         {
             Debug.Log($"Loaded Scene {scene.name} with index: {scene.buildIndex}");
             _activeScene = (ECarePackageScenes)scene.buildIndex;
-/*
+
+#if !UNITY_WEBGL
             if (_lastActiveScene.HasValue)
             {
                 CompleteTimeSpentInSceneAnalysisForScene(_lastActiveScene.Value);
             }
-            StartTimeSpentInSceneAnalysisForScenme(_activeScene);*/
+            StartTimeSpentInSceneAnalysisForScenme(_activeScene);
+#endif
 
             switch (_activeScene)
             {
@@ -91,7 +92,6 @@ namespace CarePackage.Main
                     break;
                 
                 case ECarePackageScenes.Ending:
-                    HandleEndingScene();
                     break;
                 default:
                     break;
@@ -126,42 +126,7 @@ namespace CarePackage.Main
                 Task.TaskManager.PushTaskUpdate(new Task.Task("Check in at the computer"));
         }
         
-        private void HandleEndingScene()
-        {/*
-            Debug.Log("Entered Ending Scene");
-            var goodEnding = GameObject.Find("UI_GoodEnding");
-            var neutralEnding = GameObject.Find("UI_NeutralEnding");
-            var badEnding = GameObject.Find("UI_BadEnding");
-            var failed = GameObject.Find("UI_Failed");
-            
-            goodEnding.SetActive(false);
-            neutralEnding.SetActive(false);
-            badEnding.SetActive(false);
-            failed.SetActive(false);
-                
-            if (!GameManager.Instance.Survived)
-            {
-                failed.SetActive(true);
-                var failedText = failed.GetComponentInChildren<TextMeshProUGUI>();
-                failedText.text = "You Failed to reach the required Amount: " + EconomyManager.Instance.GetRequiredMoney + " and your store shutdown.";
-                return;
-            }
-
-            var score = DialogueManager.Instance.GetYarnFloat("$relationshipFamA");
-            if (score < -1.5)
-            {
-                badEnding.SetActive(true);
-            }
-            else if (score >= -1.5 && score < 1)
-            {
-                neutralEnding.SetActive(true);
-            }
-            else if (score >= 1)
-            {
-                goodEnding.SetActive(true);
-            }*/
-        }
-        
+#if !UNITY_WEBGL
         private void StartTimeSpentInSceneAnalysisForScenme(ECarePackageScenes scene)
         {
             var sceneCompletableId = "TimeSpent_" + scene;
@@ -178,6 +143,7 @@ namespace CarePackage.Main
             if (Xasu.XasuTracker.Instance == null) return;
             Xasu.HighLevel.CompletableTracker.Instance.Completed(sceneCompletableId, Xasu.HighLevel.CompletableTracker.CompletableType.Level).WithSuccess(true).WithDuration(_timeAtEnteringScene, System.DateTime.Now);
         }
+#endif
         
         public static ECarePackageScenes GetActiveScene()
         {

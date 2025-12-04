@@ -1,3 +1,4 @@
+#if !UNITY_WEBGL
 using System;
 using System.Threading.Tasks;
 using TinCan;
@@ -26,3 +27,4 @@ public class GameLogger : MonoBehaviour
         CompletableTracker.Instance.Completed("CarePackage", CompletableTracker.CompletableType.Game).WithDuration(startTime, DateTime.Now);
     }
 }
+#endif

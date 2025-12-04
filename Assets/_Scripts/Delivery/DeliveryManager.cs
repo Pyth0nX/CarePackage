@@ -6,7 +6,6 @@ using CarePackage.Interaction;
 using CarePackage.Main;
 using System.Linq;
 using UnityEngine;
-using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -46,6 +45,8 @@ namespace CarePackage.Delivery
         private float _timeTakenToDelivery;
         private int _deliveriesMade;
         private int _currentDeliveryId;
+
+        public static event System.Action<Package> OnPackageDelivered;
 
         private void Awake()
         {
@@ -126,8 +127,11 @@ namespace CarePackage.Delivery
 
             int wantedId = newJob.Id;
             _currentDeliveryId = wantedId;
+
+#if !UNITY_WEBGL
+            Xasu.HighLevel.CompletableTracker.Instance.Initialized("Package_" + newJob.PackageData.Title, Xasu.HighLevel.CompletableTracker.CompletableType.Quest);
+#endif
             
-            CompletableTracker.Instance.Initialized("Package_" + newJob.PackageData.Title, CompletableTracker.CompletableType.Quest);
             ToggleIndicator(wantedId, newJob);
             _deliveryTimer.Start();
         }
@@ -185,8 +189,13 @@ namespace CarePackage.Delivery
                 _deliveriesMade++;
                 
                 GoalIndicator.Instance.SetGoalObject(null);
+                OnPackageDelivered?.Invoke(packageToDeliver);
                 
-                CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
+#if !UNITY_WEBGL
+                Xasu.HighLevel.CompletableTracker.Instance.Completed(
+                    "Package_" + packageToDeliver.PackageData.Title, Xasu.HighLevel.CompletableTracker.CompletableType.Quest, _timeTakenToDelivery)
+                    .WithSuccess(true);
+#endif
                 Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");
                 GetRandomJob();
                 
@@ -324,7 +333,6 @@ namespace CarePackage.Delivery
         public GameObject FindPostBoxWithId(int targetId)
         {
             GameObject foundPostBox = null;
-            var postBoxes = FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
             foreach (var postBox in _deliverableSpots)
             {
                 var action = postBox.InteractLogic;

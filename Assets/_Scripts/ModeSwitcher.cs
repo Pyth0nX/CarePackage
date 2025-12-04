@@ -18,6 +18,7 @@ namespace CarePackage.Main
         [SerializeField] private GameObject idleCarPrefab;
         [SerializeField] private Transform transitPackages;
         [SerializeField] private GameObject packagePrefab;
+        [SerializeField] private bool restorePackagesFromPreviousScene = true;
 
         public Camera CarCamera => carCamera;
         public GameObject Car { get => _car; set => _car = value; }
@@ -48,16 +49,19 @@ namespace CarePackage.Main
 
         private void Start()
         {
-            GameManager.onDayEntered += OnDayStarted_Implementation;
+            if (restorePackagesFromPreviousScene)
+                GameManager.onDayEntered += OnDayStarted_Implementation;
         }
 
         private void OnDisable()
         {
-            GameManager.onDayEntered -= OnDayStarted_Implementation;
+            if (restorePackagesFromPreviousScene)
+                GameManager.onDayEntered -= OnDayStarted_Implementation;
         }
 
         private void OnDayStarted_Implementation(int day)
         {
+            if (!restorePackagesFromPreviousScene) return;
             var offset = .8f;
             var count = GameManager.Instance.Player.DeliveryManager.DeliveriesToMake;
             SpawnInitalPackages(count, offset);

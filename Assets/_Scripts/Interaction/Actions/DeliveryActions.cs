@@ -60,7 +60,9 @@ namespace CarePackage.Interaction.Delivery
             if (package == null) package = DeliveryUitilities.ToScriptableObject(_internalPackage);
             
             interactingPlayer.Pickup(this);
+#if !UNITY_WEBGL
             Xasu.HighLevel.GameObjectTracker.Instance.Interacted("Package_" + Package.PackageData.Title, Xasu.HighLevel.GameObjectTracker.TrackedGameObject.Item);
+#endif
             interactingPlayer.DeliveryManager.SetCurrentHeldDelivery(Package);
         }
         
