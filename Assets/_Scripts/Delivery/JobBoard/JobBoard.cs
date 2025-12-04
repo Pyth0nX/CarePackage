@@ -144,7 +144,6 @@ namespace CarePackage.Delivery
 
         public void OnExitBoardClicked()
         {
-            //var popupsToClose = new List<GameObject> {gameObject, button};
             UI.UIManager.Instance.CloseAllPopupWindows();
         }
 
