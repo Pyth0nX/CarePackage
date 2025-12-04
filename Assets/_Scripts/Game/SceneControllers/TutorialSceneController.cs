@@ -21,7 +21,7 @@ namespace CarePackage.Main
         {
             if (requiredMoneyText != null)
                 requiredMoneyText.text = "Required Money: 300";
-            
+            GoalIndicator.Instance.Camera = GameManager.Instance.Player.SwitchMode.FirstPersonPlayer.GetComponentInChildren<Camera>();
             GameManager.Instance.Player.SwitchMode.CarCamera = Camera.main;
             
             for (int i = 0; i < tutorialPackageAmount; i++)
