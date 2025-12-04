@@ -18,8 +18,8 @@ namespace CarePackage.Delivery
         
         [SerializeField] private float newDeliveryDistanceThreshold;
         [SerializeField] private int mainPackageNumber = 5;
-        [SerializeField] private int minPackageAmount;
-        [SerializeField] private int maxPackageAmount;
+        [SerializeField] private int minPackageAmount = 1;
+        [SerializeField] private int maxPackageAmount = 4;
         [SerializeField] private int deliveriesToMake;
         [SerializeField] private bool overrideRandomDelivery = false;
 
@@ -229,7 +229,7 @@ namespace CarePackage.Delivery
                 int minPay = Random.Range(10, 100);
                 int maxPay = Random.Range(minPay, minPay + 50);
                 string flavour = flavourLibrary.GetRandomFlavour();
-                string title = "Delivery" + _randomNumbers[i];//item.ItemData.name + "Delivery" + _randomNumbers[i];
+                string title = "Delivery" + _randomNumbers[i];//if set up random items changed to: item.ItemData.name + "Delivery" + _randomNumbers[i];
                 string address = "Go to Address: " + addressLibrary.GetAddressForId(i);
                 string description =
                     $"Deliver to: someone wanted by {flavour}\n" +
@@ -248,13 +248,10 @@ namespace CarePackage.Delivery
                         minPay,
                         maxPay
                     ),
-                    //ItemGUID = item != null ? item.ItemData.name : null,
+                    //for if it has random Item: ItemGUID = item != null ? item.ItemData.name : null,
                 };
-                //AddDelivery(newMail);
-                //_jobBoard.CreateJob(newDelivery);
                 packages.Add(newDelivery);
             }
-
             _jobBoard.CheckScriptedJobs();
             _jobBoard.InitRandomJobsForPackages(packages);
             _deliveryCheckList.InitializePackageList(packages);
@@ -264,8 +261,7 @@ namespace CarePackage.Delivery
         {
             var mailboxesCount = _randomNumbers.Count;
             Debug.Log($"Assigning mailboxes random numbers: {mailboxesCount}");
-
-            //_deliverableSpots.Clear();
+            
             _deliverableSpots = FindObjectsByType<DeliverableZone>(FindObjectsSortMode.InstanceID);
             HelperMethods.ShuffleList(_randomNumbers);
 

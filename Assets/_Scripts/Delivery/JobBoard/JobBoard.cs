@@ -23,30 +23,32 @@ namespace CarePackage.Delivery
 
     public class JobBoard : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private GameObject jobListing;
         [SerializeField] private GameObject jobListingElemets;
         [SerializeField] private GameObject jobPrefab;
         [SerializeField] private Transform jobsContainer;
         [SerializeField] private List<GameObject> jobNotes;
-        [SerializeField] private float maxOffset = 5f;
-
-        [SerializeField] private List<ScriptedJob> scriptedJobs = new();
-
+        [SerializeField] private SO_PredeterminedAddresses addressLibrary;
+        
+        [Header("Package References")]
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private GameObject packageConveyerBelt;
+        [SerializeField] private float maxOffset = 5f;
         
-        [SerializeField] private SO_PredeterminedAddresses addressLibrary;
-
+        [Header("Data")]
+        [SerializeField] private List<ScriptedJob> scriptedJobs = new();
+        
         private List<GameObject> _jobButtons = new();
-        private HashSet<GameObject> _movingPackages = new();
-        private Package _displayedJob;
-        private GameObject _lastClickedButton;
         private List<GameObject> _spawnedPackages = new();
+        private HashSet<GameObject> _movingPackages = new();
+        private GameObject _lastClickedButton;
+        private Package _displayedJob;
+        private ConveyorBeltController _conveyorController;
         private TextMeshProUGUI _jobTitle;
         private TextMeshProUGUI _jobDescription;
         private Image _jobAddressImage;
         private Image _jobImage;
-        private ConveyorBeltController _conveyorController;
         private float _joblistingX = 550f;
 
         private void Awake()
@@ -194,13 +196,8 @@ namespace CarePackage.Delivery
             _jobButtons.Add(newJob);
         }
 
-        public void InitRandomJobsForPackages(List<Package> packages)
-        {/*
-            for (int i = 0; i < packages.Count; i++)
-            {
-                InitJob(packages[i]);
-            }*/
-            
+        public void InitRandomJobsForPackagesWithRandomAmountAutomaticallySpawnedOnConveyerBelt(List<Package> packages)
+        {
             if (packages == null || packages.Count == 0)
                 return;
 
@@ -227,24 +224,33 @@ namespace CarePackage.Delivery
                 else
                 {
                     var p = shuffledPackages[i];
-                    //Tween.Delay(1f).OnComplete(() => CreatePackageForConveyerBelt(p));
                     CreatePackageForConveyerBelt(p);
                 }
             }
         }
+        
+        public void InitRandomJobsForPackages(List<Package> packages)
+        {
+            if (packages == null || packages.Count == 0)
+                return;
+            
+            List<Package> shuffledPackages = new List<Package>(packages);
+            for (int i = 0; i < shuffledPackages.Count; i++)
+            {
+                int swapIndex = Random.Range(i, shuffledPackages.Count);
+                (shuffledPackages[i], shuffledPackages[swapIndex]) = (shuffledPackages[swapIndex], shuffledPackages[i]);
+            }
+            
+            for (int i = 0; i < shuffledPackages.Count; i++)
+                InitJob(shuffledPackages[i]);
+        }
 
         public void InitJob(Package job)
         {
-            var jobNote = GetAvailableJobNote();/*
+            var jobNote = GetAvailableJobNote();
             if (jobNote == null)
             {
                 CreatePackageForConveyerBelt(job);
-                return;
-            }*/
-            
-            if (jobNote == null)
-            {
-                Debug.LogError("No available job note found. All notes may be active.");
                 return;
             }
             
@@ -258,14 +264,7 @@ namespace CarePackage.Delivery
         }
 
         private GameObject GetAvailableJobNote()
-        {/*
-            foreach (var jobNote in jobNotes)
-            {
-                var avaiable = !jobNote.gameObject.activeSelf;
-                if (avaiable) return jobNote;
-            }
-            return null;*/
-            
+        {
             int attempts = 0;
             int maxAttempts = jobNotes.Count;
             while (attempts < maxAttempts)
@@ -305,13 +304,9 @@ namespace CarePackage.Delivery
 
         public Package[] GetScriptedJobsDeliveriesByDay(int day)
         {
-            var packagesForDay = GetScriptedJobsByDay(day).Select(delivery => delivery.TargetPackage).ToArray();
-            /*var scriptedJobsForDay = GetScriptedJobsByDay(day);
-            /*var packagesForDay = new Package[scriptedJobsForDay.Count];
-            for (int i = 0; i < packagesForDay.Length - 1; i++)
-            {
-                packagesForDay[i] = scriptedJobsForDay[i].TargetPackage;
-            }*/
+            var packagesForDay = GetScriptedJobsByDay(day)
+                .Select(delivery => delivery.TargetPackage)
+                .ToArray();
             return packagesForDay;
         }
 
@@ -351,10 +346,11 @@ namespace CarePackage.Delivery
 
                 if (Vector3.Distance(package.transform.position, targetPosition) < 0.01f && !_movingPackages.Contains(package)) 
                     continue;
+                
                 _movingPackages.Add(package);
                 package.transform.rotation = Quaternion.identity;
-                Tween.PositionAtSpeed(package.transform, targetPosition, 1.2f, Ease.Linear)
-                    .OnComplete(() => FinishMovingPackage(package));
+                
+                Tween.PositionAtSpeed(package.transform, targetPosition, 1.2f, Ease.Linear).OnComplete(() => FinishMovingPackage(package));
             }
         }
 

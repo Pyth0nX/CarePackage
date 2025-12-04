@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System;
-using System.Linq;
 
 namespace CarePackage.UI
 {
@@ -324,17 +324,6 @@ namespace CarePackage.UI
         {
             HUD.SetActive(toggle);
         }
-        /*
-        private void UpdateInputSchema() 
-        {
-            var schema = _activePopups.Count > 0 ? "UI" : "Player";
-            SetInputSchema(schema);
-        }*/
-        /*
-        public void SetInputSchema(string schema) 
-        {
-            playerInput.SwitchCurrentActionMap(schema);
-        }*/
 
         public void ToggleSettingsMenu()
         {
