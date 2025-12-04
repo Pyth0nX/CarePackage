@@ -278,7 +278,7 @@ Mailman: I will. I'm truly sorry.
 Lina: Are you new around here? I haven't seen you before.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Yeah, just started, actually. Still getting the hang of it, as you can see.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Feeling nervous about it?
     <<jump AEn1Day1>>
@@ -295,7 +295,7 @@ position: -1704,-615
 ---
 <<receivePackage true>>
 <<set $relationshipFamA -= 1>>
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Don't worry, I will report it.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Understood. Good evening.
@@ -310,7 +310,7 @@ position: -1707,-325
 ---
 <<receivePackage true>>
 <<set $relationshipFamA -= 2>>
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: So it's “not your fault”? Right. I'll be filing a complaint.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: …Have a good evening.
