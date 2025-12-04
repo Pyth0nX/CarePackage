@@ -1120,9 +1120,14 @@ MonoBehaviour:
     sprite: {fileID: -331904235, guid: 4ed0963e60a971e4e869bb28984269d5, type: 3}
   - name: BadEnding
     sprite: {fileID: 852810896, guid: 24248ad0613d0ec4594fdbbf6fa94024, type: 3}
-  characters: []
-  dialogueCanvas: {fileID: 0}
-  dialogueRunner: {fileID: 0}
+  characters:
+  - characterName: Phone
+    image: {fileID: 639909978}
+    emotions:
+    - emotionName: ringing
+      sprite: {fileID: 21300000, guid: 77215cbbd572d374fa4d147b4422d461, type: 3}
+    - emotionName: notringing
+      sprite: {fileID: 21300000, guid: ed407377a4d156342bb7d204af2d0226, type: 3}
 --- !u!1 &639909977
 GameObject:
   m_ObjectHideFlags: 0
