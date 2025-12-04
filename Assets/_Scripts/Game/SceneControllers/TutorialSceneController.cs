@@ -86,14 +86,6 @@ namespace CarePackage.Main
             Delivery.DeliveryManager.OnPackageDelivered -= CheckTutorialFinished;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                OnReadyToPlayClicked();
-            }
-        }
-
         public void OnReadyToPlayClicked()
         {
             OnExit();
