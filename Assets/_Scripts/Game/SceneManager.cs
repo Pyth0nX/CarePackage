@@ -155,10 +155,11 @@ namespace CarePackage.Main
             Debug.Log("Quit Game");
             Application.Quit();
         }
-
+#if !UNITY_WEBGL
         private void OnApplicationQuit()
         {
             CompleteTimeSpentInSceneAnalysisForScene(ActiveScene);
         }
+#endif
     }
 }

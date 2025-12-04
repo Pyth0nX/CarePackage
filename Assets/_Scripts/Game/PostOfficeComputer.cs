@@ -48,12 +48,13 @@ namespace CarePackage.Delivery
             {
                 popups[i] = UI.UIManager.Instance.GetActivePopup(i);
             }
+
             UI.UIManager.Instance.ClosePopupWindows(popups);
             //GameManager.Instance.EndDayEarly();
 #if !UNITY_WEBGL
-            Xasu.HighLevel.AccessibleTracker.Instance.Accessed("Computer", Xasu.HighLevel.AccessibleTracker.AccessibleType.Screen)
+            Xasu.HighLevel.AccessibleTracker.Instance.Accessed("Computer", Xasu.HighLevel.AccessibleTracker.AccessibleType.Screen)        
+            .WithDuration(_accessedTime, DateTime.Now).WithSuccess(false);
 #endif
-                .WithDuration(_accessedTime, DateTime.Now).WithSuccess(false);
         }
 
         public void OpenMailClicked()
