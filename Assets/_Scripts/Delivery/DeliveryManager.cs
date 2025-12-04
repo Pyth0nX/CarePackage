@@ -183,22 +183,28 @@ namespace CarePackage.Delivery
                 if (packageObj != null) Destroy(packageObj);
                 _deliveryCheckList.CheckOffPackage(packageToDeliver);
                 _deliveriesMade++;
+                
+                GoalIndicator.Instance.SetGoalObject(null);
+                
                 CompletableTracker.Instance.Completed("Package_" + packageToDeliver.PackageData.Title, CompletableTracker.CompletableType.Quest, _timeTakenToDelivery).WithSuccess(true);
                 Debug.Log($"[DeliverPackage] Managed to Deliver package: {deliveringId}");
                 GetRandomJob();
                 
                 if (_deliveriesMade == 1 && GameManager.Instance.CurrentDay == 1)
                     Task.TaskManager.PushTaskUpdate(new Task.Task("You delivered a package, go on and the deliver the next"));
-
+                
                 if (GoalIndicator.Instance.GoalTransform == null) return;
                 
                 var distanceGoalToPlayer = Vector3.Distance(GoalIndicator.Instance.GoalTransform.position,
                     GameManager.Instance.Player.ActivePlayer.transform.position);
                 Debug.Log("Goal Distance: " + distanceGoalToPlayer);
                 if (distanceGoalToPlayer > newDeliveryDistanceThreshold) return;
-
+/*
+                var goalLocation = FindPostBoxWithId(_currentDeliveryId);
+                if (goalLocation == null) return;
+                
                 var goalPackage = FindDeliveryPackageWithId(_currentDeliveryId);
-                if (goalPackage == null) return;
+                if (goalPackage == null) return;*/
                 /*
                 var deliverableSpot = FindDeliverableSpotWithId(deliveringId);
                 if (deliverableSpot == null) return;
@@ -207,7 +213,7 @@ namespace CarePackage.Delivery
                 if (deliverableIndicator == null) return;
 
                 deliverableIndicator.ToggleIndicator(false);*/
-                ToggleIndicator(goalPackage);
+                //ToggleIndicator(_currentDeliveryId, goalPackage);
             }
         }
 
@@ -296,41 +302,9 @@ namespace CarePackage.Delivery
             if (package != null) return package;
             return null;
         }
-        /*
-        public void ToggleIndicator(int wantedId, bool overrideThing = false, int defaultChoice = 0)
-        {
-            var delivery = GetDeliveryById(wantedId);
-            if (delivery == null) return;
-            ToggleIndicator(wantedId, delivery, overrideThing, defaultChoice);
-        }*/
         
         public void ToggleIndicator(int wantedId, Package delivery, bool overrideThing = false, int defaultChoice = 0)
-        {/*
-            var deliverableSpot = FindDeliverableSpotWithId(wantedId);
-            if (deliverableSpot == null) return;
-            
-            delivery.PackageData.MinPay = GetBasePayBasedOnDistance(transform.position, deliverableSpot.transform.position);
-            SetCurrentDelivery(delivery);
-            _directDistanceToDelivery = Vector3.Distance(transform.position, deliverableSpot.transform.position);
-            
-            if (_directDistanceToDelivery > 30 && !overrideThing || overrideThing && defaultChoice == 0)
-            {
-                var deliverableIndicator = deliverableSpot.GetComponentInChildren<IndicatorBehavior>();
-                if (deliverableIndicator == null) return;
-                
-                deliverableIndicator.ToggleIndicator(true);
-            }
-            else if (_directDistanceToDelivery < 30 && !overrideThing || overrideThing && defaultChoice == 1)
-            {
-                var deliverablePackage = FindDeliveryPackageWithId(wantedId);
-                if (deliverablePackage == null) return;
-
-                var indicator = deliverablePackage.GetComponentInChildren<IndicatorBehavior>();
-                if (indicator == null) return;
-                
-                indicator.ToggleIndicator(true);
-            }*/
-            
+        {
             var deliveryLocation = FindPostBoxWithId(wantedId);
             if (deliveryLocation == null) return;
 
@@ -343,6 +317,7 @@ namespace CarePackage.Delivery
 
         public void ToggleIndicator(GameObject wantedGameObject, bool hasMapIndicator = true, bool hidePreviousMarker = true, float upOffset = 1.33f)
         {
+            //GoalIndicator.Instance.SetGoalObject(null, hasMapIndicator, hidePreviousMarker, upOffset);
             GoalIndicator.Instance.SetGoalObject(wantedGameObject, hasMapIndicator, hidePreviousMarker, upOffset);
         }
 
