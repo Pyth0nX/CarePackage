@@ -1,6 +1,4 @@
-using System;
 using CarePackage.Interaction;
-using CarePackage.Interaction.Delivery;
 using CarePackage.Main;
 using UnityEngine;
 
@@ -21,7 +19,7 @@ namespace CarePackage.Delivery
             layerMask = LayerMask.GetMask("Interaction");
             _collider = GetComponent<BoxCollider>();
             _collider.isTrigger = true;
-            if (interactLogic == null) interactLogic = new ZoneReceivePackage();
+            if (interactLogic == null) interactLogic = new Interaction.Delivery.ZoneReceivePackage();
         }
 
         private void OnTriggerEnter(Collider other)

@@ -285,7 +285,7 @@ namespace CarePackage.Main
         
         public float GetSensitivity(UI.SensitivitySetting.ESensitivity sensitivityCategory)
         {
-            var sens = PlayerPrefs.GetFloat(sensitivityCategory.ToString(), 1);
+            var sens = PlayerPrefs.GetFloat(sensitivityCategory.ToString(), 0.42f);
             return sens;
         }
         
