@@ -258,6 +258,7 @@ group: FamA && Day1
 //FAM A — DAY 1 — BACKPACK (BROKEN / FLATTENED)
 <<set $famA_D2_breakCount += 1>>
 <<setBackground "BGFamA">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: Good afternoon! Are you—
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Is that my daughter's package? It's completely crushed!
@@ -273,6 +274,7 @@ Lina: This is unacceptable. She needs that backpack for tomorrow.
 -> Mailman: It left the warehouse fine, these things happen.
     <<jump FamA_D1_Broken_Cold>>
 ===
+
 title: FamA_D1_Broken_Kind
 group: FamA && Day1
 color: green
@@ -1980,12 +1982,12 @@ color: orange
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good afternoon! I'm looking for Jonas.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Oh thank god! We were running out of diapers. Honey, the package is here!
 <<showCharacter "Jonas" "Worried">>
 <<receivePackage true>>
 Vera: YES! just in time, this was about to get ugly.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Sorry about the mess. Our whole world is diapers and coffee these days. Where do I sign?
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: Haha, I have never experienced something like that. But if you ever need a hand, I can try to find you an extra pair.
@@ -2001,11 +2003,11 @@ color: green
 ---
 <<set $relationshipFamC += 0.5>>
 <<receivePackage true>>
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas, while signing: Thank you for offering, I might reach out when I feel like we're losing our minds. 
 <<showCharacter "Jonas" "Worried">>
 Mailman: You have my number in the receipt, call me if you need anything.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Thank you so much! Have a good day.
 <<showCharacter "Jonas" "Worried">>
 Mailman: You too, good luck with the little rascal hahaha.
@@ -2019,7 +2021,7 @@ position: 200,-764
 color: green
 ---
 <<receivePackage true>>
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas, while signing: Alright, thank you. Have a good day.
 <<showCharacter "Jonas" "Worried">>
 Mailman: You too.
@@ -2040,29 +2042,29 @@ position: -70,-684
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Oh thank god! The diapers are here. A bit damaged tho. Are you sure everything is okay inside of the box?
 <<showCharacter "Jonas" "Worried">>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here. I'm sure everything is okay with the diapers.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 <<receivePackage true>>
 Jonas: I hope so, we need each and everyone. We have no time to spare, I would do anything for an extra pair of hands.
 <<showCharacter "Jonas" "Worried">>
 -> Mailman: If you ever need to file a complaint, the email is in the receipt
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingWorried">>
     Jonas: Okay, thanks for the info.
     <<showCharacter "Jonas" "Worried">>
     Mailman: No worries, have a good evening.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingWorried">>
     Jonas: You too.
     <<hideCharacter "Jonas">>
     <<hideBackground>>
 ->Mailman: In return for my inconvenience, I will find you a babysitter. How does that sound? 
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingWorried">>
     Jonas: Really?! We've been trying to find someone, but since everything is new we don't know how to even start. If you find anyone willing to do it, I would be grateful.
     <<showCharacter "Jonas" "Worried">>
     Mailman: It's a deal then, have a nice evening.
-    <<showCharacter "Jonas" "Talking">>
+    <<showCharacter "Jonas" "TalkingWorried">>
     Jonas: You too.
     <<hideCharacter "Jonas">>
     <<hideBackground>>
@@ -2081,20 +2083,20 @@ position: -70,-514
 <<setBackground "BGFamC">>
 <<showCharacter "Jonas" "Worried">>
 Mailman: Good morning! I'm looking for Jonas.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: Oh thank god! The diapers are here. The box is broken. Are you sure everything is okay inside of the box?
 <<showCharacter "Jonas" "Worried">>
 <<receivePackage true>>
 Mailman: Oh, I'm so sorry. It must have received some damage on the way here, I'm sure everything is okay with the diapers inside. If that isn't the case you can write an email and we will look for solutions to compensate you.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: I hope so, we need each and everyone.
 <<showCharacter "Jonas" "Worried">>
 Mailman: I swear I will be more careful next time, I'm truly sorry.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: It's okay, it wasn't anything fragile. But please, drive slower next time.
 <<showCharacter "Jonas" "Worried">>
 Mailman: I will, have a nice evening.
-<<showCharacter "Jonas" "Talking">>
+<<showCharacter "Jonas" "TalkingWorried">>
 Jonas: You too.
 <<hideCharacter "Jonas">>
 <<hideBackground>>
@@ -2519,7 +2521,7 @@ Jonas: Hello, I don't think we have ordered anything.
 
 //FAM C — DAY 5 — GOOD ENDING (WARM)
 title: FamC
-when: ($day == 5) && ($relationshipFamC >= 4)
+when: ($day == 5) && ($relationshipFamC >= 4) && ($package == "childrensBook")
 position: -77,1665
 color: orange
 group: FamC && Day5
@@ -2555,7 +2557,7 @@ Mikkel: I have brought all we need to go to my secret spot and see who is the be
 
 //FAM C — DAY 5 — NEUTRAL ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0)
+when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0) && ($package == "childrensBook")
 position: -76,1797
 color: orange
 group: FamC && Day5
@@ -2579,7 +2581,7 @@ Mailman: You too...
 
 //FAM C — DAY 5 — BAD ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($relationshipFamC < 0)
+when: ($day == 5) && ($relationshipFamC < 0) && ($package == "childrensBook")
 position: -76,1797
 color: orange
 group: FamC && Day5
