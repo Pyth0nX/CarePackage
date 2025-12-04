@@ -310,6 +310,7 @@ namespace CarePackage.UI
 
         public void OnHovered(PointerEventData eventData)
         {
+            _defaultPosition = target.anchoredPosition;
             if (!shakeOnHover) return;
             _currentTween.Stop();
             _currentTween = Tween.ShakeLocalPosition
