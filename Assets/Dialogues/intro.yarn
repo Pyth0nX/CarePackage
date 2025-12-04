@@ -2521,7 +2521,7 @@ Jonas: Hello, I don't think we have ordered anything.
 
 //FAM C — DAY 5 — GOOD ENDING (WARM)
 title: FamC
-when: ($day == 5) && ($relationshipFamC >= 4) && ($package == "childrensBook")
+when: ($day == 5) && ($relationshipFamC >= 4) && ($package == "childrensbook")
 position: -77,1665
 color: orange
 group: FamC && Day5
@@ -2557,7 +2557,7 @@ Mikkel: I have brought all we need to go to my secret spot and see who is the be
 
 //FAM C — DAY 5 — NEUTRAL ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0) && ($package == "childrensBook")
+when: ($day == 5) && ($relationshipFamC < 4 || $relationshipFamC >= 0) && ($package == "childrensbook")
 position: -76,1797
 color: orange
 group: FamC && Day5
@@ -2581,7 +2581,7 @@ Mailman: You too...
 
 //FAM C — DAY 5 — BAD ENDING (NEUTRAL)
 title: FamC
-when: ($day == 5) && ($relationshipFamC < 0) && ($package == "childrensBook")
+when: ($day == 5) && ($relationshipFamC < 0) && ($package == "childrensbook")
 position: -76,1797
 color: orange
 group: FamC && Day5
