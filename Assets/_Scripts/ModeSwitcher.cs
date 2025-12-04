@@ -20,7 +20,8 @@ namespace CarePackage.Main
         [SerializeField] private GameObject packagePrefab;
         [SerializeField] private bool restorePackagesFromPreviousScene = true;
 
-        public Camera CarCamera => carCamera;
+        public Camera CarCamera { get => carCamera; set => carCamera = value; }
+
         public GameObject Car { get => _car; set => _car = value; }
         public GameObject IdleCar { get => _idleCarInstance; set => _idleCarInstance = value; }
         public GameObject FirstPersonPlayer { get => _firstPersonPlayer; set => _firstPersonPlayer = value; }

@@ -1,3 +1,4 @@
+using System;
 using CarePackage.Interaction;
 using UnityEngine;
 
@@ -20,12 +21,16 @@ namespace CarePackage.Main
         {
             if (requiredMoneyText != null)
                 requiredMoneyText.text = "Required Money: 300";
+            
+            GameManager.Instance.Player.SwitchMode.CarCamera = Camera.main;
+            
             for (int i = 0; i < tutorialPackageAmount; i++)
             {
                 var createdPackage = CreatePackage(i);
                 GameManager.Instance.Player.DeliveryManager.AddDelivery(createdPackage);
             }
             GameManager.Instance.Player.DeliveryManager.AssignRandomAddressesForDelivery();
+            GameManager.Instance.Player.DeliveryManager.CheckList.InitializePackageList(GameManager.Instance.Player.DeliveryManager.Deliveries);
             Delivery.DeliveryManager.OnPackageDelivered += CheckTutorialFinished;
         }
 
@@ -42,7 +47,9 @@ namespace CarePackage.Main
                 Id = index,
                 PackageData = new Delivery.FPackageData(
                     "Package" + index + 1, 
-                    "Package to deliver to house " + index + 1)
+                    "Package to deliver to house " + index + 1,
+                    10,
+                    100)
             };
             
             var extendedPickups = new IPickupExtension[]
@@ -78,11 +85,19 @@ namespace CarePackage.Main
         {
             Delivery.DeliveryManager.OnPackageDelivered -= CheckTutorialFinished;
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                OnReadyToPlayClicked();
+            }
+        }
+
         public void OnReadyToPlayClicked()
         {
             OnExit();
-            SceneController.Instance.LoadScene(ECarePackageScenes.PostOffice);
+            GameManager.Instance.StartGame();
         }
         
         public void OnRetryClicked()
