@@ -28828,7 +28828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1125755987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50587,6 +50587,10 @@ PrefabInstance:
     - target: {fileID: 1277280427620631281, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
       propertyPath: m_Name
       value: InteractableComputer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277280427620631281, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1344205077025773663, guid: b1b58f2f67d381b4d98ba285c50a0c7c, type: 3}
       propertyPath: m_Enabled
