@@ -50720,6 +50720,9 @@ MonoBehaviour:
   - {fileID: 361787917}
   - {fileID: 2018460872}
   - {fileID: 1469666576}
+  addressLibrary: {fileID: 11400000, guid: d8da5d25ff90a564abb2730a91012896, type: 2}
+  packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
+  packageConveyerBelt: {fileID: 655333188}
   maxOffset: 7.5
   scriptedJobs:
   - dayToAppear: 1
@@ -50738,9 +50741,6 @@ MonoBehaviour:
     deliveryToAppear: {fileID: 11400000, guid: 01e56cc451311bf458463a3070900a57, type: 2}
   - dayToAppear: 5
     deliveryToAppear: {fileID: 11400000, guid: b6f6b6bf090a47244bf84d9c148b0510, type: 2}
-  packagePrefab: {fileID: 1758858581119899920, guid: 5f2de07795051bc4e91f172a60df10c5, type: 3}
-  packageConveyerBelt: {fileID: 655333188}
-  addressLibrary: {fileID: 11400000, guid: d8da5d25ff90a564abb2730a91012896, type: 2}
 --- !u!1 &1956295087
 GameObject:
   m_ObjectHideFlags: 0
