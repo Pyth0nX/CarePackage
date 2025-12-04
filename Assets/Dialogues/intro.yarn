@@ -24,12 +24,17 @@ color: blue
     <<setBackground "NeutralEnding">>
 <<elseif $ending == "Bad Ending" || $day != 5>>
     <<setBackground "BadEnding">>
+    <<showCharacter "Phone" "ringing">>
+    Phone: *Ring ring*
+    <<showCharacter "Phone" "notringing">>
     Manager: Good afternoon is this Mr.Mailman?
     Mailman: That's me, what can I help you with Manager?
     Manager: Sadly we've received several complaints about broken and damaged packages and we are going to have to let you go.
     Mailman: Is there anything I could do to change this? I could practise my routes every weekend.
     Manager: I am so sorry, there's nothing you can do. 
     Manager: You must leave the truck keys on your way out, and the post office keys can go into the mailbox.
+    <<hideCharacter "Phone">>
+    <<hideBackground>>
 <<endif>>
 ===
 
