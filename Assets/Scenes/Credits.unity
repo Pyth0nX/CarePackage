@@ -554,11 +554,11 @@ MonoBehaviour:
         ease: 1
         scaleMultiplier: 1.2
         duration: 0.2
-        _target: {fileID: 544694489}
+        target: {fileID: 0}
     - rid: 3802007356141732498
       type: {class: HoverColor, ns: CarePackage.UI, asm: Assembly-CSharp}
       data:
-        hoveredColor: {r: 0.9496855, g: 0.050769284, b: 0.050769284, a: 1}
+        hoveredColor: {r: 0.15579242, g: 0.9490196, b: 0.05098037, a: 1}
         defaultColor: {r: 0.6745098, g: 0.6745098, b: 0.6745098, a: 1}
         duration: 0.2
         useEasing: 1
@@ -587,12 +587,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca91b1a9134d3b4996a3d92e259fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarePackage.Interaction.Interactable
+  interactAction:
+    rid: 7735813649916756145
+  interactedOutline:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    width: 0
   interactionType: 2
   interactionLayer:
     serializedVersion: 2
     m_Bits: 32
-  interactAction:
-    rid: 7735813649916756145
   interactText: 
   showMessage: 0
   debug: 0
