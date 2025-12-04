@@ -73,6 +73,7 @@ Lina: Okay, thank you. Have a good day!
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Please remember to come back with the right package.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 <<endonce>>
 ===
@@ -156,6 +157,7 @@ Lina: Thanks again! We'll see you around.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Have a wonderful evening, both of you. And good luck tomorrow!
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -221,6 +223,7 @@ Lina: It's not the nicest surprise, but... fine.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Understood. Have a good evening.
 <<hideBackground>>
+<<hideCharacter "Sofie">>
 <<hideCharacter "Lina">>
 ===
 
@@ -236,6 +239,7 @@ Lina: Then let's hope it doesn't happen again. Please be more careful next time.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Right. Have a good evening.
 <<hideBackground>>
+<<hideCharacter "Sofie">>
 <<hideCharacter "Lina">>
 ===
 
@@ -285,6 +289,7 @@ Lina: Oh, so you are just like Sofie! She just started in a new school.
 -> Mailman: Well, I hope this brightens her evening.
     <<jump AEnd1Day1>>
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -300,6 +305,7 @@ Lina: Don't worry, I will report it.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: Understood. Good evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -315,6 +321,7 @@ Lina: So it's “not your fault”? Right. I'll be filing a complaint.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: …Have a good evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -340,6 +347,7 @@ Mailman: You are so right. I'm sorry, I will be back when I have your package.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Sounds good, see you later!
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -357,17 +365,17 @@ position: -1970,302
 Mailman: Good afternoon, Lina! More school supplies, I'm guessing.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: You guessed right. Sofie's uniform finally arrived.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Hello Mr.Mailman...
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Hello Sofie, are you excited about your new uniform?
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: At least I'll fit in class, but I won't fit in once I'm out of school.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I'm sorry, Sofie. The uniform was already too expensive.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: I know… it just feels like everyone else has cooler stuff.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
     <<jump FamA_D2_En_Kind>>
 -> Mailman: You should listen to your mother.
@@ -377,36 +385,38 @@ Sofie: I know… it just feels like everyone else has cooler stuff.
 title: FamA_D2_En_Kind
 group: FamA && Day2
 color: green
-position: -1704,333
+position: -1649,327
 ---
 <<set $relationshipFamA += 0.5>>
 <<receivePackage true>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Yeah, but I won't be like them, I won't fit in. I'll just be the nice girl from class.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Yeah, I get it. Just don't be so hard on your mom, she's trying her best.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I promise that we'll go shopping next month. Thank you, Mr.Mailman.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Lina" "ListeningTired">>
 Mailman: You're welcome. Have a lovely evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
 title: FamA_D2_End_Cold
 group: FamA && Day2
 color: red
-position: -1708,474
+position: -1656,474
 ---
 <<receivePackage true>>
 <<set $relationshipFamA -= 0.5>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: You're not my dad. You don't even know me.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: I'm so sorry, I think you should go. She's not in the mood to talk today.
-<<showCharacter "Lina" "SofieListeningTired">>
-Mailman: I'm sorry. Have a good evening.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: Sofie! I can't believe she would do something like this, I'm so sorry she ran off like that.
+<<showCharacter "Lina" "ListeningTired">>
+Mailman: It's okay, I shouldn't have said that, have a good evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -435,20 +445,21 @@ Lina: Oh but this package is damaged, what happened to it?
 Mailman: I'm so sorry, it was a bumpy ride.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Anyways, I'm glad it at least arrived.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: It's that my new uniform? 
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
     <<receivePackage true>>
-    <<showCharacter "Lina" "SofieSpeakingTired">>
+    <<showCharacter "Sofie" "Speaking">>
 	Sofie: Thank you Mr.Mailman.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    <<showCharacter "Lina" "SpeakingTired">>
 	Lina: Bye Mr.Mailman.
-    <<showCharacter "Lina" "SofieListeningTired">>
+    <<showCharacter "Lina" "ListeningTired">>
 	Mailman: Have a nice day.
     <<hideCharacter "Lina">>
+    <<hideCharacter "Sofie">>
     <<hideBackground>>
 ===
 
@@ -476,9 +487,9 @@ Lina: Oh but this package is damaged again, I thought you said it wasn't going t
 Mailman: I'm so sorry, it was a bumpy ride.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: Anyways, I'm glad it at least arrived.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: It's that my new uniform? 
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: That's right, how was your first day?
     <<jump AEn3Day2>>
 -> Mailman: Yes, I hope you enjoy it.
@@ -487,6 +498,7 @@ Sofie: It's that my new uniform?
 	Lina: Bye Mr.Mailman.
 	Mailman: Have a nice day.
     <<hideCharacter "Lina">>
+    <<hideCharacter "Sofie">>
     <<hideBackground>>
 ===
 
@@ -510,19 +522,19 @@ Lina: Let me see...
 Lina: Thankfully, it looks like the uniform is okay. 
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: I am so sorry, I don't know how it could've happened. I'll drive more carefully next time.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: It's okay, there is no visible damage to the clothing.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Hello Mr.Mailman…
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Hello Sofie, are you excited about your new uniform?
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: At least I'll fit in class, but I still won't fit in once I'm out of school.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I'm sorry Sofie, the uniform was already too expensive. 
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: I know, but the kids all have cool stuff.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
     <<jump FamA_D2_En_Kind>>
 -> Mailman: You should listen to your mother.
@@ -535,16 +547,19 @@ position: -1691,843
 ---
 <<set $relationshipFamA += 0.5>>
 <<receivePackage true>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: Some kids already called me weird yesterday because I didn't have my uniform and my clothes were old.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
-Lina: We are working on it, I promised her we will go shopping next month. 
-<<showCharacter "Lina" "SofieSpeakingTired">>
-Sofie: Yeah, but until then I will avoid any chances of meeting my classmates out of school.
-<<showCharacter "Lina" "SofieListeningTired">>
--> Mailman: I might have something to fix that, just wait here while I look in my truck.
--> Mailman: Wow, that's a lot of free time
+<<showCharacter "Sofie" "Speaking">>
+Sofie: At least I'll fit in class, but I won't fit in once I'm out of school.
+<<showCharacter "Lina" "SpeakingTired">>
+Lina: I'm sorry, Sofie. The uniform was already too expensive.
+<<showCharacter "Sofie" "Speaking">>
+Sofie: I know… it just feels like everyone else has cooler stuff.
+<<showCharacter "Sofie" "Listening">>
+-> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
+    <<jump FamA_D2_En_Kind>>
+-> Mailman: You should listen to your mother.
+    <<jump FamA_D2_End_Cold>>
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -568,19 +583,19 @@ Lina: Let me see...
 Lina: Thankfully, it looks like the uniform is okay. 
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: I am so sorry, I swear I drove more carefully this time.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: It's okay, there is no visible damage to the clothing.
 <<showCharacter "Lina" "SofieSpeakingTired">>
 Sofie: Hello Mr.Mailman…
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Hello Sofie, are you excited about your new uniform?
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: At least I'll fit in class, but I still won't fit in once I'm out of school.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: I'm sorry Sofie, the uniform was already too expensive. 
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: I know, but the kids all have cool stuff.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 -> Mailman: Don't worry Sofie, just give it a bit of time. You're a lovely girl and everyone can see that. 
     <<jump FamA_D2_En_Kind>>
 -> Mailman: You should listen to your mother.
@@ -600,22 +615,23 @@ position: -1968,1053
 Mailman: Good Morning Lina! More school supplies I'm guessing.
 <<showCharacter "Lina" "SpeakingTired">>
 Lina: [Sign]Yes, you got me[/Sign]. It's Sofie's new uniform, today she felt like she was the odd one out without it.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 <<receivePackage true>>
 Sofie:...
 -> Mailman: I'm glad she has it now, tomorrow will be a better day.
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    <<showCharacter "Lina" "SpeakingTired">>
 	Lina: Yeah, let's hope you're right. Have a nice day.
-    <<showCharacter "Lina" "SofieListeningTired">>
+    <<showCharacter "Sofie" "Listening">>
 	Sofie: …
 	Mailman: You too.
 
 -> Mailman: *node*
-    <<showCharacter "Lina" "LinaSSpeakingTired">>
+    <<showCharacter "Lina" "SpeakingTired">>
 	Lina: Alright. Have a nice day.
-    <<showCharacter "Lina" "SofieListeningTired">>
+    <<showCharacter "Sofie" "Listening">>
 	Sofie: …
 	Mailman: You too.
+<<hideCharacter "Sofie">>
 <<hideCharacter "Lina">>
 <<hideBackground>>
 ===
@@ -636,27 +652,28 @@ Mailman: Good afternoon Lina!
 Lina: Hello Mr.Mailman. I don't think I ordered anything else...
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: This one is addressed to Sofie.
-<<showCharacter "Lina" "SpeakingRested">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: To... me?
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: That's right. It's from Vera, your Neighbour.
 <<receivePackage true>>
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Vera? I don't think I know her.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: She has the cutest little boy, that's probably why you haven't seen her much. She has her hands full.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh yeah, it was not so long ago I was in that same situation, do you think they would be interested in a babysitter?
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
 <<giveItem "note">>
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Here you have the note, I wrote my number in case she wants to contact me.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -685,17 +702,18 @@ Mailman: It's from Vera, your Neighbour.
 Sofie: Vera? I don't think I know her.
 <<showCharacter "Lina" "ListeningTired">>
 Mailman: She's busy with her kid and they recently moved here, so you might have not seen her much around.
-<<showCharacter "Lina" "LinaSSpeakingTired">>
+<<showCharacter "Lina" "SpeakingTired">>
 Lina: Oh that's just perfect, we've been looking for something Sofie could do after school, she could babysit the boy from time to time. What do you think Sofie?
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Oh yeah, it would be awesome and I can also thank her for the package. I'll you write her a note, could you give it to her Mr.Mailman?
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: Of course! I'm sure she we'll be excited to have an evening to relax.
-<<showCharacter "Lina" "SofieSpeakingTired">>
+<<showCharacter "Sofie" "Speaking">>
 Sofie: Here you have the note, I wrote my number in case she wants to contact me.
-<<showCharacter "Lina" "SofieListeningTired">>
+<<showCharacter "Sofie" "Listening">>
 Mailman: I'll take it to her as soon as I can. You two have a lovely evening.
 <<hideCharacter "Lina">>
+<<hideCharacter "Sofie">>
 <<hideBackground>>
 ===
 
@@ -870,37 +888,37 @@ group: FamA && Day4
 <<showBackground "BGFamA">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Good afternoon Lina.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Good afternoon Mr.Mailman.
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: How is Sofie doing?
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Oh, she's great. She's helping Vera and Jonas, since it's her first time babysitting they also invited their niece to help her out, she lives closer to the coast so she can't help as often.
 Lina: It's nice since their niece attends the same school as Sofie.
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: Oh! Tha's amazing, I hope they can get along.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Yes, I am really grateful. So, what do you have for me today?
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: I think these are your groceries.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: Thank you! This is a bit damaged though.
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: I'm so sorry, today's drive was a bit rough.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: As long as my eggs are okay…
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: I am really sorry, I'll make sure to be more careful next time.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: It's okay, these things happen. I'm just learning new recipes and I needed some ingredients. 
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That sounds so good, really.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: For now I made a batch of chocolate chip cookies, I made some extra so you could give them to our neighbours.
 <<giveItem "cookies">>
 <<showCharacter "Lina" "ListeningRested">>
 Mailman: That is amazing, they're going to be so happy. You are too kind.
-<<showCharacter "Lina" "LinaSpeakingRested">>
+<<showCharacter "Lina" "SpeakingRested">>
 Lina: I wanted to give something nice back to our community. Now I feel like I'm part of a big family. 
 <<showCharacter "Lina" "ListeningRested">>
 -> Mailman: I'm glad you feel that way, I can assure you they feel the same way 
@@ -908,7 +926,7 @@ Lina: I wanted to give something nice back to our community. Now I feel like I'm
 	Lina: This wouldn't have been possible without you Mr.Mailman, you have done a lot for this community.
     <<showCharacter "Lina" "ListeningRested">>
 	Mailman: I only deliver, take care Lina.
-    <<showCharacter "Lina" "LinaSpeakingRested">>
+    <<showCharacter "Lina" "SpeakingRested">>
 	Lina: You too Mr.Mailman.
 
 ->Mailman: That's nice, see you tomorrow.
