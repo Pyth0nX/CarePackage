@@ -63,6 +63,7 @@ namespace CarePackage.Main
             _lastUpdateSecond = -1;
             Tween.Custom(0f, dayTime, dayTime, UpdateTimer, Ease.Linear).OnComplete(EndDay);
             if (_day == 1) TaskManager.PushTaskUpdate(new Task.Task("Press V to get an overview of all the packages you need"));
+            if (_day == 4) TaskManager.PushTaskUpdate(new Task.Task("You have new Mail, check your mail in the computer"));
         }
 
         public void StartGame()
