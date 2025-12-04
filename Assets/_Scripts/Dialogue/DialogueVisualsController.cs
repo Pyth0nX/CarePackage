@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Xasu.HighLevel;
 using Yarn.Unity;
 
 public class DialogueVisualsController : MonoBehaviour

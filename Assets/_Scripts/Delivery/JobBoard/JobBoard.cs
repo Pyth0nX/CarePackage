@@ -7,7 +7,6 @@ using UnityEngine;
 using System.Linq;
 using PrimeTween;
 using TMPro;
-using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -135,7 +134,9 @@ namespace CarePackage.Delivery
             UI.UIManager.Instance.OpenPopupWindow(jobListing);
             _lastClickedButton = button;
             jobListing.GetComponent<RectTransform>().anchoredPosition = new Vector2(_joblistingX, 0);
-            CompletableTracker.Instance.Initialized("SelectedPackage_" + _displayedJob.PackageData.Title, CompletableTracker.CompletableType.Completable);
+#if !UNITY_WEBGL
+            Xasu.HighLevel.CompletableTracker.Instance.Initialized("SelectedPackage_" + _displayedJob.PackageData.Title, Xasu.HighLevel.CompletableTracker.CompletableType.Completable);
+#endif
         }
 
         public void OnExitJobClicked(GameObject button)
@@ -155,7 +156,10 @@ namespace CarePackage.Delivery
             CreatePackageForConveyerBelt(_displayedJob);
             OnExitJobClicked(_lastClickedButton);
             UI.UIManager.Instance.ClosePopupWindow(jobListing);
-            CompletableTracker.Instance.Completed("SelectedPackage_" + _displayedJob.PackageData.Title, CompletableTracker.CompletableType.Completable).WithSuccess(true);
+#if !UNITY_WEBGL
+            Xasu.HighLevel.CompletableTracker.Instance.Completed("SelectedPackage_" + _displayedJob.PackageData.Title, Xasu.HighLevel.CompletableTracker.CompletableType.Completable)
+                .WithSuccess(true);
+#endif
         }
         
         public void CreatePackage(Package packageData) => CreatePackageForConveyerBelt(packageData);

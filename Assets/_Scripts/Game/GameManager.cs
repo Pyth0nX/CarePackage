@@ -98,7 +98,8 @@ namespace CarePackage.Main
             if (automaticallyLoseAtSpecificDay) 
                 if (_day >= dayToLose) LoseGame();
             
-            DialogueManager.Instance.SetYarnFloat("$day", _day);
+            if (DialogueManager.Instance != null) 
+                DialogueManager.Instance.SetYarnFloat("$day", _day);
             onDayEnded?.Invoke(_day);
         }
 
@@ -197,9 +198,7 @@ namespace CarePackage.Main
                 }
             }
         }
-           
-
-
+        
         public void TogglePause()
         {
             if (_isPaused)

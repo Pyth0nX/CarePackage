@@ -1,5 +1,5 @@
+#if !UNITY_WEBGL
 using System.Threading;
-using Xasu.HighLevel;
 using Yarn.Unity;
 
 public class AnalyticsOptionPresenter : OptionsPresenter
@@ -12,9 +12,10 @@ public class AnalyticsOptionPresenter : OptionsPresenter
 
         void Continuation()
         {
-            AlternativeTracker.Instance.Selected("AltOption_" + DialogueManager.Instance.dialogueRunner.Dialogue.CurrentNode,
+            Xasu.HighLevel.AlternativeTracker.Instance.Selected("AltOption_" + DialogueManager.Instance.dialogueRunner.Dialogue.CurrentNode,
                 "DialogueOption_" + awaiter.GetResult().DialogueOptionID);
         }
         return task;
     }
 }
+#endif

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CarePackage.Main;
 using UnityEngine;
 using UnityEngine.UI;
-using Xasu.HighLevel;
 
 namespace CarePackage.Delivery
 {
@@ -36,7 +35,9 @@ namespace CarePackage.Delivery
         private void OnEnable()
         {
             _accessedTime = DateTime.Now;
-            AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen);
+#if !UNITY_WEBGL
+            Xasu.HighLevel.AccessibleTracker.Instance.Accessed("Computer", Xasu.HighLevel.AccessibleTracker.AccessibleType.Screen);
+#endif
         }
 
         public void CheckOutClicked()
@@ -49,7 +50,9 @@ namespace CarePackage.Delivery
             }
             UI.UIManager.Instance.ClosePopupWindows(popups);
             //GameManager.Instance.EndDayEarly();
-            AccessibleTracker.Instance.Accessed("Computer", AccessibleTracker.AccessibleType.Screen)
+#if !UNITY_WEBGL
+            Xasu.HighLevel.AccessibleTracker.Instance.Accessed("Computer", Xasu.HighLevel.AccessibleTracker.AccessibleType.Screen)
+#endif
                 .WithDuration(_accessedTime, DateTime.Now).WithSuccess(false);
         }
 
